@@ -1,0 +1,16 @@
+{
+	"apiVersion": 2,
+	"name": "wc-donation-platform/wcdp",
+	"title": "Donation Form",
+	"category": "widgets",
+	"icon": "heart",
+	"description": "Display a donation form powered by Donation Platform for WooCommerce",
+	"supports": {
+		"html": true
+	},
+	"editorScript": "file:./build/index.js",
+  	"dependencies": [ "wp-blocks", "wp-i18n", "wp-element" ],
+  	"supports": {
+	  "multiple": false
+	}
+}
