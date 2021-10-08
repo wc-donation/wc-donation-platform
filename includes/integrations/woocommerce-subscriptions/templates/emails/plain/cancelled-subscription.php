@@ -10,7 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-echo $email_heading . "\n\n";
+echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
+echo esc_html( wp_strip_all_tags( $email_heading ) );
+echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 // translators: $1: customer's billing first name and last name
 printf( __( 'A recurring donation belonging to %1$s has been cancelled. Their recurring donation\'s details are as follows:', 'wc-donation-platform' ), $subscription->get_formatted_billing_full_name() );

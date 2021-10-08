@@ -10,7 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-echo $email_heading . "\n\n";
+echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
+echo esc_html( wp_strip_all_tags( $email_heading ) );
+echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 // translators: $1: customer's billing first name and last name
 printf( _x( 'You have received a recurring donation renewal from %1$s. Their donation is as follows:', 'Used in admin email: new renewal order', 'wc-donation-platform' ), $order->get_formatted_billing_full_name() );
