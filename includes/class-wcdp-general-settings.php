@@ -6,12 +6,11 @@ class WCDP_General_Settings {
     /**
      * Bootstraps the class and hooks required actions & filters.
      */
-    public static function init() {
-        add_filter( 'woocommerce_settings_tabs_array', __CLASS__ . '::add_settings_tab', 50 );
-        add_action( 'woocommerce_settings_tabs_wcdp_settings', __CLASS__ . '::settings_tab' );
-        add_action( 'woocommerce_update_options_wcdp_settings', __CLASS__ . '::update_settings' );
+    public function __construct() {
+        add_filter( 'woocommerce_settings_tabs_array', array($this, 'add_settings_tab'), 50 );
+        add_action( 'woocommerce_settings_tabs_wc-donation-platform', array($this, 'settings_tab') );
+        add_action( 'woocommerce_update_options_wc-donation-platform', array($this, 'update_settings') );
     }
-
 
     /**
      * Add a new settings tab to the WooCommerce settings tabs array.
@@ -19,8 +18,8 @@ class WCDP_General_Settings {
      * @param array $settings_tabs Array of WooCommerce setting tabs & their labels, excluding the Subscription tab.
      * @return array $settings_tabs Array of WooCommerce setting tabs & their labels, including the Subscription tab.
      */
-    public static function add_settings_tab( $settings_tabs ) {
-        $settings_tabs['WCDP_General_Settings'] = __( 'Donations', 'wc-donations-settings' );
+    public function add_settings_tab( $settings_tabs ) {
+        $settings_tabs['wc-donation-platform'] = __( 'Donations', 'wc-donations-settings' );
         return $settings_tabs;
     }
 
@@ -30,8 +29,9 @@ class WCDP_General_Settings {
      * @uses woocommerce_admin_fields()
      * @uses self::get_settings()
      */
-    public static function settings_tab() {
-        woocommerce_admin_fields( self::get_settings() );
+    public function settings_tab() {
+		error_log("l34");
+        woocommerce_admin_fields( $this->get_settings() );
     }
 
 
@@ -41,7 +41,7 @@ class WCDP_General_Settings {
      * @uses woocommerce_update_options()
      * @uses self::get_settings()
      */
-    public static function update_settings() {
+    public function update_settings() {
         woocommerce_update_options( self::get_settings() );
     }
 
@@ -51,7 +51,8 @@ class WCDP_General_Settings {
      *
      * @return array Array of settings for @see woocommerce_admin_fields() function.
      */
-    public static function get_settings() {
+    public function get_settings(): array
+	{
     	$decimals = pow(10, wc_get_price_decimals() * (-1));
         $settings = array(
 				array(
@@ -161,9 +162,9 @@ class WCDP_General_Settings {
 
 		);
 
-        return apply_filters( 'WCDP_General_Settings', $settings );
+        return apply_filters( 'wcdp-general-settings', $settings );
     }
 
 }
 
-WCDP_General_Settings::init();
+$wc_settings = new WCDP_General_Settings();
