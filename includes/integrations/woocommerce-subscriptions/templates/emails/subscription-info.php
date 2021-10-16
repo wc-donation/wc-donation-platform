@@ -56,7 +56,6 @@ $is_parent_order       = wcs_order_contains_subscription( $order, 'parent' );
 
 	/* translators: %s links */
 	printf( '<small>%s</small>', wp_kses_post( sprintf( _n(
-		// Translators: Placeholders are opening and closing My Account link tags.
 		'This recurring donation is set to renew automatically using your payment method on file. You can manage or cancel this recurring donation from your %smy account page%s.',
 		'These recurring donations are set to renew automatically using your payment method on file. You can manage or cancel your recurring donations from your %smy account page%s.',
 		count( $subscriptions ),

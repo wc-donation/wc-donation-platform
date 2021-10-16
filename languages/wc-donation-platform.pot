@@ -1,21 +1,21 @@
 # Copyright (C) 2021 Jonas Höbenreich
-# This file is distributed under the same license as the WC Donation Platform plugin.
+# This file is distributed under the same license as the Donation Platform for WooCommerce: Fundraising & Donation Management plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Donation Platform 0.0.5\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.0.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-04T22:09:12+02:00\n"
+"POT-Creation-Date: 2021-10-16T18:13:03+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wc-donation-platform\n"
 
 #. Plugin Name of the plugin
-msgid "WC Donation Platform"
+msgid "Donation Platform for WooCommerce: Fundraising & Donation Management"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -42,43 +42,43 @@ msgstr ""
 msgid "Enable to allow this form to be embedded elsewhere using "
 msgstr ""
 
-#: includes/class-wcdp-form.php:71
+#: includes/class-wcdp-form.php:70
 msgid "Only one donation form per page allowed"
 msgstr ""
 
-#: includes/class-wcdp-form.php:88
+#: includes/class-wcdp-form.php:87
 msgid "id is a required attribute"
 msgstr ""
 
-#: includes/class-wcdp-form.php:99
+#: includes/class-wcdp-form.php:98
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:207
+#: includes/class-wcdp-form.php:206
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:209
+#: includes/class-wcdp-form.php:208
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:240
+#: includes/class-wcdp-form.php:239
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:280
+#: includes/class-wcdp-form.php:279
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:283
+#: includes/class-wcdp-form.php:282
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:287
+#: includes/class-wcdp-form.php:286
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:290
+#: includes/class-wcdp-form.php:289
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
@@ -167,11 +167,11 @@ msgstr ""
 msgid "Donation Form"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:117
+#: includes/class-wcdp-product-settings.php:129
 msgid "Donable"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:118
+#: includes/class-wcdp-product-settings.php:130
 msgid "This product will only be used for donations if activated"
 msgstr ""
 
@@ -179,79 +179,61 @@ msgstr ""
 msgid "Donation Receipt"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:91
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:34
 msgid "Thank You Certificate"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:180
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:123
 msgid "Enable"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:191
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:134
 msgid "Attach to:"
 msgstr ""
 
 #. translators: directory path
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:199
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:142
 msgid "It looks like the temp folder (<code>%s</code>) is not writable, check the permissions for this folder! Without having write access to this folder, the plugin will not be able to email invoices."
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:205
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:148
 msgid "Orientation of the Certificate"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:212
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:155
 msgid "Portrait"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:213
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:156
 msgid "Landscape"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:220
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:163
 msgid "Allow My Account thank you certificate download"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:227
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:170
 msgid "Only when an invoice is already created/emailed"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:228
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:171
 msgid "Only for specific order statuses (define below)"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:229
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:172
 msgid "Always"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:230
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:173
 msgid "Never"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:245
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:188
 msgid "URL of background image"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:257
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:200
 msgid "URL to image of signature"
-msgstr ""
-
-#. translators: 1. credit note title, 2. refund id
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:497
-msgid "%1$s (refund #%2$s) was regenerated."
-msgstr ""
-
-#. translators: 1. credit note title, 2. refund id
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:497
-msgid "%s was regenerated"
-msgstr ""
-
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:1014
-msgid "Admin email"
-msgstr ""
-
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:1017
-msgid "Manual email"
 msgstr ""
 
 #. Translators: %$1s blog name, %2$s shop base address, %3$s shop base postal code, %4$s %2$s shop base city
@@ -371,14 +353,14 @@ msgstr ""
 
 #. translators: $1: customer's billing first name and last name
 #: includes/integrations/woocommerce-subscriptions/templates/emails/admin-new-renewal-order.php:16
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-renewal-order.php:16
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-renewal-order.php:18
 msgctxt "Used in admin email: new renewal order"
 msgid "You have received a recurring donation renewal from %1$s. Their donation is as follows:"
 msgstr ""
 
 #. translators: $1: customer's first name and last name, $2: how many subscriptions customer switched
 #: includes/integrations/woocommerce-subscriptions/templates/emails/admin-new-switch-order.php:18
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-switch-order.php:18
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-switch-order.php:20
 msgctxt "Used in switch notification admin email"
 msgid "Customer %1$s has switched their recurring donation. The details of their new recurring donation are as follows:"
 msgid_plural "Customer %1$s has switched %2$d of their recurring donations. The details of their new recurring donations are as follows:"
@@ -475,61 +457,61 @@ msgstr ""
 
 #. translators: $1: customer's billing first name and last name
 #: includes/integrations/woocommerce-subscriptions/templates/emails/expired-subscription.php:16
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:14
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:16
 msgid "A recurring donation belonging to %1$s has expired. Their recurring donation's details are as follows:"
 msgstr ""
 
 #. translators: $1: customer's billing first name and last name
 #: includes/integrations/woocommerce-subscriptions/templates/emails/on-hold-subscription.php:16
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:14
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:16
 msgid "A recurring donation belonging to %1$s has been suspended by the user. Their recurring donation's details are as follows:"
 msgstr ""
 
 #. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:20
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:22
 msgctxt "In customer renewal invoice email"
 msgid "The automatic recurring payment for donation #%1$s to %2$s has failed. The payment will be retried %3$s."
 msgstr ""
 
 #. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:21
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:23
 msgid "The renewal donation is as follows:"
 msgstr ""
 
 #. translators: $1: customer's billing first name and last name
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:16
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:18
 msgid "A recurring donation belonging to %1$s has been cancelled. Their recurring donation's details are as follows:"
 msgstr ""
 
 #. translators: placeholder is last time subscription was paid
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:32
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:30
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:34
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:32
 msgid "Last Donation Date: %s"
 msgstr ""
 
 #. translators: placeholder is either view or edit url for the subscription
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:44
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:42
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:46
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:44
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/subscription-info.php:25
 msgctxt "in plain emails for subscription information"
 msgid "View Recurring Donation: %s"
 msgstr ""
 
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-renewal-order.php:15
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-renewal-order.php:17
 msgid "We have finished processing your recurring donation renewal."
 msgstr ""
 
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-switch-order.php:15
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-switch-order.php:17
 msgid "You have successfully changed your recurring donation. Your new recurring donation details are shown below for your reference:"
 msgstr ""
 
 #. translators: placeholder is order's view url
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-switch-order.php:22
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-switch-order.php:24
 msgid "View your donation: %s"
 msgstr ""
 
 #. translators: placeholder is subscription's view url
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-switch-order.php:33
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-switch-order.php:35
 msgid "View your recurring donation: %s"
 msgstr ""
 
@@ -538,30 +520,30 @@ msgid "Thanks for your renewal donation. It’s on-hold until we confirm that pa
 msgstr ""
 
 #. translators: %s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-payment-retry.php:16
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-payment-retry.php:18
 msgctxt "In customer renewal invoice email"
 msgid "The automatic payment to renew your recurring donation has failed. We will retry the payment %s."
 msgstr ""
 
 #. translators: %1$s: link to checkout payment url, note: no full stop due to url at the end
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-payment-retry.php:19
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-payment-retry.php:21
 msgctxt "In customer renewal invoice email"
 msgid "To reactivate the recurring donation now, you can also log in and pay for the renewal from your account page: %1$s"
 msgstr ""
 
 #. translators: %s: Order number
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-processing-renewal-order.php:16
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-processing-renewal-order.php:18
 msgid "Just to let you know &mdash; we've received your recurring donation renewal #%s, and it is now being processed:"
 msgstr ""
 
 #. translators: %1$s: name of the blog, %2$s: link to checkout payment url, note: no full stop due to url at the end
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-renewal-invoice.php:18
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-renewal-invoice.php:20
 msgctxt "In customer renewal invoice email"
 msgid "Please pay for your recurring donation to %1$s using the following link: %2$s"
 msgstr ""
 
 #. translators: %1$s: name of the blog, %2$s: link to checkout payment url, note: no full stop due to url at the end
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-renewal-invoice.php:21
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-renewal-invoice.php:23
 msgctxt "In customer renewal invoice email"
 msgid "The automatic payment to renew your recurring donation to %1$s has failed. To reactivate the recurring donation, please log in and pay for the renewal donation from your account page: %2$s"
 msgstr ""
@@ -582,12 +564,12 @@ msgid "Recurring Donation Number: %s"
 msgstr ""
 
 #. translators: placeholder is last time subscription was paid
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:30
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:32
 msgid "Last Donation: %s"
 msgstr ""
 
 #. translators: %s donation number
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:38
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:40
 msgctxt "in plain emails for subscription information"
 msgid "View recurring donation: %s"
 msgstr ""
@@ -616,7 +598,6 @@ msgid "Recurring donation information"
 msgstr ""
 
 #. translators: %s links
-#. Translators: Placeholders are opening and closing My Account link tags.
 #: includes/integrations/woocommerce-subscriptions/templates/emails/subscription-info.php:58
 msgid "This recurring donation is set to renew automatically using your payment method on file. You can manage or cancel this recurring donation from your %smy account page%s."
 msgid_plural "These recurring donations are set to renew automatically using your payment method on file. You can manage or cancel your recurring donations from your %smy account page%s."
@@ -680,16 +661,16 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: includes/templates/wcdp_form.php:34
+#: includes/templates/wcdp_form.php:30
 #: includes/wc-templates/checkout/payment.php:39
 msgid "Please activate JavaScript to continue with your donation."
 msgstr ""
 
-#: includes/templates/wcdp_form.php:49
+#: includes/templates/wcdp_form.php:45
 msgid "Donate now!"
 msgstr ""
 
-#: includes/templates/wcdp_form.php:58
+#: includes/templates/wcdp_form.php:54
 msgid "Close"
 msgstr ""
 
@@ -777,6 +758,14 @@ msgstr ""
 msgid "Your Donation"
 msgstr ""
 
+#: includes/templates/wcdp_step_3.php:17
+msgid "Please fill in all fields under Donor Details correctly before checking out."
+msgstr ""
+
+#: includes/templates/wcdp_step_3.php:18
+msgid "Fix Invalid Fields"
+msgstr ""
+
 #: includes/wc-templates/checkout/cart-errors.php:20
 msgid "There are some issues with your donation session. Please reload the page and try again."
 msgstr ""
@@ -827,6 +816,10 @@ msgstr ""
 
 #: includes/wc-templates/checkout/thankyou.php:43
 msgid "Thank you. Your donation has been received."
+msgstr ""
+
+#: includes/wc-templates/checkout/thankyou.php:86
+msgid "Your request could not be processed correctly. If the problem persists, please contact us."
 msgstr ""
 
 #. translators: %1$s: Order number, %2$s: Customer full name
@@ -912,6 +905,10 @@ msgstr ""
 
 #: includes/wc-templates/emails/plain/email-addresses.php:19
 msgid "Donor Details"
+msgstr ""
+
+#: includes/wc-templates/emails/plain/email-addresses.php:34
+msgid "Shipping address"
 msgstr ""
 
 #. translators: %1$s: Order ID. %2$s: Order date

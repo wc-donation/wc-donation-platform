@@ -83,7 +83,7 @@ defined( 'ABSPATH' ) || exit;
 	<?php else : ?>
 
         <ul class="woocommerce-error" role="alert" id="wcdp-invalid-order">
-            <?php esc_html_e('Your request could not be processed correctly. If the problem persists, please contact us.', 'wc-donation-amount'); ?>
+            <?php esc_html_e('Your request could not be processed correctly. If the problem persists, please contact us.', 'wc-donation-platform'); ?>
         </ul>
 
     <?php endif; ?>

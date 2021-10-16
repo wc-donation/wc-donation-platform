@@ -1,10 +1,10 @@
-=== Donation Platform for WooCommerce ===
+=== Donation Platform for WooCommerce: Fundraising & Donation Management ===
 Contributors: flinnn
 Tags: donation, donations, crowdfunding, fundraising, woocommerce
 Requires at least: 5.7
 Tested up to: 5.8.1
-Stable tag: 1.0.2
-Requires PHP: 7.0
+Stable tag: 1.0.3
+Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,13 +79,22 @@ Since WooCommerce and other plugins don't assume that there are multiple checkou
 == Changelog ==
 Active development of this plugin is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.0.2 =
+= 1.0.3 - 2021-10-16 - =
+
+tweak: rename from "Donation Platform for WooCommerce" to "Donation Platform for WooCommerce: Fundraising & Donation Management"
+tweak: push WC supported version to 5.8.0
+fix: text-domain error and i18n warning
+
+
+= 1.0.2 - 2021-10-10 - =
 
 fix: general settings not working
 
-= 1.0.1 =
+
+= 1.0.1 - 2021-10-09 - =
 
 small fixes
+
 
 = 1.0.0 =
 

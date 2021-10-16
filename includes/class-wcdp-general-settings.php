@@ -30,7 +30,6 @@ class WCDP_General_Settings {
      * @uses self::get_settings()
      */
     public function settings_tab() {
-		error_log("l34");
         woocommerce_admin_fields( $this->get_settings() );
     }
 
