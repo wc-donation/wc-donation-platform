@@ -19,7 +19,7 @@ if(!defined('ABSPATH')) exit;
 
 define( 'WCDP_DIR', dirname(__FILE__).'/' );
 define( 'WCDP_DIR_URL', plugin_dir_url( __FILE__ ) );
-const WCDP_VERSION = '1.0.1';
+const WCDP_VERSION = '1.0.4';
 
 /**
  * Check if WooCommerce is active

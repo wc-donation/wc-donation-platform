@@ -73,7 +73,7 @@ class WCDP_General_Settings {
 					'title'    	=> __( 'Maximum Donation amount', 'wc-donation-platform' ),
 					'id'       	=> 'wcdp_max_amount',
 					'type'     	=> 'number',
-					'default'	=> '5000',
+					'default'	=> '50000',
 					'custom_attributes'	=> array(
 						'min'	=> $decimals,
 						'step'	=> $decimals,

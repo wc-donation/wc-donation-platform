@@ -110,7 +110,7 @@ jQuery( function( $ ) {
         $('.woocommerce-checkout select').selectWoo();
 		$('.wcdp-loader').hide();
 		$('.wc-donation-platform').css({"visibility": "visible", "animation-name": "wcdp-appear-animation", "animation-duration": "1s" });
-        wcdp_open();
+        wcdp_open(false);
         if ($('.wcdp-choose-donation')[0].checkValidity()) {
             wcdp_submit();
         }
@@ -118,8 +118,12 @@ jQuery( function( $ ) {
 
     //Modal window hash
     window.onhashchange = function(){
-        wcdp_open();
+        wcdp_open(false);
     }
+
+	$('.wcdp-modal-open').click(function() {
+		wcdp_open(true);
+	});
 
     //Close modal when excape is pressed
     $(document).on("keypress", "input", function (e) {
@@ -143,8 +147,8 @@ jQuery( function( $ ) {
     }
 
     //Open modal function
-    function wcdp_open(){
-        if (location.hash == '#wcdp-form' && $('.wcdp-overlay').length > 0) {
+    function wcdp_open(direct){
+        if (direct || location.hash == '#wcdp-form' && $('.wcdp-overlay').length > 0) {
             $('.wcdp-overlay').show();
             $('body').css('overflow-y', 'hidden');
 			wcdpOpen = true;
