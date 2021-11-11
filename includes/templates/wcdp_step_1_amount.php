@@ -73,7 +73,7 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 				'input-id' 			=> 'wcdp_value_other',
 				'input-value'		=> '',
 				'label-id'			=> 'wcdp_label_custom_amount',
-				'label-text'		=> '<div id="wcdp_other">' . esc_html( 'Other', 'wc-donation-platform' ) . '</div><div class="wcdp_cu_field">' .  $wcdp_price_field . '</div>',
+				'label-text'		=> '<div id="wcdp_other">' . esc_html__( 'Other', 'wc-donation-platform' ) . '</div><div class="wcdp_cu_field">' .  $wcdp_price_field . '</div>',
 		)); ?>
 		<label class="wcdp-variation-heading" for="donation-amount"><?php esc_attr_e( 'Choose an amount:', 'wc-donation-platform' ); ?></label> <?php
 		echo WCDP_Form::wcdp_generate_fieldset($args);

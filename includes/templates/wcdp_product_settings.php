@@ -11,12 +11,18 @@ global $post;
 <div id="wcdp_donation_form_data" class="panel woocommerce_options_panel hidden">
 	<div class="options_group">
 		<p class="wcdp_shortcode form-field">
-			<label for="wcdp_shortcode"><?php _e( 'Shortcode', 'wc-donation-platform' ); ?></label>
+			<label for="wcdp_shortcode"><?php esc_html_e( 'Shortcode', 'wc-donation-platform' ); ?></label>
 			<span class="wrap">
-				<input type="text" readonly="readonly" onclick="this.select()" value="[wcdp_donation_form id=&quot;<?php echo $post->ID ?>&quot;]">
+				<input type="text" readonly="readonly" onclick="this.select()" value="[wcdp_donation_form id=&quot;<?php echo $post->ID; ?>&quot;]">
 				<?php
-	/* translators: %s & %s: link html (not visible) */
-	echo wc_help_tip( __( 'Add this shortcode where you want to display the donation form.') . '<a href="https://wcdp.jonh.eu/documentation/getting-started/shortcode/" target="_blank" rel="noopener">'. __('Shortcode Documentation', 'wc-donation-platform') . '</a>' ); ?>
+				/* translators: %s & %s: link html (not visible) */
+				echo wc_help_tip( __( 'Add this shortcode where you want to display the donation form.', 'wc-donation-platform') . '<a href="https://wcdp.jonh.eu/documentation/getting-started/shortcode/" target="_blank" rel="noopener">'. __('Shortcode Documentation', 'wc-donation-platform') . '</a>' ); ?>
+			</span>
+		</p>
+		<p class="wcdp_direct_link form-field">
+			<label><?php esc_html_e( 'Direct Link', 'wc-donation-platform' ); ?></label>
+			<span class="wrap">
+				<a href="<?php echo esc_url(wc_get_checkout_url() . '?postid=' . $post->ID ); ?>" target="_blank"><?php echo esc_url(wc_get_checkout_url() . '?postid=' . $post->ID ); ?></a>
 			</span>
 		</p>
 	</div>
@@ -136,6 +142,10 @@ global $post;
 
 			$(window).bind("load", function() {
 				show_hide_donable_panel();
+
+				if ($('#_regular_price').val() == '') {
+					$('#_regular_price').val(1);
+				}
 			});
 
 			$('#wcdp-amount-layout,input#_donable').on('change', function(){
@@ -150,7 +160,7 @@ global $post;
 					$( '.show_if_donable' ).hide();
 				}
 
-				if($('#wcdp-amount-layout').val()) {
+				if($('#wcdp-amount-layout').val() == 1) {
 					$('.wcdp-settings_field').show();
 				} else {
 					$('.wcdp-settings_field').hide();

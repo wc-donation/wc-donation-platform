@@ -28,12 +28,18 @@ class WCDP_Form
     public function wcdp_enqueue_scripts() {
         //Dependencies
         $cssdeps = array('select2',);
-        $jsdeps = array('jquery',
-            'selectWoo',
-            'wc-checkout',
-            'wc-password-strength-meter',
-            'select2',
-            'wc-cart',);
+        $jsdeps = array(
+				'jquery',
+				'selectWoo',
+				'wc-checkout',
+				'select2',
+				'wc-cart',
+			);
+
+		//Require wc-password-strength-meter when necessary
+		if ( 'yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option( 'woocommerce_registration_generate_password' ) && ! is_user_logged_in() ) {
+			array_push($jsdeps, 'wc-password-strength-meter');
+		}
 
         //Register CSS & JS
         wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp.min.css', $cssdeps, WCDP_VERSION );

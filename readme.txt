@@ -2,8 +2,8 @@
 Contributors: flinnn
 Tags: donation, donations, crowdfunding, fundraising, woocommerce
 Requires at least: 5.7
-Tested up to: 5.8.1
-Stable tag: 1.0.4
+Tested up to: 5.8.2
+Stable tag: 1.0.5
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -85,6 +85,17 @@ Since WooCommerce and other plugins don't assume that there are multiple checkou
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.0.5 - 2021-11-1 - =
+
+fix: textdomain not loading properly
+fix: i18n of "Other" string
+fix: Amount Suggestions field not hiding properly
+performance: load wc-password-strength-meter only when it is necessary
+tweak: set standard price of simple product to 1
+tweak: add direct donation link on product edit page
+tweak: push supported WC version to 5.9
+tweak: push supported WP version to 5.8.1
 
 = 1.0.4 - 2021-11-02 - =
 
