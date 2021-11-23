@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, crowdfunding, woocommerce, woocommerce donation
 Requires at least: 5.7
 Tested up to: 5.8.2
-Stable tag: 1.0.6
+Stable tag: 1.0.9
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -126,13 +126,19 @@ Since WooCommerce and other plugins don't assume that there are multiple checkou
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.0.6 2021-11-23 =
+= 1.0.9 2021-11-23 =
 
 new feature: Shortcode wcdp_progress to display a donation progress bar
 new feature: new donation form design (Style 5)
 fix: Settings Link not working
 tweak: min, max donation amount on product settings page
 tweak: readme revised
+
+= 1.0.8 2021-11-23 =
+= 1.0.7 2021-11-23 =
+= 1.0.6 2021-11-23 =
+
+Faulty updates. Please do not install these versions
 
 = 1.0.5 2021-11-11 =
 
