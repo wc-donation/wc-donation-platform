@@ -99,6 +99,8 @@ jQuery( function( $ ) {
             default:
                 return;
         }
+		$('.wcdp-style5-active').removeClass('wcdp-style5-active');
+		$('#wcdp-style5-step-'+step).addClass('wcdp-style5-active');
         $("#wcdp-progress-bar").css('width', 33.33*(parseInt(step)-1)+'%');
         $(".wcdp-tab").hide();
         $("#wcdp-step-"+step).show();

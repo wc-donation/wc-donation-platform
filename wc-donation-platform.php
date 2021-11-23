@@ -4,7 +4,7 @@
  * Plugin URI: https://wcdp.jonh.eu/
  * Description: Donation Platform for WooCommerce unlocks the power of WooCommerce for your online fundraising & crowdfunding.
  * Author: Jonas Höbenreich
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author URI: https://www.jonh.eu/
  * Plugin URI:  https://wcdp.jonh.eu/
  * License: GNU General Public License v3.0
@@ -19,7 +19,7 @@ if(!defined('ABSPATH')) exit;
 
 define( 'WCDP_DIR', dirname(__FILE__).'/' );
 define( 'WCDP_DIR_URL', plugin_dir_url( __FILE__ ) );
-const WCDP_VERSION = '1.0.5';
+const WCDP_VERSION = '1.0.6';
 
 /**
  * Check if WooCommerce is active
@@ -50,9 +50,10 @@ if ( !class_exists( 'WCDP' ) ) {
          */
         public function __construct() {
             $this->includes();
-            $wcdp_hooks = new WCDP_Hooks();
-            $wcdp_product = new WCDP_Product_Settings();
-            $wcdp_form = new WCDP_Form();
+            new WCDP_Hooks();
+            new WCDP_Product_Settings();
+            new WCDP_Form();
+			new WCDP_Progress();
             WCDP_Integrator::init();
 
 			//Load textdomain
@@ -80,6 +81,9 @@ if ( !class_exists( 'WCDP' ) ) {
 
             //WooCommerce settings tab
             include_once 'includes/class-wcdp-general-settings.php';
+
+			//Fundraising Progress
+			include_once 'includes/class-wcdp-progress.php';
 
             //Integration with other Extensions
             include_once 'includes/integrations/class-wcdp-integrator.php';
@@ -110,13 +114,13 @@ if ( !class_exists( 'WCDP' ) ) {
 
         /**
          * Adds plugin action links
-         * @param $links Plugin action links before filtering.
+         * @param $links array plugin action links before filtering.
          * @return array Filtered links.
          */
-        public static function plugin_action_links($links): array
+        public static function plugin_action_links(array $links): array
         {
             $plugin_links = array(
-                'settings' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=wcdp_settings' ) . '" aria-label="' . esc_attr__( 'View WCDP settings', 'wc-donation-platform' ) . '">' . esc_html__( 'Settings', 'wc-donation-platform' ) . '</a>',
+                'settings' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=wc-donation-platform' ) . '" aria-label="' . esc_attr__( 'View WCDP settings', 'wc-donation-platform' ) . '">' . esc_html__( 'Settings', 'wc-donation-platform' ) . '</a>',
             );
 
             return array_merge( $plugin_links, $links );

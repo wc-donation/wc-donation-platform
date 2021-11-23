@@ -81,6 +81,10 @@ if(!defined('ABSPATH')) exit;
             //Just first step, only on Product page
             include_once 'styles/wcdp_form_style_4.php';
             break;
+		case '5':
+			//Just first step, only on Product page
+			include_once 'styles/wcdp_form_style_5.php';
+			break;
         case 'checkout':
             if ($is_internal) {
                 //Just first step, only on Checkout page

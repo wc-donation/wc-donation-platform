@@ -334,13 +334,8 @@ input:disabled ~ label {
     position: relative;
 }
 
-.woocommerce-invalid > label > .required:after {
-    content: '\e016 ';
-    color: var(--wcdp-main-3);
-    font-family: 'Woocommerce';
-    padding: 0 5px 0 5px;
-    border: none;
-    text-decoration: unset;
+.woocommerce-invalid .woocommerce-input-wrapper input {
+	border-color: var(--wcdp-main-3);
 }
 
 #wcdp-header-step-1  {
@@ -399,11 +394,12 @@ input:disabled ~ label {
     font-weight: bold;
 }
 
-.wcdp-step:hover {
-    cursor: pointer;
-    transform: scale(1.05);
+.wcdp-header .wcdp-step:hover {
+	transform: scale(1.05);
 }
-
+.wcdp-step {
+	cursor: pointer;
+}
 #wcdp-invalid-fields {
     display: none;
 }
@@ -416,4 +412,63 @@ input:disabled ~ label {
 /* compatibility Twenty Twenty-OneVersion */
 .woocommerce-checkout form[name=checkout] {
 	display: block;
+}
+/* Style 5 header */
+.wcdp-steps-wrapper {
+	display: flex;
+	outline: 1px solid var(--wcdp-main-2);
+	margin: 1px 1px 1em 1px;
+}
+.wcdp-style5 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: calc(100% / 3);
+	height: 2em;
+	color: var(--wcdp-main-2);
+	background-color: inherit;
+}
+.wcdp-style5:first-child {
+	z-index: 3;
+}
+.wcdp-style5:nth-child(2) {
+	z-index: 2;
+}
+.wcdp-style5:nth-child(3) {
+	z-index: 1;
+}
+.wcdp-style5:after {
+	content: '';
+	display: block;
+	position: absolute;
+	width: calc(1.414em + 0.5px);
+	height: calc(1.414em + 0.5px);
+	left: calc(100% - 0.707em);
+	top: 50%;
+	margin-top: -0.707em;
+	background-color: var(--label-text-checked);
+	transform: rotate(45deg);
+	border-top: 1px solid var(--wcdp-main-2);
+	border-right: 1px solid var(--wcdp-main-2);
+	z-index: -1;
+}
+.wcdp-style5:hover, .wcdp-style5:hover:after {
+	background-color: var(--wcdp-main-2);
+	color: var(--label-text-checked);
+}
+.wcdp-style5-active {
+	color: var(--label-text-checked);
+	background-color: var(--wcdp-main-2);
+}
+.wcdp-style5-active:after {
+	background-color: var(--wcdp-main-2);
+}
+#wcdp-style5-step-3:after {
+	display: none;
+}
+#wcdp-popup .wcdp-steps-wrapper {
+	margin: 0 20px 20px 20px;
+	top: 35px;
+	position: inherit;
 }

@@ -67,7 +67,7 @@ if(!defined('ABSPATH')) exit;
         //Variation fields
         include('wcdp_step_1_variations.php');
     ?>
-		<?php if ( $value['style'] == 1 || $value['style'] == 3) : ?>
+		<?php if ( $value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5) : ?>
 	        <div class="wcdp-divider"></div>
 			<button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" value="2"><?php esc_html_e( 'Next', 'wc-donation-platform' ); ?>&nbsp;<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div></button>
 		    <div class="lds-ellipsis" id="wcdp-spinner"><div></div><div></div><div></div><div></div></div>
