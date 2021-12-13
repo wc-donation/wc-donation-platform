@@ -6,8 +6,8 @@ if(!defined('ABSPATH')) exit;
 
 global $post;
 
-$wcdp_min_amount = floatval(get_option('wcdp_min_amount', 3));
-$wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
+$wcdp_min_amount = (float) get_option('wcdp_min_amount', 3);
+$wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
 ?>
 
 <div id="wcdp_donation_form_data" class="panel woocommerce_options_panel hidden">
@@ -15,7 +15,7 @@ $wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
 		<p class="wcdp_shortcode form-field">
 			<label for="wcdp_shortcode"><?php esc_html_e( 'Shortcode', 'wc-donation-platform' ); ?></label>
 			<span class="wrap">
-				<input type="text" readonly="readonly" onclick="this.select()" value="[wcdp_donation_form id=&quot;<?php echo $post->ID; ?>&quot;]">
+				<input type="text" id="wcdp_shortcode" readonly="readonly" onclick="this.select()" value="[wcdp_donation_form id=&quot;<?php echo $post->ID; ?>&quot;]">
 				<?php
 				/* translators: %s & %s: link html (not visible) */
 				echo wc_help_tip( __( 'Add this shortcode where you want to display the donation form.', 'wc-donation-platform') . '<a href="https://wcdp.jonh.eu/documentation/getting-started/shortcode/" target="_blank" rel="noopener">'. __('Shortcode Documentation', 'wc-donation-platform') . '</a>' ); ?>
@@ -32,10 +32,39 @@ $wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
 			<span class="wrap">
 				<?php
 				//Translators: %1$d minimum donation amount, %2$d maximum donation amount
-				printf(esc_html__( 'Min: %1$d, Max: %2$d', 'wc-donation-platform' ), $wcdp_min_amount, $wcdp_max_amount); ?>&nbsp;
+				printf(esc_html__( 'Min: %1$s, Max: %2$s', 'wc-donation-platform' ), wc_price($wcdp_min_amount), wc_price($wcdp_max_amount)); ?>&nbsp;
 				<a href="<?php echo admin_url( 'admin.php?page=wc-settings&tab=wc-donation-platform' ); ?>" target="_blank"><?php esc_html_e('Edit', 'wc-donation-platform'); ?></a>
 			</span>
 		</p>
+	</div>
+
+	<div class="options_group">
+			<?php
+			woocommerce_wp_text_input(
+				array(
+					'id'            => "wcdp_fundraising_goal",
+					'name'          => "wcdp_fundraising_goal",
+					'value'         => get_post_meta( $post->ID, 'wcdp-settings[wcdp_fundraising_goal]', true ),
+					'label'         => __('Fundraising Goal', 'wc-donation-platform'),
+					'wrapper_class' => 'form-field',
+					'placeholder'   => __('Enter 0 to deactivate', 'wc-donation-platform'),
+					'data_type'		=> 'price',
+					'desc_tip'		=> true,
+					'description'	=> __('The amount you want to collect with this campaign. Leave the field empty to hide the goal. Please note: You can still donate to the project after reaching the goal.', 'wc-donation-platform'),
+				)
+			);
+			woocommerce_wp_text_input(
+				array(
+					'id'            => "wcdp_fundraising_end_date",
+					'name'          => "wcdp_fundraising_end_date",
+					'type'			=> 'date',
+					'value'         => get_post_meta( $post->ID, 'wcdp-settings[wcdp_fundraising_end_date]', true ),
+					'label'         => __('End Date', 'wc-donation-platform'),
+					'wrapper_class' => 'form-field',
+				)
+			);
+
+		?>
 	</div>
 
 	<div class="options_group">
@@ -51,7 +80,7 @@ $wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
 							'0'	=> __( 'Just input box', 'wc-donation-platform' ),
 							'1'	=> __( 'Radio/button selection', 'wc-donation-platform' ),
 							'2'	=> __( 'Input box + Range slider', 'wc-donation-platform' ),
-							'3'	=> __( 'Expert: custom code with action: wcdp_custom_html_amount', 'wc-donation-platform' ),
+							//'3'	=> __( 'Expert: custom code with action: wcdp_custom_html_amount', 'wc-donation-platform' ),
 						),
 						'description' => __( 'Design of the amount field.', 'wc-donation-platform' ),
 						'desc_tip'	=> 'true',
@@ -62,38 +91,42 @@ $wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
 
 		$values = json_decode( get_post_meta( $post->ID, 'wcdp-settings[1]', true ) );
 		$defaultoptions = array (
-			'1'	=> '1',
-			'2'	=> '2',
-			'5'	=> '5',
-			'10'	=> '10',
-			'15'	=> '15',
-			'20'	=> '20',
-			'25'	=> '25',
-			'30'	=> '30',
-			'50'	=> '50',
-			'75'	=> '75',
-			'100'	=> '100',
-			'150'	=> '150',
-			'200'	=> '200',
-			'250'	=> '250',
-			'500'	=> '500',
-			'750'	=> '750',
-			'1000'	=> '1000',
-			'1500'	=> '1500',);
+			'1'		=> 1,
+			'2'		=> 2,
+			'5'		=> 5,
+			'10'	=> 10,
+			'15'	=> 15,
+			'20'	=> 20,
+			'25'	=> 25,
+			'30'	=> 30,
+			'50'	=> 50,
+			'75'	=> 75,
+			'100'	=> 100,
+			'150'	=> 150,
+			'200'	=> 200,
+			'250'	=> 250,
+			'500'	=> 500,
+			'750'	=> 750,
+			'1000'	=> 1000,
+			'1500'	=> 1500,
+		);
 		$options = array();
 
-		if (is_array($values)){
-			foreach ($defaultoptions as $value) {
-				if ($value >= $wcdp_min_amount && $value <= $wcdp_max_amount) {
-					$options[$value] = $value;
-				}
+		foreach ($defaultoptions as $value) {
+			if ($value >= $wcdp_min_amount && $value <= $wcdp_max_amount) {
+				$options[$value] = $value;
 			}
+		}
+
+		if (is_array($values)){
 			foreach ($values as $value){
 				if (is_numeric($value) && $value >= $wcdp_min_amount && $value <= $wcdp_max_amount) {
 					$options[$value] = $value;
 				}
 			}
 		}
+		asort($options);
+		asort($values);
 
 		woocommerce_wp_select(
 							array(
@@ -110,7 +143,7 @@ $wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
 								'description' => __( 'Display buttons with donation amount suggestions. Create new options by entering a number (decimals seperated by period) and hit space bar.', 'wc-donation-platform' ),
 								'desc_tip'	=> 'true',
 								'name'		=> 'wcdp-settings[]',
-								'value'		=> $values
+								'value'		=> $values,
 							)
 		);
 
@@ -163,7 +196,7 @@ $wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
 				$(window).bind("load", function() {
 					show_hide_donable_panel();
 
-					if ($('#_regular_price').val() == '') {
+					if ($('#_regular_price').val() === '') {
 						$('#_regular_price').val(1);
 					}
 				});
@@ -180,7 +213,7 @@ $wcdp_max_amount = floatval(get_option('wcdp_max_amount', 50000));
 						$( '.show_if_donable' ).hide();
 					}
 
-					if($('#wcdp-amount-layout').val() == 1) {
+					if($('#wcdp-amount-layout').val() === 1) {
 						$('.wcdp-settings_field').show();
 					} else {
 						$('.wcdp-settings_field').hide();

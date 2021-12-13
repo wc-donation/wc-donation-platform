@@ -19,6 +19,8 @@ defined( 'ABSPATH' ) || exit;
 global $post;
 global $product;
 
+echo do_shortcode( '[wcdp_progress id="' . $post->ID . '" style="2"]' );
+
 if ( ! $product->is_purchasable() ) {
 	return;
 }

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Donation Platform for WooCommerce: Fundraising & Donation Management plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.0.6\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-11-23T18:16:27+01:00\n"
+"POT-Creation-Date: 2021-12-13T20:00:41+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -123,43 +123,43 @@ msgstr ""
 msgid "Do you like Donation Platform for WooCommerce? Please consider supporting the plugin with your review or suggestion for improvement."
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:187
+#: includes/class-wcdp-hooks.php:189
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/related-orders.php:20
 msgid "Donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:188
+#: includes/class-wcdp-hooks.php:190
 msgid "Total"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:202
-#: includes/class-wcdp-hooks.php:220
+#: includes/class-wcdp-hooks.php:204
+#: includes/class-wcdp-hooks.php:222
 msgid "Donations"
 msgstr ""
 
 #. translators: %s: page
-#: includes/class-wcdp-hooks.php:218
+#: includes/class-wcdp-hooks.php:220
 msgid "Donations (page %d)"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:245
+#: includes/class-wcdp-hooks.php:247
 #: includes/wc-templates/myaccount/orders.php:98
 msgid "Donate now"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:286
+#: includes/class-wcdp-hooks.php:288
 msgid "Related projects"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:297
+#: includes/class-wcdp-hooks.php:299
 msgid "Donation notes"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:298
+#: includes/class-wcdp-hooks.php:300
 msgid "Notes about your donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:308
+#: includes/class-wcdp-hooks.php:310
 msgid "Learn more"
 msgstr ""
 
@@ -167,11 +167,11 @@ msgstr ""
 msgid "Donation Form"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:129
+#: includes/class-wcdp-product-settings.php:136
 msgid "Donable"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:130
+#: includes/class-wcdp-product-settings.php:137
 msgid "This product will only be used for donations if activated"
 msgstr ""
 
@@ -714,7 +714,7 @@ msgstr ""
 
 #. Translators: %1$d minimum donation amount, %2$d maximum donation amount
 #: includes/templates/wcdp_product_settings.php:35
-msgid "Min: %1$d, Max: %2$d"
+msgid "Min: %1$s, Max: %2$s"
 msgstr ""
 
 #. Translators: %1$d minimum donation amount, %2$d maximum donation amount
@@ -722,56 +722,68 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:49
-msgid "Layout of Amount suggestions"
+#: includes/templates/wcdp_product_settings.php:48
+msgid "Fundraising Goal"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:51
-msgid "Just input box"
-msgstr ""
-
-#: includes/templates/wcdp_product_settings.php:52
-#: includes/templates/wcdp_product_settings.php:130
-msgid "Radio/button selection"
+#: includes/templates/wcdp_product_settings.php:50
+msgid "Enter 0 to deactivate"
 msgstr ""
 
 #: includes/templates/wcdp_product_settings.php:53
+msgid "The amount you want to collect with this campaign. Leave the field empty to hide the goal. Please note: You can still donate to the project after reaching the goal."
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:62
+msgid "End Date"
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:78
+msgid "Layout of Amount suggestions"
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:80
+msgid "Just input box"
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:81
+#: includes/templates/wcdp_product_settings.php:163
+msgid "Radio/button selection"
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:82
 msgid "Input box + Range slider"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:54
-msgid "Expert: custom code with action: wcdp_custom_html_amount"
-msgstr ""
-
-#: includes/templates/wcdp_product_settings.php:56
+#: includes/templates/wcdp_product_settings.php:85
 msgid "Design of the amount field."
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:107
+#: includes/templates/wcdp_product_settings.php:140
 msgid "Amount Suggestions"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:110
+#: includes/templates/wcdp_product_settings.php:143
 msgid "Display buttons with donation amount suggestions. Create new options by entering a number (decimals seperated by period) and hit space bar."
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:127
+#: includes/templates/wcdp_product_settings.php:160
 msgid "Layout of "
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:129
+#: includes/templates/wcdp_product_settings.php:162
 msgid "Default layout"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:131
+#: includes/templates/wcdp_product_settings.php:164
 msgid "Expert: custom code with action wcdp_custom_html_"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:133
+#: includes/templates/wcdp_product_settings.php:166
 msgid "Design of the variation selection. Only for variable products."
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:195
+#: includes/templates/wcdp_product_settings.php:228
 msgid "If you like Donation Platform for WooCommerce, please consider rating it with ★★★★★"
 msgstr ""
 

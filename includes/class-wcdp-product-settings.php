@@ -79,17 +79,12 @@ class WCDP_Product_Settings
         if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings'])){
 			$prices = array();
 			foreach ($_POST['wcdp-settings'] as $value) {
-				array_push($prices, (float) $value);
+				$prices[] = (float)$value;
 			}
+			sort($prices);
 			$wc_donation_platform[1] = json_encode($prices);
         } else {
             $wc_donation_platform[1] = '';
-        }
-
-        if (isset($_POST['wcdp-activate-embed']) && $_POST['wcdp-activate-embed'] = 'yes'){
-            $wc_donation_platform[4] = 'yes';
-        } else {
-            $wc_donation_platform[4] = 'no';
         }
 
         if (is_a( $product, 'WC_Product_Variable' )) {
@@ -106,6 +101,18 @@ class WCDP_Product_Settings
                 }
             }
         }
+
+		if (isset($_POST['wcdp_fundraising_goal']) && $_POST['wcdp_fundraising_goal'] != ''){
+			$wc_donation_platform['wcdp_fundraising_goal'] = (float) $_POST['wcdp_fundraising_goal'];
+		} else {
+			$wc_donation_platform['wcdp_fundraising_goal'] = 0;
+		}
+
+		if (isset($_POST['wcdp_fundraising_end_date']) && $_POST['wcdp_fundraising_end_date'] != ''){
+			$wc_donation_platform['wcdp_fundraising_end_date'] = preg_replace( '/[^0-9-]/', '', $_POST['wcdp_fundraising_end_date'] );
+		} else {
+			$wc_donation_platform['wcdp_fundraising_end_date'] = '';
+		}
 
         foreach ($wc_donation_platform as $key => $value) {
             $product->update_meta_data( 'wcdp-settings[' . $key . ']', $value );

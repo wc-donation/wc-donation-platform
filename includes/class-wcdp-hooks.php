@@ -150,6 +150,8 @@ class WCDP_Hooks
 			case 'single-product/add-to-cart/grouped.php' :
             	if(WCDP_Form::is_donable(get_queried_object_id())) {
 					$template = $path . 'single-product/add-to-cart/product.php';
+				} else {
+					return $template;
 				}
                 break;
 

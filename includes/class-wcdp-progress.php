@@ -45,63 +45,48 @@ class WCDP_Progress
 		if (!isset($atts['id'])) {
 			return esc_html_e('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
 		}
+		$goal_db = get_post_meta( $atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true );
+		$end_date_db = get_post_meta( $atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true );
+
 		$atts = shortcode_atts( array(
 			'id'		=> -1,
-			'goal'		=> 100,
+			'goal'		=> $goal_db,
+			'style'		=> 1
 		), $atts );
+
 		if (!is_numeric($atts['goal'])) {
 			$atts['goal'] = 100;
 		}
 
 		$revenue = (float) $this->getTotalRevenueOfProduct($atts['id']);
-		$width = ($revenue*100) / (float) $atts['goal'];
+		if ((float) $atts['goal'] != 0) {
+			$width = ($revenue*100) / (float) $atts['goal'];
+		} else {
+			$width = 100;
+		}
+
 		if ($width > 100) {
 			$width = 100;
 		}
 
 		//Translators: %1$s: donation amount raised, %2$s: fundraising goal
 		$label = esc_html__('%1$s of %2$s', 'wc-donation-amount');
-		$label = sprintf($label, wc_price($revenue), wc_price($atts['goal']));
 
-		return '
-<style>
-	:root{
-		--wcdp-main: ' . sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')) . ';
-		--wcdp-main-2: '. sanitize_hex_color(get_option('wcdp_main_color', '#00753a')) . ';
-		--label-text-checked: white;
-	}
-	.wcdp-thermometer {
-		height: 2em;
-		border-radius: 0.5em;
-	}
-	.wcdp-thermometer-bg {
-		background-color: var(--wcdp-main);
-		margin: 0;
-		height: 2em;
-	}
-	.wcdp-progress > .wcdp-thermometer-fg {
-		background-color: var(--wcdp-main-2);
-		margin-top: -2em;
-		animation: progress 2s ease-in;
-	}
-	@keyframes progress {
-		0% {
-			width: 0%;
+		$template = '';
+
+		switch ($atts['style']) {
+			case 2:
+				$template = 'wcdp_progress_style_2.php';
+				break;
+			default:
+				$template = 'wcdp_progress_style_1.php';
 		}
-	}
-	.wcdp-thermometer > .wcdp-label, .wcdp-thermometer > .wcdp-label .woocommerce-Price {
-		white-space: nowrap;
-		color: var(--label-text-checked);
-		text-align: right;
-		padding: 0 1ch 0 1ch;
-		font-size: 1em;
-		line-height: 2em;
-	}
-</style>
-<div class="wcdp-progress"><div class="wcdp-thermometer wcdp-thermometer-bg"></div>
-<div class="wcdp-thermometer wcdp-thermometer-fg" style="width: ' . $width . '%">
-	<div class="wcdp-label">' . $label . '</div>
-</div>';
+
+		ob_start();
+		include_once(WCDP_DIR . 'includes/templates/styles/progress/' . $template);
+		$r = ob_get_contents();
+		ob_end_clean();
+		return $r;
 	}
 
 	/**
@@ -114,8 +99,8 @@ class WCDP_Progress
 		if ($totalrevenue === false) {
 			return 0;
 		}
-		//Calculate revenue if not set of revenue older than 21600 seconds
-		if (!$totalrevenue|| time() - $totalrevenue[0]['time'] > 21600) {
+		//Calculate revenue if not set or calculated revenue older than 21600 seconds
+		if (!$totalrevenue || !isset($totalrevenue[0]) || time() - $totalrevenue[0]['time'] > 21600) {
 			$this->updateTotalRevenueOfProduct($productid);
 			$totalrevenue = get_post_meta( $productid, 'wcdp_total_revenue' );
 		}
@@ -146,6 +131,23 @@ class WCDP_Progress
 
 		if (!is_null($result) && isset($result['revenue'])) {
 			update_post_meta( $productid, 'wcdp_total_revenue', array('revenue' => (float) $result['revenue'], 'time' => time()));
+		} else {
+			update_post_meta( $productid, 'wcdp_total_revenue', array('revenue' => 0, 'time' => time()));
 		}
+	}
+
+	private function get_human_time_diff( $timestamp ) {
+		$time_diff = strtotime( $timestamp ) - strtotime( 'now' );
+
+		$human_diff = '<span class="wcdp-emphasized">' . human_time_diff( strtotime($timestamp) ) . '</span>';
+		if ( $time_diff > 0) {
+			// translators: placeholder is human time diff (e.g. "3 weeks")
+			$date_to_display = sprintf( __( '%s to go', 'fian' ), $human_diff );
+		} else {
+			// translators: placeholder is human time diff (e.g. "3 weeks")
+			$date_to_display = sprintf( __( 'ended %s ago', 'fian' ), $human_diff );
+		}
+
+		return $date_to_display;
 	}
 }
