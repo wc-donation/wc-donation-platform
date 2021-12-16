@@ -124,9 +124,9 @@ $wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
 					$options[$value] = $value;
 				}
 			}
+			asort($values);
 		}
 		asort($options);
-		asort($values);
 
 		woocommerce_wp_select(
 							array(
@@ -196,7 +196,7 @@ $wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
 				$(window).bind("load", function() {
 					show_hide_donable_panel();
 
-					if ($('#_regular_price').val() === '') {
+					if ($('#_regular_price').val() == '') {
 						$('#_regular_price').val(1);
 					}
 				});
@@ -213,7 +213,7 @@ $wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
 						$( '.show_if_donable' ).hide();
 					}
 
-					if($('#wcdp-amount-layout').val() === 1) {
+					if($('#wcdp-amount-layout').val() == 1) {
 						$('.wcdp-settings_field').show();
 					} else {
 						$('.wcdp-settings_field').hide();

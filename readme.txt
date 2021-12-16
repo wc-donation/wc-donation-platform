@@ -1,9 +1,9 @@
 === Donation Platform for WooCommerce: Fundraising & Donation Management ===
 Contributors: flinnn
-Tags: donation, fundraising, crowdfunding, woocommerce, woocommerce donation
+Tags: donation, fundraising, woocommerce, woocommerce donation, recurring donation
 Requires at least: 5.7
 Tested up to: 5.8.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -28,9 +28,9 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 * **Gorgeous Design**: 5 different beautiful and simple donation form designs
 * **Pop-Up Donation Form**: [Collect donations even more elegantly](https://wcdp.jonh.eu/demos/demo-style-1-popup/#wcdp-form)
 * **Mobile Donations**: Optimized for mobile fundraising
-* **60+ Payment Gateways**: Greater choice - lower transaction fees. Reduce transaction costs to an absolute minimum, as you do not have to pay any platform fees.
+* **80+ Payment Gateways**: Greater choice - lower transaction fees. Reduce transaction costs to an absolute minimum, as you do not have to pay any platform fees.
 * **Donation Management**: Advanced donation, customer & donor management
-* **Long-term Fundraising: Recurring Donations**: [Reliably fund your projects with regular donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)
+* **Recurring Donations** for long-term Fundraising: [Reliably fund your projects with regular donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)
 * **Donation Receipts**: [Generate donation receipts automatically](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
 * **Thank You Certificates**: [Thank your donors with an individual donation certificate](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
 * **Unlimited Integrations**: WooCommerce integrates with CRM, Marketing & Analytics tools
@@ -89,6 +89,13 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Webhooks**: Use Webhooks to get Fundraising Notifications in real time.
 * **Developer Friendly Fundraising**: You can use Actions & Filters to change to layout, design und behavior of your donation platform. Because WooCommerce is so widely used you can find a WooCommerce developers with ease.
 
+=== This is why you will like Donation Platform for WooCommerce: Fundraising & Donation Management ===
+* **[Recurring Donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)**
+* **[Modern Design](https://wcdp.jonh.eu/demos/demo-style-2/)**
+* **[Automatic donation receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)**
+* **[80+ Payment Gateways](https://wcdp.jonh.eu/documentation/integrations/payment-gateways/)**
+* **[...and more!](https://wcdp.jonh.eu/features/)**
+
 === Donation Platform for WooCommerce: Fundraising & Donation Management: Motivation ===
 
 Why does the world need this donation & fundraising plugin for WooCommerce?
@@ -122,8 +129,21 @@ No. For now it primarily focuses on customer facing behaviour and appearance tha
 
 Since WooCommerce and other plugins don't assume that there are multiple checkouts on a page, you might run into problems otherwise.
 
+= How can I set up recurring donations? =
+
+To set up recurring donations, please also install WooCommerce Subscriptions. Here you can find detailed instructions on how to set up recurring donations: [Set up recurring donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)
+
+= How can I generate donation receipts automatically? =
+
+WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plugin you can use to send out your tax-deductible receipts & thank you certificates. Please following this guide to set up donation receipts: [Set up donation receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
+
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.1.1 2021-12-16 =
+enhancement: push supported WC version to 6.0.0
+fix: donation selection not displayed in product settings
+fix: asort on null in wcdp_product_settings.php
 
 = 1.1.0 2021-12-13 =
 
