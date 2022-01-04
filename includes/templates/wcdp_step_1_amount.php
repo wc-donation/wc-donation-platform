@@ -33,7 +33,11 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 		do_action('wcdp_custom_html_amount');
 	} else if ($amount_layout == 2) { //Input box with range slider ?>
 		<div class="wcdp-amount">
-			<label for="wcdp-donation-amount"><?php esc_html_e( 'Your Contribution', 'wc-donation-platform' ); ?>
+			<label for="wcdp-donation-amount">
+				<?php
+					$title = get_option('wcdp_contribution_title', __( 'Your Contribution', 'wc-donation-platform' ));
+					echo esc_html( $title );
+				?>
 				<abbr class="required" title="<?php esc_html_e('required', 'wc-donation-platform'); ?>">*</abbr>
 			</label>
 			<br>
@@ -60,26 +64,36 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 		if (!is_null($suggestions)) {
 			foreach ($suggestions as $suggestion){
 				if (is_numeric($suggestion) && $suggestion > 0) {
-					array_push($args['options'], array(
-							'input-id' 			=> 'wcdp_amount_' . str_replace ('.', '-', $suggestion),//'wcdp_value_' . str_replace ('.', '-', $suggestion),
-							'input-value'		=> $suggestion,
-							'label-text'		=> sprintf( $price_format, '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', $suggestion )
-					));
+					$args['options'][] = array(
+							'input-id' => 'wcdp_amount_' . str_replace('.', '-', $suggestion),//'wcdp_value_' . str_replace ('.', '-', $suggestion),
+							'input-value' => $suggestion,
+							'label-text' => sprintf($price_format, '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', $suggestion)
+					);
 				}
 			}
 		}
 		$wcdp_price_field = sprintf($wcdp_price_field, '');
-		array_push($args['options'], array(
-				'input-id' 			=> 'wcdp_value_other',
-				'input-value'		=> '',
-				'label-id'			=> 'wcdp_label_custom_amount',
-				'label-text'		=> '<div id="wcdp_other">' . esc_html__( 'Other', 'wc-donation-platform' ) . '</div><div class="wcdp_cu_field">' .  $wcdp_price_field . '</div>',
-		)); ?>
-		<label class="wcdp-variation-heading" for="donation-amount"><?php esc_attr_e( 'Choose an amount:', 'wc-donation-platform' ); ?></label> <?php
+		$args['options'][] = array(
+				'input-id' => 'wcdp_value_other',
+				'input-value' => '',
+				'label-id' => 'wcdp_label_custom_amount',
+				'label-text' => '<div id="wcdp_other">' . esc_html__('Other', 'wc-donation-platform') . '</div><div class="wcdp_cu_field">' . $wcdp_price_field . '</div>',
+		); ?>
+		<label class="wcdp-variation-heading" for="donation-amount">
+			<?php
+				$title = get_option('wcdp_choose_amount_title', __( 'Choose an amount', 'wc-donation-platform' ));
+				echo esc_html( $title );
+			?>
+			<abbr class="required" title="<?php esc_html_e('required', 'wc-donation-platform'); ?>">*</abbr>
+		</label> <?php
 		echo WCDP_Form::wcdp_generate_fieldset($args);
 	} else { //Default: just input box ?>
 		<div class="wcdp-amount">
-			<label for="wcdp-donation-amount"><?php esc_html_e( 'Your Contribution', 'wc-donation-platform' ); ?>
+			<label for="wcdp-donation-amount">
+				<?php
+				$title = get_option('wcdp_contribution_title', __( 'Your Contribution', 'wc-donation-platform' ));
+				echo esc_html( $title );
+				?>
 				<abbr class="required" title="<?php esc_html_e('required', 'wc-donation-platform'); ?>">*</abbr>
 			</label>
 			<br>

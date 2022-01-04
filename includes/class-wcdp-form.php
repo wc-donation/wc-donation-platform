@@ -174,7 +174,7 @@ class WCDP_Form
 				'style'    => array(
 					'type'    => 'number',
 					'default' => 1,
-					'enum' => array( 1, 2, 3, 4 ),
+					'enum' => array( 1, 2, 3, 4, 5 ),
 				),
 				'popup'    => array(
 					'type'    => 'boolean',
@@ -347,15 +347,15 @@ class WCDP_Form
 
 		$options = array();
 		foreach ($args['options'] as $option) {
-			array_push($options, wp_parse_args($option, array(
-				'input-id' 			=> '',
-				'input-class' 		=> '',
-				'input-value'		=> '',
-				'input-checked'		=> '0',
-				'label-class'		=> 'wcdp-button-label',
-				'label-id'			=> '',
-				'label-text'		=> ''
-			)));
+			$options[] = wp_parse_args($option, array(
+				'input-id' => '',
+				'input-class' => '',
+				'input-value' => '',
+				'input-checked' => '0',
+				'label-class' => 'wcdp-button-label',
+				'label-id' => '',
+				'label-text' => ''
+			));
 		}
 
 		$html = '<ul id="' . esc_attr($args['ul-id']) . '" class="' . esc_attr($args['ul-class']) . '" wcdp-name="' . esc_attr($args['name']) . '"> ';

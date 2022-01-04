@@ -60,6 +60,18 @@ class WCDP_General_Settings {
 					'id'    => 'wcdp_settings_general',
 				),
 				array(
+					'title'    	=> __( '"Your Contribution" Title Text', 'wc-donation-platform' ),
+					'id'       	=> 'wcdp_contribution_title',
+					'type'     	=> 'text',
+					'default'	=> __( 'Your Contribution', 'wc-donation-platform' ),
+				),
+				array(
+					'title'    	=> __( '"Choose an amount" Title Text', 'wc-donation-platform' ),
+					'id'       	=> 'wcdp_choose_amount_title',
+					'type'     	=> 'text',
+					'default'	=> __( 'Choose an amount', 'wc-donation-platform' ),
+				),
+				array(
 					'title'    	=> __( 'Minimum Donation amount', 'wc-donation-platform' ),
 					'id'       	=> 'wcdp_min_amount',
 					'type'     	=> 'number',
@@ -145,7 +157,6 @@ class WCDP_General_Settings {
 					'desc_tip' => true,
 				),
 
-
 				array(
 					'type' => 'sectionend',
 					'id'   => 'wcdp_section_design',
@@ -153,12 +164,10 @@ class WCDP_General_Settings {
 
 			array(
 				'title' => __( 'Support', 'wc-donation-platform' ),
-				'desc' => __( 'Do you like Donation Platform for WooCommerce? Please consider supporting the plugin with your review or suggestion for improvement.', 'wc-donation-platform' ),
+				'desc' => __( 'If you like Donation Platform for WooCommerce, please consider rating it with ★★★★★', 'wc-donation-platform' ),
 				'type'  => 'title',
 				'id'    => 'wcdp_settings_support',
 			),
-
-
 		);
 
         return apply_filters( 'wcdp-general-settings', $settings );

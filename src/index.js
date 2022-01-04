@@ -101,6 +101,7 @@ registerBlockType( 'wc-donation-platform/wcdp', {
 								{ label: __( 'Style 2 (one page)', 'wc-donation-platform' ), value: '2' },
 								{ label: __( 'Style 3 (3 steps, no header)', 'wc-donation-platform' ), value: '3' },
 								{ label: __( 'Style 4 (just first step)', 'wc-donation-platform' ), value: '4' },
+								{ label: __( 'Style 5 (Banner Header)', 'wc-donation-platform' ), value: '5' },
 							] }
 							onChange={ changeStyle }
 						/>
