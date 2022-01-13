@@ -133,7 +133,7 @@ class WCDP_Product_Settings
 		$product_type_options["donable"] = [
 			"id"            => "_donable",
 			"wrapper_class" => "show_if_simple show_if_variable show_if_grouped",
-			"label"         => __( 'Donable', 'wc-donation-platform' ),
+			"label"         => __( 'Donation Product', 'wc-donation-platform' ),
 			"description"   => __( 'This product will only be used for donations if activated', 'wc-donation-platform' ),
 			"default"       => "no",
 		];

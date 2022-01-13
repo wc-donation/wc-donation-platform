@@ -3,8 +3,8 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.7
-Tested up to: 5.8.2
-Stable tag: 1.1.2
+Tested up to: 5.8.3
+Stable tag: 1.1.3
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -151,6 +151,12 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.1.3 2022-01-13 =
+fix: remove is_ajax function (deprecated since version 6.1.0. of WC) and replace it with wp_doing_ajax
+fix: Prevent is_subscription() from interfering with product editing on admin pages
+tweak: rename "Donable" label to "Donation Product"
+tweak: update supported WC version to 6.1.0
 
 = 1.1.2 2022-01-04 =
 new feature: set custom title for Donation Amount

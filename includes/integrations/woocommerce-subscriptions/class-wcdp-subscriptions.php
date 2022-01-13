@@ -56,7 +56,7 @@ class WCDP_Subscriptions
      * @param string $subscription_string
      * @return array|string|string[]
      */
-    public static function product_price_string( $subscription_string = '' ) {
+    public static function product_price_string(string $subscription_string = '' ) {
         if ( strpos($subscription_string, ' 1 ') ) {
             return substr_replace($subscription_string, ' style="display:none"', strpos($subscription_string, 'class="subscription-details"'), 0);
         }
@@ -65,14 +65,14 @@ class WCDP_Subscriptions
 
     /**
      * Make one-time subscription product not a subscription
-     *
+     * No not apply on admin pages (Otherwise, errors may occur when editing variable products)
      * @param $is_subscription
      * @param $product_id
      * @param $product
      * @return false|mixed
      */
     public static function is_subscription($is_subscription, $product_id, $product) {
-        if ($is_subscription && $product->get_meta( '_subscription_length', true ) == 1) {
+        if ($is_subscription && $product->get_meta( '_subscription_length', true ) == 1 && !is_admin()) {
             return false;
         }
         return $is_subscription;
