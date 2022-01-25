@@ -156,7 +156,8 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 fix: invalid progress colors #10
 fix: echo bug in progress shortcode
 tweak: improved support for normal products
-tweak: update supported WP version to 5.9
+tweak: update supported WC version to 5.9
+tweak: update supported WP version to 6.1.1
 
 = 1.1.3 2022-01-13 =
 fix: remove is_ajax function (deprecated since version 6.1.0. of WC) and replace it with wp_doing_ajax

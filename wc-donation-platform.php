@@ -12,7 +12,7 @@
  * Text Domain: wc-donation-platform
  * Domain Path: /languages
  * WC requires at least: 4.0.0
- * WC tested up to: 6.1.0
+ * WC tested up to: 6.1.1
 */
 
 if(!defined('ABSPATH')) exit;
