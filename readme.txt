@@ -3,15 +3,15 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.7
-Tested up to: 5.8.3
-Stable tag: 1.1.3
+Tested up to: 5.9
+Stable tag: 1.1.4
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-=== Donation System for Your Charity, NGO or Individual Fundraising Campaign ===
+=== Donation System for Your Charity, NGO or Personal Fundraising Campaign ===
 
 [Demos](https://wcdp.jonh.eu/demos/demo-style-1/) | [Docs](https://wcdp.jonh.eu/documentation/) | [Getting Started](https://wcdp.jonh.eu/documentation/getting-started/first-steps/)
 
@@ -151,6 +151,12 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.1.4 2022-01-25 =
+fix: invalid progress colors #10
+fix: echo bug in progress shortcode
+tweak: improved support for normal products
+tweak: update supported WP version to 5.9
 
 = 1.1.3 2022-01-13 =
 fix: remove is_ajax function (deprecated since version 6.1.0. of WC) and replace it with wp_doing_ajax

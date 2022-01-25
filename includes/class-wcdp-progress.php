@@ -43,7 +43,7 @@ class WCDP_Progress
 	 */
 	public function wcdp_progress($atts = '') {
 		if (!isset($atts['id'])) {
-			return esc_html_e('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
+			return esc_html__('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
 		}
 		$goal_db = get_post_meta( $atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true );
 		$end_date_db = get_post_meta( $atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true );

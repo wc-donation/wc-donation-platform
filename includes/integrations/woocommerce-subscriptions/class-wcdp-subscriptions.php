@@ -148,9 +148,12 @@ class WCDP_Subscriptions
 
             case 'single-product/add-to-cart/subscription.php' :
             case 'single-product/add-to-cart/variable-subscription.php' :
-                $template = WCDP_DIR . 'includes/wc-templates/single-product/add-to-cart/product.php';
+				if(WCDP_Form::is_donable(get_queried_object_id())) {
+					$template = WCDP_DIR . 'includes/wc-templates/single-product/add-to-cart/product.php';
+				}
+				break;
 
-            default:
+			default:
                 break;
         }
         return apply_filters( 'wcdp_get_template', $template, $template_name, $args, $template_path, $default_path );

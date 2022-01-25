@@ -5,8 +5,8 @@ $label = sprintf($label, wc_price($revenue), wc_price($atts['goal']));
 ?>
 <style>
 	:root{
-	--wcdp-main: ' . sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')) . ';
-	--wcdp-main-2: '. sanitize_hex_color(get_option('wcdp_main_color', '#00753a')) . ';
+	--wcdp-main: <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')) ?>;
+	--wcdp-main-2: <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#00753a')) ?>;
 	--label-text-checked: white;
 	}
 	.wcdp-thermometer {

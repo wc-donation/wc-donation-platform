@@ -108,9 +108,6 @@ class WCDP_Hooks
 
             case 'order/order-details.php':
 
-            case 'single-product/price.php':
-            case 'single-product/add-to-cart/variation-add-to-cart-button.php' :
-
             case 'emails/email-order-details.php' :
             case 'emails/email-customer-details.php' :
             case 'emails/email-addresses.php' :
@@ -145,13 +142,18 @@ class WCDP_Hooks
                 $template = $path . $template_name;
                 break;
 
+			case 'single-product/price.php':
+			case 'single-product/add-to-cart/variation-add-to-cart-button.php' :
+				if(WCDP_Form::is_donable(get_queried_object_id())) {
+					$template = $path . $template_name;
+				}
+				break;
+
             case 'single-product/add-to-cart/simple.php' :
             case 'single-product/add-to-cart/variable.php' :
 			case 'single-product/add-to-cart/grouped.php' :
             	if(WCDP_Form::is_donable(get_queried_object_id())) {
 					$template = $path . 'single-product/add-to-cart/product.php';
-				} else {
-					return $template;
 				}
                 break;
 

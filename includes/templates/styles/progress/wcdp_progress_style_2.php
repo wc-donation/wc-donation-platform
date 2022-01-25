@@ -6,9 +6,9 @@ $label = sprintf($label, '<span class="wcdp-emphasized">' . wc_price($revenue) .
 ?>
 <style>
 	:root{
-	--wcdp-main: ' . sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')) . ';
-	--wcdp-main-2: '. sanitize_hex_color(get_option('wcdp_main_color', '#00753a')) . ';
-	--label-text-checked: white;
+		--wcdp-main: <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')) ?>;
+		--wcdp-main-2: <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#00753a')) ?>;
+		--label-text-checked: white;
 	}
 	.wcdp-fundraising-progress {
 		margin-bottom: 1.5em;
