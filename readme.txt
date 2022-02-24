@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.7
 Tested up to: 5.9
-Stable tag: 1.1.4
+Stable tag: 1.2.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 * **[Recurring Donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)**
 * **[Modern Design](https://wcdp.jonh.eu/demos/demo-style-2/)**
 * **[Automatic Donation Receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)**
-* **[80+ Payment Gateways](https://wcdp.jonh.eu/documentation/integrations/payment-gateways/)**
+* **[100+ Payment Gateways](https://wcdp.jonh.eu/documentation/integrations/payment-gateways/)**
+* **[Express Donations: Apple Pay / Google Pay (Stripe) & PayPal](https://wcdp.jonh.eu/documentation/integrations/express-donations-apple-pay-google-pay-paypal/)**
 * **100% free** & **no platform fees** & **open source**
 * **[...and more!](https://wcdp.jonh.eu/features/)**
 
@@ -39,8 +40,9 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 * **Gorgeous Design**: 5 different beautiful and simple donation form designs
 * **Pop-Up Donation Form**: [Collect donations even more elegantly](https://wcdp.jonh.eu/demos/demo-style-1-popup/#wcdp-form)
 * **Mobile Donations**: Optimized for mobile fundraising
-* **80+ Payment Gateways**: Greater choice - lower transaction fees. Reduce transaction costs to an absolute minimum, as you do not have to pay any platform fees.
+* **100+ Payment Gateways**: Greater choice - lower transaction fees. Reduce transaction costs to an absolute minimum, as you do not have to pay any platform fees.
 * **Donation Management**: Advanced donation, customer & donor management
+* **Express Donations**: Apple Pay / Google Pay (Stripe) & PayPal
 * **Recurring Donations** for long-term Fundraising: [Reliably fund your projects with regular donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)
 * **Donation Receipts**: [Generate donation receipts automatically](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
 * **Thank You Certificates**: [Thank your donors with an individual donation certificate](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
@@ -76,7 +78,8 @@ Donation Platform for WooCommerce: Fundraising & Donation Management is a powerf
 A large part of the fundraising features arise through the use of WooCommerce, which allows your charity to benefit directly from the incredibly diverse ecosystem around it.
 Thanks to its extensive features, the Fundraising & Donation Platform is suitable for charities, non-profit organizations, political fundraisers, individuals and more.
 
-* **Recurring Donations** To Your Charity: With WooCommerce Subscriptions you can charge your donors on a regular basis in order to reliably fund your projects.
+* **Recurring Donations** To Your Charity: Using Subscriptions for WooCommerce (free extension) or WooCommerce Subscriptions (premium extension) you can charge your donors on a regular basis in order to reliably fund your projects.
+* **Express Donations** We live in fast times. If your donors want to use the Express Line, they can complete a donation via Apple Pay / Google Pay / PayPal in just 20 seconds.
 * **Donation Receipts**: Donation Platform for WooCommerce provides a template for your charity to automatically issue donation receipts.
 * **Free Donations**: There are no paid extensions for Donation Platform for WooCommerce: Fundraising & Donation Management. However, this does not apply to all extensions for WooCommerce.
 * **Open Source Fundraising**: Donation Platform for WooCommerce: Fundraising & Donation Management is open source software released under the terms of the GNU General Public License v2.0
@@ -95,7 +98,7 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Credit Card Donations**: Accept donations through credit cards with Stripe or benefit from Revolut’s low rates.
 * **PayPal Donations**: Use the PayPal integration out of the box and reach the hundreds of millions of potential PayPal donors.
 * **Direct Bank Transfer Donations**: The cheapest transaction fees and the great popularity make bank transfers extremely interesting as a payment method.
-* **Local Payment Options**: With 80+ payment gateways, there are also many local payment methods that you can use to better reach your target group.
+* **Local Payment Options**: With 100+ payment gateways, there are also many local payment methods that you can use to better reach your target group.
 * **Gorgeous Fundraising Designs**: Donation Platform for WooCommerce comes with 5 different beautiful and simple designs.
 * **Custom CSS Donations**: You can use your own css to integrate the donation form seamlessly into your fundraising website.
 * **Custom Donation Templates**: You can even adapt the templates and thus completely adapt the fundraising & donation form to your own wishes.
@@ -120,6 +123,7 @@ So it doesn't make sense to reprogram all the features already implemented by Wo
 2. Donors can easily manage their donations.
 3. Use popup donation forms to collect donations even more elegantly.
 4. Automatically generate tax-deductible donation receipts and thank your donors with a personalized thank you certificate.
+5. Express Donations allow your supporters to donate to you in less than 20 seconds via Apple Pay / Google Pay / PayPal
 
 == Frequently Asked Questions ==
 
@@ -152,12 +156,28 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
+= 1.2.0 =
+new feature: support for Google Pay / Apple Pay / PayPal Express Checkout (Express Donation)
+new feature: added support for Subscriptions For WooCommerce
+new feature: from now on donation orders do not net manual processing: autocomplete donations as soon as they are paid
+new feature: show progress in product overview
+new feature: support for [product_page] shortcode
+new feature: support for default configuration for variable products
+tweak: mark variation selection required in donation form
+tweak: show price for normal products on overview page
+tweak: update supported WC version to 6.2
+tweak: some code quality adjustments
+fix: JS error with non-focusable and invalid elements
+fix: check for <= max donation amount instead of <
+fix: html syntax error for checked attributes
+fix: donation form on product page #15
+
 = 1.1.4 2022-01-25 =
 fix: invalid progress colors #10
 fix: echo bug in progress shortcode
 tweak: improved support for normal products
-tweak: update supported WC version to 5.9
-tweak: update supported WP version to 6.1.1
+tweak: update supported WP version to 5.9
+tweak: update supported WC version to 6.1.1
 
 = 1.1.3 2022-01-13 =
 fix: remove is_ajax function (deprecated since version 6.1.0. of WC) and replace it with wp_doing_ajax

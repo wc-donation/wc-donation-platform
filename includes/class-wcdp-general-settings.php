@@ -10,7 +10,76 @@ class WCDP_General_Settings {
         add_filter( 'woocommerce_settings_tabs_array', array($this, 'add_settings_tab'), 50 );
         add_action( 'woocommerce_settings_tabs_wc-donation-platform', array($this, 'settings_tab') );
         add_action( 'woocommerce_update_options_wc-donation-platform', array($this, 'update_settings') );
+		add_action( 'woocommerce_admin_field_wcdp_fee_recovery', array($this, 'wcdp_fee_recovery') );
     }
+
+	public function wcdp_fee_recovery($value) {
+		?>
+		<script>
+			(function($) {
+				$(window).bind("load", function() {
+					show_hide_fee_recovery();
+				});
+
+				$('#wcdp_fee_recovery').on('change', function(){
+					show_hide_fee_recovery();
+				});
+
+				function show_hide_fee_recovery() {
+					if ( $('#wcdp_fee_recovery').prop('checked') ) {
+						$( '.show_if_fee_recovery' ).show();
+					} else {
+						$( '.show_if_fee_recovery' ).hide();
+					}
+				}
+			})(jQuery);
+		</script>
+		<tr valign="top" class="">
+			<th scope="row" class="titledesc"></th>
+			<td class="forminp forminp-checkbox">
+				<fieldset>
+					<table class="show_if_fee_recovery">
+						<?php
+							$available_payment_methods = WC()->payment_gateways->get_available_payment_gateways();
+							foreach( $available_payment_methods as $method ) {
+								?>
+								<tr>
+									<td>
+										<label><?php echo esc_html($method->get_title()); ?></label>
+									</td>
+									<td>
+										<input
+											name="<?php echo esc_attr( $method->id . '_wcdp_fixed' ); ?>"
+											id="<?php echo esc_attr( $method->id . '_wcdp_fixed' ); ?>"
+											type="number"
+											style="width: 100px;"
+											value="<?php echo esc_attr(get_option( $method->id . '_wcdp_fixed')); ?>"
+											placeholder="<?php esc_html_e( 'Fixed', 'wc-donation-platform' ); ?>"
+											min="0"
+											step="<?php echo esc_attr($value['step']); ?>"
+										/><?php echo get_woocommerce_currency_symbol(); ?>&nbsp;&nbsp;&nbsp;
+										<input
+											name="<?php echo esc_attr( $method->id . '_wcdp_variable' ); ?>"
+											id="<?php echo esc_attr( $method->id . '_wcdp_variable' ); ?>"
+											type="number"
+											style="width: 100px;"
+											value="<?php echo esc_attr(get_option( $method->id . '_wcdp_variable')); ?>"
+											placeholder="<?php esc_html_e( 'Variable', 'wc-donation-platform' ); ?>"
+											min="0"
+											max="100"
+											step="any"
+										/>%
+									</td>
+								</tr>
+								<?php
+							}
+						?>
+					</table>
+				</fieldset>
+			</td>
+		</tr>
+		<?php
+	}
 
     /**
      * Add a new settings tab to the WooCommerce settings tabs array.
@@ -97,8 +166,8 @@ class WCDP_General_Settings {
 					'type'     	=> 'number',
 					'default'	=> '500',
 					'custom_attributes'	=> array(
-						'min'	=> '1',
-						'step'	=> 'any',
+						'min'	=> $decimals,
+						'step'	=> $decimals,
 					),
 				),
             array(
@@ -107,9 +176,18 @@ class WCDP_General_Settings {
                 'id'              => 'wcdp_disable_order_notes',
                 'default'         => 'no',
                 'type'            => 'checkbox',
-                'show_if_checked' => 'option',
             ),
-
+//				array(
+//						'title'           => __( 'Fee Recovery', 'wc-donation-platform' ),
+//						'desc'            => __( 'Ask donors to cover transaction fees.', 'wc-donation-platform' ),
+//						'id'              => 'wcdp_fee_recovery',
+//						'default'         => 'no',
+//						'type'            => 'checkbox',
+//				),
+//			array(
+//				'type'            => 'wcdp_fee_recovery',
+//				'step'				=> $decimals,
+//			),
 				array(
 					'type' => 'sectionend',
 					'id'   => 'wcdp_section_general',

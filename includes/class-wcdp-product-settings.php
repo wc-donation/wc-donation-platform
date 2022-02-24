@@ -58,8 +58,6 @@ class WCDP_Product_Settings
      */
     public function wcdp_process_product_meta( $post_id ) {
         $product = wc_get_product( $post_id );
-        $price_format = get_woocommerce_price_format();
-        $currency_symbol = get_woocommerce_currency_symbol();
         $wc_donation_platform = array();
 
         if (isset($_POST['wcdp-amount-layout'])) {

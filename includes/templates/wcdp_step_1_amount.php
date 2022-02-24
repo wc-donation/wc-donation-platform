@@ -1,6 +1,7 @@
 <?php
-/*
-WCDP Shortcode Form
+/**
+ * WCDP Shortcode Form
+ * @var float $min_donation_amount
 */
 if(!defined('ABSPATH')) exit;
 
@@ -8,8 +9,7 @@ $amount_layout = get_post_meta( $value['id'], 'wcdp-settings[0]', true );
 
 //Donation Amount field
 $wcdp_price_decimals = pow(10, wc_get_price_decimals() * (-1));
-$min_donation_amount = floatval(get_option('wcdp_min_amount', 3));
-$max_donation_amount = floatval(get_option('wcdp_max_amount', 50000));
+$max_range = (float) get_option('wcdp_max_range', 500);
 $value_donation_amount = "";
 $currency_symbol = get_woocommerce_currency_symbol();
 
@@ -18,6 +18,7 @@ if (isset($_REQUEST["wcdp-donation-amount"])) {
 }
 
 $wcdp_price_field = sprintf( get_woocommerce_price_format(), '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', '<input type="number" class="wcdf-input-field validate-required %s" id="wcdp-donation-amount" name="wcdp-donation-amount" step="%s" min="%s" max="%s" value="%s" required>' );
+/** @var float $max_donation_amount */
 $wcdp_price_field = sprintf($wcdp_price_field, '%s %s', $wcdp_price_decimals, $min_donation_amount, $max_donation_amount, $value_donation_amount);
 
 if ($value['style'] != 3 && $value['style'] != 4) {
@@ -42,9 +43,6 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 			</label>
 			<br>
 			<?php
-				$max_range = get_option('wcdp_max_range') ?? '500';
-				$max_range = is_numeric($max_range) ? $max_range : 500;
-
 				$wcdp_price_field = sprintf($wcdp_price_field, 'wcdp-amount-range-field');
 				echo $wcdp_price_field
 			?>

@@ -15,7 +15,7 @@ class WCDP_Progress
 		add_shortcode( 'wcdp_progress', array($this, 'wcdp_progress'));
 
 		//update donation revenue
-		add_action( 'woocommerce_order_status_changed', array($this, 'updateTotalRevenue'), 10, 4);
+		add_action( 'woocommerce_order_status_changed', array($this, 'update_total_revenue'), 10, 4);
 	}
 
 	/**
@@ -26,7 +26,7 @@ class WCDP_Progress
 	 * @param $order
 	 * @return void
 	 */
-	public function updateTotalRevenue($orderid, $from, $to, $order) {
+	public function update_total_revenue($orderid, $from, $to, $order) {
 		foreach ( $order->get_items() as $item ) {
 			$revenue = get_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
 			//Recalculate the Revenue only if it has not been calculated recently (Avoid performance problems during peak loads)
@@ -78,12 +78,29 @@ class WCDP_Progress
 			case 2:
 				$template = 'wcdp_progress_style_2.php';
 				break;
+			case 3:
+				$template = 'wcdp_progress_style_3.php';
+				break;
 			default:
 				$template = 'wcdp_progress_style_1.php';
 		}
 
-		ob_start();
-		include_once(WCDP_DIR . 'includes/templates/styles/progress/' . $template);
+		ob_start(); ?>
+		<style>
+		<?php if (defined('WCDP_PROGRESS_3') || defined('WCDP_PROGRESS_2') || defined('WCDP_PROGRESS_1')) : ?>
+				:root {
+					--wcdp-main: <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')) ?>;
+					--wcdp-main-2: <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#00753a')) ?>;
+					--label-text-checked: white;
+				}
+				@keyframes wcdp-progress {
+					0% {
+						width: 0%;
+					}
+				}
+		<?php endif;
+
+		include(WCDP_DIR . 'includes/templates/styles/progress/' . $template);
 		$r = ob_get_contents();
 		ob_end_clean();
 		return $r;

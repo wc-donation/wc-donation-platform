@@ -1,15 +1,16 @@
-#main #wcdp {
+#main #wcdp, #wcdp {
     position: relative;
     padding: 0;
+	margin-bottom: 0;
 }
 #wcdp-progress-bar {
     position: relative;
     display: block;
     height: 6px;
     background: var(--wcdp-main-2);
-    width: 0%;
+    width: 0;
     transition: width 0.9s;
-    margin: -6px 16.6667% 0 16.6667%;
+    margin: -6px 16.6667% 0;
     z-index: 1;
     top: 1em;
 }
@@ -19,7 +20,7 @@
     background: var(--wcdp-main);
     z-index: 0;
     top: 1em;
-    margin: 0 16.6667% 0 16.6667%;
+    margin: 0 16.6667%;
 }
 div.wcdp-header > div.wcdp-step {
     z-index: 2;
@@ -68,6 +69,7 @@ div.wcdp-header > div.wcdp-step {
     text-align: center;
     margin: 0;
 	color: var(--controls);
+	background-color: var(--label-text-checked);
 }
 .wcdp-body {
     overflow: hidden;
@@ -133,7 +135,7 @@ div.wcdp-header > div.wcdp-step {
     overflow: auto;
     background: var(--overlay-color);
     opacity: 1;
-    padding: 0px;
+    padding: 0;
 }
 #wcdp-popup {
     margin: 10vh auto;
@@ -146,7 +148,6 @@ div.wcdp-header > div.wcdp-step {
     animation-duration: 1s;
 
 }
-
 .wcdp-close {
     position: absolute;
     top: 5px;
@@ -160,7 +161,7 @@ div.wcdp-header > div.wcdp-step {
 	border-radius: 100%;
 }
 .wcdp-close svg {
-	filter: drop-shadow( 0px 0px 1px white);
+	filter: drop-shadow( 0 0 1px white);
 }
 .wcdp-close:hover {
     transform: scale(1.2);
@@ -173,7 +174,7 @@ div.wcdp-header > div.wcdp-step {
 #wcdp-form {
     min-width: 100%;
     min-height: 100%;
-    margin: 0px;
+    margin: 0;
 }
 .wcdp-header {
     height: calc(4em + 20px);
@@ -277,7 +278,7 @@ ul.wcdp_options > li > input:hover:not(:disabled):not(:checked) + label {
     display: block;
     background: var(--label-inactive);
     color: var(--label-text);
-    padding: 6px 6px 6px 6px;
+    padding: 6px;
     cursor: pointer;
 }
 
@@ -288,8 +289,8 @@ ul.wcdp_options > li > input:hover:not(:disabled):not(:checked) + label {
 }
 
 .wcdp_options {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(21ch, 1fr));
     grid-gap: 8px;
@@ -303,7 +304,7 @@ ul.wcdp_options > li > input:hover:not(:disabled):not(:checked) + label {
 
 .variations_form > .wcdp_options > li, .wcdp-row > .wcdp_options > li {
     display: block;
-    margin: 0px;
+    margin: 0;
     height: 100%;
     /*min-width: max-content;*/
 }
@@ -317,14 +318,14 @@ input:disabled ~ label {
     opacity: 0.2;
     cursor: default;
 }
-.wcdp-button-label {
+.wcdp-button-label,#wcdp-post-send {
     margin: 0;
 }
 /* END Step 1 grid */
 
 .wcdp-divider-arrow
 {
-    margin: 1em auto 1em auto;
+    margin: 1em auto;
     width: 90%;
     max-width: 700px;
     display: block;
@@ -359,8 +360,9 @@ input:disabled ~ label {
 
 #wcdp_label_custom_amount {
     /*
-    padding: 0;*/
+    padding: 0;
     height: 100%;
+    */
     text-align: left;
 }
 
@@ -409,15 +411,15 @@ input:disabled ~ label {
     margin-top:20%;
     left:calc(50% - 36px);
 }
-/* compatibility Twenty Twenty-OneVersion */
-.woocommerce-checkout form[name=checkout] {
+/* compatibility Twenty Twenty-One */
+#wcdp form[name=checkout] {
 	display: block;
 }
 /* Style 5 header */
 .wcdp-steps-wrapper {
 	display: flex;
 	outline: 1px solid var(--wcdp-main-2);
-	margin: 1px 1px 1em 1px;
+	margin: 1px 1px 1em;
 }
 .wcdp-style5 {
 	display: flex;
@@ -464,11 +466,20 @@ input:disabled ~ label {
 .wcdp-style5-active:after {
 	background-color: var(--wcdp-main-2);
 }
-#wcdp-style5-step-3:after {
+#wcdp-style5-step-3:after, .wcdp-express-heading {
 	display: none;
 }
 #wcdp-popup .wcdp-steps-wrapper {
-	margin: 0 20px 20px 20px;
+	margin: 0 20px 20px;
 	top: 35px;
 	position: inherit;
+}
+.wcdp-choose-donation #wc-stripe-payment-request-button-separator {
+	display: none !important;
+}
+#wcdp #wc-stripe-payment-request-wrapper {
+	padding: 0 0 14px 0 !important;
+}
+.woocommerce div.product div.summary .first-payment-date {
+	margin: 0;
 }

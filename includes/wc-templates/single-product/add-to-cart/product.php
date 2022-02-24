@@ -26,17 +26,11 @@ if ( ! $product->is_purchasable() ) {
 }
 
 if ( $product->is_in_stock() ) {
-
-	do_action( 'woocommerce_before_add_to_cart_form' );
-
 	/**
 	 * Display Donation Form
 	 */
 	echo WCDP_Form::wcdp_donation_form(array(
         'id' => $post->ID,
 		'style' => '4',
-    ), true); ?>
-
-	<?php do_action( 'woocommerce_after_add_to_cart_form' );
-
+    ), true);
 }

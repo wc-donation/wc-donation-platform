@@ -167,7 +167,7 @@ if ( !class_exists( 'WCDP_Thank_You_Certificate' ) ) :
 						'option_name'	=> $option_name,
 						'id'			=> 'my_account_buttons',
 						'options' 		=> array(
-							'available'	=> __( 'Only when an invoice is already created/emailed' , 'wc-donation-platform' ),
+							'available'	=> __( 'Only when a thank you certificate is already created/emailed' , 'wc-donation-platform' ),
 							'custom'	=> __( 'Only for specific order statuses (define below)' , 'wc-donation-platform' ),
 							'always'	=> __( 'Always' , 'wc-donation-platform' ),
 							'never'		=> __( 'Never' , 'wc-donation-platform' ),

@@ -38,7 +38,7 @@ class WCDP_Form
 
 		//Require wc-password-strength-meter when necessary
 		if ( 'yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option( 'woocommerce_registration_generate_password' ) && ! is_user_logged_in() ) {
-			array_push($jsdeps, 'wc-password-strength-meter');
+			$jsdeps[] = 'wc-password-strength-meter';
 		}
 
         //Register CSS & JS
@@ -64,15 +64,15 @@ class WCDP_Form
 	/**
 	 * Return html of Donation Form
 	 *
-	 * @param $value donation form attributes
-	 * @param $is_internal
+	 * @param $value array form attributes
+	 * @param $is_internal bool
 	 * @return string html of donation form
 	 */
     public static function wcdp_donation_form($value, $is_internal): string
 	{
         //Only one donation form per page
         static $no_donation_form_yet = true;
-        if ( !$no_donation_form_yet ) {
+        if ( !$no_donation_form_yet || (!$is_internal && is_product())) {
             return '<p class="wcdp-error-message">' . esc_html__('Only one donation form per page allowed','wc-donation-platform' ) . '</p>';
         }
         $no_donation_form_yet = false;
@@ -105,7 +105,11 @@ class WCDP_Form
             echo '</li></ul>';
             wc_get_template('templates/form-login.php');
         } else {
-            $product = wc_get_product($id);
+			global $product;
+			if (is_null($product)) {
+				$product = wc_get_product($id);
+			}
+
             if (!isset(WC()->cart)) {
 				WCDP_Form::form_error_message('In the current view, the donation form is not available.');
 			} else if(!WCDP_Form::is_donable($id)) {
@@ -144,7 +148,7 @@ class WCDP_Form
      * return true if there is a donation form on the site
      * @return bool
      */
-    private static function wcdp_has_donation_form(): bool
+    public static function wcdp_has_donation_form(): bool
     {
         if (defined('WCDP_FORM')) {
             return true;
@@ -153,7 +157,10 @@ class WCDP_Form
         global $post;
         if (is_product() || is_checkout()
 			|| has_block( 'wc-donation-platform/wcdp' )
-            || (is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'wcdp_donation_form' ))){
+            || (is_a( $post, 'WP_Post' )
+				&& (has_shortcode( $post->post_content, 'wcdp_donation_form') || has_shortcode( $post->post_content, 'product_page'))
+			)
+		){
             define('WCDP_FORM', 1);
             return true;
         }
@@ -265,21 +272,19 @@ class WCDP_Form
 						}
 					}
 				}
-				$min_donation_amount = get_option('wcdp_min_amount') ?? 3;
-				$min_donation_amount = is_numeric($min_donation_amount) ? $min_donation_amount : 3;
-				$max_donation_amount = get_option('wcdp_max_amount') ?? 5000;
-				$max_donation_amount = is_numeric($max_donation_amount) ? $max_donation_amount : 5000;
+				$min_donation_amount = (float) get_option('wcdp_min_amount', 3);
+				$max_donation_amount = (float) get_option('wcdp_max_amount', 50000);
 
 				$wcdp_donation_amount = sanitize_text_field($_REQUEST['wcdp-donation-amount']);
-				if (is_numeric($min_donation_amount) && $wcdp_donation_amount >= $min_donation_amount
-					&& $wcdp_donation_amount < $max_donation_amount && isset(WC()->cart)){
+				if ($wcdp_donation_amount >= $min_donation_amount
+					&& $wcdp_donation_amount <= $max_donation_amount && isset(WC()->cart)){
 					if (!WC()->cart->is_empty()){
 						WC()->cart->empty_cart();
 					}
 
 					if (false !== WC()->cart->add_to_cart($product_id, 1, $variation_id, $variation, array('wcdp_donation_amount' => $wcdp_donation_amount) )) {
 						$response['success'] = true;
-						$response['recurring'] = WCDP_Subscriptions::wcdp_contains_subscription();
+						$response['recurring'] = WCDP_Integrator::wcdp_contains_subscription();
 						$response['reload'] = false;
 					} else {
 						$response['message'] = esc_html__('Could not add donation to cart.', 'wc-donation-platform');
@@ -301,7 +306,7 @@ class WCDP_Form
 		return apply_filters('wcdp_is_donable', get_post_meta( $id, '_donable', true) == 'yes');
 	}
 
-	public static function wcdp_generate_fieldset($args = array()) {
+	public static function wcdp_generate_fieldset($args = array(), $product = null) {
 		$args = wp_parse_args(
 			apply_filters( 'wcdp_generate_fieldset_args', $args ),
 			array(
@@ -361,8 +366,11 @@ class WCDP_Form
 		$html = '<ul id="' . esc_attr($args['ul-id']) . '" class="' . esc_attr($args['ul-class']) . '" wcdp-name="' . esc_attr($args['name']) . '"> ';
 		foreach ($options as $option) {
 			$html .= '<li><input type="radio" id="' . esc_attr($option['input-id']) . '" name="' . esc_attr($args['name']) . '" class="' . esc_attr($option['input-class']) . '" value="' . esc_attr($option['input-value']) . '"';
-			if ($option['input-checked'] || (isset($_REQUEST[esc_attr($args['name'])]) && $_REQUEST[esc_attr($args['name'])] == esc_attr($option['input-value']))) {
-				$html .= '" checked="checked"';
+			if ($option['input-checked']
+				|| (isset($_REQUEST[esc_attr($args['name'])]) && $_REQUEST[esc_attr($args['name'])] == esc_attr($option['input-value']))
+				|| (!isset($_REQUEST[esc_attr($args['name'])]) && !is_null($product) && $product->get_variation_default_attribute(esc_attr($args['name'])) == esc_attr($option['input-value']))
+			) {
+				$html .= ' checked="checked"';
 			}
 			$html .= ' required>';
 			$html .= '<label id="' . esc_attr($option['label-id']) . '" class="' . esc_attr($option['label-class']) . '" for="' . esc_attr($option['input-id']) . '">';

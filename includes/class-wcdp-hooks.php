@@ -68,6 +68,9 @@ class WCDP_Hooks
         if ((get_option('wcdp_disable_order_notes') ?? false) == 'yes') {
             add_filter('woocommerce_enable_order_notes_field', '__return_false');
         }
+
+		//donations do not need admin processing
+		add_filter('woocommerce_order_item_needs_processing', array( $this, 'wcdp_autocomplete_order'), 10, 3);
     }
 
     /**
@@ -137,10 +140,16 @@ class WCDP_Hooks
             case 'emails/plain/admin-cancelled-order.php' :
 
             case 'loop/no-products-found.php':
-			case 'loop/price.php':
 
                 $template = $path . $template_name;
                 break;
+
+			case 'loop/price.php':
+				global $product;
+				if(!is_null($product) && WCDP_Form::is_donable($product->get_id())) {
+					$template = $path . $template_name;
+				}
+				break;
 
 			case 'single-product/price.php':
 			case 'single-product/add-to-cart/variation-add-to-cart-button.php' :
@@ -170,14 +179,17 @@ class WCDP_Hooks
      */
     public function wcdp_set_is_checkout( $is_checkout ): bool
     {
-        global $post;
-        if (defined('WCDP_FORM')  || (!is_null($post) && has_shortcode( $post->post_content, 'wcdp_donation_form' ))){
-            if (!defined('WCDP_FORM')) {
-                define('WCDP_FORM', 1);
-            }
+		if ($is_checkout) {
+			return true;
+		}
+		global $post;
+		if (defined('WCDP_FORM')  || (!is_null($post) && has_shortcode( $post->post_content, 'wcdp_donation_form' ))){
+			if (!defined('WCDP_FORM')) {
+				define('WCDP_FORM', 1);
+			}
             return true;
         }
-        return $is_checkout;
+        return false;
     }
 
     /**
@@ -253,8 +265,14 @@ class WCDP_Hooks
      * Recalculate item price to the amount specified by user
      */
     public function wcdp_set_donation_price( $cart_object ) {
+		$min_donation_amount = get_option('wcdp_min_amount', 3);
+		$max_donation_amount = get_option('wcdp_max_amount', 50000);
+
         foreach ( $cart_object->cart_contents as $key => $value ) {
-            if( isset( $value["wcdp_donation_amount"] ) ) {
+            if( isset( $value["wcdp_donation_amount"] ) &&
+				$value["wcdp_donation_amount"] >= $min_donation_amount &&
+				$value["wcdp_donation_amount"] <= $max_donation_amount
+			) {
                 $value['data']->set_price($value["wcdp_donation_amount"]);
             }
         }
@@ -330,4 +348,21 @@ class WCDP_Hooks
             esc_html( $product->add_to_cart_text() )
         );
     }
+
+	/**
+	 * Autocomplete donations
+	 * (donation products do not need processing)
+	 * @param $product WC_Product
+	 * @param $order_id int
+	 * @return bool if order needs processing
+	 */
+	public function wcdp_autocomplete_order($needs_processing, WC_Product $product, int $order_id): bool
+	{
+		if ($needs_processing && $product->is_virtual()) {
+			if (! WCDP_Form::is_donable($product->get_id()) && ! WCDP_Form::is_donable($product->get_parent_id())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -21,7 +21,7 @@ class WCDP_Subscriptions
             //add_filter('woocommerce_subscriptions_product_price_string', 'WCDP_Subscriptions::product_price_string', 10, 1);
             add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
 
-            //Filter specific WC templates to WCDP templates
+            //Filter specific WC Subscription templates to WCDP templates
             add_filter( 'wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5 );
 
             //Rename Subscriptions Tab on My Account page
@@ -37,16 +37,6 @@ class WCDP_Subscriptions
 			//Remove feature to frontend subscription switching
 			add_filter( 'woocommerce_subscriptions_can_item_be_switched_by_user', '__return_false' );
         }
-    }
-
-    /**
-     * Check if cart contains a subscription
-     *
-     * @return bool
-     */
-    public static function wcdp_contains_subscription(): bool
-    {
-        return class_exists('WC_Subscriptions_Cart') && WC_Subscriptions_Cart::cart_contains_subscription();
     }
 
     /**

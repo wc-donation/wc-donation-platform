@@ -1,7 +1,7 @@
 jQuery( function( $ ) {
     //Send donation selection form
     function wcdp_submit(step) {
-        if ($('#wcdp-ajax-send')[0].reportValidity() && ($('#variation_id').length == 0 || $('#variation_id').attr("value") != '')) { //
+        if (check_validity('#wcdp-ajax-send')) {
             $('#wcdp-spinner').show();
             $('#wcdp-ajax-button').hide();
             const formData = $("#wcdp-ajax-send").serialize();
@@ -32,12 +32,21 @@ jQuery( function( $ ) {
                     }
 
                 })
-                .fail(function( data ) {
+                .fail(function() {
                     $('#wcdp-spinner').hide();
                     $('#ajax-unexpected-error').show();
                 });
         }
     };
+
+	// Return true if the donation form is filled in correctly
+	function check_validity(id) {
+		try {
+			return $(id)[0].reportValidity() && ($('#variation_id').length == 0 || $('#variation_id').attr("value") != '');
+		} catch(err) {
+			return false;
+		}
+	}
 
     function error_message(message, reload) {
         if (!reload) {
@@ -65,6 +74,22 @@ jQuery( function( $ ) {
             }
         }, 1300);
     });
+
+	let ecpresstime = 0;
+	let currentprice = 0;
+	$( '.wcdp-body' ).on('input blur keyup paste change', function (){
+		if (currentprice != $('#wcdp-donation-amount').val()) {
+			$('.wcdp-express-amount').val($('#wcdp-donation-amount').val());
+			currentprice = $('#wcdp-donation-amount').val();
+			ecpresstime++;
+			setTimeout(function() {
+				ecpresstime--;
+				if (ecpresstime == 0) {
+					$(document.body).trigger('woocommerce_variation_has_changed');
+				}
+			}, 500);
+		}
+	});
 
     //Next and back buttons
 	let currentStep = 1;
@@ -107,16 +132,31 @@ jQuery( function( $ ) {
         currentStep = step;
     }
 
+	let express_heading_timeout = 10;
     //trigger selectWoo/Select2, Open modal when hash is #wcdp-form
-    $(document).ready(function() {
-        $('.woocommerce-checkout select').selectWoo();
+    $(document).ready(function wcdp_setup() {
+		$('.woocommerce-checkout select').selectWoo();
 		$('.wcdp-loader').hide();
 		$('.wc-donation-platform').css({"visibility": "visible", "animation-name": "wcdp-appear-animation", "animation-duration": "1s" });
-        wcdp_open(false);
-        if ($('.wcdp-choose-donation')[0].checkValidity()) {
-            wcdp_submit();
-        }
-    });
+		wcdp_open(false);
+		try {
+			if ($('.wcdp-choose-donation')[0].checkValidity()) {
+				wcdp_submit();
+			}
+		} catch (err) {}
+		$( '.wcdp-body' ).trigger('change');
+
+		setTimeout(express_checkout_heading, express_heading_timeout);
+	});
+
+	function express_checkout_heading() {
+		if ($('#wc-stripe-payment-request-button').children().length + $('#ppc-button').children().length > 0) {
+			$('.wcdp-express-heading').show();
+		} else if (express_heading_timeout<10000) {
+			express_heading_timeout = express_heading_timeout*2;
+			setTimeout(express_checkout_heading, express_heading_timeout);
+		}
+	}
 
     //Modal window hash
     window.onhashchange = function(){
@@ -150,15 +190,16 @@ jQuery( function( $ ) {
 
     //Open modal function
     function wcdp_open(direct){
-        if (direct || location.hash == '#wcdp-form' && $('.wcdp-overlay').length > 0) {
-            $('.wcdp-overlay').show();
+		const x = $('.wcdp-overlay')
+        if (direct || location.hash == '#wcdp-form' && x.length > 0) {
+			x.show();
             $('body').css('overflow-y', 'hidden');
 			wcdpOpen = true;
         }
     }
 
     //copy value of ul choices to corresponding input field
-    $( '.wcdp_options' ).change(function(event) {
+    $( '.wcdp_options' ).change(function() {
         var name = this.attributes['wcdp-name'].value;
         var value = $('input[name="'+name+'"]:checked').val();
         if (value) {
@@ -181,7 +222,7 @@ jQuery( function( $ ) {
     });
 
     //Select the right donation suggestion field
-    $('#wcdp-donation-amount').on('change', function(event){
+    $('#wcdp-donation-amount').on('change', function(){
         var name = '#wcdp_value_' + $('#wcdp-donation-amount').val().replace(/./g, "-");
         //console.log($('#wcdp_value_' + ).prop("checked", true));
         if ($(name).length == 0) {
@@ -197,8 +238,8 @@ jQuery( function( $ ) {
     });
 
     //Disable unavailable choices
-    $( '.wcdp-choose-donation' ).on('change', function(event) {
-        $('.wcdp_su input').each(function(index) {
+    $( '.wcdp-choose-donation' ).on('change', function() {
+        $('.wcdp_su input').each(function() {
             if ($('#'+this.name + ' option[value="' + this.value + '"]').length == 0) {
                 this.setAttribute("disabled", "true");
             } else {
