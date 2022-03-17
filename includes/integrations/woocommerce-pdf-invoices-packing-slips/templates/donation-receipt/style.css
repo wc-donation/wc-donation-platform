@@ -3,15 +3,12 @@
 	margin: 0;
 }
 .invoice-page {
-	margin-top: 1cm;
-	margin-bottom: 3cm;
-	margin-left: 2cm;
-	margin-right: 2cm;
+	margin: 1cm 2cm 3cm;
 }
 body {
 	background: #fff;
 	color: #000;
-	margin: 0cm;
+	margin: 0;
 	font-family: 'Open Sans', sans-serif;
 	/* want to use custom fonts? http://docs.wpovernight.com/woocommerce-pdf-invoices-packing-slips/using-custom-fonts/ */
 	font-size: 9pt;
@@ -155,7 +152,7 @@ td.order-data table th {
 /* Order details */
 table.order-details {
 	width:100%;
-	margin-bottom: 0mm;
+	margin-bottom: 0;
 }
 
 .quantity,
@@ -229,8 +226,7 @@ dd:after {
 	display: inline;
 }
 .wc-item-meta li {
-	margin: 0;
-	margin-left: 5px;
+	margin: 0 0 0 5px;
 }
 
 /* Notes & Totals */
@@ -277,7 +273,7 @@ table.totals tr.payment_method {
 	height: 2cm; /* if you change the footer height, don't forget to change the bottom (=negative height) and the @page margin-bottom as well! */
 	border-top: 0.1mm solid gray;
 	margin-bottom: 0;
-	padding-top: 0mm;
+	padding-top: 0;
 }
 
 /* page numbers */

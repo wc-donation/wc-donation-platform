@@ -23,7 +23,8 @@ echo "\n" . WC_Subscriptions_Email::email_order_items_table( $order, $order_item
 
 echo "----------\n\n";
 
-if ( $totals = $order->get_order_item_totals() ) {
+$totals = $order->get_order_item_totals();
+if ( $totals ) {
 	foreach ( $totals as $total ) {
 		echo $total['label'] . "\t " . $total['value'] . "\n";
 	}

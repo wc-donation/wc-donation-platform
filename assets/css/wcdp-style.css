@@ -295,6 +295,7 @@ ul.wcdp_options > li > input:hover:not(:disabled):not(:checked) + label {
     grid-template-columns: repeat(auto-fit, minmax(21ch, 1fr));
     grid-gap: 8px;
     align-items: center;
+	list-style: none;
 }
 
 #wcdp_amount {
@@ -478,8 +479,44 @@ input:disabled ~ label {
 	display: none !important;
 }
 #wcdp #wc-stripe-payment-request-wrapper {
-	padding: 0 0 14px 0 !important;
+	padding: 0 0 14px !important;
 }
 .woocommerce div.product div.summary .first-payment-date {
 	margin: 0;
+}
+.wcdp-fee-recovery {
+	font-size: 1.1em;
+	margin-bottom: 2em;
+}
+#wcdp_fee_recovery {
+	position: relative;
+	width: 1.1em;
+	height: 1.1em;
+	color: var(--wcdp-main-2);
+	border: 2px solid var(--wcdp-main-2);
+	border-radius: 4px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: 0;
+	cursor: pointer;
+}
+#wcdp_fee_recovery::before {
+	position: absolute;
+	content: "";
+	display: block;
+	left: 0.25em;
+	width: 0.35em;
+	height: 0.8em;
+	border-style: solid;
+	border-color: var(--label-text-checked);
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+	opacity: 0;
+}
+#wcdp_fee_recovery:checked::before {
+	opacity: 1;
+}
+#wcdp_fee_recovery:checked {
+	background-color: var(--wcdp-main-2);
 }

@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.7
 Tested up to: 5.9
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,6 +23,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 * **[Automatic Donation Receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)**
 * **[100+ Payment Gateways](https://wcdp.jonh.eu/documentation/integrations/payment-gateways/)**
 * **[Express Donations: Apple Pay / Google Pay (Stripe) & PayPal](https://wcdp.jonh.eu/documentation/integrations/express-donations-apple-pay-google-pay-paypal/)**
+* **[Processing Fee Recovery](https://wcdp.jonh.eu/documentation/usage/fee-recovery/)**
 * **100% free** & **no platform fees** & **open source**
 * **[...and more!](https://wcdp.jonh.eu/features/)**
 
@@ -46,6 +47,7 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 * **Recurring Donations** for long-term Fundraising: [Reliably fund your projects with regular donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)
 * **Donation Receipts**: [Generate donation receipts automatically](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
 * **Thank You Certificates**: [Thank your donors with an individual donation certificate](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
+* **Fee Recovery**: [Ask donors to cover transaction costs](https://wcdp.jonh.eu/documentation/usage/fee-recovery/)
 * **Unlimited Integrations**: WooCommerce integrates with CRM, Marketing & Analytics tools
 * **100% free** and **open source** fundraising & donation management for charities
 
@@ -82,6 +84,7 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Express Donations** We live in fast times. If your donors want to use the Express Line, they can complete a donation via Apple Pay / Google Pay / PayPal in just 20 seconds.
 * **Donation Receipts**: Donation Platform for WooCommerce provides a template for your charity to automatically issue donation receipts.
 * **Free Donations**: There are no paid extensions for Donation Platform for WooCommerce: Fundraising & Donation Management. However, this does not apply to all extensions for WooCommerce.
+* **Fee Recovery**: Donors have the option to cover transaction costs.
 * **Open Source Fundraising**: Donation Platform for WooCommerce: Fundraising & Donation Management is open source software released under the terms of the GNU General Public License v2.0
 * **Own Your Fundraising Data**: All donation data belong exclusively to your charity and are under your full control. You are not tied to any other company that handles the donations for you.
 * **Privacy Friendly Donations**: WooCommerce and WordPress include privacy tools that make it easier to handle Right to Access and Right to Erasure requests from donors. This allows you to easily comply with regulations such as GDPR or CCPA.
@@ -118,6 +121,8 @@ Hands down, WooCommerce is the most mature eCommerce solution. It is supported b
 
 So it doesn't make sense to reprogram all the features already implemented by WooCommerce for a donation and fundraising platform again and worse. Instead, you just customize the look and in some places the behavior of WooCommerce and you get a comprehensive fundraising, crowdfunding, crowdsourcing and donation solution for your charity.
 
+=== Problems? Feel free to open a ticket in the [WordPress Support Forum](https://wordpress.org/support/plugin/wc-donation-platform/). ===
+
 == Screenshots ==
 1. Highly converting donation form for your online fundraising.
 2. Donors can easily manage their donations.
@@ -143,20 +148,27 @@ No. For now it primarily focuses on customer facing behaviour and appearance tha
 
 = Why is only one donation form allowed per page? =
 
-Since WooCommerce and other plugins don't assume that there are multiple checkouts on a page, you might run into problems otherwise.
+Since WooCommerce and other plugins like payment gateways don't assume that there are multiple checkouts on a page, you might run into problems otherwise.
 
 = How can I set up recurring donations? =
 
-To set up recurring donations, please also install WooCommerce Subscriptions. Here you can find detailed instructions on how to set up recurring donations: [Set up recurring donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)
+To set up recurring donations, please also install Subscriptions for WooCommerce (free plugin) or WooCommerce Subscriptions (premium extension). Here you can find detailed instructions on how to set up recurring donations: [Set up recurring donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)
 
 = How can I generate donation receipts automatically? =
 
-WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plugin you can use to send out your tax-deductible receipts & thank you certificates. Please following this guide to set up donation receipts: [Set up donation receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
+WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plugin you can use to send out your tax-deductible receipts & thank you certificates. Please follow this guide to set up donation receipts: [Set up donation receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.2.0 =
+= 1.2.1 2022-03-17 =
+new feature: Fee Recovery: give your donors the option to cover the processing fees on their donations
+tweak: update supported WC version to 6.3.1
+fix: wrong textdomain
+fix: set donation project for automatic product update (#16)
+fix: increase priority of woocommerce_checkout_update_order_review_expired filter
+
+= 1.2.0 2022-02-24 =
 new feature: support for Google Pay / Apple Pay / PayPal Express Checkout (Express Donation)
 new feature: added support for Subscriptions For WooCommerce
 new feature: from now on donation orders do not net manual processing: autocomplete donations as soon as they are paid

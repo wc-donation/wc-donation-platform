@@ -33,7 +33,7 @@ class WCDP_Product_Settings
      * @param array $tabs
      * @return array
      */
-    public function wcdp_product_data_tabs( $tabs = array() ): array
+    public function wcdp_product_data_tabs(array $tabs = array() ): array
     {
         $wcdp_options =  array(
             'label'    => __( 'Donation Form', 'wc-donation-platform' ),
@@ -41,7 +41,7 @@ class WCDP_Product_Settings
             'class'    => 'show_if_donable hidden donation_options hide_if_external',
             'priority' => 65,
         );
-        array_push($tabs, $wcdp_options);
+        $tabs[] = $wcdp_options;
         return $tabs;
     }
 
@@ -133,7 +133,7 @@ class WCDP_Product_Settings
 			"wrapper_class" => "show_if_simple show_if_variable show_if_grouped",
 			"label"         => __( 'Donation Product', 'wc-donation-platform' ),
 			"description"   => __( 'This product will only be used for donations if activated', 'wc-donation-platform' ),
-			"default"       => "no",
+			"default"       => "yes",
 		];
 
 		return $product_type_options;
@@ -147,6 +147,9 @@ class WCDP_Product_Settings
 	 * @param $update
 	 */
 	public function wcdp_save_post_product($post_ID, $product, $update) {
+		if ( ! isset( $_POST['_wpnonce'] ) ) {
+			return;
+		}
 		update_post_meta(
 			$product->ID
 			, "_donable"

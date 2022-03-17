@@ -11,7 +11,7 @@ class WCDP_Hooks
 {
     public function __construct() {
         //Change some WC templates to WCDP templates
-        add_filter( 'wc_get_template', array( $this, 'wcdp_modify_template'), 10, 5 );
+        add_filter( 'wc_get_template', array( $this, 'wcdp_modify_template'), 11, 5 );
 
         //A page with a WCDP form is a checkout page
         add_filter( 'woocommerce_is_checkout', array( $this, 'wcdp_set_is_checkout' ) );
@@ -35,7 +35,7 @@ class WCDP_Hooks
         add_filter( 'woocommerce_checkout_redirect_empty_cart', '__return_false' );
 
         //Allow checkout page with expired update order review
-        add_filter( 'woocommerce_checkout_update_order_review_expired', '__return_false' );
+        add_filter( 'woocommerce_checkout_update_order_review_expired', '__return_false', 15 );
 
         //Rename Order notes to Donation notes
         add_filter( 'woocommerce_checkout_fields', array( $this, 'woocommerce_checkout_fields'), 10 );
@@ -65,7 +65,7 @@ class WCDP_Hooks
         add_action( 'woocommerce_product_related_products_heading', array( $this, 'wcdp_product_related_products_heading') );
 
         //Disable Order notes if checked in settings
-        if ((get_option('wcdp_disable_order_notes') ?? false) == 'yes') {
+        if (get_option('wcdp_disable_order_notes', 'no') == 'yes') {
             add_filter('woocommerce_enable_order_notes_field', '__return_false');
         }
 

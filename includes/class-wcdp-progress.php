@@ -70,7 +70,7 @@ class WCDP_Progress
 		}
 
 		//Translators: %1$s: donation amount raised, %2$s: fundraising goal
-		$label = esc_html__('%1$s of %2$s', 'wc-donation-amount');
+		$label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
 
 		$template = '';
 
@@ -159,10 +159,10 @@ class WCDP_Progress
 		$human_diff = '<span class="wcdp-emphasized">' . human_time_diff( strtotime($timestamp) ) . '</span>';
 		if ( $time_diff > 0) {
 			// translators: placeholder is human time diff (e.g. "3 weeks")
-			$date_to_display = sprintf( __( '%s to go', 'fian' ), $human_diff );
+			$date_to_display = sprintf( __( '%s to go', 'wc-donation-platform' ), $human_diff );
 		} else {
 			// translators: placeholder is human time diff (e.g. "3 weeks")
-			$date_to_display = sprintf( __( 'ended %s ago', 'fian' ), $human_diff );
+			$date_to_display = sprintf( __( 'ended %s ago', 'wc-donation-platform' ), $human_diff );
 		}
 
 		return $date_to_display;

@@ -68,7 +68,7 @@ class WCDP_Form
 	 * @param $is_internal bool
 	 * @return string html of donation form
 	 */
-    public static function wcdp_donation_form($value, $is_internal): string
+    public static function wcdp_donation_form(array $value, bool $is_internal): string
 	{
         //Only one donation form per page
         static $no_donation_form_yet = true;
@@ -166,6 +166,22 @@ class WCDP_Form
         }
         return false;
     }
+
+	/**
+	 * Return true if the cart contains a donation product
+	 * @return bool
+	 */
+	public static function cart_contains_donation(): bool
+	{
+		if ( ! empty( WC()->cart->get_cart_contents() ) ) {
+			foreach ( WC()->cart->get_cart_contents() as $cart_item ) {
+				if ( isset($cart_item['product_id']) && WCDP_Form::is_donable( $cart_item['product_id'] ) ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Registers the block using the metadata loaded from the `block.json` file.

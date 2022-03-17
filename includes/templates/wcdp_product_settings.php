@@ -39,7 +39,7 @@ $wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
 	</div>
 
 	<div class="options_group">
-			<?php
+		<?php
 			woocommerce_wp_text_input(
 				array(
 					'id'            => "wcdp_fundraising_goal",
@@ -63,8 +63,8 @@ $wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
 					'wrapper_class' => 'form-field',
 				)
 			);
-
 		?>
+		<p><?php esc_html_e('Please note: You can still donate to the project after reaching the fundraising goal or end date.', 'wc-donation-platform'); ?></p>
 	</div>
 
 	<div class="options_group">

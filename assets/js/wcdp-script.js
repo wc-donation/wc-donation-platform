@@ -37,7 +37,7 @@ jQuery( function( $ ) {
                     $('#ajax-unexpected-error').show();
                 });
         }
-    };
+    }
 
 	// Return true if the donation form is filled in correctly
 	function check_validity(id) {
@@ -143,10 +143,10 @@ jQuery( function( $ ) {
 			if ($('.wcdp-choose-donation')[0].checkValidity()) {
 				wcdp_submit();
 			}
-		} catch (err) {}
-		$( '.wcdp-body' ).trigger('change');
-
-		setTimeout(express_checkout_heading, express_heading_timeout);
+		} finally {
+			$( '#wcdp-ajax-send,.wcdp_options' ).trigger('change');
+			setTimeout(express_checkout_heading, express_heading_timeout);
+		}
 	});
 
 	function express_checkout_heading() {
@@ -208,6 +208,10 @@ jQuery( function( $ ) {
             $('#'+name).trigger('change');
         }
     });
+
+	$(document).on("change", "#wcdp_fee_recovery,.wcdp-fee-recovery + .wc_payment_methods input[name='payment_method']" , function() {
+		$( 'body' ).trigger( 'update_checkout' );
+	});
 
     //copy value of range slider
     $( '#wcdp-range' ).on('input', function () {
