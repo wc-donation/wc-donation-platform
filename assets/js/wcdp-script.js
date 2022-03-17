@@ -210,7 +210,9 @@ jQuery( function( $ ) {
     });
 
 	$(document).on("change", "#wcdp_fee_recovery,.wcdp-fee-recovery + .wc_payment_methods input[name='payment_method']" , function() {
-		$( 'body' ).trigger( 'update_checkout' );
+		setTimeout(function() {
+			$( 'body' ).trigger( 'update_checkout' );
+		}, 400);
 	});
 
     //copy value of range slider

@@ -485,38 +485,46 @@ input:disabled ~ label {
 	margin: 0;
 }
 .wcdp-fee-recovery {
-	font-size: 1.1em;
-	margin-bottom: 2em;
+	font-size: 1.2em;
 }
-#wcdp_fee_recovery {
+.wcdp-fee-recovery__body {
+	display: grid;
+	grid-template-columns: 38px 1fr;
+	align-items: center;
+	min-height: 50px;
+	border-radius: 5px;
+	overflow: hidden;
 	position: relative;
-	width: 1.1em;
-	height: 1.1em;
-	color: var(--wcdp-main-2);
-	border: 2px solid var(--wcdp-main-2);
-	border-radius: 4px;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	outline: 0;
 	cursor: pointer;
+	margin-bottom: 1em;
 }
-#wcdp_fee_recovery::before {
+.wcdp-fee-recovery__input:checked ~ .wcdp-fee-recovery__body .wcdp-fee-recovery__body-cover-checkbox--svg {
+	--stroke-dashoffset: 0;
+}
+.wcdp-fee-recovery__body-cover-checkbox {
+	border: 2px solid var(--wcdp-main-2);
 	position: absolute;
-	content: "";
-	display: block;
-	left: 0.25em;
-	width: 0.35em;
-	height: 0.8em;
-	border-style: solid;
-	border-color: var(--label-text-checked);
-	border-width: 0 2px 2px 0;
-	transform: rotate(45deg);
-	opacity: 0;
+	left: 0;
+	top: 10px;
+	z-index: 1;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	transition: transform 0.15s, opacity calc(0.15s * 1.2) linear, -webkit-transform 0.15s ease;
 }
-#wcdp_fee_recovery:checked::before {
-	opacity: 1;
-}
-#wcdp_fee_recovery:checked {
-	background-color: var(--wcdp-main-2);
+
+.wcdp-fee-recovery__body-cover-checkbox--svg {
+	width: 13px;
+	height: 11px;
+	display: inline-block;
+	vertical-align: top;
+	fill: none;
+	margin: 7px 0 0 5px;
+	stroke: var(--wcdp-main-2);
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 16px;
+	stroke-dashoffset: var(--stroke-dashoffset, 16px);
+	transition: stroke-dashoffset 0.4s ease 0.15s;
 }

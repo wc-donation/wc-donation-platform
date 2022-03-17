@@ -27,16 +27,24 @@ class WCDP_Fee_Recovery
 	function add_fee_recovery_checkbox() {
 		if (WCDP_Form::cart_contains_donation()) {
 			?>
-			<div class="wcdp-fee-recovery">
-				<label for="wcdp_fee_recovery">
-					<input type="checkbox" id="wcdp_fee_recovery" name="wcdp_fee_recovery" value="wcdp_fee_recovery"
-						<?php if((isset($_POST['post_data']) && strpos($_POST['post_data'], 'wcdp_fee_recovery=wcdp_fee_recovery'))): ?>
+			<label class="wcdp-fee-recovery" for="wcdp_fee_recovery">
+				<input type="checkbox" id="wcdp_fee_recovery" class="wcdp-fee-recovery__input" name="wcdp_fee_recovery" value="wcdp_fee_recovery" style="display:none;"
+						<?php if(isset($_POST['post_data']) && strpos($_POST['post_data'], 'wcdp_fee_recovery=wcdp_fee_recovery')): ?>
 							checked="checked"
 						<?php endif; ?>
-					>
-					<?php esc_html_e('Yes, I want to cover the transaction fee.', 'wc-donation-platform'); ?>
-				</label>
-			</div>
+				>
+				<div class="wcdp-fee-recovery__body">
+					<div></div>
+					<div class="wcdp-fee-recovery__body-header">
+						<?php esc_html_e('Yes, I want to cover the transaction fee.', 'wc-donation-platform'); ?>
+					</div>
+					<span class="wcdp-fee-recovery__body-cover-checkbox">
+					  <svg class="wcdp-fee-recovery__body-cover-checkbox--svg" viewBox="0 0 12 10">
+						<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+					  </svg>
+					</span>
+				</div>
+			</label>
 			<?php
 		}
 	}
