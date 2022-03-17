@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Donation Platform for WooCommerce: Fundraising & Donation Management plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform-dev\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-24T23:50:03+01:00\n"
+"POT-Creation-Date: 2022-03-17T20:11:58+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -34,12 +34,32 @@ msgstr ""
 msgid "https://www.jonh.eu/"
 msgstr ""
 
-#: future-features/embed.php:73
-msgid "Allow Embedding?"
+#: includes/class-wcdp-fee-recovery.php:39
+msgid "Yes, I want to cover the transaction fee."
 msgstr ""
 
-#: future-features/embed.php:74
-msgid "Enable to allow this form to be embedded elsewhere using "
+#: includes/class-wcdp-fee-recovery.php:83
+msgid "Transaction costs"
+msgstr ""
+
+#: includes/class-wcdp-fee-recovery.php:120
+msgid "Enter the fixed transaction costs in the left field and the percentage transaction costs in the right field."
+msgstr ""
+
+#: includes/class-wcdp-fee-recovery.php:153
+msgid "Fixed"
+msgstr ""
+
+#: includes/class-wcdp-fee-recovery.php:156
+msgid "(fixed)"
+msgstr ""
+
+#: includes/class-wcdp-fee-recovery.php:163
+msgid "Variable"
+msgstr ""
+
+#: includes/class-wcdp-fee-recovery.php:167
+msgid "(variable)"
 msgstr ""
 
 #: includes/class-wcdp-form.php:76
@@ -54,99 +74,105 @@ msgstr ""
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:219
+#: includes/class-wcdp-form.php:235
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:221
+#: includes/class-wcdp-form.php:237
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:252
+#: includes/class-wcdp-form.php:268
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:290
+#: includes/class-wcdp-form.php:306
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:293
+#: includes/class-wcdp-form.php:309
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:297
+#: includes/class-wcdp-form.php:313
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:300
+#: includes/class-wcdp-form.php:316
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:57
-msgid "Fixed"
+#: includes/class-wcdp-general-settings.php:23
+#: includes/class-wcdp-hooks.php:218
+#: includes/class-wcdp-hooks.php:236
+msgid "Donations"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:67
-msgid "Variable"
-msgstr ""
-
-#: includes/class-wcdp-general-settings.php:127
+#: includes/class-wcdp-general-settings.php:82
 msgid "General Options"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:132
+#: includes/class-wcdp-general-settings.php:87
 msgid "\"Your Contribution\" Title Text"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:135
+#: includes/class-wcdp-general-settings.php:90
 #: includes/templates/wcdp_step_1_amount.php:39
 #: includes/templates/wcdp_step_1_amount.php:92
 msgid "Your Contribution"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:138
+#: includes/class-wcdp-general-settings.php:93
 msgid "\"Choose an amount\" Title Text"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:141
+#: includes/class-wcdp-general-settings.php:96
 #: includes/templates/wcdp_step_1_amount.php:82
 msgid "Choose an amount"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:144
+#: includes/class-wcdp-general-settings.php:99
 msgid "Minimum Donation amount"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:154
+#: includes/class-wcdp-general-settings.php:109
 msgid "Maximum Donation amount"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:164
+#: includes/class-wcdp-general-settings.php:119
 msgid "Maximum Amount for range input"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:174
+#: includes/class-wcdp-general-settings.php:129
 msgid "Disable Order / Donation notes"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:175
+#: includes/class-wcdp-general-settings.php:130
 msgid "Enable to disable notes on checkout"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:197
+#: includes/class-wcdp-general-settings.php:136
+msgid "Fee Recovery"
+msgstr ""
+
+#: includes/class-wcdp-general-settings.php:137
+msgid "Ask donors to cover transaction fees."
+msgstr ""
+
+#: includes/class-wcdp-general-settings.php:155
 msgid "Design Options"
 msgstr ""
 
 #. translators: %s: default color
-#: includes/class-wcdp-general-settings.php:205
+#: includes/class-wcdp-general-settings.php:163
 msgid "Primary Color used in the frontend. Default: %s."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:244
+#: includes/class-wcdp-general-settings.php:202
 msgid "Support"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:245
+#: includes/class-wcdp-general-settings.php:203
 #: includes/templates/wcdp_product_settings.php:228
 msgid "If you like Donation Platform for WooCommerce, please consider rating it with ★★★★★"
 msgstr ""
@@ -158,11 +184,6 @@ msgstr ""
 
 #: includes/class-wcdp-hooks.php:204
 msgid "Total"
-msgstr ""
-
-#: includes/class-wcdp-hooks.php:218
-#: includes/class-wcdp-hooks.php:236
-msgid "Donations"
 msgstr ""
 
 #. translators: %s: page
@@ -205,6 +226,21 @@ msgstr ""
 
 #: includes/class-wcdp-progress.php:46
 msgid "wcdp_progress: Required attribute \"id\" missing."
+msgstr ""
+
+#. Translators: %1$s: donation amount raised, %2$s: fundraising goal
+#: includes/class-wcdp-progress.php:73
+msgid "%1$s of %2$s"
+msgstr ""
+
+#. translators: placeholder is human time diff (e.g. "3 weeks")
+#: includes/class-wcdp-progress.php:162
+msgid "%s to go"
+msgstr ""
+
+#. translators: placeholder is human time diff (e.g. "3 weeks")
+#: includes/class-wcdp-progress.php:165
+msgid "ended %s ago"
 msgstr ""
 
 #: includes/integrations/express-checkout/class-wcdp-express-checkout.php:38
@@ -736,7 +772,7 @@ msgid "3. Payment"
 msgstr ""
 
 #: includes/templates/wcdp_form.php:30
-#: includes/wc-templates/checkout/payment.php:39
+#: includes/wc-templates/checkout/payment.php:40
 msgid "Please activate JavaScript to continue with your donation."
 msgstr ""
 
@@ -794,6 +830,10 @@ msgstr ""
 
 #: includes/templates/wcdp_product_settings.php:62
 msgid "End Date"
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:67
+msgid "Please note: You can still donate to the project after reaching the fundraising goal or end date."
 msgstr ""
 
 #: includes/templates/wcdp_product_settings.php:78
@@ -1062,28 +1102,28 @@ msgstr ""
 msgid "Donation details"
 msgstr ""
 
-#: wc-donation-platform.php:103
+#: wc-donation-platform.php:107
 msgid "Donation Platform for WooCommerce requires WooCommerce to be installed & activated."
 msgstr ""
 
 #. translators: %s required WC version
-#: wc-donation-platform.php:106
+#: wc-donation-platform.php:110
 msgid "Donation Platform for WooCommerce is inactive. This version of Donation Platform for WooCommerce requires WooCommerce %s or newer. Please update WooCommerce."
 msgstr ""
 
-#: wc-donation-platform.php:123
+#: wc-donation-platform.php:127
 msgid "View WCDP settings"
 msgstr ""
 
-#: wc-donation-platform.php:123
+#: wc-donation-platform.php:127
 msgid "Settings"
 msgstr ""
 
-#: wc-donation-platform.php:140
+#: wc-donation-platform.php:144
 msgid "View Documentation of Donation Platform for WooCommerce"
 msgstr ""
 
-#: wc-donation-platform.php:140
+#: wc-donation-platform.php:144
 msgid "Documentation"
 msgstr ""
 
