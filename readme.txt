@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.7
 Tested up to: 5.9.3
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -161,7 +161,7 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.2.2 =
+= 1.2.3 2022-04-20 =
 new feature: support for multiple products in cart, activate in general donation settings
 new feature: support for grouped products
 tweak: fee recovery: show info message if no active payment methods found
@@ -172,6 +172,9 @@ tweak: adjust CSS of fee recovery checkbox
 tweak: code maintainability improvements
 tweak: add README.md for GitHub
 fix: readme link error
+fix: fee recovery not working
+
+= 1.2.2 (skipped: unreleased, because of a bug) =
 
 = 1.2.1 2022-03-17 =
 new feature: Fee Recovery: give your donors the option to cover the processing fees on their donations
