@@ -21,7 +21,7 @@ global $product;
 
 echo do_shortcode( '[wcdp_progress id="' . $post->ID . '" style="2"]' );
 
-if ( ! $product->is_purchasable() ) {
+if ( ! $product->is_purchasable() &&  $product->get_type() != 'grouped') {
 	return;
 }
 

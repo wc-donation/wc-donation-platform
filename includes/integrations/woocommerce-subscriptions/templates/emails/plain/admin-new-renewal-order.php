@@ -2,7 +2,7 @@
 /**
  * Admin new renewal order email (plain text)
  *
- * @author  Brent Shepherd
+ * forked from WooCommerce_Subscription\Templates
  * @package WooCommerce_Subscriptions/Templates/Emails/Plain
  * @version 2.6.0
  */

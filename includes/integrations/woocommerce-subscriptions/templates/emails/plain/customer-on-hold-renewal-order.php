@@ -2,7 +2,9 @@
 /**
  * Customer on-hold renewal order email.
  *
- * forked from WooCommerce_Subscription\Templates
+ * forked from WooCommerce_Subscription\Templates by Prospress
+ * @package WooCommerce_Subscriptions/Templates/Emails/Plain
+ * @version 2.6.0
  */
 
 defined( 'ABSPATH' ) || exit;

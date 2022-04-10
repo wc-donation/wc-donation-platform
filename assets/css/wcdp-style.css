@@ -484,19 +484,16 @@ input:disabled ~ label {
 .woocommerce div.product div.summary .first-payment-date {
 	margin: 0;
 }
-.wcdp-fee-recovery {
-	font-size: 1.2em;
-}
 .wcdp-fee-recovery__body {
 	display: grid;
-	grid-template-columns: 38px 1fr;
+	grid-template-columns: 48px 1fr;
 	align-items: center;
 	min-height: 50px;
 	border-radius: 5px;
 	overflow: hidden;
 	position: relative;
 	cursor: pointer;
-	margin-bottom: 1em;
+	border: 2px solid var(--wcdp-main-2);
 }
 .wcdp-fee-recovery__input:checked ~ .wcdp-fee-recovery__body .wcdp-fee-recovery__body-cover-checkbox--svg {
 	--stroke-dashoffset: 0;
@@ -504,13 +501,14 @@ input:disabled ~ label {
 .wcdp-fee-recovery__body-cover-checkbox {
 	border: 2px solid var(--wcdp-main-2);
 	position: absolute;
-	left: 0;
+	left: 10px;
 	top: 10px;
 	z-index: 1;
 	width: 28px;
 	height: 28px;
 	border-radius: 50%;
 	transition: transform 0.15s, opacity calc(0.15s * 1.2) linear, -webkit-transform 0.15s ease;
+	transform: scale(90%);
 }
 
 .wcdp-fee-recovery__body-cover-checkbox--svg {

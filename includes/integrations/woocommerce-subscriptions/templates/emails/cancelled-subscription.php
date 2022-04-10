@@ -2,7 +2,7 @@
 /**
  * Cancelled Subscription email
  *
- * @author  Prospress
+ * forked from WooCommerce_Subscription\Templates by Prospress
  * @package WooCommerce_Subscriptions/Templates/Emails
  * @version 2.6.0
  */

@@ -2,7 +2,9 @@
 /**
  * Customer completed subscription change email (plain text)
  *
- * forked from WooCommerce_Subscription\Templates
+ * forked from WooCommerce_Subscription\Templates by Prospress
+ * @package WooCommerce_Subscriptions/Templates/Emails/Plain
+ * @version 2.6.0
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

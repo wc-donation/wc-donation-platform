@@ -1,6 +1,6 @@
 <?php
 /**
- * Cancelled Subscription email (plain text)
+ * Expired Subscription email (plain text)
  *
  * forked from WooCommerce_Subscription\Templates
  */

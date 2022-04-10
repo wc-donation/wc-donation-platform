@@ -107,21 +107,21 @@ if ($has_child) : ?>
 	/**
 	 * Select between products for grouped products
 	 */
-	$ids = $product->get_children ('edit');
 	$args = array(
 			'ul-id' => 'WCDP_ProductSettings',
 			'ul-class' => 'wcdp_options',
 			'name' => 'wcdp_products',
 			'options' => array(),
 	);
+	$ids = $product->get_children ('edit');
 	foreach ($ids as $id) {
-		$products = wc_get_product ($id);
-		if ($products && $products->is_purchasable ()) {
-			array_push ($args['options'], array(
+		$products = wc_get_product($id);
+		if ($products && $products->is_purchasable () && WCDP_Form::is_donable( $id )) {
+			$args['options'][] = array(
 					'input-id' => 'wcdp_value_' . $id,
 					'input-value' => $id,
-					'label-text' => esc_html ($products->get_title ()),
-			));
+					'label-text' => esc_html($products->get_title()),
+			);
 		}
 	} ?>
 	<div class="wcdp-product-choice wcdp-row">

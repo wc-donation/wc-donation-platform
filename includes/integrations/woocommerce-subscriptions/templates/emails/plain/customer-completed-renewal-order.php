@@ -3,6 +3,8 @@
  * Customer completed renewal order email (plain text)
  *
  * forked from WooCommerce_Subscription\Templates
+ * @package WooCommerce_Subscriptions/Templates/Emails/Plain
+ * @version 2.6.0
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

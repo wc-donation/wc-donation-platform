@@ -61,6 +61,8 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php endif; ?>
 
+		<?php do_action( 'wcdp_fee_recovery' ); ?>
+
 		<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
 			<tr class="fee">
 				<th><?php echo esc_html( $fee->name ); ?></th>

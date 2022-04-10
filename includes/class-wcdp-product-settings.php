@@ -53,71 +53,111 @@ class WCDP_Product_Settings
     }
 
     /**
-     * Add donation data panel on product edit page
+     * Save donation data from product edit page
      * @param $post_id
      */
     public function wcdp_process_product_meta( $post_id ) {
         $product = wc_get_product( $post_id );
-        $wc_donation_platform = array();
+		$product_settings = array();
 
-        if (isset($_POST['wcdp-amount-layout'])) {
-			if ($_POST['wcdp-amount-layout'] == 0) {
-				$wc_donation_platform[0] = 0;
-			} else if ($_POST['wcdp-amount-layout'] == 1) {
-				$wc_donation_platform[0] = 1;
+		$product_settings = $this->product_meta_style($product_settings);
+		$product_settings = $this->product_meta_amount_selection($product_settings);
+		$product_settings = $this->product_meta_variation_styles($product_settings, $product);
+		$product_settings = $this->product_meta_fundraising_meta($product_settings, $product);
+
+        foreach ($product_settings as $key => $value) {
+            $product->update_meta_data( 'wcdp-settings[' . $key . ']', $value );
+        }
+        $product->save();
+    }
+
+	/**
+	 * Determine style of product
+	 * @param $product_settings
+	 * @return array
+	 */
+	private function product_meta_style($product_settings): array
+	{
+		if (isset($_POST['wcdp-amount-layout'])) {
+			if ($_POST['wcdp-amount-layout'] == 1) {
+				$product_settings[0] = 1;
 			} else if ($_POST['wcdp-amount-layout'] == 2) {
-				$wc_donation_platform[0] = 2;
+				$product_settings[0] = 2;
 			} else if ($_POST['wcdp-amount-layout'] == 3) {
-				$wc_donation_platform[0] = 3;
+				$product_settings[0] = 3;
 			}
 		} else {
-            $wc_donation_platform[0] = '0';
-        }
+			//Default style
+			$product_settings[0] = 0;
+		}
+		return $product_settings;
+	}
 
-        if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings'])){
+	/**
+	 * Determine predefined amounts
+	 * @param $product_settings
+	 * @return array
+	 */
+	private function product_meta_amount_selection($product_settings): array
+	{
+		if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings'])){
 			$prices = array();
 			foreach ($_POST['wcdp-settings'] as $value) {
 				$prices[] = (float)$value;
 			}
 			sort($prices);
-			$wc_donation_platform[1] = json_encode($prices);
-        } else {
-            $wc_donation_platform[1] = '';
-        }
-
-        if (is_a( $product, 'WC_Product_Variable' )) {
-            $attributes = $product->get_variation_attributes();
-            foreach ( $attributes as $attribute => $options ) {
-                $attribute_name = esc_attr( sanitize_title( $attribute ) );
-                $wc_donation_platform['wcdp-attr-'.$attribute_name] = '0';
-                if (isset($_POST['wcdp-attr-'.$attribute_name])) {
-                    if ($_POST['wcdp-attr-'.$attribute_name] == '1') {
-                        $wc_donation_platform['wcdp-attr-'.$attribute_name] = '1';
-                    } else if ($_POST['wcdp-attr-'.$attribute_name] == '2') {
-                        $wc_donation_platform['wcdp-attr-'.$attribute_name] = '2';
-                    }
-                }
-            }
-        }
-
-		if (isset($_POST['wcdp_fundraising_goal']) && $_POST['wcdp_fundraising_goal'] != ''){
-			$wc_donation_platform['wcdp_fundraising_goal'] = (float) $_POST['wcdp_fundraising_goal'];
+			$product_settings[1] = json_encode($prices);
 		} else {
-			$wc_donation_platform['wcdp_fundraising_goal'] = 0;
+			$product_settings[1] = '';
+		}
+		return $product_settings;
+	}
+
+	/**
+	 * Determine style of variation attributes
+	 * @param $product_settings
+	 * @param $product
+	 * @return array
+	 */
+	private function product_meta_variation_styles($product_settings, $product): array
+	{
+		if (is_a( $product, 'WC_Product_Variable' )) {
+			$attributes = $product->get_variation_attributes();
+			foreach ( $attributes as $attribute => $options ) {
+				$attribute_name = esc_attr( sanitize_title( $attribute ) );
+				$product_settings['wcdp-attr-'.$attribute_name] = '0';
+				if (isset($_POST['wcdp-attr-'.$attribute_name])) {
+					if ($_POST['wcdp-attr-'.$attribute_name] == '1') {
+						$product_settings['wcdp-attr-'.$attribute_name] = '1';
+					} else if ($_POST['wcdp-attr-'.$attribute_name] == '2') {
+						$product_settings['wcdp-attr-'.$attribute_name] = '2';
+					}
+				}
+			}
+		}
+		return $product_settings;
+	}
+
+	/**
+	 * Determine fundraising end date & goal
+	 * @param $product_settings
+	 * @return array
+	 */
+	private function product_meta_fundraising_meta($product_settings): array
+	{
+		if (isset($_POST['wcdp_fundraising_goal']) && $_POST['wcdp_fundraising_goal'] != ''){
+			$product_settings['wcdp_fundraising_goal'] = (float) $_POST['wcdp_fundraising_goal'];
+		} else {
+			$product_settings['wcdp_fundraising_goal'] = 0;
 		}
 
 		if (isset($_POST['wcdp_fundraising_end_date']) && $_POST['wcdp_fundraising_end_date'] != ''){
-			$wc_donation_platform['wcdp_fundraising_end_date'] = preg_replace( '/[^0-9-]/', '', $_POST['wcdp_fundraising_end_date'] );
+			$product_settings['wcdp_fundraising_end_date'] = preg_replace( '/[^0-9-]/', '', $_POST['wcdp_fundraising_end_date'] );
 		} else {
-			$wc_donation_platform['wcdp_fundraising_end_date'] = '';
+			$product_settings['wcdp_fundraising_end_date'] = '';
 		}
-
-        foreach ($wc_donation_platform as $key => $value) {
-            $product->update_meta_data( 'wcdp-settings[' . $key . ']', $value );
-        }
-
-        $product->save();
-    }
+		return $product_settings;
+	}
 
 	/**
 	 * Add "Donable" as a product type option

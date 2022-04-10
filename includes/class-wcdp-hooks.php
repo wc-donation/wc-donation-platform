@@ -265,14 +265,8 @@ class WCDP_Hooks
      * Recalculate item price to the amount specified by user
      */
     public function wcdp_set_donation_price( $cart_object ) {
-		$min_donation_amount = get_option('wcdp_min_amount', 3);
-		$max_donation_amount = get_option('wcdp_max_amount', 50000);
-
-        foreach ( $cart_object->cart_contents as $key => $value ) {
-            if( isset( $value["wcdp_donation_amount"] ) &&
-				$value["wcdp_donation_amount"] >= $min_donation_amount &&
-				$value["wcdp_donation_amount"] <= $max_donation_amount
-			) {
+        foreach ($cart_object->cart_contents as $value ) {
+            if( isset( $value["wcdp_donation_amount"] ) && WCDP_Form::check_donation_amount($value["wcdp_donation_amount"])) {
                 $value['data']->set_price($value["wcdp_donation_amount"]);
             }
         }

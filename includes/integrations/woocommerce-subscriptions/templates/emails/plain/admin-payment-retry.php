@@ -5,7 +5,7 @@
  * Email sent to admins when an attempt to automatically process a subscription renewal payment has failed
  * and a retry rule has been applied to retry the payment in the future.
  *
- * @author  Prospress
+ * forked from WooCommerce_Subscription\Templates
  * @package WooCommerce_Subscriptions/Templates/Emails/Plain
  * @version 2.6.0
  */

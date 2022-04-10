@@ -2,7 +2,7 @@
 /**
  * Customer renewal invoice email
  *
- * @author  Brent Shepherd
+ * forked from WooCommerce_Subscription\Templates by Prospress
  * @package WooCommerce_Subscriptions/Templates/Emails
  * @version 2.6.0
  */

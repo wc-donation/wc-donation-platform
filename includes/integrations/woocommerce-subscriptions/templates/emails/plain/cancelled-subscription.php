@@ -2,7 +2,7 @@
 /**
  * Cancelled Subscription email (plain text)
  *
- * @author  Prospress
+ * forked from WooCommerce_Subscription\Templates
  * @package WooCommerce_Subscriptions/Templates/Emails/Plain
  * @version 2.6.0
  */

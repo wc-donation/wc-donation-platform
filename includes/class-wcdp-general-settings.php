@@ -78,125 +78,131 @@ class WCDP_General_Settings {
 	{
     	$decimals = pow(10, wc_get_price_decimals() * (-1));
         $settings = array(
-				array(
-					'title' => __( 'General Options', 'wc-donation-platform' ),
-					'type'  => 'title',
-					'id'    => 'wcdp_settings_general',
+			array(
+				'title' => __( 'General Options', 'wc-donation-platform' ),
+				'type'  => 'title',
+				'id'    => 'wcdp_settings_general',
+			),
+			array(
+				'title'           => __( 'Allow more than one product in cart', 'wc-donation-platform' ),
+				'desc'            => __( 'Should it be possible to have more than one donation product in the cart at the same time?', 'wc-donation-platform' ),
+				'id'              => 'wcdp_multiple_in_cart',
+				'default'         => 'no',
+				'type'            => 'checkbox',
+			),
+			array(
+				'title'    	=> __( '"Your Contribution" Title Text', 'wc-donation-platform' ),
+				'id'       	=> 'wcdp_contribution_title',
+				'type'     	=> 'text',
+				'default'	=> __( 'Your Contribution', 'wc-donation-platform' ),
+			),
+			array(
+				'title'    	=> __( '"Choose an amount" Title Text', 'wc-donation-platform' ),
+				'id'       	=> 'wcdp_choose_amount_title',
+				'type'     	=> 'text',
+				'default'	=> __( 'Choose an amount', 'wc-donation-platform' ),
+			),
+			array(
+				'title'    	=> __( 'Minimum Donation amount', 'wc-donation-platform' ),
+				'id'       	=> 'wcdp_min_amount',
+				'type'     	=> 'number',
+				'default'	=> '3',
+				'custom_attributes'	=> array(
+					'min'	=> $decimals,
+					'step'	=> $decimals,
 				),
-				array(
-					'title'    	=> __( '"Your Contribution" Title Text', 'wc-donation-platform' ),
-					'id'       	=> 'wcdp_contribution_title',
-					'type'     	=> 'text',
-					'default'	=> __( 'Your Contribution', 'wc-donation-platform' ),
+			),
+			array(
+				'title'    	=> __( 'Maximum Donation amount', 'wc-donation-platform' ),
+				'id'       	=> 'wcdp_max_amount',
+				'type'     	=> 'number',
+				'default'	=> '50000',
+				'custom_attributes'	=> array(
+					'min'	=> $decimals,
+					'step'	=> $decimals,
 				),
-				array(
-					'title'    	=> __( '"Choose an amount" Title Text', 'wc-donation-platform' ),
-					'id'       	=> 'wcdp_choose_amount_title',
-					'type'     	=> 'text',
-					'default'	=> __( 'Choose an amount', 'wc-donation-platform' ),
+			),
+			array(
+				'title'    	=> __( 'Maximum Amount for range input', 'wc-donation-platform' ),
+				'id'       	=> 'wcdp_max_range',
+				'type'     	=> 'number',
+				'default'	=> '500',
+				'custom_attributes'	=> array(
+					'min'	=> $decimals,
+					'step'	=> $decimals,
 				),
-				array(
-					'title'    	=> __( 'Minimum Donation amount', 'wc-donation-platform' ),
-					'id'       	=> 'wcdp_min_amount',
-					'type'     	=> 'number',
-					'default'	=> '3',
-					'custom_attributes'	=> array(
-						'min'	=> $decimals,
-						'step'	=> $decimals,
-					),
-				),
-				array(
-					'title'    	=> __( 'Maximum Donation amount', 'wc-donation-platform' ),
-					'id'       	=> 'wcdp_max_amount',
-					'type'     	=> 'number',
-					'default'	=> '50000',
-					'custom_attributes'	=> array(
-						'min'	=> $decimals,
-						'step'	=> $decimals,
-					),
-				),
-				array(
-					'title'    	=> __( 'Maximum Amount for range input', 'wc-donation-platform' ),
-					'id'       	=> 'wcdp_max_range',
-					'type'     	=> 'number',
-					'default'	=> '500',
-					'custom_attributes'	=> array(
-						'min'	=> $decimals,
-						'step'	=> $decimals,
-					),
-				),
-				array(
-					'title'           => __( 'Disable Order / Donation notes', 'wc-donation-platform' ),
-					'desc'            => __( 'Enable to disable notes on checkout', 'wc-donation-platform' ),
-					'id'              => 'wcdp_disable_order_notes',
+			),
+			array(
+				'title'           => __( 'Disable Order / Donation notes', 'wc-donation-platform' ),
+				'desc'            => __( 'Enable to disable notes on checkout', 'wc-donation-platform' ),
+				'id'              => 'wcdp_disable_order_notes',
+				'default'         => 'no',
+				'type'            => 'checkbox',
+			),
+			array(
+					'title'           => __( 'Fee Recovery', 'wc-donation-platform' ),
+					'desc'            => __( 'Ask donors to cover transaction fees.', 'wc-donation-platform' ),
+					'id'              => 'wcdp_fee_recovery',
 					'default'         => 'no',
 					'type'            => 'checkbox',
-				),
-				array(
-						'title'           => __( 'Fee Recovery', 'wc-donation-platform' ),
-						'desc'            => __( 'Ask donors to cover transaction fees.', 'wc-donation-platform' ),
-						'id'              => 'wcdp_fee_recovery',
-						'default'         => 'no',
-						'type'            => 'checkbox',
-				),
-				array(
-					'type'            => 'wcdp_fee_recovery',
-					'step'				=> $decimals,
-				),
-				array(
-						'id'				=> 'wcdp_fee_recovery_values',
-				),
-				array(
-					'type' => 'sectionend',
-					'id'   => 'wcdp_section_general',
-				),
+			),
+			array(
+				'type'            => 'wcdp_fee_recovery',
+				'step'			  => $decimals,
+			),
+			array(
+					'id'				=> 'wcdp_fee_recovery_values',
+			),
+			array(
+				'type' => 'sectionend',
+				'id'   => 'wcdp_section_general',
+			),
+			array(
+				'title' => __( 'Design Options', 'wc-donation-platform' ),
+				'type'  => 'title',
+				'id'    => 'wcdp_settings_design',
+			),
 
-				array(
-					'title' => __( 'Design Options', 'wc-donation-platform' ),
-					'type'  => 'title',
-					'id'    => 'wcdp_settings_design',
-				),
+			array(
+				'title'    => __( 'Main Color', 'woocommerce' ),
+				/* translators: %s: default color */
+				'desc'     => sprintf( __( 'Primary Color used in the frontend. Default: %s.', 'wc-donation-platform' ), '<code>#00753a</code>' ),
+				'id'       => 'wcdp_main_color',
+				'type'     => 'color',
+				'css'      => 'width:6em;',
+				'default'  => '#00753a',
+				'autoload' => false,
+				'desc_tip' => true,
+			),
 
-				array(
-					'title'    => __( 'Main Color', 'woocommerce' ),
-					/* translators: %s: default color */
-					'desc'     => sprintf( __( 'Primary Color used in the frontend. Default: %s.', 'wc-donation-platform' ), '<code>#00753a</code>' ),
-					'id'       => 'wcdp_main_color',
-					'type'     => 'color',
-					'css'      => 'width:6em;',
-					'default'  => '#00753a',
-					'autoload' => false,
-					'desc_tip' => true,
-				),
+			array(
+				'title'    => __( 'Secondary Color', 'woocommerce' ),
+				/* translators: %s: default color */
+				'desc'     => sprintf( __( 'Secondary Color used in the frontend. Default: %s.', 'woocommerce' ), '<code>#30bf76</code>' ),
+				'id'       => 'wcdp_secondary_color',
+				'type'     => 'color',
+				'css'      => 'width:6em;',
+				'default'  => '#30bf76',
+				'autoload' => false,
+				'desc_tip' => true,
+			),
 
-				array(
-					'title'    => __( 'Secondary Color', 'woocommerce' ),
-					/* translators: %s: default color */
-					'desc'     => sprintf( __( 'Secondary Color used in the frontend. Default: %s.', 'woocommerce' ), '<code>#30bf76</code>' ),
-					'id'       => 'wcdp_secondary_color',
-					'type'     => 'color',
-					'css'      => 'width:6em;',
-					'default'  => '#30bf76',
-					'autoload' => false,
-					'desc_tip' => true,
-				),
+			array(
+				'title'    => __( 'Error Color', 'woocommerce' ),
+				// translators: %s: default color //
+				'desc'     => sprintf( __( 'Error Color used in the frontend. Default: %s.', 'woocommerce' ), '<code>#de0000</code>' ),
+				'id'       => 'wcdp_error_color',
+				'type'     => 'color',
+				'css'      => 'width:6em;',
+				'default'  => '#de0000',
+				'autoload' => false,
+				'desc_tip' => true,
+			),
 
-				array(
-					'title'    => __( 'Error Color', 'woocommerce' ),
-					// translators: %s: default color //
-					'desc'     => sprintf( __( 'Error Color used in the frontend. Default: %s.', 'woocommerce' ), '<code>#de0000</code>' ),
-					'id'       => 'wcdp_error_color',
-					'type'     => 'color',
-					'css'      => 'width:6em;',
-					'default'  => '#de0000',
-					'autoload' => false,
-					'desc_tip' => true,
-				),
-
-				array(
-					'type' => 'sectionend',
-					'id'   => 'wcdp_section_design',
-				),
+			array(
+				'type' => 'sectionend',
+				'id'   => 'wcdp_section_design',
+			),
 
 			array(
 				'title' => __( 'Support', 'wc-donation-platform' ),

@@ -3,8 +3,8 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.7
-Tested up to: 5.9
-Stable tag: 1.2.1
+Tested up to: 5.9.3
+Stable tag: 1.2.2
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -121,7 +121,7 @@ Hands down, WooCommerce is the most mature eCommerce solution. It is supported b
 
 So it doesn't make sense to reprogram all the features already implemented by WooCommerce for a donation and fundraising platform again and worse. Instead, you just customize the look and in some places the behavior of WooCommerce and you get a comprehensive fundraising, crowdfunding, crowdsourcing and donation solution for your charity.
 
-=== Problems? Feel free to open a ticket in the [WordPress Support Forum](https://wordpress.org/support/plugin/wc-donation-platform/). ===
+**Problems? Feel free to open a ticket in the [WordPress Support Forum](https://wordpress.org/support/plugin/wc-donation-platform/).**
 
 == Screenshots ==
 1. Highly converting donation form for your online fundraising.
@@ -160,6 +160,18 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.2.2 =
+new feature: support for multiple products in cart, activate in general donation settings
+new feature: support for grouped products
+tweak: fee recovery: show info message if no active payment methods found
+tweak: show Transaction costs fee even when the fee is 0
+tweak: update supported WP version to 5.9.3
+tweak: change position of fee recovery checkbox
+tweak: adjust CSS of fee recovery checkbox
+tweak: code maintainability improvements
+tweak: add README.md for GitHub
+fix: readme link error
 
 = 1.2.1 2022-03-17 =
 new feature: Fee Recovery: give your donors the option to cover the processing fees on their donations
@@ -207,14 +219,12 @@ fix: donation selection not displayed in product settings
 fix: asort on null in wcdp_product_settings.php
 
 = 1.1.0 2021-12-13 =
-
 new feature: new Design for wcdp_progress Shortcode
 new feature: set fundraising goal and campaign end per product
 tweak: sort donation amount options
 tweak: some small fixes and enhancements
 
 = 1.0.9 2021-11-23 =
-
 new feature: Shortcode wcdp_progress to display a donation progress bar
 new feature: new donation form design (Style 5)
 fix: Settings Link not working
@@ -224,11 +234,9 @@ tweak: readme revised
 = 1.0.8 2021-11-23 =
 = 1.0.7 2021-11-23 =
 = 1.0.6 2021-11-23 =
-
 Faulty updates. Please do not install these versions
 
 = 1.0.5 2021-11-11 =
-
 fix: textdomain not loading properly
 fix: i18n of "Other" string
 fix: Amount Suggestions field not hiding properly
@@ -239,28 +247,19 @@ tweak: push supported WC version to 5.9
 tweak: push supported WP version to 5.8.1
 
 = 1.0.4 2021-11-02 =
-
 fix: Popup does not open if plugin/theme prevents adding #wcdp-form
 tweak: Increase the default value for the maximum donation amount to 50,000
 
-
 = 1.0.3 2021-10-16 =
-
 tweak: rename from "Donation Platform for WooCommerce" to "Donation Platform for WooCommerce: Fundraising & Donation Management"
 tweak: push WC supported version to 5.8.0
 fix: text-domain error and i18n warning
 
-
 = 1.0.2 2021-10-10 =
-
 fix: general settings not working
 
-
 = 1.0.1 2021-10-09 =
-
 small fixes
 
-
 = 1.0.0 =
-
 Initial release
