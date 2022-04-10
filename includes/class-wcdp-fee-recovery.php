@@ -59,34 +59,48 @@ class WCDP_Fee_Recovery
 	 * @return void
 	 */
 	function add_transaction_fee_cart() {
-		if (!is_null(WC()->cart) && isset($_POST['post_data']) && strpos($_POST['post_data'], 'wcdp_fee_recovery=wcdp_fee_recovery')) {
+		if (is_admin() && !defined('DOING_AJAX') || is_null(WC()->cart)) {
+			return;
+		}
+		if (isset($_POST['post_data']) && strpos($_POST['post_data'], 'wcdp_fee_recovery=wcdp_fee_recovery')) {
 			$post_data = $_POST['post_data'];
 			$pos = strpos($post_data, 'payment_method=');
 			if ($pos) {
 				$payment_method = sanitize_key(strtok(substr($post_data, $pos+15), '&'));
-				$wcdp_fee_recovery_values = json_decode(get_option( 'wcdp_fee_recovery_values', '{}' ), true);
-
-				if (isset($wcdp_fee_recovery_values[$payment_method])) {
-					$value_fixed = 0;
-					$value_variable = 0;
-					if (isset($wcdp_fee_recovery_values[$payment_method]['fixed']) &&
-						$wcdp_fee_recovery_values[$payment_method]['fixed'] >= 0) {
-						$value_fixed = (float) $wcdp_fee_recovery_values[$payment_method]['fixed'];
-					}
-					if (isset($wcdp_fee_recovery_values[$payment_method]['variable']) &&
-						$wcdp_fee_recovery_values[$payment_method]['variable'] >= 0 &&
-						$wcdp_fee_recovery_values[$payment_method]['variable'] <= 100
-					) {
-						$value_variable = (float) $wcdp_fee_recovery_values[$payment_method]['variable'];
-					}
-
-					if ($value_fixed >= 0 && $value_variable >= 0) {
-						$amount = WC()->cart->get_cart_contents_total();
-						$fee = $value_fixed + $value_variable/100 * $amount;
-						WC()->cart->add_fee(__('Transaction costs', 'wc-donation-platform'), $fee);
-					}
-				}
+			} else {
+				$payment_method = '';
 			}
+		} else if (isset($_POST['wcdp_fee_recovery']) && isset($_POST['payment_method'])) {
+			$payment_method = sanitize_key($_POST['payment_method']);
+		} else {
+			return;
+		}
+		//error_log(json_encode($_REQUEST));
+		$wcdp_fee_recovery_values = json_decode(get_option( 'wcdp_fee_recovery_values', '{}' ), true);
+
+		if (isset($wcdp_fee_recovery_values[$payment_method])) {
+			$value_fixed = 0;
+			$value_variable = 0;
+			if (isset($wcdp_fee_recovery_values[$payment_method]['fixed']) &&
+				$wcdp_fee_recovery_values[$payment_method]['fixed'] >= 0) {
+				$value_fixed = (float) $wcdp_fee_recovery_values[$payment_method]['fixed'];
+			}
+			if (isset($wcdp_fee_recovery_values[$payment_method]['variable']) &&
+				$wcdp_fee_recovery_values[$payment_method]['variable'] >= 0 &&
+				$wcdp_fee_recovery_values[$payment_method]['variable'] <= 100
+			) {
+				$value_variable = (float) $wcdp_fee_recovery_values[$payment_method]['variable'];
+			}
+			if ($value_fixed < 0) {
+				$value_fixed = 0;
+			}
+			if ($value_variable < 0) {
+				$value_variable = 0;
+			}
+
+			$amount = WC()->cart->get_cart_contents_total();
+			$fee = $value_fixed + $value_variable/100 * $amount;
+			WC()->cart->add_fee(__('Transaction costs', 'wc-donation-platform'), $fee);
 		}
 	}
 
