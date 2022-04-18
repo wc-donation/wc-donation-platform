@@ -87,17 +87,15 @@ jQuery( function( $ ) {
 	let ecpresstime = 0;
 	let currentprice = 0;
 	$( '.wcdp-body' ).on('input blur keyup paste change', function (){
-		if (currentprice != $('#wcdp-donation-amount').val()) {
-			$('.wcdp-express-amount').val($('#wcdp-donation-amount').val());
-			currentprice = $('#wcdp-donation-amount').val();
-			ecpresstime++;
-			setTimeout(function() {
-				ecpresstime--;
-				if (ecpresstime == 0) {
-					$(document.body).trigger('woocommerce_variation_has_changed');
-				}
-			}, 500);
-		}
+		$('.wcdp-express-amount').val($('#wcdp-donation-amount').val());
+		ecpresstime++;
+		setTimeout(function() {
+			ecpresstime--;
+			if (ecpresstime == 0 && currentprice != $('#wcdp-donation-amount').val()) {
+				currentprice = $('#wcdp-donation-amount').val();
+				$(document.body).trigger('woocommerce_variation_has_changed');
+			}
+		}, 500);
 	});
 
     //Next and back buttons
