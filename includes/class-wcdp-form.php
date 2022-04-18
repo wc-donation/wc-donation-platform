@@ -42,9 +42,8 @@ class WCDP_Form
 		}
 
         //Register CSS & JS
-		//TODO
-        wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp-style.css', $cssdeps, WCDP_VERSION );
-        wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp-script.js', $jsdeps, WCDP_VERSION );
+        wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp.min.css', $cssdeps, WCDP_VERSION );
+        wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp.min.js', $jsdeps, WCDP_VERSION );
 
         //Only enqueue if needed
         if($this->wcdp_has_donation_form()) {
