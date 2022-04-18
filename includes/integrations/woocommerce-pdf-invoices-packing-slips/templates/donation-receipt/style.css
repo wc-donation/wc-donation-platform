@@ -300,12 +300,12 @@ table.totals tr.payment_method {
 	text-align: right;
 }
 .frame-banner {
-	margin: 4% 4% 0 4%;
+	margin: 4% 4% 0;
 	border: 0.8cm solid white;
 	height: 80%;
 }
 .banner {
-	margin: -0.8cm 4% 0 4%;
+	margin: -0.8cm 4% 0;
 	width: 92%;
 	background-color: white;
 	text-align: center;
@@ -315,7 +315,7 @@ table.totals tr.payment_method {
 .center-table {
 	width: 50%;
 	text-align: center;
-	padding: 0.8cm 0 0.8cm 0;
+	padding: 0.8cm 0;
 }
 .right-table, .left-table {
 	width: 25%;

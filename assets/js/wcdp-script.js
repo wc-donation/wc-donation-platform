@@ -1,4 +1,5 @@
 jQuery( function( $ ) {
+	let currentFormData;
     //Send donation selection form
     function wcdp_submit(step) {
         if (check_validity('#wcdp-ajax-send')) {
@@ -60,19 +61,27 @@ jQuery( function( $ ) {
 
     $('#wcdp-ajax-send').on('submit', function(e){
 		e.preventDefault();
-		wcdp_submit('2');
+		if (currentFormData != $("#wcdp-ajax-send").serialize()) {
+			currentFormData = $("#wcdp-ajax-send").serialize();
+			wcdp_submit('2');
+		} else {
+			wcdp_steps(2);
+		}
 	});
 
     //Submit step 1 form automatically for style 3
 	let time = 0;
 	$( '.wcdp-body > #wcdp-ajax-send' ).on('input blur keyup paste change', function (){
-        time++;
-        setTimeout(function() {
-            time--;
-            if (time == 0) {
-                wcdp_submit();
-            }
-        }, 1300);
+		if (currentFormData != $("#wcdp-ajax-send").serialize()) {
+			time++;
+			currentFormData = $("#wcdp-ajax-send").serialize();
+			setTimeout(function() {
+				time--;
+				if (time == 0) {
+					wcdp_submit();
+				}
+			}, 1300);
+		}
     });
 
 	let ecpresstime = 0;
@@ -98,7 +107,12 @@ jQuery( function( $ ) {
 		if (currentStep != 1) {
             wcdp_steps(step);
         } else if (step != 1) {
-            wcdp_submit(step);
+			if (currentFormData != $("#wcdp-ajax-send").serialize()) {
+				currentFormData = $("#wcdp-ajax-send").serialize();
+				wcdp_submit(step);
+			} else {
+				wcdp_steps(step);
+			}
         }
     });
 
@@ -141,6 +155,7 @@ jQuery( function( $ ) {
 		wcdp_open(false);
 		try {
 			if ($('.wcdp-choose-donation')[0].checkValidity()) {
+				currentFormData = $("#wcdp-ajax-send").serialize();
 				wcdp_submit();
 			}
 		} finally {

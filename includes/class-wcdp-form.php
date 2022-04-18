@@ -42,8 +42,9 @@ class WCDP_Form
 		}
 
         //Register CSS & JS
-        wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp.min.css', $cssdeps, WCDP_VERSION );
-        wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp.min.js', $jsdeps, WCDP_VERSION );
+		//TODO
+        wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp-style.css', $cssdeps, WCDP_VERSION );
+        wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp-script.js', $jsdeps, WCDP_VERSION );
 
         //Only enqueue if needed
         if($this->wcdp_has_donation_form()) {
@@ -424,6 +425,34 @@ class WCDP_Form
 		}
 		$html .= '</ul>';
 		return apply_filters( 'wcdp_generate_fieldset_args_html', $html, $args );
+	}
+
+	/**
+	 * echo css block with wcdp color variables
+	 * @return void
+	 */
+	public static function define_ccs_variables() {
+		$wcdp_main_color = get_option('wcdp_secondary_color', '#30bf76');
+		$wcdp_main_color_2 = get_option('wcdp_main_color', '#00753a');
+		$wcdp_main_color_3 = get_option('wcdp_error_color', '#de0000');
+		?>
+		<style id="wcdp-css">
+			:root{
+				--wcdp-main: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
+				--wcdp-main-2: <?php echo sanitize_hex_color($wcdp_main_color_2); ?>;
+				--wcdp-main-3: <?php echo sanitize_hex_color($wcdp_main_color_3); ?>;
+				--wcdp-step-2: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
+				--wcdp-step-3: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
+				--label-inactive: LightGray;
+				--label-inactive-hover: #b5b5b5;
+				--label-text: black;
+				--label-text-checked: white;
+				--background-color: white;
+				--overlay-color: rgba(0, 0, 0, 0.8);
+				--controls: black;
+			}
+		</style>
+		<?php
 	}
 }
 

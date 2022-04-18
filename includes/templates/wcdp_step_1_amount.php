@@ -13,12 +13,17 @@ $max_range = (float) get_option('wcdp_max_range', 500);
 $value_donation_amount = "";
 $currency_symbol = get_woocommerce_currency_symbol();
 
+//Preselected donation amount
 if (isset($_REQUEST["wcdp-donation-amount"])) {
     $value_donation_amount = floatval($_REQUEST["wcdp-donation-amount"]);
+} else {
+	$value_donation_amount = $product->get_price();
+	if (!WCDP_Form::check_donation_amount($value_donation_amount)) {
+		$value_donation_amount = '';
+	}
 }
 
 $wcdp_price_field = sprintf( get_woocommerce_price_format(), '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', '<input type="number" class="wcdf-input-field validate-required %s" id="wcdp-donation-amount" name="wcdp-donation-amount" step="%s" min="%s" max="%s" value="%s" required>' );
-/** @var float $max_donation_amount */
 $wcdp_price_field = sprintf($wcdp_price_field, '%s %s', $wcdp_price_decimals, $min_donation_amount, $max_donation_amount, $value_donation_amount);
 
 if ($value['style'] != 3 && $value['style'] != 4) {
@@ -32,6 +37,7 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 	<?php
 	if ($amount_layout == 3) { //Expert design - action wcdp_custom_html_amount
 		do_action('wcdp_custom_html_amount');
+		do_action('wcdp_custom_html_amount_' . $value['id']);
 	} else if ($amount_layout == 2) { //Input box with range slider ?>
 		<div class="wcdp-amount">
 			<label for="wcdp-donation-amount">
@@ -53,7 +59,7 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 		$price_format = get_woocommerce_price_format();
 
 		$args = array(
-				'ul-id'				=> 'wcdp_amount',//'wcdp_suggestions',
+				'ul-id'				=> 'wcdp_amount',
 				'ul-class'			=> 'wcdp_options',
 				'name'				=> 'donation-amount',
 				'options'			=> array()
@@ -62,11 +68,15 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 		if (!is_null($suggestions)) {
 			foreach ($suggestions as $suggestion){
 				if (is_numeric($suggestion) && $suggestion > 0) {
-					$args['options'][] = array(
-							'input-id' => 'wcdp_amount_' . str_replace('.', '-', $suggestion),//'wcdp_value_' . str_replace ('.', '-', $suggestion),
+					$option = array(
+							'input-id' => 'wcdp_amount_' . str_replace('.', '-', $suggestion),
 							'input-value' => $suggestion,
-							'label-text' => sprintf($price_format, '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', $suggestion)
+							'label-text' => sprintf($price_format, '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', $suggestion),
 					);
+					if ($suggestion == $value_donation_amount){
+						$option['input-checked'] = true;
+					}
+					$args['options'][] = $option;
 				}
 			}
 		}

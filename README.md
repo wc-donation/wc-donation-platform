@@ -7,16 +7,32 @@
 </div>
 
 <p align="center">
-	<img alt="WordPress Plugin Rating" src="https://img.shields.io/wordpress/plugin/stars/wc-donation-platform?color=0c4a0d">
-	<img alt="WordPress Plugin Downloads" src="https://img.shields.io/wordpress/plugin/dt/wc-donation-platform?color=0c4a0d">
-	<img alt="WordPress Plugin Version" src="https://img.shields.io/wordpress/plugin/v/wc-donation-platform?color=0c4a0d">
+	<a href="https://wordpress.org/plugins/wc-donation-platform/" target="_blank">
+		<img alt="WordPress Plugin Rating" src="https://img.shields.io/wordpress/plugin/stars/wc-donation-platform?color=0c4a0d">
+	</a>
+	<a href="https://wordpress.org/plugins/wc-donation-platform/" target="_blank">
+		<img alt="WordPress Plugin Downloads" src="https://img.shields.io/wordpress/plugin/dt/wc-donation-platform?color=0c4a0d">
+	</a>
+	<a href="https://wordpress.org/plugins/wc-donation-platform/" target="_blank">
+		<img alt="WordPress Plugin Version" src="https://img.shields.io/wordpress/plugin/v/wc-donation-platform?color=0c4a0d">
+	</a>
+	<br>
+	<a href="https://wordpress.org/plugins/wc-donation-platform/" target="_blank">
+		<img alt="WordPress Plugin Required PHP Version" src="https://img.shields.io/wordpress/plugin/required-php/wc-donation-platform?color=0c4a0d">
+	</a>
+	<a href="https://wordpress.org/plugins/wc-donation-platform/" target="_blank">
+		<img alt="WordPress Plugin: Tested WP Version" src="https://img.shields.io/wordpress/plugin/tested/wc-donation-platform?color=0c4a0d">
+	</a>
+	<a href="https://wordpress.org/plugins/wc-donation-platform/" target="_blank">
+		<img alt="GitHub" src="https://img.shields.io/github/license/jonas-hoebenreich/wc-donation-platform?color=0c4a0d">
+	</a>
 <br>
-	<img alt="WordPress Plugin Required PHP Version" src="https://img.shields.io/wordpress/plugin/required-php/wc-donation-platform?color=0c4a0d">
-	<img alt="WordPress Plugin: Tested WP Version" src="https://img.shields.io/wordpress/plugin/tested/wc-donation-platform?color=0c4a0d">
-	<img alt="GitHub" src="https://img.shields.io/github/license/jonas-hoebenreich/wc-donation-platform?color=0c4a0d">
-<br>
-	<img alt="Code Review" src="https://potrivit.com/plugin/wc-donation-platform/badge.svg"/>
-	<img src="https://www.codefactor.io/repository/github/jonas-hoebenreich/wc-donation-platform/badge" alt="CodeFactor">
+	<a href="https://potrivit.com/plugin/wc-donation-platform/" target="_blank">
+		<img alt="Code Review" src="https://potrivit.com/plugin/wc-donation-platform/badge.svg"/>
+	</a>
+	<a href="https://www.codefactor.io/repository/github/jonas-hoebenreich/wc-donation-platform/" target="_blank">
+		<img src="https://www.codefactor.io/repository/github/jonas-hoebenreich/wc-donation-platform/badge" alt="CodeFactor">
+	</a>
 </p>
 
 ___
@@ -105,7 +121,7 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Fundraising Marketing**: Newsletter tools such as Mailchimp or Mailpoet can be integrated into the donation form.
 * **Analyse your Fundraising Success**: Use analysis tools such as Google Analytics or Matomo and more to optimize the donation process.
 * **Shipping Providers**: If you want to send a gift to donors as a thank you, you can use the existing integrations with shipping services.
-* **Social Proof Fundraising**: Increase fundraising engagement by using Fomo plugins, Social media integrations and more.
+* **Social Proof Fundraising**: Increase fundraising engagement by using Fomo (Fear of missing out, aka. "Only X items left") plugins, Social media integrations and more.
 * **Credit Card Donations**: Accept donations through credit cards with Stripe or benefit from Revolut’s low rates.
 * **PayPal Donations**: Use the PayPal integration out of the box and reach the hundreds of millions of potential PayPal donors.
 * **Direct Bank Transfer Donations**: The cheapest transaction fees and the great popularity make bank transfers extremely interesting as a payment method.
@@ -145,7 +161,7 @@ Probably. I cannot test every WooCommerce extension out there. Donation Platform
 
 #### Does Donation Platform for WooCommerce: Fundraising & Donation Management support every WooCommerce feature?
 
-No. For now it primarily focuses on customer facing behaviour and appearance that is crucial for the donation & fundraising platform.
+No. For now, it primarily focuses on customer facing behaviour and appearance that is crucial for the donation & fundraising platform.
 
 #### Why is only one donation form allowed per page?
 

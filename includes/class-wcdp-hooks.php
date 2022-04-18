@@ -239,7 +239,7 @@ class WCDP_Hooks
     }
 
     /**
-     * Hide Hide Place Order button when cart is empty
+     * Hide Place Order button when cart is empty
      *
      * @param $html
      * @return string|string[]
@@ -276,6 +276,10 @@ class WCDP_Hooks
      * Add donation selection on checkout page
      */
     public function wcdp_before_checkout_form() {
+		//insert css variables style block
+		WCDP_FORM::define_ccs_variables();
+
+		//add donation form
         if (isset($_REQUEST['postid']) && is_checkout()) {
             $id = intval($_REQUEST['postid']);
 
@@ -325,7 +329,7 @@ class WCDP_Hooks
     }
 
     /**
-     * Turn Add to cart button into a learn more button
+     * Turn Add to cart button into a "learn more" button
      * Filters the Add to Cart button
      *
      * @param $html

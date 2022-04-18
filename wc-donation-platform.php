@@ -4,7 +4,7 @@
  * Plugin URI: https://wcdp.jonh.eu/
  * Description: Donation Platform for WooCommerce unlocks the power of WooCommerce for your online fundraising & crowdfunding.
  * Author: Jonas Höbenreich
- * Version: 1.2.3
+ * Version: 1.2.4
  * Author URI: https://www.jonh.eu/
  * Plugin URI:  https://wcdp.jonh.eu/
  * License: GNU General Public License v3.0
@@ -12,14 +12,14 @@
  * Text Domain: wc-donation-platform
  * Domain Path: /languages
  * WC requires at least: 4.0.0
- * WC tested up to: 6.3.1
+ * WC tested up to: 6.4.1
 */
 
 if(!defined('ABSPATH')) exit;
 
 define( 'WCDP_DIR', dirname(__FILE__).'/' );
 define( 'WCDP_DIR_URL', plugin_dir_url( __FILE__ ) );
-const WCDP_VERSION = '1.2.3';
+const WCDP_VERSION = '1.2.4';
 
 /**
  * Check if WooCommerce is active
@@ -40,10 +40,7 @@ if ( !class_exists( 'WCDP' ) ) {
      * Class WCDP
      */
     class WCDP {
-        public static $wc_minimum_supported_version = '4.0.0';
-//        public $wcdp_filters;
-//        public $wcdp_product;
-//        public $wcdp_form;
+        public static string $wc_minimum_supported_version = '4.0.0';
 
         /**
          * WCDP constructor.
@@ -138,7 +135,8 @@ if ( !class_exists( 'WCDP' ) ) {
          *
          * @return array
          */
-        public static function plugin_row_meta( $links, $file ) {
+        public static function plugin_row_meta( $links, $file ): array
+		{
             if (strpos( $file, basename(__FILE__) )) {
                 $row_meta = array(
                     'docs'    => '<a href="' . esc_url( 'https://wcdp.jonh.eu/documentation/' ) . '" aria-label="' . esc_attr__( 'View Documentation of Donation Platform for WooCommerce', 'wc-donation-platform' ) . '">' . esc_html__( 'Documentation', 'wc-donation-platform' ) . '</a>',

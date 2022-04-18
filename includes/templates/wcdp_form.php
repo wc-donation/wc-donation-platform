@@ -4,26 +4,7 @@
  */
 
 if(!defined('ABSPATH')) exit;
-    $wcdp_main_color = get_option('wcdp_secondary_color', '#30bf76');
-	$wcdp_main_color_2 = get_option('wcdp_main_color', '#00753a');
-	$wcdp_main_color_3 = get_option('wcdp_error_color', '#de0000');
-    ?>
-    <style id="wcdp-css">
-        :root{
-            --wcdp-main: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-            --wcdp-main-2: <?php echo sanitize_hex_color($wcdp_main_color_2); ?>;
-            --wcdp-main-3: <?php echo sanitize_hex_color($wcdp_main_color_3); ?>;
-            --wcdp-step-2: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-            --wcdp-step-3: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-            --label-inactive: LightGray;
-            --label-inactive-hover: #b5b5b5;
-            --label-text: black;
-            --label-text-checked: white;
-            --background-color: white;
-			--overlay-color: rgba(0, 0, 0, 0.8);
-            --controls: black;
-        }
-    </style>
+?>
 
 <noscript>
     <ul class="woocommerce-error" role="alert">
@@ -70,7 +51,7 @@ if(!defined('ABSPATH')) exit;
 
     switch($value['style']) {
         case 2:
-            //Style 2: one page form
+            //Style 2: one-page form
             include_once 'styles/wcdp_form_style_2.php';
             break;
         case 3:
@@ -91,6 +72,7 @@ if(!defined('ABSPATH')) exit;
                 include_once 'styles/wcdp_form_style_checkout.php';
                 break;
             }
+			//no break here
         default:
             //Default Style: 3 steps, with progress bar
             include_once 'styles/wcdp_form_style_1.php';

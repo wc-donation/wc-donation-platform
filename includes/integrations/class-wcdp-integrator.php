@@ -28,6 +28,10 @@ class WCDP_Integrator
 			include_once 'express-checkout/class-wcdp-express-checkout.php';
 			new WCDP_Express_Checkout();
 		}
+		if ($paypal_active) {
+			//PayPal Payment Gateway does not load with an empty checkout
+			add_filter('woocommerce_cart_get_cart_contents_total', 'WCDP_Integrator::cart_contents_total', 10, 1);
+		}
 
 		//Integration with Subscriptions for WooCommerce
 		//https://wordpress.org/plugins/subscriptions-for-woocommerce/
@@ -48,5 +52,18 @@ class WCDP_Integrator
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * PayPal Payment Plugin only loads when the cart total != 0
+	 * @param $total
+	 * @return float|mixed
+	 */
+	public static function cart_contents_total($total) {
+		if ($total == 0 && WCDP_FORM::wcdp_has_donation_form()) {
+			//Return very small amount (rounded to 0 in checkout)
+			return 4.9E-324;
+		}
+		return $total;
 	}
 }

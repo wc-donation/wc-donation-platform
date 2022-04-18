@@ -75,7 +75,6 @@ class WCDP_Fee_Recovery
 		} else {
 			return;
 		}
-		//error_log(json_encode($_REQUEST));
 		$wcdp_fee_recovery_values = json_decode(get_option( 'wcdp_fee_recovery_values', '{}' ), true);
 
 		if (isset($wcdp_fee_recovery_values[$payment_method])) {
