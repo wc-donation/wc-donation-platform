@@ -169,7 +169,7 @@ tweak: update supported WC version to 6.4.1
 fix: PayPal Gateway not working #19
 fix: CSS variables not defined under certain circumstances
 
-= 1.2.3 2022-04-20 =
+= 1.2.3 2022-04-10 =
 new feature: support for multiple products in cart, activate in general donation settings
 new feature: support for grouped products
 tweak: fee recovery: show info message if no active payment methods found

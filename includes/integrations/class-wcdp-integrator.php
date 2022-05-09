@@ -9,10 +9,15 @@ class WCDP_Integrator
      * Bootstraps the class and hooks required actions & filters
      */
     public static function init() {
+		$active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
+
         //Integration with WooCommerce Subscriptions
         //https://woocommerce.com/products/woocommerce-subscriptions/
-        include_once 'woocommerce-subscriptions/class-wcdp-subscriptions.php';
-        WCDP_Subscriptions::init();
+		$subscriptions_active = in_array('woocommerce-subscriptions/woocommerce-subscriptions.php', $active_plugins);
+		if ($subscriptions_active) {
+			include_once 'woocommerce-subscriptions/class-wcdp-subscriptions.php';
+			WCDP_Subscriptions::init();
+		}
 
         //Integration with WooCommerce PDF Invoices & Packing Slips
         //https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/
@@ -22,8 +27,8 @@ class WCDP_Integrator
 		//Add support for Stripe & PayPal Express Checkout
 		//https://wordpress.org/plugins/woocommerce-gateway-stripe/
 		//https://wordpress.org/plugins/woocommerce-paypal-payments/
-		$stripe_active = in_array('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php', apply_filters('active_plugins', get_option('active_plugins')));
-		$paypal_active = in_array('woocommerce-paypal-payments/woocommerce-paypal-payments.php', apply_filters('active_plugins', get_option('active_plugins')));
+		$stripe_active = in_array('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php', $active_plugins);
+		$paypal_active = in_array('woocommerce-paypal-payments/woocommerce-paypal-payments.php', $active_plugins);
 		if ($stripe_active || $paypal_active) {
 			include_once 'express-checkout/class-wcdp-express-checkout.php';
 			new WCDP_Express_Checkout();
@@ -37,6 +42,13 @@ class WCDP_Integrator
 		//https://wordpress.org/plugins/subscriptions-for-woocommerce/
 		include_once 'subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php';
 		WCDP_Subscriptions_For_WooCommerce::init();
+
+		$polylang_active = in_array('polylang/polylang.php', $active_plugins);
+		if ($polylang_active) {
+			include_once 'polylang/class-wcdp-polylang.php';
+			//update donation total revenue for translated products
+			add_filter('wcdp_update_product_revenue', 'WCDP_Polylang::product_revenue', 10, 2);
+		}
     }
 
 	/**

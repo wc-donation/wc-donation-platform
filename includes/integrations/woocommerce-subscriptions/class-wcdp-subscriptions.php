@@ -9,34 +9,28 @@ if(!defined('ABSPATH')) exit;
 
 class WCDP_Subscriptions
 {
-    private static $subscriptions_active;
-
     /**
      * Bootstraps the class and hooks required actions & filters
      */
     public static function init() {
-        $subscriptions_active = in_array('woocommerce-subscriptions/woocommerce-subscriptions.php', apply_filters('active_plugins', get_option('active_plugins')));
+ 		//add_filter('woocommerce_subscriptions_product_price_string', 'WCDP_Subscriptions::product_price_string', 10, 1);
+		add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
 
-        if ($subscriptions_active) {
-            //add_filter('woocommerce_subscriptions_product_price_string', 'WCDP_Subscriptions::product_price_string', 10, 1);
-            add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
+		//Filter specific WC Subscription templates to WCDP templates
+		add_filter( 'wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5 );
 
-            //Filter specific WC Subscription templates to WCDP templates
-            add_filter( 'wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5 );
+		//Rename Subscriptions Tab on My Account page
+		add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1 );
 
-            //Rename Subscriptions Tab on My Account page
-            add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1 );
+		//Remove Subscription Info message on checkout page
+		add_filter( 'woocommerce_subscriptions_thank_you_message', '__return_empty_string' );
 
-            //Remove Subscription Info message on checkout page
-            add_filter( 'woocommerce_subscriptions_thank_you_message', '__return_empty_string' );
+		//Remove Subscription Info message on checkout page
+		add_filter( 'woocommerce_add_message', 'WCDP_Subscriptions::add_message' );
 
-            //Remove Subscription Info message on checkout page
-            add_filter( 'woocommerce_add_message', 'WCDP_Subscriptions::add_message' );
-
-			//TODO Find Better solution for Edit Recurring Donation
-			//Remove feature to frontend subscription switching
-			add_filter( 'woocommerce_subscriptions_can_item_be_switched_by_user', '__return_false' );
-        }
+		//TODO Find Better solution for Edit Recurring Donation
+		//Remove feature to frontend subscription switching
+		add_filter( 'woocommerce_subscriptions_can_item_be_switched_by_user', '__return_false' );
     }
 
     /**

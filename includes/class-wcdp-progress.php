@@ -30,7 +30,7 @@ class WCDP_Progress
 		foreach ( $order->get_items() as $item ) {
 			$revenue = get_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
 			//Recalculate the Revenue only if it has not been calculated recently (Avoid performance problems during peak loads)
-			if (!$revenue || time() - $revenue[0]['time'] > 15) {
+			if (!$revenue || time() - $revenue[0]['time'] > 30) {
 				$this->updateTotalRevenueOfProduct($item->get_product_id());
 			}
 		}
@@ -131,7 +131,7 @@ class WCDP_Progress
 	 */
 	private function updateTotalRevenueOfProduct($productid) {
 		global $wpdb;
-		$query ="SELECT
+		$query = "SELECT
                         SUM(ltoim.meta_value) as revenue
                     FROM
                         {$wpdb->prefix}woocommerce_order_itemmeta wcoim
@@ -147,10 +147,12 @@ class WCDP_Progress
 		$result = $wpdb->get_row($wpdb->prepare( $query, $productid ), ARRAY_A);
 
 		if (!is_null($result) && isset($result['revenue'])) {
-			update_post_meta( $productid, 'wcdp_total_revenue', array('revenue' => (float) $result['revenue'], 'time' => time()));
+			$revenue = $result['revenue'];
 		} else {
-			update_post_meta( $productid, 'wcdp_total_revenue', array('revenue' => 0, 'time' => time()));
+			$revenue = 0;
 		}
+		$revenue = (float) apply_filters('wcdp_update_product_revenue', $revenue, $productid);
+		update_post_meta( $productid, 'wcdp_total_revenue', array('revenue' => $revenue, 'time' => time()));
 	}
 
 	private function get_human_time_diff( $timestamp ) {
