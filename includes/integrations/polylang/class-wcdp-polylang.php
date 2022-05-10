@@ -10,15 +10,6 @@ if(!defined('ABSPATH')) exit;
 class WCDP_Polylang
 {
 	/**
-	 * Bootstraps the class and hooks required actions & filters
-	 */
-	public static function init() {
-		//Recalculate Donation Total for translated products
-
-
-	}
-
-	/**
 	 * Sum up the total for translated products
 	 * @param $revenue
 	 * @param $productid
