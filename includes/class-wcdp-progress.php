@@ -27,13 +27,15 @@ class WCDP_Progress
 	 * @return void
 	 */
 	public function update_total_revenue($orderid, $from, $to, $order) {
-		foreach ( $order->get_items() as $item ) {
-			$revenue = get_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
-			//Recalculate the Revenue only if it has not been calculated recently (Avoid performance problems during peak loads)
-			if (!$revenue || time() - $revenue[0]['time'] > 30) {
-				$this->updateTotalRevenueOfProduct($item->get_product_id());
-			}
-		}
+        if ($from == 'completed' || $to == 'completed') {
+            foreach ( $order->get_items() as $item ) {
+                $revenue = get_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
+                //Recalculate the Revenue only if it has not been calculated recently (Avoid performance problems during peak loads)
+                if (!$revenue || time() - $revenue[0]['time'] > 30) {
+                    $this->updateTotalRevenueOfProduct($item->get_product_id());
+                }
+            }
+        }
 	}
 
 	/**
