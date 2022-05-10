@@ -11,7 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-=== Donation System for Your Charity, NGO or Personal Fundraising Campaign ===
+=== Fastest Growing Donation System for Your Charity, NGO or Personal Fundraising Campaign ===
 
 [Demos](https://wcdp.jonh.eu/demos/demo-style-1/) | [Docs](https://wcdp.jonh.eu/documentation/) | [Getting Started](https://wcdp.jonh.eu/documentation/getting-started/first-steps/)
 
@@ -160,6 +160,16 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.2.5 2022-05-10 =
+new feature: add 'cheat' attribute to shortcode wcdp_progress (manipulate donation turnover by a specified amount)
+new feature: add 'addids' attribute to shortcode wcdp_progress (show the cumulated turnover of several products)
+new feature: improved support for Polylang for WooCommerce (add up turnover for translated products)
+tweak: calculate product revenue only when status change includes 'completed' (performance improvement)
+tweak: calculate product revenue no more than once in 30s (performance improvement)
+tweak: add wcdp_update_product_revenue filter to revenue calculation (revenue in db)
+tweak: add wcdp_progress_revenue filter to displayed donation turnover (revenue displayed to donors)
+fix: css color variables for shortcode wcdp_progress not set
 
 = 1.2.4 2022-04-18 =
 new feature: Set default donation amount per project
