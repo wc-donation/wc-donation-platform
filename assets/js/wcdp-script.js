@@ -72,16 +72,16 @@ jQuery( function( $ ) {
     //Submit step 1 form automatically for style 3
 	let time = 0;
 	$( '.wcdp-body > #wcdp-ajax-send' ).on('input blur keyup paste change', function (){
-		if (currentFormData != $("#wcdp-ajax-send").serialize()) {
-			time++;
-			currentFormData = $("#wcdp-ajax-send").serialize();
-			setTimeout(function() {
-				time--;
-				if (time == 0) {
-					wcdp_submit();
-				}
-			}, 1300);
-		}
+        if (currentFormData != $("#wcdp-ajax-send").serialize()) {
+            time++;
+            currentFormData = $("#wcdp-ajax-send").serialize();
+            setTimeout(function() {
+                time--;
+                if (time == 0) {
+                    wcdp_submit();
+                }
+            }, 1300);
+        }
     });
 
 	let ecpresstime = 0;

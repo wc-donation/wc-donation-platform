@@ -1,8 +1,6 @@
 <?php
 if(!defined('ABSPATH')) exit;
 
-$label = sprintf($label, wc_price($revenue), wc_price($atts['goal']));
-
 if (!defined('WCDP_PROGRESS_1')) :
 	define('WCDP_PROGRESS_1', 1);
 	?>
@@ -28,7 +26,9 @@ if (!defined('WCDP_PROGRESS_1')) :
 		font-size: 1em;
 		line-height: 2em;
 	}
-<?php endif; ?>
+<?php endif;
+$label = sprintf($label, wc_price($revenue), wc_price($atts['goal']));
+?>
 </style>
 
 <div class="wcdp-progress-style-1">
