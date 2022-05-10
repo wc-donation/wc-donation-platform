@@ -53,7 +53,9 @@ class WCDP_Progress
 		$atts = shortcode_atts( array(
 			'id'		=> -1,
 			'goal'		=> $goal_db,
-			'style'		=> 1
+			'style'		=> 1,
+            'addids'    => '',
+            'cheat'     => 0,
 		), $atts );
 
 		if (!is_numeric($atts['goal'])) {
@@ -61,6 +63,18 @@ class WCDP_Progress
 		}
 
 		$revenue = (float) $this->getTotalRevenueOfProduct($atts['id']);
+
+        //Add revenue of additional Product IDs
+        $ids = explode(",", $atts['addids']);
+        foreach ($ids as $id) {
+            $revenue += (float) $this->getTotalRevenueOfProduct($id);
+        }
+
+        //Add specified amount to revenue
+        $revenue += (float) $atts['cheat'];
+
+        $revenue = apply_filters('wcdp_progress_revenue', $revenue, $atts);
+
 		if ((float) $atts['goal'] != 0) {
 			$width = ($revenue*100) / (float) $atts['goal'];
 		} else {
