@@ -161,6 +161,9 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
+= 1.2.6 =
+tweak: check for min/max donation amount for suggestion fields
+
 = 1.2.5 2022-05-10 =
 new feature: add 'cheat' attribute to shortcode wcdp_progress (manipulate donation turnover by a specified amount)
 new feature: add 'addids' attribute to shortcode wcdp_progress (show the cumulated turnover of several products)

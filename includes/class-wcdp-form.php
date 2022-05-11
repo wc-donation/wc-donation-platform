@@ -55,9 +55,10 @@ class WCDP_Form
     /**
      * Return html of Donation Form
      * @param string $atts
-     * @return false|string|void
+     * @return string
      */
-    public static function wcdp_donation_form_shortcode($atts = array()){
+    public static function wcdp_donation_form_shortcode($atts = array()): string
+    {
         return WCDP_Form::wcdp_donation_form($atts, false);
     }
 
