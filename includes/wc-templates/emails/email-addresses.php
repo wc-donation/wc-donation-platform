@@ -29,7 +29,7 @@ $shipping   = $order->get_formatted_shipping_address();
 			<h2><?php esc_html_e( 'Donor details', 'wc-donation-platform' ); ?></h2>
 
 			<address class="address">
-				<?php echo wp_kses_post( $address ? $address : esc_html__( 'N/A', 'woocommerce' ) ); ?>
+				<?php echo wp_kses_post( $address ?: esc_html__( 'N/A', 'woocommerce' ) ); ?>
 				<?php if ( $order->get_billing_phone() ) : ?>
 					<br/><?php echo wc_make_phone_clickable( $order->get_billing_phone() ); ?>
 				<?php endif; ?>

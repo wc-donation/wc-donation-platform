@@ -63,7 +63,7 @@ class WCDP_Product_Settings
 		$product_settings = $this->product_meta_style($product_settings);
 		$product_settings = $this->product_meta_amount_selection($product_settings);
 		$product_settings = $this->product_meta_variation_styles($product_settings, $product);
-		$product_settings = $this->product_meta_fundraising_meta($product_settings, $product);
+		$product_settings = $this->product_meta_fundraising_meta($product_settings);
 
         foreach ($product_settings as $key => $value) {
             $product->update_meta_data( 'wcdp-settings[' . $key . ']', $value );

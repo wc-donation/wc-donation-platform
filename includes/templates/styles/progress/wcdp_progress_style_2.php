@@ -62,7 +62,7 @@ define('WCDP_PROGRESS_2', 1);
 	<?php if ($goal_db != '' && $goal_db > 0) : ?>
 		<div class="wcdp-progress">
 			<div class="wcdp-thermometer wcdp-thermometer-bg"></div>
-			<div class="wcdp-thermometer wcdp-thermometer-fg" style="width: <?php echo esc_attr($width);; ?>%"></div>
+			<div class="wcdp-thermometer wcdp-thermometer-fg" style="width: <?php echo esc_attr($width); ?>%"></div>
 		</div>
 	<?php endif; ?>
 </div>

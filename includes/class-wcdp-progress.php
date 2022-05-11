@@ -40,10 +40,10 @@ class WCDP_Progress
 
 	/**
 	 * Display a fundraising progress bar
-	 * @param string $atts
+	 * @param array $atts
 	 * @return string|void
 	 */
-	public function wcdp_progress($atts = '') {
+	public function wcdp_progress($atts = array()) {
 		if (!isset($atts['id'])) {
 			return esc_html__('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
 		}
@@ -111,7 +111,7 @@ class WCDP_Progress
 				}
 				@keyframes wcdp-progress {
 					0% {
-						width: 0%;
+						width: 0;
 					}
 				}
 		<?php endif;

@@ -170,6 +170,8 @@ tweak: calculate product revenue no more than once in 30s (performance improveme
 tweak: add wcdp_update_product_revenue filter to revenue calculation (revenue in db)
 tweak: add wcdp_progress_revenue filter to displayed donation turnover (revenue displayed to donors)
 tweak: update supported WC version to 6.5.0
+tweak: compatibility with php 7.1
+tweak: some code improvements
 fix: css color variables for shortcode wcdp_progress not set
 
 = 1.2.4 2022-04-18 =

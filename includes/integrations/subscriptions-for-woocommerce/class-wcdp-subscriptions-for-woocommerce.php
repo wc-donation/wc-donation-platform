@@ -64,10 +64,8 @@ class WCDP_Subscriptions_For_WooCommerce
 		}
 		$path = WCDP_DIR . 'includes/integrations/subscriptions-for-woocommerce/templates/';
 
-		switch ($template_name) {
-			case 'myaccount/mwb-show-subscription-details.php':
-				$template = $path . $template_name;
-				break;
+		if ($template_name == 'myaccount/mwb-show-subscription-details.php') {
+            $template = $path . $template_name;
 		}
 		return apply_filters( 'wcdp_get_template', $template, $template_name, $args, $template_path, $default_path );
 	}
