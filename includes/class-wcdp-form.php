@@ -12,7 +12,7 @@ class WCDP_Form
 		add_shortcode( 'wcdp_donation_form', 'WCDP_Form::wcdp_donation_form_shortcode' );
 
 		//Register & Enqueue CSS & JS files
-		add_action( 'wp_enqueue_scripts', array($this, 'wcdp_enqueue_scripts'), 15 );
+		add_action( 'wp_enqueue_scripts', array($this, 'wcdp_register_scripts'), 15 );
 
 		//Register Gutenberg Block
 		add_action( 'init',  array($this, 'wcdp_block_init') );
@@ -23,38 +23,44 @@ class WCDP_Form
 	}
 
     /**
-     * Register & Enqueue CSS & JS Files
+     * Register CSS & JS Files
      */
-    public function wcdp_enqueue_scripts() {
-        //Dependencies
-        $cssdeps = array('select2',);
-        $jsdeps = array(
-				'jquery',
-				'selectWoo',
-				'wc-checkout',
-				'select2',
-				'wc-cart',
-			);
-
-		//Require wc-password-strength-meter when necessary
-		if ( 'yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option( 'woocommerce_registration_generate_password' ) && ! is_user_logged_in() ) {
-			$jsdeps[] = 'wc-password-strength-meter';
-		}
-
-        //Register CSS & JS
+    public function wcdp_register_scripts() {
         wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp.min.css', [], WCDP_VERSION );
         wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp.min.js', [], WCDP_VERSION );
 
         //Only enqueue if needed
         if($this->wcdp_has_donation_form()) {
-            wp_enqueue_style( 'wc-donation-platform');
-            wp_enqueue_script( 'wc-donation-platform');
-            foreach ($cssdeps as $cssdep) {
-                wp_enqueue_style( $cssdep);
-            }
-            foreach ($jsdeps as $jsdep) {
-                wp_enqueue_script( $jsdep);
-            }
+            $this->wcdp_enqueue_scripts();
+        }
+    }
+
+    /**
+     * Enqueue CSS & JS Files
+     * @return void
+     */
+    public static function wcdp_enqueue_scripts() {
+        //Dependencies
+        $cssdeps = array('select2',);
+        $jsdeps = array(
+            'jquery',
+            'selectWoo',
+            'wc-checkout',
+            'select2',
+            'wc-cart',
+        );
+        //Require wc-password-strength-meter when necessary
+        if ( 'yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option( 'woocommerce_registration_generate_password' ) && ! is_user_logged_in() ) {
+            $jsdeps[] = 'wc-password-strength-meter';
+        }
+
+        wp_enqueue_style( 'wc-donation-platform');
+        wp_enqueue_script( 'wc-donation-platform');
+        foreach ($cssdeps as $cssdep) {
+            wp_enqueue_style( $cssdep);
+        }
+        foreach ($jsdeps as $jsdep) {
+            wp_enqueue_script( $jsdep);
         }
     }
 
@@ -139,6 +145,7 @@ class WCDP_Form
                     wp_enqueue_script('wc-add-to-cart-variation');
                 }
 
+                WCDP_Form::wcdp_enqueue_scripts();
                 require_once 'templates/wcdp_form.php';
             }
         }
