@@ -2,8 +2,8 @@
 Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
-Requires at least: 5.7
-Tested up to: 5.9.3
+Requires at least: 5.8
+Tested up to: 6.0
 Stable tag: 1.2.5
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -69,7 +69,7 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 === For whom is Donation Platform for WooCommerce suitable? ===
 
 * Charities
-* Individuals who Wish to Fundraise Online
+* Individuals who wish to fundraise online (for example for weddings, birthdays etc.)
 * Non-Profit Organisations (NPOs)
 * Political Fundraisers
 * Foundations, Clubs & NGOs
@@ -163,6 +163,10 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.2.6 =
 tweak: check for min/max donation amount for suggestion fields
+tweak: push supported WP version to 6.0
+tweak: push supported WC version to 6.6.1
+tweak: push required WP version to 5.8 (since WC required WP >= 5.8)
+fix: improved JS/CSS file enqueue
 
 = 1.2.5 2022-05-10 =
 new feature: add 'cheat' attribute to shortcode wcdp_progress (manipulate donation turnover by a specified amount)
