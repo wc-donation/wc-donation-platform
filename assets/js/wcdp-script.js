@@ -145,9 +145,8 @@ jQuery( function( $ ) {
     }
 
 	let express_heading_timeout = 10;
-    //trigger selectWoo/Select2, Open modal when hash is #wcdp-form
+    //initialize WCDP in Frontend
     $(document).ready(function wcdp_setup() {
-		$('.woocommerce-checkout select').selectWoo();
 		$('.wcdp-loader').hide();
 		$('.wc-donation-platform').css({"visibility": "visible", "animation-name": "wcdp-appear-animation", "animation-duration": "1s" });
 		wcdp_open(false);
@@ -156,6 +155,7 @@ jQuery( function( $ ) {
 				currentFormData = $("#wcdp-ajax-send").serialize();
 				wcdp_submit();
 			}
+            $('.woocommerce-checkout select').selectWoo();
 		} finally {
 			$( '#wcdp-ajax-send,.wcdp_options' ).trigger('change');
 			setTimeout(express_checkout_heading, express_heading_timeout);
