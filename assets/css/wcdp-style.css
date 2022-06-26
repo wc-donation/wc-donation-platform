@@ -526,3 +526,15 @@ input:disabled ~ label {
 	stroke-dashoffset: var(--stroke-dashoffset, 16px);
 	transition: stroke-dashoffset 0.4s ease 0.15s;
 }
+/* 2022 compatibility */
+#wcdp-step-3 .col2-set {
+    width: 100%;
+}
+button {
+    background-color: var(--wcdp-main-2);
+    color: var(--label-text-checked);
+    border: 0;
+    text-align: center;
+    padding: 6px 20px;
+    cursor: pointer;
+}
