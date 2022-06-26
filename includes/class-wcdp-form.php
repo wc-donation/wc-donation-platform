@@ -42,13 +42,19 @@ class WCDP_Form
 		}
 
         //Register CSS & JS
-        wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp.min.css', $cssdeps, WCDP_VERSION );
-        wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp.min.js', $jsdeps, WCDP_VERSION );
+        wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp.min.css', [], WCDP_VERSION );
+        wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp.min.js', [], WCDP_VERSION );
 
         //Only enqueue if needed
         if($this->wcdp_has_donation_form()) {
             wp_enqueue_style( 'wc-donation-platform');
             wp_enqueue_script( 'wc-donation-platform');
+            foreach ($cssdeps as $cssdep) {
+                wp_enqueue_style( $cssdep);
+            }
+            foreach ($jsdeps as $jsdep) {
+                wp_enqueue_script( $jsdep);
+            }
         }
     }
 
@@ -77,6 +83,9 @@ class WCDP_Form
             return '<p class="wcdp-error-message">' . esc_html__('Only one donation form per page allowed','wc-donation-platform' ) . '</p>';
         }
         $no_donation_form_yet = false;
+        if (!defined('WCDP_FORM')) {
+            define('WCDP_FORM', true);
+        }
 
         $value = shortcode_atts( array(
             'id'			    => 0,
@@ -152,18 +161,21 @@ class WCDP_Form
     public static function wcdp_has_donation_form(): bool
     {
         if (defined('WCDP_FORM')) {
-            return true;
+            return WCDP_FORM;
         }
 
         global $post;
         if (is_product() || is_checkout()
 			|| has_block( 'wc-donation-platform/wcdp' )
-            || (is_a( $post, 'WP_Post' )
+            || (!is_null($post)
 				&& (has_shortcode( $post->post_content, 'wcdp_donation_form') || has_shortcode( $post->post_content, 'product_page'))
 			)
 		){
-            define('WCDP_FORM', 1);
+            define('WCDP_FORM', true);
             return true;
+        }
+        if (!is_null($post)) {
+            define('WCDP_FORM', false);
         }
         return false;
     }

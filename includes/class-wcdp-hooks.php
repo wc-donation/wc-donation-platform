@@ -182,14 +182,18 @@ class WCDP_Hooks
 		if ($is_checkout) {
 			return true;
 		}
-		global $post;
-		if (defined('WCDP_FORM')  || (!is_null($post) && has_shortcode( $post->post_content, 'wcdp_donation_form' ))){
-			if (!defined('WCDP_FORM')) {
-				define('WCDP_FORM', 1);
-			}
-            return true;
+        if (defined('WCDP_FORM')) {
+            return WCDP_FORM;
         }
-        return false;
+		global $post;
+		if (has_block( 'wc-donation-platform/wcdp' )
+            || (!is_null($post) && (has_shortcode( $post->post_content, 'wcdp_donation_form') || has_shortcode( $post->post_content, 'product_page')))
+        ){
+            define('WCDP_FORM', true);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
