@@ -8,7 +8,7 @@ if(!defined('ABSPATH')) exit;
 $amount_layout = get_post_meta( $value['id'], 'wcdp-settings[0]', true );
 
 //Donation Amount field
-$wcdp_price_decimals = pow(10, wc_get_price_decimals() * (-1));
+$wcdp_price_decimals = apply_filters('wcdp_donation_amount_decimals', pow(10, wc_get_price_decimals() * (-1)));
 $max_range = (float) get_option('wcdp_max_range', 500);
 $value_donation_amount = "";
 $currency_symbol = get_woocommerce_currency_symbol();
