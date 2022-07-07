@@ -168,6 +168,7 @@ tweak: push supported WC version to 6.6.1
 tweak: push required WP version to 5.8 (since WC requires WP >= 5.8)
 fix: improved JS/CSS file enqueue
 fix: some layout issues with 2022 theme
+fix: php warning in woocommerce-subscriptions admin-payment-retry email template
 
 = 1.2.5 2022-05-10 =
 new feature: add 'cheat' attribute to shortcode wcdp_progress (manipulate donation turnover by a specified amount)

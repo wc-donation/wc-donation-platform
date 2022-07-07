@@ -6,7 +6,7 @@
  * and a retry rule has been applied to retry the payment in the future.
  *
  * forked from WooCommerce_Subscription\Templates by Prospress
- * @package WooCommerce_Subscriptions/Templates/Emails/Plain
+ * @package WooCommerce_Subscriptions/Templates/Emails/
  * @version 2.6.0
  */
 
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours' */ ?>
-<p><?php echo esc_html( sprintf( _x( 'The automatic recurring payment for donation #$1%d from %$2s has failed. The payment will be retried %3$s.', 'In customer renewal invoice email', 'wc-donation-platform' ), $order->get_order_number(), $order->get_formatted_billing_full_name(), wcs_get_human_time_diff( $retry->get_time() ) ) ); ?></p>
+<p><?php echo esc_html( sprintf( _x( 'The automatic recurring payment for donation #%d from %s has failed. The payment will be retried %3$s.', 'In customer renewal invoice email', 'wc-donation-platform' ), $order->get_order_number(), $order->get_formatted_billing_full_name(), wcs_get_human_time_diff( $retry->get_time() ) ) ); ?></p>
 <p><?php esc_html_e( 'The wc-donation-platform order is as follows:', 'wc-donation-platform' ); ?></p>
 
 <?php
