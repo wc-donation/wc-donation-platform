@@ -53,7 +53,7 @@ class WCDP_Pdf_Invoices
 	 */
 	public static function add_document_type($documents = array()) {
 		if (file_exists(WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/documents/abstract-wcpdf-order-document-methods.php')) {
-			$documents['WCDP_Donation_Receipt'] = include 'class-wcdp-thank-you-certificate.php';
+			$documents['WCDP_Donation_Receipt'] = include_once 'class-wcdp-thank-you-certificate.php';
 		}
 		return $documents;
 	}
