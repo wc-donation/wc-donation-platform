@@ -163,12 +163,14 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.2.6 =
 tweak: check for min/max donation amount for suggestion fields
-tweak: push supported WP version to 6.0
-tweak: push supported WC version to 6.6.1
+tweak: push supported WP version to 6.0.1
+tweak: push supported WC version to 6.7.0
 tweak: push required WP version to 5.8 (since WC requires WP >= 5.8)
+tweak: add fallback name for invoice
+tweak: Default error message is now added in a different way to avoid problems with some themes
 fix: improved JS/CSS file enqueue
 fix: some layout issues with 2022 theme
-fix: php warning in woocommerce-subscriptions admin-payment-retry email template
+fix: php warning in woocommerce-subscriptions/admin-payment-retry email template
 fix: include class-wcdp-thank-you-certificate at most once
 
 = 1.2.5 2022-05-10 =
