@@ -152,7 +152,24 @@ class WCDP_Form
 
         $r = ob_get_contents();
         ob_end_clean();
-        return $r;
+
+        if ($value['popup']) {
+            add_action( 'wp_footer', function() use( $r ) {
+                echo $r;
+            } );
+            if ($value['button']) {
+                return '<p>
+                    <a href="#wcdp-form">
+                        <button id="wcdp-button" type="button" class="button wcdp-modal-open">'
+                            . esc_html( "Donate now!", "wc-donation-platform" ) .
+                        '</button>
+                    </a>
+                </p>';
+            }
+            return '';
+        } else {
+            return $r;
+        }
     }
 
     private static function form_error_message($message) {

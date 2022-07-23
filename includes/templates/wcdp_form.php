@@ -13,31 +13,18 @@ if(!defined('ABSPATH')) exit;
 </noscript>
 
 <?php
-    //Encapsulate donation form in a popup?
-    if ($value['popup']) :
+//Encapsulate donation form in a popup?
+if ($value['popup']) :
 ?>
-        <?php
-        //Show a button to open the donation form?
-        if ($value['button']) :
-        ?>
-			<p>
-                <a href="#wcdp-form">
-                    <button id="wcdp-button" type="button" class="button wcdp-modal-open">
-                        <?php esc_html_e( 'Donate now!', 'wc-donation-platform' ); ?>
-                    </button>
-                </a>
-			</p>
-        <?php endif; ?>
-
-        <div id="wcdp-form" class="wcdp-overlay">
-            <div id="wcdp-cancel" class="wcdp-modal-close"></div>
-            <div id="wcdp-popup">
-                <div aria-label="<?php esc_html_e('Close', 'wc-donation-platform'); ?>" class="wcdp-close wcdp-modal-close">
-                    <svg viewbox="0 0 40 40">
-                        <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-                    </svg>
-                </div>
-                <div class="wcdp">
+    <div id="wcdp-form" class="wcdp-overlay">
+        <div id="wcdp-cancel" class="wcdp-modal-close"></div>
+        <div id="wcdp-popup">
+            <div aria-label="<?php esc_html_e('Close', 'wc-donation-platform'); ?>" class="wcdp-close wcdp-modal-close">
+                <svg viewbox="0 0 40 40">
+                    <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                </svg>
+            </div>
+            <div class="wcdp">
 <?php endif; ?>
 
 <div class="wc-donation-platform woocommerce <?php esc_attr_e($value['className']);?>" id="wcdp" style="visibility:hidden">
@@ -86,7 +73,7 @@ if(!defined('ABSPATH')) exit;
 //Closing divs of popup
 if ($value['popup']) :
     ?>
-                </div>
             </div>
         </div>
+    </div>
 <?php endif; ?>

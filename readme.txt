@@ -167,7 +167,8 @@ tweak: push supported WP version to 6.0.1
 tweak: push supported WC version to 6.7.0
 tweak: push required WP version to 5.8 (since WC requires WP >= 5.8)
 tweak: add fallback name for invoice
-tweak: Default error message is now added in a different way to avoid problems with some themes
+tweak: Default error message is now added in a different way to avoid issues with some themes
+fix: resolve popup overlay issues with some themes/page builders
 fix: improved JS/CSS file enqueue
 fix: some layout issues with 2022 theme
 fix: php warning in woocommerce-subscriptions/admin-payment-retry email template
