@@ -59,6 +59,7 @@ do_action( 'woocommerce_before_add_to_cart_form' );
 	<?php if ($has_child): ?>
 	  	data-product_variations="<?php echo $variations_attr;?>"
 	<?php endif; ?>
+        wcdp-error-default="<?php echo _wp_specialchars( wp_kses( __('An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform'), array() ), ENT_QUOTES, 'UTF-8', true ); ?>"
 	>
 	<input type="hidden" name="action" value="wcdp_ajax_donation_calculation">
 	<input type="hidden" name="security" value="<?php echo wp_create_nonce('wcdp_ajax_nonce' . $value['id']);?>">
@@ -103,8 +104,5 @@ if ($value['style'] == 4 && $is_internal) {
 }
 ?>
 
-<ul class="woocommerce-error" role="alert" style="display: none" id="ajax-unexpected-error">
-	<li><?php esc_html_e( 'An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform' ); ?></li>
-</ul>
 <?php
 do_action('woocommerce_after_add_to_cart_form');

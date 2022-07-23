@@ -17,8 +17,8 @@ if(!defined('ABSPATH')) exit;
     if ($value['popup']) :
 ?>
         <?php
-            //Show a button to open the donation form?
-            if ($value['button']) :
+        //Show a button to open the donation form?
+        if ($value['button']) :
         ?>
 			<p>
                 <a href="#wcdp-form">

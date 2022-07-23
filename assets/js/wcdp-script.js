@@ -31,11 +31,10 @@ jQuery( function( $ ) {
                             error_message(response.message, response.reload);
                             break;
                     }
-
                 })
                 .fail(function() {
                     $('#wcdp-spinner').hide();
-                    $('#ajax-unexpected-error').show();
+                    error_message($('.wcdp-choose-donation').attr('wcdp-error-default'));
                 });
         }
     }
@@ -49,7 +48,7 @@ jQuery( function( $ ) {
 		}
 	}
 
-    function error_message(message, reload) {
+    function error_message(message="An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.", reload=true) {
         if (!reload) {
             $('#wcdp-ajax-button').show();
         }
