@@ -494,6 +494,7 @@ input:disabled ~ label {
 	position: relative;
 	cursor: pointer;
 	border: 2px solid var(--wcdp-main-2);
+    text-align: left;
 }
 .wcdp-fee-recovery__input:checked ~ .wcdp-fee-recovery__body .wcdp-fee-recovery__body-cover-checkbox--svg {
 	--stroke-dashoffset: 0;
