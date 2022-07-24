@@ -51,7 +51,7 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 * **Unlimited Integrations**: WooCommerce integrates with CRM, Marketing & Analytics tools
 * **100% free** and **open source** fundraising & donation management for charities
 
-> Note: Donation Platform for WooCommerce: Fundraising & Donation Management turns WooCommerce into a donation system, parallel use as a normal store is not recommended.
+> Note: Donation Platform for WooCommerce: Fundraising & Donation Management turns WooCommerce into a donation system, parallel use as a normal store is not recommended, as some wording has been changed.
 
 === Links ===
 
