@@ -50,7 +50,7 @@ div.wcdp-header > div.wcdp-step {
 #wcdp-step-2, #wcdp-step-3 {
     display: none;
 }
-.woocommerce .wcdp-tab .wcdp-right, .wcdp-right {
+#wcdp .wcdp-right, .wcdp-right {
     float: right;
 }
 .wcdp-left {
@@ -538,4 +538,7 @@ button {
     text-align: center;
     padding: 6px 20px;
     cursor: pointer;
+}
+#wcdp-post-send, #wcdp-ajax-send {
+    display: block;
 }
