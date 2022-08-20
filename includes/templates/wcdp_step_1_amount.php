@@ -52,7 +52,7 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 				$wcdp_price_field = sprintf($wcdp_price_field, 'wcdp-amount-range-field');
 				echo $wcdp_price_field
 			?>
-			<input id="wcdp-range" type="range" step="1" min="<?php echo $min_donation_amount ?>" max="<?php echo $max_range ?>">
+			<input id="wcdp-range" type="range" step="<?php echo (float) apply_filters('wcdp_range_slider_steps', 1); ?>" min="<?php echo $min_donation_amount ?>" max="<?php echo $max_range ?>">
 		</div> <?php
 	} else if ($amount_layout == 1) { //Radio/Button choices
 		$suggestions = json_decode( get_post_meta( $value['id'], 'wcdp-settings[1]', true ) );
