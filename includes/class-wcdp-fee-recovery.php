@@ -14,7 +14,7 @@ class WCDP_Fee_Recovery
 			add_action( 'wcdp_fee_recovery', array($this, 'add_fee_recovery_checkbox') );
 
 			//Add transaction fee to WC cart
-			add_action( 'woocommerce_cart_calculate_fees', array($this, 'add_transaction_fee_cart') );
+			add_action( 'woocommerce_cart_calculate_fees', array($this, 'add_transaction_fee_cart'), 10, 1 );
 		}
 		//Add Fee recovery options table to general setting
 		add_action( 'woocommerce_admin_field_wcdp_fee_recovery', array($this, 'settings_fee_recovery') );
@@ -53,15 +53,16 @@ class WCDP_Fee_Recovery
 		}
 	}
 
-	/**
-	 * Add the transaction fee to checkout if wcdp_fee_recovery checked
-	 * @param $post_data
-	 * @return void
-	 */
-	function add_transaction_fee_cart() {
+    /**
+     * Add the transaction fee to cart if wcdp_fee_recovery checked
+     * @param $cart WC_Cart
+     * @return void
+     */
+	function add_transaction_fee_cart( $cart ) {
 		if (is_admin() && !defined('DOING_AJAX') || is_null(WC()->cart)) {
 			return;
 		}
+        //dertermine currently selected payment method
 		if (isset($_POST['post_data']) && strpos($_POST['post_data'], 'wcdp_fee_recovery=wcdp_fee_recovery')) {
 			$post_data = $_POST['post_data'];
 			$pos = strpos($post_data, 'payment_method=');
@@ -75,31 +76,27 @@ class WCDP_Fee_Recovery
 		} else {
 			return;
 		}
+        //Get fees for all payment options
 		$wcdp_fee_recovery_values = json_decode(get_option( 'wcdp_fee_recovery_values', '{}' ), true);
 
+        //Get fees for selected payment method
 		if (isset($wcdp_fee_recovery_values[$payment_method])) {
 			$value_fixed = 0;
 			$value_variable = 0;
 			if (isset($wcdp_fee_recovery_values[$payment_method]['fixed']) &&
-				$wcdp_fee_recovery_values[$payment_method]['fixed'] >= 0) {
+				$wcdp_fee_recovery_values[$payment_method]['fixed'] > 0) {
 				$value_fixed = (float) $wcdp_fee_recovery_values[$payment_method]['fixed'];
 			}
 			if (isset($wcdp_fee_recovery_values[$payment_method]['variable']) &&
-				$wcdp_fee_recovery_values[$payment_method]['variable'] >= 0 &&
+				$wcdp_fee_recovery_values[$payment_method]['variable'] > 0 &&
 				$wcdp_fee_recovery_values[$payment_method]['variable'] <= 100
 			) {
 				$value_variable = (float) $wcdp_fee_recovery_values[$payment_method]['variable'];
 			}
-			if ($value_fixed < 0) {
-				$value_fixed = 0;
-			}
-			if ($value_variable < 0) {
-				$value_variable = 0;
-			}
 
-			$amount = WC()->cart->get_cart_contents_total();
+			$amount = $cart->get_cart_contents_total();
 			$fee = $value_fixed + $value_variable/100 * $amount;
-			WC()->cart->add_fee(__('Transaction costs', 'wc-donation-platform'), $fee);
+            $cart->add_fee(__('Transaction costs', 'wc-donation-platform'), $fee);
 		}
 	}
 
