@@ -62,7 +62,7 @@ class WCDP_Fee_Recovery
 		if (is_admin() && !defined('DOING_AJAX') || is_null(WC()->cart)) {
 			return;
 		}
-        //dertermine currently selected payment method
+        //determine currently selected payment method
 		if (isset($_POST['post_data']) && strpos($_POST['post_data'], 'wcdp_fee_recovery=wcdp_fee_recovery')) {
 			$post_data = $_POST['post_data'];
 			$pos = strpos($post_data, 'payment_method=');
