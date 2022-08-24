@@ -50,9 +50,14 @@ ___
 
 <div align="center">
 	<img src="https://ps.w.org/wc-donation-platform/assets/screenshot-1.jpg" width="80%" alt="Donation Platform for WooCommerce"/>
+	<p>
+		<strong>Donation Platform for WooCommerce unleashes the power of WooCommerce for your online fundraising, crowdfunding & donation management.</strong>
+	</p>
 </div>
 
-### Donation Platform for WooCommerce: Fundraising & Donation Management Is the Best Fundraising Solution for Your Charity
+****
+
+## Donation Platform for WooCommerce: Fundraising & Donation Management Is the Best Fundraising Solution for Your Charity
 You don’t have to reinvent the wheel to collect donations online. WooCommerce is one of the most widely used tools for online shops; helping businesses make billions in sales.
 Donation Platform for WooCommerce unleashes this power for your online fundraising, crowdfunding, crowdsponsoring & donation management.
 Thanks to the comprehensive ecosystem around WooCommerce, Donation Platform for WooCommerce is the most powerful online fundraising & donor management solution. Features such as regular donations, automatic donation certificates and highly converting donation forms round off the comprehensive fundraising platform.
@@ -61,7 +66,7 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 
 > **100% free**, **open source** and **no platform fees**. There are **no paid extensions** for Donation Platform for WooCommerce.
 
-### Features
+### Fundraising & Donation Features
 
 * **Gorgeous Design**: 5 different beautiful and simple donation form designs
 * **Pop-Up Donation Form**: [Collect donations even more elegantly](https://wcdp.jonh.eu/demos/demo-style-1-popup/#wcdp-form)
@@ -76,7 +81,7 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 * **Unlimited Integrations**: WooCommerce integrates with CRM, Marketing & Analytics tools
 * **100% free** and **open source** fundraising & donation management for charities
 
-> Note: Donation Platform for WooCommerce: Fundraising & Donation Management turns WooCommerce into a donation system, parallel use as a normal store is not possible.
+> Note: Donation Platform for WooCommerce: Fundraising & Donation Management turns WooCommerce into a donation system, parallel use as a normal store is not recommended, as some wording has been changed.
 
 ### Links
 
@@ -94,12 +99,13 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 ### For whom is Donation Platform for WooCommerce suitable?
 
 * Charities
-* Individuals who Wish to Fundraise Online
+* Individuals who wish to fundraise online (for example for weddings, birthdays etc.)
 * Non-Profit Organisations (NPOs)
 * Political Fundraisers
 * Foundations, Clubs & NGOs
 
-### All Features
+### Fundraising & Donation Collection: Recurring Donations, Donation Receipts & more
+
 Donation Platform for WooCommerce: Fundraising & Donation Management is a powerful and versatile fundraising solution for your charity.
 A large part of the fundraising features arise through the use of WooCommerce, which allows your charity to benefit directly from the incredibly diverse ecosystem around it.
 Thanks to its extensive features, the Fundraising & Donation Platform is suitable for charities, non-profit organizations, political fundraisers, individuals and more.
@@ -121,7 +127,7 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Fundraising Marketing**: Newsletter tools such as Mailchimp or Mailpoet can be integrated into the donation form.
 * **Analyse your Fundraising Success**: Use analysis tools such as Google Analytics or Matomo and more to optimize the donation process.
 * **Shipping Providers**: If you want to send a gift to donors as a thank you, you can use the existing integrations with shipping services.
-* **Social Proof Fundraising**: Increase fundraising engagement by using Fomo (Fear of missing out, aka. "Only X items left") plugins, Social media integrations and more.
+* **Social Proof Fundraising**: Increase fundraising engagement by using Fomo plugins, Social media integrations and more.
 * **Credit Card Donations**: Accept donations through credit cards with Stripe or benefit from Revolut’s low rates.
 * **PayPal Donations**: Use the PayPal integration out of the box and reach the hundreds of millions of potential PayPal donors.
 * **Direct Bank Transfer Donations**: The cheapest transaction fees and the great popularity make bank transfers extremely interesting as a payment method.
@@ -138,7 +144,8 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Webhooks**: Use Webhooks to get Fundraising Notifications in real time.
 * **Developer Friendly Fundraising**: You can use Actions & Filters to change to layout, design und behavior of your donation platform. Because WooCommerce is so widely used you can find a WooCommerce developers with ease.
 
-### Motivation
+=== Donation Platform for WooCommerce: Fundraising & Donation Management: Motivation ===
+
 Why does the world need this donation & fundraising plugin for WooCommerce?
 Hands down, WooCommerce is the most mature eCommerce solution. It is supported by all other major systems (CRM, Analytics, Marketing, Accounting and more) and offers numerous possibilities to customize the behavior to your needs.
 
