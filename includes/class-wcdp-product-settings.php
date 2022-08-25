@@ -58,9 +58,7 @@ class WCDP_Product_Settings
      */
     public function wcdp_process_product_meta( $post_id ) {
         $product = wc_get_product( $post_id );
-		$product_settings = array();
-
-		$product_settings = $this->product_meta_style($product_settings);
+		$product_settings = $this->product_meta_style(array());
 		$product_settings = $this->product_meta_amount_selection($product_settings);
 		$product_settings = $this->product_meta_variation_styles($product_settings, $product);
 		$product_settings = $this->product_meta_fundraising_meta($product_settings);
@@ -79,13 +77,15 @@ class WCDP_Product_Settings
 	private function product_meta_style($product_settings): array
 	{
 		if (isset($_POST['wcdp-amount-layout'])) {
-			if ($_POST['wcdp-amount-layout'] == 1) {
+			if ($_POST['wcdp-amount-layout'] == '1') {
 				$product_settings[0] = 1;
-			} else if ($_POST['wcdp-amount-layout'] == 2) {
+			} else if ($_POST['wcdp-amount-layout'] == '2') {
 				$product_settings[0] = 2;
-			} else if ($_POST['wcdp-amount-layout'] == 3) {
+			} else if ($_POST['wcdp-amount-layout'] == '3') {
 				$product_settings[0] = 3;
-			}
+			} else {
+                $product_settings[0] = 0;
+            }
 		} else {
 			//Default style
 			$product_settings[0] = 0;
@@ -100,7 +100,7 @@ class WCDP_Product_Settings
 	 */
 	private function product_meta_amount_selection($product_settings): array
 	{
-		if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings'])){
+		if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings']) && $product_settings[0] == 1){
 			$prices = array();
 			foreach ($_POST['wcdp-settings'] as $value) {
 				$prices[] = (float)$value;
@@ -109,6 +109,9 @@ class WCDP_Product_Settings
 			$product_settings[1] = json_encode($prices);
 		} else {
 			$product_settings[1] = '';
+            if ($product_settings[0] == 1) {
+                $product_settings[0] = 0;
+            }
 		}
 		return $product_settings;
 	}
