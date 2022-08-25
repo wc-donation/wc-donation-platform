@@ -225,7 +225,7 @@ $wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
 
 	<div class="options_group">
 		<p class="wcdp_ask_review">
-			<a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5" target="_blank"><?php esc_html_e('If you like Donation Platform for WooCommerce, please consider rating it with ★★★★★', 'wc-donation-platform'); ?></a>
+			<a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/" target="_blank"><?php esc_html_e('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform'); ?></a>
 		</p>
 	</div>
 

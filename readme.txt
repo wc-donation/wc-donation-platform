@@ -162,7 +162,11 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
 = 1.2.7 =
+new feature: charge transaction fees also for recurring donations with WC subscriptions
 tweak: add wcdp_range_slider_steps filter. This filter can be used to change the step size of the range slider.
+tweak: push supported WC version to 6.8.1
+tweak: changed wordings
+fix: donation amount selection not saving properly
 
 = 1.2.6 2022-07-24 =
 tweak: check for min/max donation amount for suggestion fields
