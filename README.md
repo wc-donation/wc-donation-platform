@@ -144,7 +144,7 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Webhooks**: Use Webhooks to get Fundraising Notifications in real time.
 * **Developer Friendly Fundraising**: You can use Actions & Filters to change to layout, design und behavior of your donation platform. Because WooCommerce is so widely used you can find a WooCommerce developers with ease.
 
-=== Donation Platform for WooCommerce: Fundraising & Donation Management: Motivation ===
+### Donation Platform for WooCommerce: Fundraising & Donation Management: Motivation
 
 Why does the world need this donation & fundraising plugin for WooCommerce?
 Hands down, WooCommerce is the most mature eCommerce solution. It is supported by all other major systems (CRM, Analytics, Marketing, Accounting and more) and offers numerous possibilities to customize the behavior to your needs.
