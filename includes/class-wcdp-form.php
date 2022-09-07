@@ -332,7 +332,7 @@ class WCDP_Form
 					$this->maybe_empty_cart($product_id, $product_choices);
 					if (false !== WC()->cart->add_to_cart($product_id, 1, $variation_id, $variation, array('wcdp_donation_amount' => $wcdp_donation_amount) )) {
 						$response['success'] = true;
-						$response['recurring'] = WCDP_Integrator::wcdp_contains_subscription();
+						$response['recurring'] = WCDP_Integrator::wcdp_contains_subscription($product);
 						$response['reload'] = false;
 					} else {
 						$response['message'] = esc_html__('Could not add donation to cart.', 'wc-donation-platform');

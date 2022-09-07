@@ -13,13 +13,15 @@ class WCDP_Subscriptions_For_WooCommerce
 	public static function init()
 	{
 		//set recurring total for regular donations
-		add_filter('mwb_sfw_cart_data_for_susbcription', 'WCDP_Subscriptions_For_WooCommerce::price_subscription', 10, 2);
+		add_filter('wps_sfw_cart_data_for_susbcription', 'WCDP_Subscriptions_For_WooCommerce::price_subscription', 10, 2);
 
 		//Filter specific Subscriptions for WooCommerce to WCDP templates
 		add_filter( 'wc_get_template', 'WCDP_Subscriptions_For_WooCommerce::modify_template', 10, 5 );
 
 		//Rename Subscriptions Tab on My Account page
 		add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions_For_WooCommerce::rename_menu_item', 11, 1 );
+
+        add_filter( 'wps_sfw_check_pro_plugin', '__return_true()' );
 	}
 
 	/**
@@ -36,7 +38,7 @@ class WCDP_Subscriptions_For_WooCommerce
 			$cart_item["wcdp_donation_amount"] >= $min_donation_amount &&
 			$cart_item["wcdp_donation_amount"] <= $max_donation_amount
 		) {
-			$mwb_recurring_data['mwb_recurring_total'] = $cart_item["wcdp_donation_amount"];
+			$mwb_recurring_data['wps_recurring_total'] = $cart_item["wcdp_donation_amount"];
 		}
 		return $mwb_recurring_data;
 	}

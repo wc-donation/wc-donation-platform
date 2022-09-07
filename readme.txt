@@ -166,6 +166,7 @@ new feature: charge transaction fees also for recurring donations with WC subscr
 tweak: add wcdp_range_slider_steps filter. This filter can be used to change the step size of the range slider.
 tweak: push supported WC version to 6.8.1
 tweak: changed wordings
+fix: Compatibility issue with Subscriptions for WooCommerce
 fix: donation amount selection not saving properly
 
 = 1.2.6 2022-07-24 =
