@@ -21,7 +21,7 @@ class WCDP_Subscriptions_For_WooCommerce
 		//Rename Subscriptions Tab on My Account page
 		add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions_For_WooCommerce::rename_menu_item', 11, 1 );
 
-        add_filter( 'wps_sfw_check_pro_plugin', '__return_true()' );
+        add_filter( 'wps_sfw_check_pro_plugin', '__return_true' );
 	}
 
 	/**
