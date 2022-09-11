@@ -33,7 +33,10 @@ function mwb_sfw_cancel_url( $mwb_subscription_id, $mwb_status ) {
 
 ?>
 <div class="mwb_sfw_details_wrap">
-	<h3><?php printf(esc_html__( 'Recurring Donation #%s', 'wc-donation-platform' ), esc_html($mwb_subscription_id)); ?></h3>
+	<h3>
+        <?php /* translators: donation (order) ID */
+        printf(esc_html__( 'Recurring Donation #%s', 'wc-donation-platform' ), esc_html($mwb_subscription_id)); ?>
+    </h3>
 	<p>
 	<?php
 	$mwb_schedule_start = get_post_meta( $mwb_subscription_id, 'mwb_schedule_start', true );

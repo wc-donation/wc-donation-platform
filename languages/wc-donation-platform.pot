@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.4\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-10T11:50:12+02:00\n"
+"POT-Creation-Date: 2022-09-11T21:31:30+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -38,77 +38,77 @@ msgstr ""
 msgid "Yes, I want to cover the transaction fee."
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:102
+#: includes/class-wcdp-fee-recovery.php:99
 msgid "Transaction costs"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:139
+#: includes/class-wcdp-fee-recovery.php:136
 msgid "No active payment methods found."
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:141
+#: includes/class-wcdp-fee-recovery.php:138
 msgid "Enter the fixed transaction costs in the left field and the percentage transaction costs in the right field."
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:174
+#: includes/class-wcdp-fee-recovery.php:171
 msgid "Fixed"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:177
+#: includes/class-wcdp-fee-recovery.php:174
 msgid "(fixed)"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:184
+#: includes/class-wcdp-fee-recovery.php:181
 msgid "Variable"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:188
+#: includes/class-wcdp-fee-recovery.php:185
 msgid "(variable)"
 msgstr ""
 
-#: includes/class-wcdp-form.php:77
+#: includes/class-wcdp-form.php:89
 msgid "Only one donation form per page allowed"
 msgstr ""
 
-#: includes/class-wcdp-form.php:94
+#: includes/class-wcdp-form.php:109
 msgid "id is a required attribute"
 msgstr ""
 
-#: includes/class-wcdp-form.php:105
+#: includes/class-wcdp-form.php:120
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:236
+#: includes/class-wcdp-form.php:272
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:238
+#: includes/class-wcdp-form.php:274
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:269
+#: includes/class-wcdp-form.php:305
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:302
+#: includes/class-wcdp-form.php:338
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:305
+#: includes/class-wcdp-form.php:341
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:309
+#: includes/class-wcdp-form.php:345
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:312
+#: includes/class-wcdp-form.php:348
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:23
-#: includes/class-wcdp-hooks.php:218
-#: includes/class-wcdp-hooks.php:236
+#: includes/class-wcdp-hooks.php:222
+#: includes/class-wcdp-hooks.php:240
 msgid "Donations"
 msgstr ""
 
@@ -185,42 +185,41 @@ msgid "Support"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:209
-#: includes/templates/wcdp_product_settings.php:228
 msgid "If you like Donation Platform for WooCommerce, please consider rating it with ★★★★★"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:203
+#: includes/class-wcdp-hooks.php:207
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/related-orders.php:20
 msgid "Donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:204
+#: includes/class-wcdp-hooks.php:208
 msgid "Total"
 msgstr ""
 
 #. translators: %s: page
-#: includes/class-wcdp-hooks.php:234
+#: includes/class-wcdp-hooks.php:238
 msgid "Donations (page %d)"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:261
+#: includes/class-wcdp-hooks.php:265
 #: includes/wc-templates/myaccount/orders.php:98
 msgid "Donate now"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:306
+#: includes/class-wcdp-hooks.php:310
 msgid "Related projects"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:317
+#: includes/class-wcdp-hooks.php:321
 msgid "Donation notes"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:318
+#: includes/class-wcdp-hooks.php:322
 msgid "Notes about your donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:328
+#: includes/class-wcdp-hooks.php:332
 msgid "Learn more"
 msgstr ""
 
@@ -228,11 +227,11 @@ msgstr ""
 msgid "Donation Form"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:174
+#: includes/class-wcdp-product-settings.php:177
 msgid "Donation Product"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:175
+#: includes/class-wcdp-product-settings.php:178
 msgid "This product will only be used for donations if activated"
 msgstr ""
 
@@ -255,6 +254,64 @@ msgstr ""
 msgid "ended %s ago"
 msgstr ""
 
+#: includes/class-wcdp_on_deactivation.php:30
+msgid "I no longer need the plugin."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:35
+msgid "I found a better plugin."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:36
+msgid "Please share which plugin."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:41
+msgid "The plugin suddenly stopped working."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:42
+#: includes/class-wcdp_on_deactivation.php:48
+msgid "Please share more details."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:47
+msgid "I could not get the plugin to work."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:53
+msgid "It's a temporary deactivation."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:58
+#: includes/templates/wcdp_step_1_amount.php:88
+msgid "Other"
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:59
+msgid "Please share the reason."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:114
+msgid "Can you please help me to improve the plugin?"
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:119
+msgid "If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce."
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:135
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:136
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: includes/class-wcdp_on_deactivation.php:139
+msgid "By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send."
+msgstr ""
+
 #: includes/integrations/express-checkout/class-wcdp-express-checkout.php:38
 msgid "Express Donation"
 msgstr ""
@@ -268,24 +325,25 @@ msgstr ""
 msgid "Recurring Donations"
 msgstr ""
 
-#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:36
+#. translators: donation (order) ID
+#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:38
 msgid "Recurring Donation #%s"
 msgstr ""
 
 #. translators: 1: order number 2: order date 3: order status
-#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:44
+#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:47
 msgid "Recurring Donation #%1$s was placed on %2$s and is currently %3$s."
 msgstr ""
 
-#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:60
+#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:63
 msgid "Start date"
 msgstr ""
 
-#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:111
+#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:114
 msgid "Recurring Donation Details"
 msgstr ""
 
-#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:115
+#: includes/integrations/subscriptions-for-woocommerce/templates/myaccount/mwb-show-subscription-details.php:118
 msgid "Project"
 msgstr ""
 
@@ -483,8 +541,9 @@ msgstr ""
 
 #. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
 #: includes/integrations/woocommerce-subscriptions/templates/emails/admin-payment-retry.php:23
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:22
 msgctxt "In customer renewal invoice email"
-msgid "The automatic recurring payment for donation #$1%d from %$2s has failed. The payment will be retried %3$s."
+msgid "The automatic recurring payment for donation #%d from %s has failed. The payment will be retried %3$s."
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/admin-payment-retry.php:24
@@ -575,12 +634,6 @@ msgstr ""
 #: includes/integrations/woocommerce-subscriptions/templates/emails/on-hold-subscription.php:16
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:16
 msgid "A recurring donation belonging to %1$s has been suspended by the user. Their recurring donation's details are as follows:"
-msgstr ""
-
-#. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:22
-msgctxt "In customer renewal invoice email"
-msgid "The automatic recurring payment for donation #%1$s to %2$s has failed. The payment will be retried %3$s."
 msgstr ""
 
 #. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
@@ -767,7 +820,7 @@ msgid "Back"
 msgstr ""
 
 #: includes/templates/styles/wcdp_form_style_3.php:23
-#: includes/templates/wcdp_step_1.php:76
+#: includes/templates/wcdp_step_1.php:77
 msgid "Next"
 msgstr ""
 
@@ -788,11 +841,7 @@ msgstr ""
 msgid "Please activate JavaScript to continue with your donation."
 msgstr ""
 
-#: includes/templates/wcdp_form.php:26
-msgid "Donate now!"
-msgstr ""
-
-#: includes/templates/wcdp_form.php:35
+#: includes/templates/wcdp_form.php:22
 msgid "Close"
 msgstr ""
 
@@ -893,12 +942,16 @@ msgstr ""
 msgid "Design of the variation selection. Only for variable products."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:81
-msgid "Donate"
+#: includes/templates/wcdp_product_settings.php:228
+msgid "If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:107
+#: includes/templates/wcdp_step_1.php:62
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
+msgstr ""
+
+#: includes/templates/wcdp_step_1.php:82
+msgid "Donate"
 msgstr ""
 
 #: includes/templates/wcdp_step_1_amount.php:48
@@ -906,10 +959,6 @@ msgstr ""
 #: includes/templates/wcdp_step_1_amount.php:105
 #: includes/templates/wcdp_step_1_variations.php:38
 msgid "required"
-msgstr ""
-
-#: includes/templates/wcdp_step_1_amount.php:88
-msgid "Other"
 msgstr ""
 
 #: includes/templates/wcdp_step_3.php:10
@@ -1114,28 +1163,28 @@ msgstr ""
 msgid "Donation details"
 msgstr ""
 
-#: wc-donation-platform.php:104
+#: wc-donation-platform.php:110
 msgid "Donation Platform for WooCommerce requires WooCommerce to be installed & activated."
 msgstr ""
 
 #. translators: %s required WC version
-#: wc-donation-platform.php:107
+#: wc-donation-platform.php:113
 msgid "Donation Platform for WooCommerce is inactive. This version of Donation Platform for WooCommerce requires WooCommerce %s or newer. Please update WooCommerce."
 msgstr ""
 
-#: wc-donation-platform.php:124
+#: wc-donation-platform.php:130
 msgid "View WCDP settings"
 msgstr ""
 
-#: wc-donation-platform.php:124
+#: wc-donation-platform.php:130
 msgid "Settings"
 msgstr ""
 
-#: wc-donation-platform.php:142
+#: wc-donation-platform.php:148
 msgid "View Documentation of Donation Platform for WooCommerce"
 msgstr ""
 
-#: wc-donation-platform.php:142
+#: wc-donation-platform.php:148
 msgid "Documentation"
 msgstr ""
 
