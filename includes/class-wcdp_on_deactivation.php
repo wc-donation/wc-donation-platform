@@ -219,6 +219,7 @@ class WCDP_On_Deactivation {
 				display: flex;
 				align-items: center;
 				background: #f8f8f8;
+                font-size: 1.3em;
 			}
 			#wcdp-on-deactivation-modal .wcdp-modal-header .wcdp-modal-cancel {
 				padding: 0;
