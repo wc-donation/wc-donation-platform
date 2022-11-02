@@ -104,6 +104,7 @@ class WCDP_Form
             'image'             => 0,
 			'className'			=> ''
         ), $value );
+        $product_id = $value['id'];
 
         if (!$value['id']) {
             return '<p class="wcdp-error-message">' . esc_html__('id is a required attribute', 'wc-donation-platform' ) . '</p>';
@@ -328,7 +329,7 @@ class WCDP_Form
 				}
 
 				$wcdp_donation_amount = sanitize_text_field($_REQUEST['wcdp-donation-amount']);
-				if ($this->check_donation_amount($wcdp_donation_amount) && isset(WC()->cart)){
+				if ($this->check_donation_amount($wcdp_donation_amount, $product_id) && isset(WC()->cart)){
 					$this->maybe_empty_cart($product_id, $product_choices);
 					if (false !== WC()->cart->add_to_cart($product_id, 1, $variation_id, $variation, array('wcdp_donation_amount' => $wcdp_donation_amount) )) {
 						$response['success'] = true;
@@ -375,12 +376,13 @@ class WCDP_Form
 	/**
 	 * Check if specified donation amount is valid
 	 * @param $donation_amount
+     * @param $product_id int
 	 * @return bool
 	 */
-	public static function check_donation_amount($donation_amount): bool
+	public static function check_donation_amount($donation_amount, int $product_id = 0): bool
 	{
-		$min_donation_amount = (float) get_option('wcdp_min_amount', 3);
-		$max_donation_amount = (float) get_option('wcdp_max_amount', 50000);
+		$min_donation_amount = (float) apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
+		$max_donation_amount = (float) apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 50000), $product_id);
 		return $donation_amount >= $min_donation_amount && $donation_amount <= $max_donation_amount;
 	}
 

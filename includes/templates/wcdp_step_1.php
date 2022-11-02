@@ -1,6 +1,10 @@
 <?php
-/*
-WCDP Shortcode Form
+/**
+ * WCDP Shortcode Form
+ * @var int $product_id
+ * @var bool $has_child
+ * @var $product
+ * @var array $value
 */
 
 if(!defined('ABSPATH')) exit;
@@ -15,8 +19,8 @@ if ($has_child) {
 	$selected_attributes = $product->get_default_attributes();
 	$get_variations = count( $product->get_children() ) <= apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
 }
-$min_donation_amount = floatval(get_option('wcdp_min_amount', 3));
-$max_donation_amount = floatval(get_option('wcdp_max_amount', 50000));
+$min_donation_amount = (float) apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
+$max_donation_amount = (float) apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 3), $product_id);
 
 //Display title of product
 if ($value['title']) {

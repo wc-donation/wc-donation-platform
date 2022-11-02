@@ -2,10 +2,11 @@
 /**
  * WCDP Shortcode Form
  * @var float $min_donation_amount
+ * @var int $product_id
 */
 if(!defined('ABSPATH')) exit;
 
-$amount_layout = get_post_meta( $value['id'], 'wcdp-settings[0]', true );
+$amount_layout = get_post_meta( $product_id, 'wcdp-settings[0]', true );
 
 //Donation Amount field
 $wcdp_price_decimals = apply_filters('wcdp_donation_amount_decimals', pow(10, wc_get_price_decimals() * (-1)));
@@ -18,7 +19,7 @@ if (isset($_REQUEST["wcdp-donation-amount"])) {
     $value_donation_amount = floatval($_REQUEST["wcdp-donation-amount"]);
 } else {
 	$value_donation_amount = $product->get_price();
-	if (!WCDP_Form::check_donation_amount($value_donation_amount)) {
+	if (!WCDP_Form::check_donation_amount($value_donation_amount, $value['id'])) {
 		$value_donation_amount = '';
 	}
 }

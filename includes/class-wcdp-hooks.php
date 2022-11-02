@@ -270,7 +270,7 @@ class WCDP_Hooks
      */
     public function wcdp_set_donation_price( $cart_object ) {
         foreach ($cart_object->cart_contents as $value ) {
-            if( isset( $value["wcdp_donation_amount"] ) && WCDP_Form::check_donation_amount($value["wcdp_donation_amount"])) {
+            if( isset( $value["wcdp_donation_amount"] ) && WCDP_Form::check_donation_amount($value["wcdp_donation_amount"], (int) $value["product_id"])) {
                 $value['data']->set_price($value["wcdp_donation_amount"]);
             }
         }
