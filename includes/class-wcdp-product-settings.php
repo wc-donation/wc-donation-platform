@@ -169,14 +169,14 @@ class WCDP_Product_Settings
 	 * @param $product_type_options
 	 * @return mixed
 	 */
-    public function wcdp_add_product_type_option($product_type_options) {
-
+    public function wcdp_add_product_type_option($product_type_options): mixed
+    {
 		$product_type_options["donable"] = [
 			"id"            => "_donable",
 			"wrapper_class" => "show_if_simple show_if_variable show_if_grouped",
 			"label"         => __( 'Donation Product', 'wc-donation-platform' ),
 			"description"   => __( 'This product will only be used for donations if activated', 'wc-donation-platform' ),
-			"default"       => "yes",
+			"default"       => "on",
 		];
 
 		return $product_type_options;
