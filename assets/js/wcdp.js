@@ -5,10 +5,11 @@ jQuery( function( $ ) {
         if (check_validity('#wcdp-ajax-send')) {
             $('#wcdp-spinner').show();
             $('#wcdp-ajax-button').hide();
-            const formData = $("#wcdp-ajax-send").serialize();
+            const form = $("#wcdp-ajax-send");
+            const formData = form.serialize();
             $.ajax({
                 type: 'POST',
-                url: $("#wcdp-ajax-send").attr('action'),
+                url: form.attr('action'),
                 data: formData
             })
                 .done(function( response ) {
@@ -60,8 +61,9 @@ jQuery( function( $ ) {
 
     $('#wcdp-ajax-send').on('submit', function(e){
 		e.preventDefault();
-		if (currentFormData != $("#wcdp-ajax-send").serialize()) {
-			currentFormData = $("#wcdp-ajax-send").serialize();
+        const serialized = $("#wcdp-ajax-send").serialize();
+		if (currentFormData != serialized) {
+			currentFormData = serialized;
 			wcdp_submit('2');
 		} else {
 			wcdp_steps(2);
@@ -114,8 +116,9 @@ jQuery( function( $ ) {
     });
 
     function wcdp_steps(step){
-		$(":root")[0].style.setProperty('--wcdp-step-2', 'var(--wcdp-main)');
-        $(":root")[0].style.setProperty('--wcdp-step-3', 'var(--wcdp-main)');
+        const root = $(":root")[0];
+        root.style.setProperty('--wcdp-step-2', 'var(--wcdp-main)');
+        root.style.setProperty('--wcdp-step-3', 'var(--wcdp-main)');
         switch (step) {
             case '3':
                 $("#wcdp-step-2").show();
@@ -127,9 +130,10 @@ jQuery( function( $ ) {
                     $('#wcdp-invalid-fields').hide();
                     $('#place_order').show();
                 }
-                $(":root")[0].style.setProperty('--wcdp-step-3', 'var(--wcdp-main-2)');
+                root.style.setProperty('--wcdp-step-3', 'var(--wcdp-main-2)');
             case '2':
-                $(":root")[0].style.setProperty('--wcdp-step-2', 'var(--wcdp-main-2)');
+                root.style.setProperty('--wcdp-step-2', 'var(--wcdp-main-2)');
+                break;
             case '1':
                 break;
             default:
@@ -173,7 +177,7 @@ jQuery( function( $ ) {
     //Modal window hash
     window.onhashchange = function(){
         wcdp_open(false);
-    }
+    };
 
 	$('.wcdp-modal-open').click(function() {
 		wcdp_open(true);
@@ -216,8 +220,9 @@ jQuery( function( $ ) {
         var value = $('input[name="'+name+'"]:checked').val();
         if (value) {
             $("#wcdp-"+name).val(value);
-            $('#'+name).val(value);
-            $('#'+name).trigger('change');
+            const el = $('#'+name);
+            el.val(value);
+            el.trigger('change');
         }
     });
 
@@ -236,9 +241,11 @@ jQuery( function( $ ) {
 
     //copy value of range slider
     $( '#wcdp-range' ).on('input', function () {
-        $('#wcdp-donation-amount').val($( '#wcdp-range' ).val());
-        if ($( '#wcdp-range' ).val() == $( '#wcdp-range' ).attr('max')) {
-            $('#wcdp-donation-amount').select();
+        const range = $( '#wcdp-range' );
+        const amount = $('#wcdp-donation-amount');
+        amount.val(range.val());
+        if (range.val() == range.attr('max')) {
+            amount.select();
         }
     });
     //copy value of amount input to range slider
