@@ -105,8 +105,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			<tr class="amount">
 				<td>
 					<?php
-					esc_html_e( 'Amount: ', 'wc-donation-platform' );
-					?>
+					esc_html_e( 'Amount:', 'wc-donation-platform' );
+					?> 
 				</td>
 				<td>
 					<?php echo $this->order->get_formatted_order_total() ?>
