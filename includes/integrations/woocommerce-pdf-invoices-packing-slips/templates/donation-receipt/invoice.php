@@ -106,7 +106,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<td>
 					<?php
 					esc_html_e( 'Amount:', 'wc-donation-platform' );
-					?> 
+                    echo ' ';
+					?>
 				</td>
 				<td>
 					<?php echo $this->order->get_formatted_order_total() ?>
@@ -114,7 +115,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			</tr>
 			<tr class="date">
 				<td>
-					<?php esc_html_e( 'Donation Date: ', 'wc-donation-platform' ); ?>
+					<?php
+                    esc_html_e( 'Donation Date:', 'wc-donation-platform' );
+                    echo ' ';
+                    ?>
 				</td>
 				<td>
 					<?php $this->order_date() ?>
@@ -122,7 +126,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			</tr>
 			<tr class="donor">
 				<td>
-					<?php esc_html_e( 'Donor: ', 'wc-donation-platform' ); ?>
+					<?php
+                    esc_html_e( 'Donor:', 'wc-donation-platform' );
+                    echo ' ';
+                    ?>
 				</td>
 				<td>
 					<?php echo wp_kses($this->get_billing_address(), array('br'=>array())); ?>
@@ -130,7 +137,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			</tr>
 			<tr class="payment_method">
 				<td>
-					<?php esc_html_e( 'Payment Method: ', 'wc-donation-platform' ); ?>
+					<?php
+                    esc_html_e( 'Payment Method:', 'wc-donation-platform' );
+                    echo ' ';
+                    ?>
 				</td>
 				<td>
 					<?php echo esc_html($this->get_payment_method()); ?>
