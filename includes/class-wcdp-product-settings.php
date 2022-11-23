@@ -21,7 +21,7 @@ class WCDP_Product_Settings
         add_action( 'woocommerce_process_product_meta', array( $this, 'wcdp_process_product_meta') );
 
         //donable Product
-		add_filter("product_type_options", array($this, 'wcdp_add_product_type_option'));
+		add_filter("product_type_options", array($this, 'wcdp_add_product_type_option'), 11);
 
 		//Safe donable Product
 		add_action("save_post_product", array($this, 'wcdp_save_post_product'), 10, 3);
