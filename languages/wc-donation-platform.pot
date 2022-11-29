@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.7\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-11T21:31:30+02:00\n"
+"POT-Creation-Date: 2022-11-29T21:45:58+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -70,39 +70,39 @@ msgstr ""
 msgid "Only one donation form per page allowed"
 msgstr ""
 
-#: includes/class-wcdp-form.php:109
+#: includes/class-wcdp-form.php:110
 msgid "id is a required attribute"
 msgstr ""
 
-#: includes/class-wcdp-form.php:120
+#: includes/class-wcdp-form.php:121
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:272
+#: includes/class-wcdp-form.php:273
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:274
+#: includes/class-wcdp-form.php:275
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:305
+#: includes/class-wcdp-form.php:306
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:338
+#: includes/class-wcdp-form.php:339
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:341
+#: includes/class-wcdp-form.php:342
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:345
+#: includes/class-wcdp-form.php:346
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:348
+#: includes/class-wcdp-form.php:349
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
@@ -129,8 +129,8 @@ msgid "\"Your Contribution\" Title Text"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:97
-#: includes/templates/wcdp_step_1_amount.php:45
-#: includes/templates/wcdp_step_1_amount.php:102
+#: includes/templates/wcdp_step_1_amount.php:46
+#: includes/templates/wcdp_step_1_amount.php:103
 msgid "Your Contribution"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgid "\"Choose an amount\" Title Text"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:103
-#: includes/templates/wcdp_step_1_amount.php:92
+#: includes/templates/wcdp_step_1_amount.php:93
 msgid "Choose an amount"
 msgstr ""
 
@@ -284,7 +284,7 @@ msgid "It's a temporary deactivation."
 msgstr ""
 
 #: includes/class-wcdp_on_deactivation.php:58
-#: includes/templates/wcdp_step_1_amount.php:88
+#: includes/templates/wcdp_step_1_amount.php:89
 msgid "Other"
 msgstr ""
 
@@ -317,7 +317,7 @@ msgid "Express Donation"
 msgstr ""
 
 #: includes/integrations/express-checkout/class-wcdp-express-checkout.php:139
-msgid " (Donation)"
+msgid "(Donation)"
 msgstr ""
 
 #: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:83
@@ -443,32 +443,32 @@ msgid "Organization: "
 msgstr ""
 
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:108
-msgid "Amount: "
+msgid "Amount:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:117
-msgid "Donation Date: "
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:119
+msgid "Donation Date:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:125
-msgid "Donor: "
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:130
+msgid "Donor:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:133
-msgid "Payment Method: "
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:141
+msgid "Payment Method:"
 msgstr ""
 
 #. Translators: %$1s, %$2s shop name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:143
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:153
 msgid "%1$s is a registered non-profit organization. Your donation is tax deductible to the extent allowable by law. No goods or service were provided by %2$s in return for this donation."
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:147
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:157
 msgid "Best regards,"
 msgstr ""
 
 #. Translators: %$1s shop name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:149
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:159
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:54
 msgid "Your friends at %s"
 msgstr ""
@@ -636,7 +636,6 @@ msgstr ""
 msgid "A recurring donation belonging to %1$s has been suspended by the user. Their recurring donation's details are as follows:"
 msgstr ""
 
-#. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:23
 msgid "The renewal donation is as follows:"
 msgstr ""
@@ -820,7 +819,7 @@ msgid "Back"
 msgstr ""
 
 #: includes/templates/styles/wcdp_form_style_3.php:23
-#: includes/templates/wcdp_step_1.php:77
+#: includes/templates/wcdp_step_1.php:81
 msgid "Next"
 msgstr ""
 
@@ -872,7 +871,6 @@ msgstr ""
 msgid "Min: %1$s, Max: %2$s"
 msgstr ""
 
-#. Translators: %1$d minimum donation amount, %2$d maximum donation amount
 #: includes/templates/wcdp_product_settings.php:36
 msgid "Edit"
 msgstr ""
@@ -946,17 +944,17 @@ msgstr ""
 msgid "If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:62
+#: includes/templates/wcdp_step_1.php:66
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:82
+#: includes/templates/wcdp_step_1.php:86
 msgid "Donate"
 msgstr ""
 
-#: includes/templates/wcdp_step_1_amount.php:48
-#: includes/templates/wcdp_step_1_amount.php:95
-#: includes/templates/wcdp_step_1_amount.php:105
+#: includes/templates/wcdp_step_1_amount.php:49
+#: includes/templates/wcdp_step_1_amount.php:96
+#: includes/templates/wcdp_step_1_amount.php:106
 #: includes/templates/wcdp_step_1_variations.php:38
 msgid "required"
 msgstr ""
@@ -1074,6 +1072,16 @@ msgstr ""
 msgid "Thanks for creating an account on %1$s. Your username is %2$s. You can access your account area to view donations, change your password, and more at: %3$s"
 msgstr ""
 
+#: includes/wc-templates/emails/customer-note.php:29
+#: includes/wc-templates/emails/plain/customer-note.php:25
+msgid "The following note has been added to your donation:"
+msgstr ""
+
+#: includes/wc-templates/emails/customer-note.php:33
+#: includes/wc-templates/emails/plain/customer-note.php:33
+msgid "As a reminder, here are your donation details:"
+msgstr ""
+
 #: includes/wc-templates/emails/customer-on-hold-order.php:27
 #: includes/wc-templates/emails/plain/customer-on-hold-order.php:25
 msgid "Thanks for your donation. It’s on-hold until we confirm that payment has been received. In the meantime, here’s a reminder of your donation:"
@@ -1100,14 +1108,6 @@ msgstr ""
 #. translators: %s: Order ID.
 #: includes/wc-templates/emails/email-order-details.php:34
 msgid "Donation #%s"
-msgstr ""
-
-#: includes/wc-templates/emails/plain/customer-note.php:25
-msgid "The following note has been added to your donation:"
-msgstr ""
-
-#: includes/wc-templates/emails/plain/customer-note.php:33
-msgid "As a reminder, here are your donation details:"
 msgstr ""
 
 #: includes/wc-templates/emails/plain/email-addresses.php:19
@@ -1144,6 +1144,10 @@ msgstr ""
 #: includes/wc-templates/myaccount/my-address.php:25
 #: includes/wc-templates/myaccount/my-address.php:34
 msgid "Donor address"
+msgstr ""
+
+#: includes/wc-templates/myaccount/my-address.php:45
+msgid "The following addresses will be used in donation forms by default."
 msgstr ""
 
 #: includes/wc-templates/myaccount/orders.php:99
