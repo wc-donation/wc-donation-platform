@@ -48,6 +48,9 @@ ___
 * **[Processing Fee Recovery](https://wcdp.jonh.eu/documentation/usage/fee-recovery/)**
 * **100% free** & **no platform fees** & **open source**
 
+### Star this repository
+[![Stargazers repo roster for @jonas-hoebenreich/wc-donation-platform](https://reporoster.com/stars/dark/jonas-hoebenreich/wc-donation-platform)](https://github.com/jonas-hoebenreich/wc-donation-platform/stargazers)
+
 <div align="center">
 	<img src="https://ps.w.org/wc-donation-platform/assets/screenshot-1.jpg" width="80%" alt="Donation Platform for WooCommerce"/>
 	<p>
