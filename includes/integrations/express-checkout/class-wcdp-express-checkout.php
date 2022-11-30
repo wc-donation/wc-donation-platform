@@ -136,7 +136,7 @@ class WCDP_Express_Checkout
 	}
 
 	function stripe_total_label_suffix() {
-		$label = ' ' + __('(Donation)', 'wc-donation-platform');
+		$label = ' ' . __('(Donation)', 'wc-donation-platform');
 
 		$label = strip_tags( $label );
 
