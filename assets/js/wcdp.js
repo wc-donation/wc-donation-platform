@@ -154,6 +154,9 @@ jQuery( function( $ ) {
 		$('.wc-donation-platform').css({"visibility": "visible", "animation-name": "wcdp-appear-animation", "animation-duration": "1s" });
 		wcdp_open(false);
 		try {
+            if ($('#wcdp-donation-amount').val() != 0) {
+                $( '#wcdp-ajax-send' ).trigger('change');
+            }
 			if ($('.wcdp-choose-donation')[0].checkValidity()) {
 				currentFormData = $("#wcdp-ajax-send").serialize();
 				wcdp_submit();
