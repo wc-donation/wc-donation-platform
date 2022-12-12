@@ -163,6 +163,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.2.8 =
 new feature: add filters wcdp_min_amount & wcdp_max_amount with parameter $product_id that allows you to change the min/max donation amount on a per-product basis
+fix: checkout not updating properly
 tweak: add wcdp_range_slider_steps to change steps of slider
 tweak: push supported WC version to 6.1
 tweak: push supported WC version to 7.0.1
