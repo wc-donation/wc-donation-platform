@@ -26,20 +26,6 @@ class WCDP_Form
      * Register CSS & JS Files
      */
     public function wcdp_register_scripts() {
-        wp_register_style( 'wc-donation-platform', WCDP_DIR_URL . 'assets/css/wcdp.min.css', [], WCDP_VERSION );
-        wp_register_script( 'wc-donation-platform', WCDP_DIR_URL . 'assets/js/wcdp.min.js', [], WCDP_VERSION );
-
-        //Only enqueue if needed
-        if($this->wcdp_has_donation_form()) {
-            $this->wcdp_enqueue_scripts();
-        }
-    }
-
-    /**
-     * Enqueue CSS & JS Files
-     * @return void
-     */
-    public static function wcdp_enqueue_scripts() {
         //Dependencies
         $cssdeps = array('select2',);
         $jsdeps = array(
@@ -54,6 +40,28 @@ class WCDP_Form
             $jsdeps[] = 'wc-password-strength-meter';
         }
 
+        wp_register_style( 'wc-donation-platform',
+            WCDP_DIR_URL . 'assets/css/wcdp.min.css',
+            $cssdeps,
+            WCDP_VERSION,
+        );
+        wp_register_script( 'wc-donation-platform',
+            WCDP_DIR_URL . 'assets/js/wcdp.min.js',
+            $jsdeps,
+            WCDP_VERSION
+        );
+
+        //Only enqueue if needed
+        if($this->wcdp_has_donation_form()) {
+            $this->wcdp_enqueue_scripts($cssdeps, $jsdeps);
+        }
+    }
+
+    /**
+     * Enqueue CSS & JS Files
+     * @return void
+     */
+    private function wcdp_enqueue_scripts($cssdeps, $jsdeps) {
         wp_enqueue_style( 'wc-donation-platform');
         wp_enqueue_script( 'wc-donation-platform');
         foreach ($cssdeps as $cssdep) {
