@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.8\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-29T21:45:58+01:00\n"
+"POT-Creation-Date: 2022-12-21T15:34:51+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -66,43 +66,43 @@ msgstr ""
 msgid "(variable)"
 msgstr ""
 
-#: includes/class-wcdp-form.php:89
+#: includes/class-wcdp-form.php:97
 msgid "Only one donation form per page allowed"
 msgstr ""
 
-#: includes/class-wcdp-form.php:110
+#: includes/class-wcdp-form.php:118
 msgid "id is a required attribute"
 msgstr ""
 
-#: includes/class-wcdp-form.php:121
+#: includes/class-wcdp-form.php:129
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:273
+#: includes/class-wcdp-form.php:281
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:275
+#: includes/class-wcdp-form.php:283
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:306
+#: includes/class-wcdp-form.php:314
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:339
+#: includes/class-wcdp-form.php:347
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:342
+#: includes/class-wcdp-form.php:350
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:346
+#: includes/class-wcdp-form.php:354
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:349
+#: includes/class-wcdp-form.php:357
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
