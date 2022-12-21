@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.8\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform-dev\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
