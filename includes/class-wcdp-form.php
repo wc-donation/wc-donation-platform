@@ -26,8 +26,7 @@ class WCDP_Form
      * Register CSS & JS Files
      */
     public function wcdp_register_scripts() {
-        //Dependencies
-        $cssdeps = array('select2',);
+        //JS Dependencies
         $jsdeps = array(
             'jquery',
             'selectWoo',
@@ -42,7 +41,7 @@ class WCDP_Form
 
         wp_register_style( 'wc-donation-platform',
             WCDP_DIR_URL . 'assets/css/wcdp.min.css',
-            $cssdeps,
+            array('select2',),
             WCDP_VERSION,
         );
         wp_register_script( 'wc-donation-platform',
@@ -53,7 +52,7 @@ class WCDP_Form
 
         //Only enqueue if needed
         if($this->wcdp_has_donation_form()) {
-            $this->wcdp_enqueue_scripts($cssdeps, $jsdeps);
+            $this->wcdp_enqueue_scripts();
         }
     }
 
@@ -61,11 +60,27 @@ class WCDP_Form
      * Enqueue CSS & JS Files
      * @return void
      */
-    private function wcdp_enqueue_scripts($cssdeps, $jsdeps) {
-        wp_enqueue_style( 'wc-donation-platform');
-        wp_enqueue_script( 'wc-donation-platform');
+    private static function wcdp_enqueue_scripts( ) {
+        //Dependencies
+        $cssdeps = array(
+                'select2',
+                'wc-donation-platform',
+            );
         foreach ($cssdeps as $cssdep) {
             wp_enqueue_style( $cssdep);
+        }
+
+        $jsdeps = array(
+            'wc-donation-platform',
+            'jquery',
+            'selectWoo',
+            'wc-checkout',
+            'select2',
+            'wc-cart',
+        );
+        //Require wc-password-strength-meter when necessary
+        if ( 'yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option( 'woocommerce_registration_generate_password' ) && ! is_user_logged_in() ) {
+            $jsdeps[] = 'wc-password-strength-meter';
         }
         foreach ($jsdeps as $jsdep) {
             wp_enqueue_script( $jsdep);
