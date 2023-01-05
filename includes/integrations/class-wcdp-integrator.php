@@ -8,7 +8,8 @@ class WCDP_Integrator
     /**
      * Bootstraps the class and hooks required actions & filters
      */
-    public static function init() {
+    public static function init(): void
+    {
 		$active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 
         //Integration with WooCommerce Subscriptions
