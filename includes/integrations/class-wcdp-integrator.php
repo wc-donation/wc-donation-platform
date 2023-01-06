@@ -39,6 +39,14 @@ class WCDP_Integrator
 			add_filter('woocommerce_cart_get_cart_contents_total', 'WCDP_Integrator::cart_contents_total', 10, 1);
 		}
 
+        //Add support for WooCommerce Payments
+        //https://github.com/Automattic/woocommerce-payments/
+        $wc_payments_active = in_array('woocommerce-payments/woocommerce-payments.php', $active_plugins);
+        if ($wc_payments_active) {
+            //WooCommerce Payments Gateway does not load with an empty checkout  && WCDP_Form::wcdp_has_donation_form()
+            //add_filter('woocommerce_cart_needs_payment', '__return_true');
+            add_filter('woocommerce_cart_get_total', 'WCDP_Integrator::cart_contents_total', 10, 1);
+        }
 		//Integration with Subscriptions for WooCommerce
 		//https://wordpress.org/plugins/subscriptions-for-woocommerce/
 		include_once 'subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php';
