@@ -167,9 +167,9 @@ class WCDP_Product_Settings
 	 * Only if this option is enabled one can donate to the product
 	 *
 	 * @param $product_type_options
-	 * @return mixed
+	 * @return array
 	 */
-    public function wcdp_add_product_type_option($product_type_options): mixed
+    public function wcdp_add_product_type_option($product_type_options): array
     {
 		$product_type_options["donable"] = [
 			"id"            => "_donable",
