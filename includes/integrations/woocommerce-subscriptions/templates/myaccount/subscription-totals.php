@@ -10,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <?php
-$include_switch_links       = true;
 $include_item_removal_links = wcs_can_items_be_removed( $subscription );
 $totals                     = $subscription->get_order_item_totals();
 
@@ -19,4 +18,4 @@ unset( $totals['payment_method'] );
 ?>
 <h2><?php esc_html_e( 'Recurring Donation Totals', 'wc-donation-platform' ); ?></h2>
 
-<?php do_action( 'woocommerce_subscription_totals', $subscription, $include_item_removal_links, $totals, $include_switch_links ); ?>
+<?php do_action( 'woocommerce_subscription_totals', $subscription, $include_item_removal_links, $totals, true ); ?>
