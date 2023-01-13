@@ -58,7 +58,7 @@ class WCDP_Fee_Recovery
      * @param $cart WC_Cart
      * @return void
      */
-	function add_transaction_fee_cart( $cart ) {
+	function add_transaction_fee_cart(WC_Cart $cart ) {
 		if (is_admin() && !defined('DOING_AJAX') || is_null(WC()->cart)) {
 			return;
 		}

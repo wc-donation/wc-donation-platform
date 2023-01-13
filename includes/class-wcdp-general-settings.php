@@ -18,7 +18,7 @@ class WCDP_General_Settings {
      * @param array $settings_tabs Array of WooCommerce setting tabs & their labels, excluding the Subscription tab.
      * @return array $settings_tabs Array of WooCommerce setting tabs & their labels, including the Subscription tab.
      */
-    public function add_settings_tab( $settings_tabs ): array
+    public function add_settings_tab(array $settings_tabs ): array
 	{
         $settings_tabs['wc-donation-platform'] = __( 'Donations', 'wc-donation-platform' );
         return $settings_tabs;

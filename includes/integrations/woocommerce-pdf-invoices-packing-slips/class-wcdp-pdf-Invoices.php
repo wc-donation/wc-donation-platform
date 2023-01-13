@@ -40,18 +40,20 @@ class WCDP_Pdf_Invoices
 
     /**
      * @param $filename
-     * @return mixed
+     * @return string
      */
-    public static function filename($filename, $type, $order_ids) {
+    public static function filename($filename, $type, $order_ids): string
+    {
 		$type = 'invoice' == $type ? 'receipt' : $type;
         return sanitize_title(get_bloginfo( 'name' ), 'wcdp') . '_' .$type . '_' . implode('-', $order_ids) . '.pdf';
     }
 
-	/**
-	 * @param $template_paths
-	 * @return mixed
-	 */
-	public static function add_document_type($documents = array()) {
+    /**
+     * @param array $documents
+     * @return array
+     */
+	public static function add_document_type(array $documents = array()): array
+    {
 		if (file_exists(WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/documents/abstract-wcpdf-order-document-methods.php')) {
 			$documents['WCDP_Donation_Receipt'] = include_once 'class-wcdp-thank-you-certificate.php';
 		}

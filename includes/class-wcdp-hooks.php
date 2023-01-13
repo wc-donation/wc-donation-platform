@@ -230,7 +230,7 @@ class WCDP_Hooks
      * @param string $title
      * @return string
      */
-    public function wcdp_endpoint_orders_title($title = ''): string
+    public function wcdp_endpoint_orders_title(string $title): string
     {
         global $wp;
         if ( ! empty( $wp->query_vars['orders'] ) ) {
@@ -258,7 +258,7 @@ class WCDP_Hooks
     /**
      * Rename Place Order button
      *
-     * @return string|void
+     * @return string
      */
     public function wcdp_order_button_text(): string
     {
@@ -326,9 +326,10 @@ class WCDP_Hooks
 
     /**
      * Turn Add to cart text into learn more
-     * @return string|void
+     * @return string
      */
-    public function product_add_to_cart_text() {
+    public function product_add_to_cart_text(): string
+    {
         return __( 'Learn more', 'wc-donation-platform');
     }
 
