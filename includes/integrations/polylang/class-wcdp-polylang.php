@@ -20,7 +20,7 @@ class WCDP_Polylang
 			global $wpdb;
 			$translationids = pll_get_post_translations($productid);
 			$placeholder = '';
-			foreach( $translationids as $id ) {
+			foreach($translationids as $ignored) {
 				$placeholder .= ', %s';
 			}
 			$placeholder = substr($placeholder, 2);
