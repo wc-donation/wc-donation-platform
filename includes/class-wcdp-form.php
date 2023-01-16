@@ -125,7 +125,8 @@ class WCDP_Form
             'description'       => 0,
             'short_description' => 0,
             'image'             => 0,
-			'className'			=> ''
+			'className'			=> '',
+            'label'             => __("Donate now!", "wc-donation-platform"),
         ), $value );
         $product_id = $value['id'];
 
@@ -185,7 +186,7 @@ class WCDP_Form
                 return '<p>
                     <a href="#wcdp-form">
                         <button id="wcdp-button" type="button" class="button wcdp-modal-open">'
-                            . esc_html( "Donate now!", "wc-donation-platform" ) .
+                            . esc_html( $value['label'] ) .
                         '</button>
                     </a>
                 </p>';

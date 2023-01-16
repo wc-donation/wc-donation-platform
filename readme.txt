@@ -162,7 +162,7 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
 = 1.3.0 =
-upcoming release
+new: shortcode attribute 'label' lets you change the text of the popup button
 
 = 1.2.8 2023-01-06 =
 Happy new year :)
