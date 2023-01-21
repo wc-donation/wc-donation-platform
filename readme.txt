@@ -127,7 +127,7 @@ So it doesn't make sense to reprogram all the features already implemented by Wo
 1. Highly converting donation form for your online fundraising.
 2. Donors can easily manage their donations.
 3. Use popup donation forms to collect donations even more elegantly.
-4. Automatically generate tax-deductible donation receipts and thank your donors with a personalized thank you certificate.
+4. Automatically generate tax-deductible donation receipts and thank your donors with a personalized thank-you certificate.
 5. Express Donations allow your supporters to donate to you in less than 20 seconds via Apple Pay / Google Pay / PayPal
 
 == Frequently Asked Questions ==
@@ -144,7 +144,7 @@ Probably. I cannot test every WooCommerce extension out there. Donation Platform
 
 = Does Donation Platform for WooCommerce: Fundraising & Donation Management support every WooCommerce feature? =
 
-No. For now it primarily focuses on customer facing behaviour and appearance that is crucial for the donation & fundraising platform.
+No. For now, it primarily focuses on customer facing behaviour and appearance that is crucial for the donation & fundraising platform.
 
 = Why is only one donation form allowed per page? =
 
