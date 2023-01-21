@@ -92,7 +92,7 @@ if ( !class_exists( 'WCDP' ) ) {
             //Integration with other Extensions
             include_once 'includes/integrations/class-wcdp-integrator.php';
 
-            //Deactivation survey
+            //Deactivation survey & Feedback survey
             include_once 'includes/class-wcdp_feedback.php';
         }
 
