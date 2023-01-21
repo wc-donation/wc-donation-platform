@@ -7,11 +7,11 @@
 
 defined('ABSPATH') || exit;
 
-class WCDP_On_Deactivation {
+class WCDP_Feedback {
     private $survey_options;
 
 	/**
-	 * WCDP_On_Deactivation constructor
+	 * WCDP_Feedback constructor
 	 *
 	 * @since v1.2.7
 	 */

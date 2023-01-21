@@ -54,7 +54,7 @@ if ( !class_exists( 'WCDP' ) ) {
 			new WCDP_Progress();
 			new WCDP_Fee_Recovery();
 
-            new WCDP_On_Deactivation();
+            new WCDP_Feedback();
             WCDP_Integrator::init();
 
 			//Load textdomain
@@ -92,8 +92,8 @@ if ( !class_exists( 'WCDP' ) ) {
             //Integration with other Extensions
             include_once 'includes/integrations/class-wcdp-integrator.php';
 
-            //Deactivation survey
-            include_once 'includes/class-wcdp_on_deactivation.php';
+            //Deactivation survey & Feedback survey
+            include_once 'includes/class-wcdp_feedback.php';
         }
 
         /**

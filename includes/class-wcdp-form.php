@@ -186,7 +186,7 @@ class WCDP_Form
                 return '<p>
                     <a href="#wcdp-form">
                         <button id="wcdp-button" type="button" class="button wcdp-modal-open">'
-                            . esc_html( $value['label'] ) .
+                            . esc_html($value['label']) .
                         '</button>
                     </a>
                 </p>';

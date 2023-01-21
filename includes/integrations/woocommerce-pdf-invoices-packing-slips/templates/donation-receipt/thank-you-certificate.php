@@ -12,11 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $shop_name = esc_html($this->get_shop_name());
 
 do_action( 'wpo_wcpdf_before_document', $this->type, $this->order ); ?>
-<?php $url= esc_url($this->get_setting('background', ''), array('http', 'https'));
+<?php
+//filter: Order ID, donation amount
+$url= apply_filters('wcdp_certificate_background_image', $this->get_setting('background', ''), $this->order->get_id(), $this->order->get_total());
 if ($url) :?>
 	<style>
 		body {
-			background-image: url("<?php echo $url; ?>");
+			background-image: url("<?php echo esc_url( $url, array('http', 'https')); ?>");
 			background-repeat: no-repeat;
 			background-position: center;
 			background-size: cover;
@@ -47,9 +49,9 @@ if ($url) :?>
 					printf( esc_html__('for donating %1$s to %2$s.', 'wc-donation-platform'), $order->get_formatted_order_total(), $shop_name); ?></h4>
 				<h4><?php esc_html_e("Your support helps us to realize our projects.", 'wc-donation-platform'); ?></h4>
 
-				<?php $url= esc_url($this->get_setting('signature', ''), array('http', 'https'));
-				if ($url) :?>
-					<img src="<?php echo $url; ?>" style="width: 5cm;"><br>
+				<?php $url_signature= esc_url($this->get_setting('signature', ''), array('http', 'https'));
+				if ($url_signature) :?>
+					<img src="<?php echo $url_signature; ?>" style="width: 5cm;"><br>
 				<?php endif; ?>
 				<p><?php printf( esc_html__( 'Your friends at %s', 'wc-donation-platform' ), $shop_name ); ?></p>
 			</th>
