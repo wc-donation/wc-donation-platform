@@ -164,6 +164,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 = 1.3.0 =
 new: shortcode attribute 'label' lets you change the text of the popup button
 new: filter wcdp_certificate_background_image allows you to dynamically change the background image of the thank-you certificate
+fix: mixed return type in wcdp_add_product_type_option causing PHP error in older PHP versions
 
 = 1.2.8 2023-01-06 =
 Happy new year :)

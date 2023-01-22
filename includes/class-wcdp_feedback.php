@@ -374,7 +374,7 @@ class WCDP_Feedback {
 	public function get_plugins(): array
     {
 		if ( ! function_exists( 'get_plugins' ) ) {
-            include ABSPATH . '/wp-admin/includes/plugin.php';
+            include_once ABSPATH . '/wp-admin/includes/plugin.php';
         }
 
 		$active = array();
