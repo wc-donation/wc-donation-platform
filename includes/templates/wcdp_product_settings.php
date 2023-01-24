@@ -8,6 +8,8 @@ global $post;
 
 $wcdp_min_amount = (float) get_option('wcdp_min_amount', 3);
 $wcdp_max_amount = (float) get_option('wcdp_max_amount', 50000);
+
+do_action('wcdp_before_product_settings');
 ?>
 
 <div id="wcdp_donation_form_data" class="panel woocommerce_options_panel hidden">
