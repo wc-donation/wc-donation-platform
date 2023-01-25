@@ -8,8 +8,8 @@
 defined('ABSPATH') || exit;
 
 class WCDP_Feedback {
-    private $deactivation_survey_options;
-    private $feedback_survey_options;
+    private array $deactivation_survey_options;
+    private array $feedback_survey_options;
 
 	/**
 	 * WCDP_Feedback constructor
@@ -25,6 +25,8 @@ class WCDP_Feedback {
 
         //send survey response to WCDP server
         add_action( 'wp_ajax_wcdp_feedback_survey', array( $this, 'send_survey_data' ) );
+        //do not show survey again after dismiss for several days
+        add_action( 'wp_ajax_wcdp_feedback_survey_dismiss', array( $this, 'send_survey_data_dismiss' ) );
 
         //options of the
         $this->deactivation_survey_options = array(
@@ -97,7 +99,9 @@ class WCDP_Feedback {
      */
 	public function send_survey_data() {
 		$data = $this->get_data();
-
+        if ($data['action'] === 'wcdp_feedback_survey') {
+            set_transient( 'wcdp_feedback_send', true, 31536000);
+        }
 		if ( current_user_can( 'administrator' ) ) {
 			wp_remote_post( 'https://wcdp.jonh.eu/wp-admin/admin-ajax.php', array(
 				'method'        => 'POST',
@@ -115,12 +119,31 @@ class WCDP_Feedback {
 	}
 
     /**
+     * Set transient value to not show the survey to often
+     *
+     * @return void
+     * @throws Exception
+     * @since 1.2.9
+     */
+    function send_survey_data_dismiss() {
+        set_transient( 'wcdp_feedback_send', true,  86400 * random_int(1, 7));
+    }
+
+    /**
      * Add Feedback Survey HTML, JS & CSS
      *
      * @since v1.2.9
      * @return void
      */
     public function wcdp_add_feedback_survey() {
+        $filename = 'index.php';
+        if (!file_exists($filename) || time() - filemtime($filename) < 345600 ||
+            !current_user_can( 'administrator' ) ||
+            get_transient( 'wcdp_feedback_send' )
+        ) {
+            return;
+        }
+
         $this->feedback_modal_html();
         $this->modal_css();
         $this->feedback_js();
@@ -153,7 +176,7 @@ class WCDP_Feedback {
 
                 <div class="wcdp-modal-header">
                     <h2><?php esc_html_e( "Can you please help me to improve Donation Platform for WooCommerce?", "wc-donation-platform" ); ?></h2>
-                    <span class="wcdp-modal-cancel"><span class="dashicons dashicons-no-alt"></span></span>
+                    <button class="wcdp-modal-cancel"><span class="dashicons dashicons-no-alt"></span></button>
                 </div>
 
                 <div class="wcdp-modal-body">
@@ -433,6 +456,13 @@ class WCDP_Feedback {
                 // Modal Cancel Click Action
                 $( document ).on( 'click', '.wcdp-modal-cancel', function(e) {
                     $( '#wcdp-feedback-modal' ).remove();
+                    $.ajax({
+                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        type: 'POST',
+                        data: {
+                            action: 'wcdp_feedback_survey_dismiss',
+                        }
+                    });
                 });
 
                 // Deactivate Button Click Action
