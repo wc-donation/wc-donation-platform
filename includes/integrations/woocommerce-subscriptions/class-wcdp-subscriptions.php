@@ -53,7 +53,7 @@ class WCDP_Subscriptions
      * @param $is_subscription
      * @param $product_id
      * @param $product
-     * @return false|mixed
+     * @return bool
      */
     public static function is_subscription($is_subscription, $product_id, $product) {
         if ($is_subscription && $product->get_meta( '_subscription_length', true ) == 1 && !is_admin()) {

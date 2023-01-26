@@ -53,6 +53,7 @@ if ($value['popup']) :
 			//Just first step, only on Product page
 			include_once 'styles/wcdp_form_style_5.php';
 			break;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'checkout':
             if ($is_internal) {
                 //Just first step, only on Checkout page

@@ -51,7 +51,7 @@ class WCDP_Subscriptions_For_WooCommerce
 	 * @param string $args
 	 * @param string $template_path
 	 * @param string $default_path
-	 * @return mixed|void
+	 * @return string
 	 */
 	public static function modify_template(string $template, string $template_name, $args, string $template_path, string $default_path ): string
 	{

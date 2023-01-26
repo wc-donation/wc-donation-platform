@@ -134,17 +134,17 @@ class WCDP_Progress
 		}
 		//Calculate revenue if not set or calculated revenue older than 21600 seconds
 		if (!$totalrevenue || !isset($totalrevenue[0]) || time() - $totalrevenue[0]['time'] > 21600) {
-			$this->updateTotalRevenueOfProduct($productid);
-			$totalrevenue = get_post_meta( $productid, 'wcdp_total_revenue' );
+            return $this->updateTotalRevenueOfProduct($productid);
 		}
 
 		return (float) $totalrevenue[0]['revenue'];
 	}
 
-	/**
-	 * Calculate and update the total revenue of a product
-	 * @param $productid
-	 */
+    /**
+     * Calculate and update the total revenue of a product
+     * @param $productid
+     * @return float
+     */
 	private function updateTotalRevenueOfProduct($productid) {
 		global $wpdb;
 		$query = "SELECT
@@ -169,6 +169,7 @@ class WCDP_Progress
 		}
 		$revenue = (float) apply_filters('wcdp_update_product_revenue', $revenue, $productid);
 		update_post_meta( $productid, 'wcdp_total_revenue', array('revenue' => $revenue, 'time' => time()));
+        return $revenue;
 	}
 
 	private function get_human_time_diff( $timestamp ) {

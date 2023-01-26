@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 6.1
-Stable tag: 1.2.8
+Stable tag: 1.2.9
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -161,9 +161,11 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.3.0 =
+= 1.2.9 =
 new: shortcode attribute 'label' lets you change the text of the popup button
 new: filter wcdp_certificate_background_image allows you to dynamically change the background image of the thank-you certificate
+new: add non-intrusive feedback survey
+fix: mixed return type in wcdp_add_product_type_option causing PHP error in older PHP versions
 
 = 1.2.8 2023-01-06 =
 Happy new year :)
