@@ -98,11 +98,12 @@ class WCDP_Feedback {
      * @since v1.2.7
      */
 	public function send_survey_data() {
-		$data = $this->get_data();
-        if ($data['action'] === 'wcdp_feedback_survey') {
-            set_transient( 'wcdp_feedback_send', true, 31536000);
-        }
 		if ( current_user_can( 'administrator' ) ) {
+            $data = $this->get_data();
+            if ($data['action'] === 'wcdp_feedback_survey') {
+                set_transient( 'wcdp_feedback_send', true, 31536000);
+            }
+
 			wp_remote_post( 'https://wcdp.jonh.eu/wp-admin/admin-ajax.php', array(
 				'method'        => 'POST',
 				'timeout'       => 30,
