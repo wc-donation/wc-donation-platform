@@ -98,25 +98,25 @@ class WCDP_Feedback {
      * @since v1.2.7
      */
 	public function send_survey_data() {
-		if ( current_user_can( 'administrator' ) ) {
-            $data = $this->get_data();
-            if ($data['action'] === 'wcdp_feedback_survey') {
-                set_transient( 'wcdp_feedback_send', true, 31536000);
-            }
+        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'wcdp_nonce') || !current_user_can( 'administrator' )) return;
 
-			wp_remote_post( 'https://wcdp.jonh.eu/wp-admin/admin-ajax.php', array(
-				'method'        => 'POST',
-				'timeout'       => 30,
-				'redirection'   => 5,
-				'headers'     => array(
-                    'user-agent' => 'PHP/WCDP',
-                    'Accept'     => 'application/json',
-                ),
-				'blocking'      => false,
-				'httpversion'   => '1.0',
-				'body'          => $data,
-			) );
+        $data = $this->get_data();
+        if ($data['action'] === 'wcdp_feedback_survey') {
+            set_transient( 'wcdp_feedback_send', true, 31536000);
         }
+
+        wp_remote_post( 'https://wcdp.jonh.eu/wp-admin/admin-ajax.php', array(
+            'method'        => 'POST',
+            'timeout'       => 30,
+            'redirection'   => 5,
+            'headers'     => array(
+                'user-agent' => 'PHP/WCDP',
+                'Accept'     => 'application/json',
+            ),
+            'blocking'      => false,
+            'httpversion'   => '1.0',
+            'body'          => $data,
+        ) );
 	}
 
     /**
@@ -458,7 +458,7 @@ class WCDP_Feedback {
                 $( document ).on( 'click', '.wcdp-modal-cancel', function(e) {
                     $( '#wcdp-feedback-modal' ).remove();
                     $.ajax({
-                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        url: '<?php echo wp_nonce_url( admin_url('admin-ajax.php'), 'wcdp_nonce' ); ?>',
                         type: 'POST',
                         data: {
                             action: 'wcdp_feedback_survey_dismiss',
@@ -480,7 +480,7 @@ class WCDP_Feedback {
                     const url = $(this).attr('href')
 
                     $.ajax({
-                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        url: '<?php echo wp_nonce_url( admin_url('admin-ajax.php'), 'wcdp_nonce' ); ?>',
                         type: 'POST',
                         data: {
                             action: 'wcdp_feedback_survey',
@@ -539,7 +539,7 @@ class WCDP_Feedback {
 					const url = $(this).attr('href')
 
 					$.ajax({
-						url: '<?php echo admin_url('admin-ajax.php'); ?>',
+						url: '<?php echo wp_nonce_url( admin_url('admin-ajax.php'), 'wcdp_nonce' ); ?>',
 						type: 'POST',
 						data: {
 							action: 'wcdp_feedback_survey',
