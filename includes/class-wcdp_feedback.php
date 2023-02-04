@@ -98,7 +98,7 @@ class WCDP_Feedback {
      * @since v1.2.7
      */
 	public function send_survey_data() {
-        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'wcdp_nonce') || !current_user_can( 'administrator' )) return;
+        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'wcdp_nonce') || !current_user_can( 'administrator' )) wp_die();
 
         $data = $this->get_data();
         if ($data['action'] === 'wcdp_feedback_survey') {
@@ -117,7 +117,8 @@ class WCDP_Feedback {
             'httpversion'   => '1.0',
             'body'          => $data,
         ) );
-	}
+        wp_die();
+    }
 
     /**
      * Set transient value to not show the survey to often
@@ -128,6 +129,7 @@ class WCDP_Feedback {
      */
     function send_survey_data_dismiss() {
         set_transient( 'wcdp_feedback_send', true,  86400 * random_int(1, 7));
+        wp_die();
     }
 
     /**
