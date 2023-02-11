@@ -70,6 +70,7 @@ div.wcdp-header > div.wcdp-step {
     margin: 0;
 	color: var(--controls);
 	background-color: var(--label-text-checked);
+    display: inline-block;
 }
 .wcdp-body {
     overflow: hidden;
