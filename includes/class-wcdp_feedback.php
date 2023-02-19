@@ -8,8 +8,8 @@
 defined('ABSPATH') || exit;
 
 class WCDP_Feedback {
-    private array $deactivation_survey_options;
-    private array $feedback_survey_options;
+    private $deactivation_survey_options;
+    private $feedback_survey_options;
 
 	/**
 	 * WCDP_Feedback constructor
@@ -185,7 +185,7 @@ class WCDP_Feedback {
                 <div class="wcdp-modal-body">
                     <h3><?php esc_html_e( "If you have a moment, please let me know how I can improve Donation Platform for WooCommerce for you. How do you like the plugin?", "wc-donation-platform" ); ?></h3>
                     <ul class="wcdp-modal-input wcdp-radio-none">
-                        <?php foreach ($this->feedback_survey_options as $key => $option) { ?>
+                        <?php foreach ($this->feedback_survey_options as $option) { ?>
                             <li>
                                 <label>
                                     <input type="radio" id="<?php echo esc_attr($option['id']); ?>" class="wcdp-survey" name="wcdp-survey" value="<?php echo esc_attr($option['id']); ?>">
@@ -194,10 +194,10 @@ class WCDP_Feedback {
                             </li>
                         <?php } ?>
                     </ul>
-                    <label for="wcdp_feedbak_comments" class="wcdp-label-strong">
+                    <label for="wcdp_feedback_comments" class="wcdp-label-strong">
                         <strong><?php esc_html_e( "Anything else you want to tell me?", "wc-donation-platform" ); ?></strong><br>
                     </label>
-                    <textarea id="wcdp_feedbak_comments" name="wcdp_feedbak_comments" placeholder="<?php esc_html_e( "Comments & Suggestions for Improvement", "wc-donation-platform" ); ?>" class="wcdp-comments-input"></textarea>
+                    <textarea id="wcdp_feedback_comments" name="wcdp_feedback_comments" placeholder="<?php esc_html_e( "Comments & Suggestions for Improvement", "wc-donation-platform" ); ?>" class="wcdp-comments-input"></textarea>
 
 
                     <div class="wcdp-modal-footer">
@@ -438,7 +438,7 @@ class WCDP_Feedback {
                 font-size: 80px;
                 filter: grayscale(0);
             }
-            #wcdp_feedbak_comments {
+            #wcdp_feedback_comments {
                 width: 100%;
                 height: 5em;
             }
@@ -479,7 +479,6 @@ class WCDP_Feedback {
                     e.preventDefault();
 
                     $(this).addClass('loading');
-                    const url = $(this).attr('href')
 
                     $.ajax({
                         url: '<?php echo wp_nonce_url( admin_url('admin-ajax.php'), 'wcdp_nonce' ); ?>',
@@ -487,7 +486,7 @@ class WCDP_Feedback {
                         data: {
                             action: 'wcdp_feedback_survey',
                             cause_id: $('.wcdp-survey:checked').attr('id'),
-                            cause_details: $('#wcdp_feedbak_comments').val(),
+                            cause_details: $('#wcdp_feedback_comments').val(),
                             type: 'wcdp_feedback_survey'
                         },
                         success: function () {
