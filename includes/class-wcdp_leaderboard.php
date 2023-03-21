@@ -21,7 +21,8 @@ class WCDP_Leaderboard
      * Leaderboard Shortcode
      * @return string
      */
-    function wcdp_leaderboard() {
+    function wcdp_leaderboard(): string
+    {
         return 'Leaderboard';
     }
 }
