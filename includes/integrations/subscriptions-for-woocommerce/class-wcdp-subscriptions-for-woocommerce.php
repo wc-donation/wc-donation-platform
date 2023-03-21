@@ -49,12 +49,12 @@ class WCDP_Subscriptions_For_WooCommerce
      *
      * @param string $template
      * @param string $template_name
-     * @param $args
+     * @param array $args
      * @param string $template_path
      * @param string $default_path
      * @return string
      */
-    public static function modify_template(string $template, string $template_name, $args, string $template_path, string $default_path): string
+    public static function modify_template(string $template='', string $template_name='', array $args=array(), string $template_path='', string $default_path='' ): string
     {
         //Only apply for Subscriptions for WooCommerce Templates
         if (!strpos($default_path, 'subscriptions-for-woocommerce')) {
