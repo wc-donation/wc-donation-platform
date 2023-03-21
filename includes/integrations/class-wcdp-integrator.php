@@ -60,11 +60,12 @@ class WCDP_Integrator
 		}
     }
 
-	/**
-	 * Return true if cart contains a WooCommerce Subscriptions or Subscriptions for WooCommerce product
-	 * @return bool
-	 */
-	public static function wcdp_contains_subscription($product = None): bool
+    /**
+     * Return true if cart contains a WooCommerce Subscriptions or Subscriptions for WooCommerce product
+     * @param null $product
+     * @return bool
+     */
+	public static function wcdp_contains_subscription($product = null): bool
 	{
 		if (class_exists('WC_Subscriptions_Cart')) {
 			return  WC_Subscriptions_Cart::cart_contains_subscription();

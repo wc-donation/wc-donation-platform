@@ -42,7 +42,7 @@ class WCDP_Form
         wp_register_style( 'wc-donation-platform',
             WCDP_DIR_URL . 'assets/css/wcdp.min.css',
             array('select2',),
-            WCDP_VERSION,
+            WCDP_VERSION
         );
         wp_register_script( 'wc-donation-platform',
             WCDP_DIR_URL . 'assets/js/wcdp.min.js',
