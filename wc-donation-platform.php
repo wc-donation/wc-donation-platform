@@ -4,7 +4,7 @@
  * Plugin URI: https://wcdp.jonh.eu/
  * Description: Donation Platform for WooCommerce unlocks the power of WooCommerce for your online fundraising & crowdfunding.
  * Author: Jonas Höbenreich
- * Version: 1.2.9
+ * Version: 1.2.10
  * Author URI: https://www.jonh.eu/
  * Plugin URI:  https://wcdp.jonh.eu/
  * License: GNU General Public License v3.0
@@ -12,7 +12,7 @@
  * Text Domain: wc-donation-platform
  * Domain Path: /languages
  * WC requires at least: 4.0.0
- * WC tested up to: 7.2.2
+ * WC tested up to: 7.6.0
  * Requires at least: 5.8
 */
 
@@ -20,7 +20,7 @@ if(!defined('ABSPATH')) exit;
 
 define( 'WCDP_DIR', dirname(__FILE__).'/' );
 define( 'WCDP_DIR_URL', plugin_dir_url( __FILE__ ) );
-const WCDP_VERSION = '1.2.9';
+const WCDP_VERSION = '1.2.10';
 
 /**
  * Check if WooCommerce is active
