@@ -1,6 +1,7 @@
 /gutenberg/node_modules/
 /node_modules/
 /.idea/
+package-lock.json
 
 # Logs
 logs

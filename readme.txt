@@ -168,6 +168,7 @@ new: set supported WC version to 7.6.0
 fix: add nonce verification to feedback endpoint
 fix: fix incompatibility with Subscriptions for WooCommerce
 fix: fix some php 7.1 incompatibilities
+tweak: update Gutenberg block
 tweak: remind of database migrations for outdated WooCommerce version
 tweak: increase priority for woocommerce_checkout_redirect_empty_cart hook
 tweak: make input text box inline-block
