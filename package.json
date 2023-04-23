@@ -1,7 +1,7 @@
 {
 	"name": "wcdp",
-	"version": "0.1.0",
-	"description": "Donation Plattform for WooCommerce is a Fundraising and Donor Management System.",
+	"version": "1.2.10",
+	"description": "Donation Platform for WooCommerce is a Fundraising and Donor Management System.",
 	"author": "Jonas Hoebenreich",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",

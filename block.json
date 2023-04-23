@@ -6,11 +6,9 @@
 	"icon": "heart",
 	"description": "Display a donation form powered by Donation Platform for WooCommerce",
 	"supports": {
-		"html": true
+		"html": true,
+		"multiple": false
 	},
 	"editorScript": "file:./build/index.js",
-  	"dependencies": [ "wp-blocks", "wp-i18n", "wp-element" ],
-  	"supports": {
-	  "multiple": false
-	}
+  	"dependencies": [ "wp-blocks", "wp-i18n", "wp-element" ]
 }

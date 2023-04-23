@@ -7,7 +7,7 @@
  * Version: 1.2.10
  * Author URI: https://www.jonh.eu/
  * Plugin URI:  https://wcdp.jonh.eu/
- * License: GNU General Public License v3.0
+ * License: GNU General Public License v2.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: wc-donation-platform
  * Domain Path: /languages
