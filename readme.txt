@@ -5,7 +5,7 @@ Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 6.2
 Stable tag: 1.2.10
-Requires PHP: 7.4
+Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,7 +100,7 @@ Thanks to its extensive features, the Fundraising & Donation Platform is suitabl
 * **Social Proof Fundraising**: Increase fundraising engagement by using Fomo plugins, Social media integrations and more.
 * **Credit Card Donations**: Accept donations through credit cards with Stripe or benefit from Revolut’s low rates.
 * **PayPal Donations**: Use the PayPal integration out of the box and reach the hundreds of millions of potential PayPal donors.
-* **Direct Bank Transfer Donations**: The cheapest transaction fees and the great popularity make bank transfers extremely interesting as a payment method.
+* **Direct Bank Transfer Donations**: The cheapest transaction fees and the great popularity make bank transfers a promising as a payment method.
 * **Local Payment Options**: With 100+ payment gateways, there are also many local payment methods that you can use to better reach your target group.
 * **Gorgeous Fundraising Designs**: Donation Platform for WooCommerce comes with 5 different beautiful and simple designs.
 * **Custom CSS Donations**: You can use your own css to integrate the donation form seamlessly into your fundraising website.
@@ -168,11 +168,11 @@ new: set supported WC version to 7.6.0
 fix: add nonce verification to feedback endpoint
 fix: fix incompatibility with Subscriptions for WooCommerce
 fix: fix some php 7.1 incompatibilities
+fix: make sure that max_donation_amount >= min_donation_amount
 tweak: update Gutenberg block
 tweak: remind of database migrations for outdated WooCommerce version
 tweak: increase priority for woocommerce_checkout_redirect_empty_cart hook
 tweak: make input text box inline-block
-tweak: set supported php version to 7.4
 
 = 1.2.9 2023-01-26 =
 new: shortcode attribute 'label' lets you change the text of the popup button
