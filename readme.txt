@@ -164,7 +164,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 = 1.2.10 =
 new: Add progress bar style 4 (with percentage)
 new: set supported WP version to 6.2
-new: set supported WC version to 7.6.0
+new: set supported WC version to 7.7.1
 fix: add nonce verification to feedback endpoint
 fix: fix incompatibility with Subscriptions for WooCommerce
 fix: fix some php 7.1 incompatibilities
