@@ -169,6 +169,7 @@ fix: add nonce verification to feedback endpoint
 fix: fix incompatibility with Subscriptions for WooCommerce
 fix: fix some php 7.1 incompatibilities
 fix: make sure that max_donation_amount >= min_donation_amount
+fix: make sure check user's donation input validity
 tweak: update Gutenberg block
 tweak: remind of database migrations for outdated WooCommerce version
 tweak: increase priority for woocommerce_checkout_redirect_empty_cart hook

@@ -42,8 +42,9 @@ jQuery( function( $ ) {
 
 	// Return true if the donation form is filled in correctly
 	function check_validity(id) {
+        const variation = $('#variation_id');
 		try {
-			return $(id)[0].reportValidity() && ($('#variation_id').length == 0 || $('#variation_id').attr("value") != '');
+			return $(id)[0].reportValidity() && (variation.length === 0 || variation.attr("value") != '');
 		} catch(err) {
 			return false;
 		}
@@ -106,8 +107,10 @@ jQuery( function( $ ) {
 		if (currentStep != 1) {
             wcdp_steps(step);
         } else if (step != 1) {
-			if (currentFormData != $("#wcdp-ajax-send").serialize()) {
-				currentFormData = $("#wcdp-ajax-send").serialize();
+            if (!check_validity('#wcdp-ajax-send')) return;
+            const ajaxSend = $("#wcdp-ajax-send").serialize();
+			if (currentFormData != ajaxSend) {
+				currentFormData = ajaxSend;
 				wcdp_submit(step);
 			} else {
 				wcdp_steps(step);
