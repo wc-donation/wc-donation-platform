@@ -51,7 +51,7 @@ if ($url) :?>
 
 				<?php $url_signature= esc_url($this->get_setting('signature', ''), array('http', 'https'));
 				if ($url_signature) :?>
-					<img src="<?php echo $url_signature; ?>" style="width: 5cm;"><br>
+					<img src="<?php echo $url_signature; ?>" style="width: 5cm;" alt="<?php esc_html_e( 'Signature', 'wc-donation-platform' ); ?>"><br>
 				<?php endif; ?>
 				<p><?php printf( esc_html__( 'Your friends at %s', 'wc-donation-platform' ), $shop_name ); ?></p>
 			</th>
