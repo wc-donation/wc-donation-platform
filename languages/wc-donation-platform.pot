@@ -1,15 +1,15 @@
 # Copyright (C) 2023 Jonas Höbenreich
-# This file is distributed under the GNU General Public License v3.0.
+# This file is distributed under the GNU General Public License v2.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.9\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.2.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-26T23:25:28+01:00\n"
+"POT-Creation-Date: 2023-05-30T20:47:35+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -249,95 +249,95 @@ msgid "%1$s of %2$s"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:181
+#: includes/class-wcdp-progress.php:184
 msgid "%s to go"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:184
+#: includes/class-wcdp-progress.php:187
 msgid "ended %s ago"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:36
+#: includes/class-wcdp_feedback.php:38
 msgid "I no longer need the plugin."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:41
+#: includes/class-wcdp_feedback.php:43
 msgid "I found a better plugin."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:42
+#: includes/class-wcdp_feedback.php:44
 msgid "Please share which plugin."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:47
+#: includes/class-wcdp_feedback.php:49
 msgid "The plugin suddenly stopped working."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:48
-#: includes/class-wcdp_feedback.php:54
+#: includes/class-wcdp_feedback.php:50
+#: includes/class-wcdp_feedback.php:56
 msgid "Please share more details."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:53
+#: includes/class-wcdp_feedback.php:55
 msgid "I could not get the plugin to work."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:59
+#: includes/class-wcdp_feedback.php:61
 msgid "It's a temporary deactivation."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:64
+#: includes/class-wcdp_feedback.php:66
 #: includes/templates/wcdp_step_1_amount.php:89
 msgid "Other"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:65
+#: includes/class-wcdp_feedback.php:67
 msgid "Please share the reason."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:178
+#: includes/class-wcdp_feedback.php:188
 msgid "Can you please help me to improve Donation Platform for WooCommerce?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:183
+#: includes/class-wcdp_feedback.php:193
 msgid "If you have a moment, please let me know how I can improve Donation Platform for WooCommerce for you. How do you like the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:195
+#: includes/class-wcdp_feedback.php:206
 msgid "Anything else you want to tell me?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:197
+#: includes/class-wcdp_feedback.php:209
 msgid "Comments & Suggestions for Improvement"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:201
+#: includes/class-wcdp_feedback.php:215
 msgid "Submit Feedback"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:202
+#: includes/class-wcdp_feedback.php:217
 msgid "Not now"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:205
-#: includes/class-wcdp_feedback.php:247
+#: includes/class-wcdp_feedback.php:220
+#: includes/class-wcdp_feedback.php:268
 msgid "By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:222
+#: includes/class-wcdp_feedback.php:238
 msgid "Can you please help me to improve the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:227
+#: includes/class-wcdp_feedback.php:243
 msgid "If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:243
+#: includes/class-wcdp_feedback.php:262
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:244
+#: includes/class-wcdp_feedback.php:265
 msgid "Skip & Deactivate"
 msgstr ""
 
@@ -349,7 +349,7 @@ msgstr ""
 msgid "(Donation)"
 msgstr ""
 
-#: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:83
+#: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:85
 #: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:154
 msgid "Recurring Donations"
 msgstr ""
@@ -528,6 +528,10 @@ msgstr ""
 
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:50
 msgid "Your support helps us to realize our projects."
+msgstr ""
+
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:54
+msgid "Signature"
 msgstr ""
 
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:61
@@ -848,7 +852,7 @@ msgid "Back"
 msgstr ""
 
 #: includes/templates/styles/wcdp_form_style_3.php:23
-#: includes/templates/wcdp_step_1.php:81
+#: includes/templates/wcdp_step_1.php:86
 msgid "Next"
 msgstr ""
 
@@ -973,11 +977,11 @@ msgstr ""
 msgid "If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:66
+#: includes/templates/wcdp_step_1.php:71
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:86
+#: includes/templates/wcdp_step_1.php:91
 msgid "Donate"
 msgstr ""
 
@@ -1202,7 +1206,7 @@ msgstr ""
 
 #. translators: %s required WC version
 #: wc-donation-platform.php:113
-msgid "Donation Platform for WooCommerce is inactive. This version of Donation Platform for WooCommerce requires WooCommerce %s or newer. Please update WooCommerce."
+msgid "Donation Platform for WooCommerce is inactive. This version of Donation Platform for WooCommerce requires WooCommerce %s or newer. Please update WooCommerce and run all database migrations."
 msgstr ""
 
 #: wc-donation-platform.php:130
