@@ -11,7 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-=== Fastest Growing Donation System for Your Charity, NGO or Personal Fundraising Campaign ===
+=== Feature Rich Donation System for Your Charity, NGO or Personal Fundraising Campaign ===
 
 [Demos](https://wcdp.jonh.eu/demos/demo-style-1/) | [Docs](https://wcdp.jonh.eu/documentation/) | [Getting Started](https://wcdp.jonh.eu/documentation/getting-started/first-steps/)
 
@@ -161,7 +161,7 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.2.10 =
+= 1.2.10 2023-05-30 =
 new: Add progress bar style 4 (with percentage)
 new: set supported WP version to 6.2
 new: set supported WC version to 7.7.1
