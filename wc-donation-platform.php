@@ -53,6 +53,7 @@ if ( !class_exists( 'WCDP' ) ) {
             new WCDP_Form();
 			new WCDP_Progress();
 			new WCDP_Fee_Recovery();
+            new WCDP_Leaderboard();
 
             new WCDP_Feedback();
             WCDP_Integrator::init();
@@ -94,6 +95,9 @@ if ( !class_exists( 'WCDP' ) ) {
 
             //Deactivation survey & Feedback survey
             include_once 'includes/class-wcdp_feedback.php';
+
+            //Leaderboard
+            include_once 'includes/class-wcdp_leaderboard.php';
         }
 
         /**
