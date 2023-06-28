@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 6.2
-Stable tag: 1.2.10
+Stable tag: 1.2.11
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -160,6 +160,9 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.3.0 =
+new: leaderboard shortcode
 
 = 1.2.10 2023-05-30 =
 new: Add progress bar style 4 (with percentage)

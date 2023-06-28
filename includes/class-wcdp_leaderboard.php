@@ -22,17 +22,24 @@ class WCDP_Leaderboard
     }
 
     /**
-     * Rteunrs an array with all WooCommerce orders
+     * get an array with all WooCommerce orders
+     * @param $orderby string
      * @return array
      */
-    private function get_orders_db(): array
+    private function get_orders_db(string $orderby): array
     {
         $args = array(
-            'limit' => 1000,
+            'limit' => apply_filters("wcdp_max_order_cache", 1000),
             'status' => 'completed',
-            'orderby' => 'date',
             'order'   => 'DESC',
         );
+        if ($orderby === 'date') {
+            $args['orderby'] = 'date';
+        } else {
+            $args['orderby'] = 'meta_value_num';
+            $args['meta_key'] = '_order_total';
+        }
+
         $all_orders = wc_get_orders($args);
 
         $orders_clean = array();
@@ -54,25 +61,20 @@ class WCDP_Leaderboard
                 'ids' => $product_ids,
             );
         }
-
-        // Sort the orders by date, newest first
-        usort($orders_clean, function ($a, $b) {
-            return strtotime($b['date']) - strtotime($a['date']);
-        });
-
         return $orders_clean;
     }
 
     /**
      * Return all the latest WooCommerce orders
-     * @return array|mixed
+     * @param string $orderby date or total
+     * @return array
      */
-    private function get_orders() : array {
-        $cache_key = 'wcdp_latest_orders';
+    private function get_orders(string $orderby) : array {
+        $cache_key = 'wcdp_orders_' . $orderby;
         $all_orders = json_decode(get_transient($cache_key), true);
 
         if (empty($all_orders)) {
-            $all_orders = $this->get_orders_db();
+            $all_orders = $this->get_orders_db($orderby);
             set_transient($cache_key, json_encode($all_orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
         }
         return $all_orders;
@@ -82,22 +84,32 @@ class WCDP_Leaderboard
      * Return orders that included at least one of the specified ids
      * @param $limit
      * @param $ids
+     * @param string $orderby date or total
      * @return array
      */
-    private function wcdp_get_latest_orders($limit, $ids): array
+    private function wcdp_get_orders($limit, $ids, string $orderby): array
     {
-        $all_orders = $this->get_orders();
+        $all_orders = $this->get_orders($orderby);
+        if ($ids === '-1') {
+            if ($limit === -1) return $all_orders;
+            return array_slice($all_orders, 0, $limit);
+        }
+
         $filtered_orders = array_filter($all_orders, function ($order) use ($ids) {
             return !empty(array_intersect($order['ids'], $ids));
         });
-        if ($limit === -1) {
-            return $filtered_orders;
-        }
+        if ($limit === -1) return $filtered_orders;
         return array_slice($filtered_orders, 0, $limit);
     }
 
-// Generate the HTML output for the orders
-    public function wcdp_generate_order_output($orders, $title, $subtitle): string
+    /**
+     * Generate the HTML output for the orders
+     * @param $orders
+     * @param $title
+     * @param $subtitle
+     * @return string
+     */
+    public function generate_leaderboard($orders, $title, $subtitle, int $style): string
     {
         $title = sanitize_text_field($title);
         $subtitle = sanitize_text_field($subtitle);
@@ -158,33 +170,40 @@ class WCDP_Leaderboard
 
         // Extract attributes
         $atts = shortcode_atts(array(
-            'limit' => 100,
-            'ids' => '',
-            'title' => '{firstname} donated {amount}',
-            'subtitle' => '{timediff}',
+            'limit'     => 100,
+            'ids'       => '-1',
+            'title'     => '{firstname} donated {amount}',
+            'subtitle'  => '{timediff}',
+            'orderby'   => 'date',
+            "style"     => 1,
         ), $atts, 'latest_orders');
+
+        $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'price';
 
         $limit = intval($atts['limit']);
         $ids = explode(',', $atts['ids']);;
 
         // Get the latest orders
-        $orders = $this->wcdp_get_latest_orders($limit, $ids);
+        $orders = $this->wcdp_get_orders($limit, $ids, $atts['orderby']);
 
         // Generate the HTML output
-        return $this->wcdp_generate_order_output($orders, $atts['title'], $atts['subtitle']);
+        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $style);
     }
 
     function delete_old_latest_orders_cache($order_id, $old_status, $new_status, $order): void
     {
         if ($old_status !== 'completed' && $new_status !== 'completed') return;
 
-        $cache_key = 'wcdp_latest_orders';
-        $timeout = get_option('_transient_timeout_' . $cache_key);
+        foreach (['date', 'total'] as $orderby) {
+            $cache_key = 'wcdp_orders_' . $orderby;
+            $timeout = get_option('_transient_timeout_' . $cache_key);
 
-        if ($timeout && time() + apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS) - $timeout > 90) {
-            delete_transient($cache_key);
-            delete_transient($cache_key . '_timestamp');
+            if ($timeout && time() + apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS) - $timeout > 90) {
+                delete_transient($cache_key);
+                delete_transient($cache_key . '_timestamp');
+            }
         }
+
     }
 
     /**
@@ -197,7 +216,7 @@ class WCDP_Leaderboard
         $parts = explode(' ', $name);
         $initials = '';
         foreach ($parts as $part) {
-            $initials .= strtoupper(substr($part, 0, 1));
+            $initials .= strtoupper(substr($part, 0, 1))  . '.';
         }
         return $initials;
     }
