@@ -113,29 +113,86 @@ class WCDP_Leaderboard
     {
         $title = sanitize_text_field($title);
         $subtitle = sanitize_text_field($subtitle);
+        $output = '';
 
-        $output = '
+        if ($style === 1) {
+            $output .= '
             <style>
-                .wcdp-leaderboard {
+            	:root {
+					--wcdp-main: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
+                    --label-inactive: lightgrey;
+                }
+                .wcdp-leaderboard-s1 {
                   list-style: none;
                   padding: 0;
                   margin: 0;
                 }
-                
-                .wcdp-leaderboard .wcdp-leaderboard-li {
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li {
+                  position: relative;
+                  padding: 12px;
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li::before {
+                  content: "";
+                  position: absolute;
+                  left: -10px;
+                  top: 0;
+                  bottom: 0;
+                  width: 2px;
+                  background-color: var(--label-inactive);
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li:first-child::before {
+                  top: 50%;
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li:last-child::before {
+                  bottom: 50%;
+                }
+                .wcdp-leaderboard-s1  .wcdp-leaderboard-title {
+                  font-size: 1.2em;
+                  font-weight: bold;
+                }
+                .wcdp-leaderboard-s1 .woocommerce-Price-amount {
+                  font-weight: bold;
+                  color: var(--wcdp-main);
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-subtitle {
+                  font-size: 1em;
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li::after {
+                  content: "";
+                  position: absolute;
+                  left: -14px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  width: 10px;
+                  height: 10px;
+                  background-color: var(--wcdp-main);
+                  border-radius: 50%;
+                }
+            </style>
+            <ul class="wcdp-leaderboard-s1 wcdp-leaderboard">';
+        } else {
+            $output .= '<style>
+                .wcdp-leaderboard-s2 {
+                  list-style: none;
+                  padding: 0;
+                  margin: 0;
+                }
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
                   padding: 10px;
                   margin-bottom: 10px;
                 }
-                
-                .wcdp-leaderboard .wcdp-leaderboard-title, .wcdp-leaderboard .woocommerce-Price-amount, .wcdp-leaderboard .wcdp-emphasized {
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-title, .wcdp-leaderboard-s2 .woocommerce-Price-amount, .wcdp-leaderboard-s2 .wcdp-emphasized {
                   font-weight: bold;
                 }
             </style>
-            <ul class="wcdp-leaderboard">';
+            <ul class="wcdp-leaderboard-s2 wcdp-leaderboard">';
+        }
+
         foreach ($orders as $order) {
             $placeholders = array(
                 '{firstname}' => esc_html($order['first']),
                 '{firstname_initial}' => esc_html($this->get_initials($order['first'])),
+                '{lastname}' => esc_html($order['last']),
                 '{lastname_initial}' => esc_html($this->get_initials($order['last'])),
                 '{amount}' => wc_price($order['total'], array('currency' => $order['cy'],)),
                 '{timediff}' => $this->get_human_time_diff($order['date']),
@@ -149,8 +206,12 @@ class WCDP_Leaderboard
             );
 
             $output .= '<li class="wcdp-leaderboard-li">';
-            $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
-            $output .= '<span class="wcdp-leaderboard-subtitle">' . strtr($subtitle, $placeholders) . '</span><br>';
+            if ($title != "") {
+                $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
+            }
+            if ($subtitle != "") {
+                $output .= '<span class="wcdp-leaderboard-subtitle">' . strtr($subtitle, $placeholders) . '</span><br>';
+            }
             $output .= '</li>';
         }
         $output .= '</ul>';
@@ -170,15 +231,15 @@ class WCDP_Leaderboard
 
         // Extract attributes
         $atts = shortcode_atts(array(
-            'limit'     => 100,
+            'limit'     => 10,
             'ids'       => '-1',
-            'title'     => '{firstname} donated {amount}',
+            'title'     => esc_html__('{firstname} donated {amount}', 'wc-donation-platform'),
             'subtitle'  => '{timediff}',
             'orderby'   => 'date',
             "style"     => 1,
         ), $atts, 'latest_orders');
 
-        $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'price';
+        $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
 
         $limit = intval($atts['limit']);
         $ids = explode(',', $atts['ids']);;
@@ -187,7 +248,7 @@ class WCDP_Leaderboard
         $orders = $this->wcdp_get_orders($limit, $ids, $atts['orderby']);
 
         // Generate the HTML output
-        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $style);
+        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $atts['style']);
     }
 
     function delete_old_latest_orders_cache($order_id, $old_status, $new_status, $order): void
@@ -229,6 +290,6 @@ class WCDP_Leaderboard
      */
     private function get_human_time_diff(int $timestamp ): string {
         $human_diff = '<span class="wcdp-emphasized">' . human_time_diff( $timestamp ) . '</span>';
-        return sprintf( __( '%s ago', 'wc-donation-platform' ), $human_diff );
+        return sprintf( esc_html__( '%s ago', 'wc-donation-platform' ), $human_diff );
     }
 }

@@ -11,11 +11,13 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-=== Feature Rich Donation System for Your Charity, NGO or Personal Fundraising Campaign ===
+=== Advanced donation system for your charity, NGO or personal fundraising campaign, works with WooCommerce ===
 
 [Demos](https://wcdp.jonh.eu/demos/demo-style-1/) | [Docs](https://wcdp.jonh.eu/documentation/) | [Getting Started](https://wcdp.jonh.eu/documentation/getting-started/first-steps/)
 
 **Donation Platform for WooCommerce unleashes the power of WooCommerce for your online fundraising, crowdfunding & donation management.**
+
+> Note: Donation Platform for WooCommerce: Fundraising & Donation Management turns WooCommerce into a donation system, parallel use as a normal store is not recommended, as some wording has been changed.
 
 === This Is Why Donation Platform for WooCommerce is Perfect for Your Charity or Fundraising Campaign ===
 * **[Recurring Donations](https://wcdp.jonh.eu/documentation/integrations/recurring-donations-with-woocommerce-subscriptions/)**
