@@ -129,12 +129,12 @@ class WCDP_Leaderboard
                 }
                 .wcdp-leaderboard-s1 .wcdp-leaderboard-li {
                   position: relative;
-                  padding: 12px;
+                  padding: 12px 0 12px 36px;
                 }
                 .wcdp-leaderboard-s1 .wcdp-leaderboard-li::before {
                   content: "";
                   position: absolute;
-                  left: -10px;
+                  left: 12px;
                   top: 0;
                   bottom: 0;
                   width: 2px;
@@ -160,7 +160,7 @@ class WCDP_Leaderboard
                 .wcdp-leaderboard-s1 .wcdp-leaderboard-li::after {
                   content: "";
                   position: absolute;
-                  left: -14px;
+                  left: 8px;
                   top: 50%;
                   transform: translateY(-50%);
                   width: 10px;
@@ -170,6 +170,56 @@ class WCDP_Leaderboard
                 }
             </style>
             <ul class="wcdp-leaderboard-s1 wcdp-leaderboard">';
+        } else if ($style === 2) {
+            $output .= '
+            <style>
+                :root {
+                    --wcdp-main: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
+                    --label-inactive: lightgrey;
+                }
+                
+                .wcdp-leaderboard-s2 {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+                
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
+                    position: relative;
+                    padding: 12px 0 12px 36px;
+                }
+                
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-title {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                }
+                
+                .wcdp-leaderboard-s2 .woocommerce-Price-amount {
+                    font-weight: bold;
+                    color: var(--wcdp-main);
+                }
+                
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-subtitle {
+                    font-size: 1em;
+                }
+                
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li::after {
+                    content: attr(data-icon); /* Add rank number from the data-rank attribute */
+                    position: absolute;
+                    left: 1.5em;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 2.2em;
+                    height: 2.2em;
+                    background-color: var(--wcdp-main);
+                    border-radius: 50%;
+                    text-align: center;
+                    color: white;
+                    font-size: 1em;
+                    line-height: 20px;
+                }
+            </style>
+            <ul class="wcdp-leaderboard-s2 wcdp-leaderboard">';
         } else {
             $output .= '<style>
                 .wcdp-leaderboard-s2 {
@@ -178,7 +228,7 @@ class WCDP_Leaderboard
                   margin: 0;
                 }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
-                  padding: 10px;
+                  padding: 10px 0;
                   margin-bottom: 10px;
                 }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-title, .wcdp-leaderboard-s2 .woocommerce-Price-amount, .wcdp-leaderboard-s2 .wcdp-emphasized {
@@ -205,7 +255,7 @@ class WCDP_Leaderboard
                 '{currency}' => esc_html($order['cy']),
             );
 
-            $output .= '<li class="wcdp-leaderboard-li">';
+            $output .= '<li class="wcdp-leaderboard-li" data-icon="' . esc_html($this->get_initials($order['first'])) . '">';
             if ($title != "") {
                 $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
             }
