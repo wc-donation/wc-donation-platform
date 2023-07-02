@@ -53,12 +53,14 @@ class WCDP_Leaderboard
                 'date' => $order->get_date_created()->getTimestamp(),
                 'first' => $order->get_billing_first_name(),
                 'last' =>  $order->get_billing_last_name(),
+                'co' => $order->get_billing_company(),
                 'city' => $order->get_billing_city(),
                 'country' => $order->get_billing_country(),
                 'zip' => $order->get_billing_postcode(),
                 'total' => $order->get_total(),
                 'cy' => $order->get_currency(),
                 'ids' => $product_ids,
+                'cmnt' => $order->get_customer_note(),
             );
         }
         return $orders_clean;
@@ -244,6 +246,8 @@ class WCDP_Leaderboard
                 '{firstname_initial}' => esc_html($this->get_initials($order['first'])),
                 '{lastname}' => esc_html($order['last']),
                 '{lastname_initial}' => esc_html($this->get_initials($order['last'])),
+                '{company}' => esc_html($order['co']),
+                '{company_or_name}' => $this->get_company_or_name($order['co'], $order['first'], $order['last']),
                 '{amount}' => wc_price($order['total'], array('currency' => $order['cy'],)),
                 '{timediff}' => $this->get_human_time_diff($order['date']),
                 '{datetime}' => date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $order['date']),
@@ -253,6 +257,7 @@ class WCDP_Leaderboard
                 '{country_code}' => esc_html($order['country']),
                 '{postcode}' => esc_html($order['zip']),
                 '{currency}' => esc_html($order['cy']),
+                '{comment}' => esc_html($order['cmnt']),
             );
 
             $output .= '<li class="wcdp-leaderboard-li" data-icon="' . esc_html($this->get_initials($order['first'])) . '">';
@@ -341,5 +346,20 @@ class WCDP_Leaderboard
     private function get_human_time_diff(int $timestamp ): string {
         $human_diff = '<span class="wcdp-emphasized">' . human_time_diff( $timestamp ) . '</span>';
         return sprintf( esc_html__( '%s ago', 'wc-donation-platform' ), $human_diff );
+    }
+
+    /**
+     * If company is set return company
+     * else return name as firstname lastname_initial (John D.)
+     * @param string $company
+     * @param string $first
+     * @param string $last
+     * @return string
+     */
+    private function get_company_or_name(string $company, string $first, string $last): string
+    {
+        if (!empty($company)) return esc_html($company);
+
+        return esc_html(esc_html($first) . ' ' . esc_html($this->get_initials($last)));
     }
 }
