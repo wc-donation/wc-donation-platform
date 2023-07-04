@@ -44,6 +44,10 @@ class WCDP_Progress
 	 * @return false|string
      */
 	public function wcdp_progress(array $atts = array()) {
+
+        // Do not allow executing this Shortcode via AJAX
+        if (wp_doing_ajax()) return "";
+
 		if (!isset($atts['id'])) {
 			return esc_html__('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
 		}
@@ -175,7 +179,13 @@ class WCDP_Progress
         return $revenue;
 	}
 
-	private function get_human_time_diff( $timestamp ) {
+    /**
+     * Format timestamp as timediff string
+     * @param $timestamp
+     * @return string
+     */
+	private function get_human_time_diff( $timestamp ): string
+    {
 		$time_diff = strtotime( $timestamp ) - strtotime( 'now' );
 
 		$human_diff = '<span class="wcdp-emphasized">' . human_time_diff( strtotime($timestamp) ) . '</span>';

@@ -94,6 +94,9 @@ class WCDP_Form
      */
     public static function wcdp_donation_form_shortcode($atts = array()): string
     {
+        // Do not allow executing this Shortcode via AJAX
+        if (wp_doing_ajax()) return "";
+
         return WCDP_Form::wcdp_donation_form($atts, false);
     }
 
