@@ -23,7 +23,7 @@ class WCDP_Leaderboard
 
     /**
      * get an array with all WooCommerce orders
-     * @param $orderby string
+     * @param string $orderby date or total
      * @return array
      */
     private function get_orders_db(string $orderby): array
@@ -106,12 +106,13 @@ class WCDP_Leaderboard
 
     /**
      * Generate the HTML output for the orders
-     * @param $orders
-     * @param $title
-     * @param $subtitle
+     * @param array $orders
+     * @param string $title
+     * @param string $subtitle
+     * @param int $style
      * @return string
      */
-    public function generate_leaderboard($orders, $title, $subtitle, int $style): string
+    public function generate_leaderboard(array $orders, string $title, string $subtitle, int $style): string
     {
         $title = sanitize_text_field($title);
         $subtitle = sanitize_text_field($subtitle);
@@ -172,56 +173,6 @@ class WCDP_Leaderboard
                 }
             </style>
             <ul class="wcdp-leaderboard-s1 wcdp-leaderboard">';
-        } else if ($style === 2) {
-            $output .= '
-            <style>
-                :root {
-                    --wcdp-main: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
-                    --label-inactive: lightgrey;
-                }
-                
-                .wcdp-leaderboard-s2 {
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                }
-                
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
-                    position: relative;
-                    padding: 12px 0 12px 36px;
-                }
-                
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-title {
-                    font-size: 1.2em;
-                    font-weight: bold;
-                }
-                
-                .wcdp-leaderboard-s2 .woocommerce-Price-amount {
-                    font-weight: bold;
-                    color: var(--wcdp-main);
-                }
-                
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-subtitle {
-                    font-size: 1em;
-                }
-                
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-li::after {
-                    content: attr(data-icon); /* Add rank number from the data-rank attribute */
-                    position: absolute;
-                    left: 1.5em;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 2.2em;
-                    height: 2.2em;
-                    background-color: var(--wcdp-main);
-                    border-radius: 50%;
-                    text-align: center;
-                    color: white;
-                    font-size: 1em;
-                    line-height: 20px;
-                }
-            </style>
-            <ul class="wcdp-leaderboard-s2 wcdp-leaderboard">';
         } else {
             $output .= '<style>
                 .wcdp-leaderboard-s2 {
@@ -242,25 +193,25 @@ class WCDP_Leaderboard
 
         foreach ($orders as $order) {
             $placeholders = array(
-                '{firstname}' => esc_html($order['first']),
-                '{firstname_initial}' => esc_html($this->get_initials($order['first'])),
-                '{lastname}' => esc_html($order['last']),
-                '{lastname_initial}' => esc_html($this->get_initials($order['last'])),
-                '{company}' => esc_html($order['co']),
+                '{firstname}' => wp_strip_all_tags($order['first']),
+                '{firstname_initial}' => wp_strip_all_tags($this->get_initials($order['first'])),
+                '{lastname}' => wp_strip_all_tags($order['last']),
+                '{lastname_initial}' => wp_strip_all_tags($this->get_initials($order['last'])),
+                '{company}' => wp_strip_all_tags($order['co']),
                 '{company_or_name}' => $this->get_company_or_name($order['co'], $order['first'], $order['last']),
                 '{amount}' => wc_price($order['total'], array('currency' => $order['cy'],)),
                 '{timediff}' => $this->get_human_time_diff($order['date']),
                 '{datetime}' => date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $order['date']),
                 '{date}' => date_i18n(get_option('date_format'), $order['date']),
-                '{city}' => esc_html($order['city']),
+                '{city}' => wp_strip_all_tags($order['city']),
                 '{country}' => WC()->countries->countries[esc_attr($order['country'])],
-                '{country_code}' => esc_html($order['country']),
-                '{postcode}' => esc_html($order['zip']),
-                '{currency}' => esc_html($order['cy']),
-                '{comment}' => esc_html($order['cmnt']),
+                '{country_code}' => wp_strip_all_tags($order['country']),
+                '{postcode}' => wp_strip_all_tags($order['zip']),
+                '{currency}' => wp_strip_all_tags($order['cy']),
+                '{comment}' => wp_strip_all_tags($order['cmnt']),
             );
 
-            $output .= '<li class="wcdp-leaderboard-li" data-icon="' . esc_html($this->get_initials($order['first'])) . '">';
+            $output .= '<li class="wcdp-leaderboard-li">';
             if ($title != "") {
                 $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
             }
