@@ -122,7 +122,7 @@ class WCDP_Leaderboard
             $output .= '
             <style>
             	:root {
-					--wcdp-main: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
+					--wcdp-main-2: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
                     --label-inactive: lightgrey;
                 }
                 .wcdp-leaderboard-s1 {
@@ -155,7 +155,7 @@ class WCDP_Leaderboard
                 }
                 .wcdp-leaderboard-s1 .woocommerce-Price-amount {
                   font-weight: bold;
-                  color: var(--wcdp-main);
+                  color: var(--wcdp-main-2);
                 }
                 .wcdp-leaderboard-s1 .wcdp-leaderboard-subtitle {
                   font-size: 1em;
@@ -168,7 +168,7 @@ class WCDP_Leaderboard
                   transform: translateY(-50%);
                   width: 10px;
                   height: 10px;
-                  background-color: var(--wcdp-main);
+                  background-color: var(--wcdp-main-2);
                   border-radius: 50%;
                 }
             </style>
