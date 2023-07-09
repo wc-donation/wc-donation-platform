@@ -160,6 +160,11 @@ To set up recurring donations, please also install Subscriptions for WooCommerce
 
 WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plugin you can use to send out your tax-deductible receipts & thank you certificates. Please follow this guide to set up donation receipts: [Set up donation receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
 
+= Why can’t I run a donation platform and a webshop with WooCommerce in parallel? =
+
+In fact, Donation Platform for WooCommerce does not change the core functionality of WooCommerce, so you can continue to sell products normally. However, the wording in the user frontend has been adjusted. For example, the order summary is now called “Your Donation” instead of “Your Order”, the title of the order history and the texts of the emails have also been adjusted accordingly.
+If this is not a problem for you, you can continue to sell normal products. Otherwise, my recommendation would be that you use a WordPress multisite or a separate WordPress installation for the donation page. Or you can use the free Loco Translate plugin to customize the texts.
+
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
