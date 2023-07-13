@@ -181,8 +181,7 @@ class WCDP_Leaderboard
                   margin: 0;
                 }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
-                  padding: 10px 0;
-                  margin-bottom: 10px;
+                  padding: 3px 0;
                 }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-title, .wcdp-leaderboard-s2 .woocommerce-Price-amount, .wcdp-leaderboard-s2 .wcdp-emphasized {
                   font-weight: bold;
@@ -216,7 +215,7 @@ class WCDP_Leaderboard
                 $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
             }
             if ($subtitle != "") {
-                $output .= '<span class="wcdp-leaderboard-subtitle">' . strtr($subtitle, $placeholders) . '</span><br>';
+                $output .= '<span class="wcdp-leaderboard-subtitle">' . strtr($subtitle, $placeholders) . '</span>';
             }
             $output .= '</li>';
         }
