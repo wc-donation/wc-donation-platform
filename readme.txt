@@ -170,7 +170,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.3.0 =
 new: leaderboard shortcode
-fix: compatibility with newest version of PDF Invoices & Packing Slips for WooCommerce
+fix: compatibility with newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance #40
 
 = 1.2.10 2023-05-30 =
 new: Add progress bar style 4 (with percentage)
