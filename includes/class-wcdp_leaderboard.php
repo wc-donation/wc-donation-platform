@@ -183,6 +183,15 @@ class WCDP_Leaderboard
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
                   padding: 3px 0;
                 }
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li::before {
+                      content: "";
+                      background-image: url(' . WCDP_DIR_URL . 'assets/svg/donation.svg);
+                      background-size: auto;
+                      width: 50px;
+                      height: 36px;
+                      margin-right: 5px;
+                      display: inline-block;
+                }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-title, .wcdp-leaderboard-s2 .woocommerce-Price-amount, .wcdp-leaderboard-s2 .wcdp-emphasized {
                   font-weight: bold;
                 }
