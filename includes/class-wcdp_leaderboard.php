@@ -183,12 +183,15 @@ class WCDP_Leaderboard
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
                   padding: 3px 0;
                 }
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li div {
+                  display: inline-block;
+                }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-li::before {
                       content: "";
                       background-image: url(' . WCDP_DIR_URL . 'assets/svg/donation.svg);
                       background-size: auto;
-                      width: 50px;
-                      height: 36px;
+                      width: 1.39em;
+                      height: 1em;
                       margin-right: 5px;
                       display: inline-block;
                 }
@@ -219,14 +222,14 @@ class WCDP_Leaderboard
                 '{comment}' => wp_strip_all_tags($order['cmnt']),
             );
 
-            $output .= '<li class="wcdp-leaderboard-li">';
+            $output .= '<li class="wcdp-leaderboard-li"><div>';
             if ($title != "") {
                 $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
             }
             if ($subtitle != "") {
                 $output .= '<span class="wcdp-leaderboard-subtitle">' . strtr($subtitle, $placeholders) . '</span>';
             }
-            $output .= '</li>';
+            $output .= '</div></li>';
         }
         $output .= '</ul>';
 
