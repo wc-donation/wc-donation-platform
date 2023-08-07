@@ -54,8 +54,8 @@ div.wcdp-header > div.wcdp-step {
     float: right;
 }
 .wcdp-left {
-    display: inline-block
-    /* float: left; */
+    display: inline-block;
+    float: left;
 }
 #wcdp-popup .wcdp-body {
     overflow: hidden;
