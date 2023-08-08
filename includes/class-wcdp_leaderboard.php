@@ -112,97 +112,27 @@ class WCDP_Leaderboard
      * @param int $style
      * @return string
      */
-    public function generate_leaderboard(array $orders, string $title, string $subtitle, int $style): string
+    public function generate_leaderboard(array $orders, string $title, string $subtitle, int $style, int $split): string
     {
         $title = sanitize_text_field($title);
         $subtitle = sanitize_text_field($subtitle);
-        $output = '';
+        $id = 'wcdp_' . wp_generate_password(6, false);
+
+        $output = "<style>#" . $id . " .wcdp-leaderboard-hidden {
+                    display: none;
+                }";
 
         if ($style === 1) {
-            $output .= '
-            <style>
-            	:root {
-					--wcdp-main-2: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
-                    --label-inactive: lightgrey;
-                }
-                .wcdp-leaderboard-s1 {
-                  list-style: none;
-                  padding: 0;
-                  margin: 0;
-                }
-                .wcdp-leaderboard-s1 .wcdp-leaderboard-li {
-                  position: relative;
-                  padding: 12px 0 12px 36px;
-                }
-                .wcdp-leaderboard-s1 .wcdp-leaderboard-li::before {
-                  content: "";
-                  position: absolute;
-                  left: 12px;
-                  top: 0;
-                  bottom: 0;
-                  width: 2px;
-                  background-color: var(--label-inactive);
-                }
-                .wcdp-leaderboard-s1 .wcdp-leaderboard-li:first-child::before {
-                  top: 50%;
-                }
-                .wcdp-leaderboard-s1 .wcdp-leaderboard-li:last-child::before {
-                  bottom: 50%;
-                }
-                .wcdp-leaderboard-s1  .wcdp-leaderboard-title {
-                  font-size: 1.2em;
-                  font-weight: bold;
-                }
-                .wcdp-leaderboard-s1 .woocommerce-Price-amount {
-                  font-weight: bold;
-                  color: var(--wcdp-main-2);
-                }
-                .wcdp-leaderboard-s1 .wcdp-leaderboard-subtitle {
-                  font-size: 1em;
-                }
-                .wcdp-leaderboard-s1 .wcdp-leaderboard-li::after {
-                  content: "";
-                  position: absolute;
-                  left: 8px;
-                  top: 50%;
-                  transform: translateY(-50%);
-                  width: 10px;
-                  height: 10px;
-                  background-color: var(--wcdp-main-2);
-                  border-radius: 50%;
-                }
-            </style>
-            <ul class="wcdp-leaderboard-s1 wcdp-leaderboard">';
+            $output .= $this->get_css_style_1($id);
         } else {
-            $output .= '<style>
-                .wcdp-leaderboard-s2 {
-                  list-style: none;
-                  padding: 0;
-                  margin: 0;
-                }
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
-                  padding: 3px 0;
-                }
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-li div {
-                  display: inline-block;
-                }
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-li::before {
-                      content: "";
-                      background-image: url(' . WCDP_DIR_URL . 'assets/svg/donation.svg);
-                      background-size: auto;
-                      width: 1.39em;
-                      height: 1em;
-                      margin-right: 5px;
-                      display: inline-block;
-                }
-                .wcdp-leaderboard-s2 .wcdp-leaderboard-title, .wcdp-leaderboard-s2 .woocommerce-Price-amount, .wcdp-leaderboard-s2 .wcdp-emphasized {
-                  font-weight: bold;
-                }
-            </style>
-            <ul class="wcdp-leaderboard-s2 wcdp-leaderboard">';
+            $output .= $this->get_css_style_2($id);
         }
-
-        foreach ($orders as $order) {
+        $hideClass = '';
+        foreach ($orders as $pos => $order) {
+            if ($pos === $split) {
+                $hideClass = ' wcdp-leaderboard-hidden';
+                $output .= '<li class="wcdp-leaderboard-seperator"><button class="button wcdp-button" type="button">' . esc_html__('Show more', 'wc-donation-platform') . '</button></li>';
+            }
             $placeholders = array(
                 '{firstname}' => wp_strip_all_tags($order['first']),
                 '{firstname_initial}' => wp_strip_all_tags($this->get_initials($order['first'])),
@@ -222,7 +152,7 @@ class WCDP_Leaderboard
                 '{comment}' => wp_strip_all_tags($order['cmnt']),
             );
 
-            $output .= '<li class="wcdp-leaderboard-li"><div>';
+            $output .= '<li class="wcdp-leaderboard-li' . $hideClass . '"><div>';
             if ($title != "") {
                 $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
             }
@@ -232,6 +162,18 @@ class WCDP_Leaderboard
             $output .= '</div></li>';
         }
         $output .= '</ul>';
+
+        if ($split !== -1) {
+            $output .= "<script>
+                  const " . $id . " = document.querySelector('#" . $id . " .wcdp-leaderboard-seperator');
+                  " . $id . ".addEventListener('click', () => {
+                    document.querySelectorAll('#" . $id . " .wcdp-leaderboard-hidden').forEach(item => {
+                      item.classList.remove('wcdp-leaderboard-hidden');
+                    });
+                    " . $id . ".style.display = 'none';
+                  });
+                </script>";
+        }
 
         return $output;
     }
@@ -254,6 +196,7 @@ class WCDP_Leaderboard
             'subtitle'  => '{timediff}',
             'orderby'   => 'date',
             "style"     => 1,
+            "split"     => -1
         ), $atts, 'latest_orders');
 
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
@@ -265,7 +208,7 @@ class WCDP_Leaderboard
         $orders = $this->wcdp_get_orders($limit, $ids, $atts['orderby']);
 
         // Generate the HTML output
-        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $atts['style']);
+        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $atts['style'], (int) $atts['split']);
     }
 
     function delete_old_latest_orders_cache($order_id, $old_status, $new_status, $order): void
@@ -323,5 +266,100 @@ class WCDP_Leaderboard
         if (!empty($company)) return esc_html($company);
 
         return esc_html(esc_html($first) . ' ' . esc_html($this->get_initials($last)));
+    }
+
+    /**
+     * Get HTML part for leaderboard style 1
+     * @param string $id leaderboard id
+     * @return string
+     */
+    private function get_css_style_1(string $id): string
+    {
+        return ':root {
+					--wcdp-main-2: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
+                    --label-inactive: lightgrey;
+                }
+                .wcdp-leaderboard-s1 {
+                  list-style: none;
+                  padding: 0;
+                  margin: 0;
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li {
+                  position: relative;
+                  padding: 12px 0 12px 36px;
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li::before {
+                  content: "";
+                  position: absolute;
+                  left: 12px;
+                  top: 0;
+                  bottom: 0;
+                  width: 2px;
+                  background-color: var(--label-inactive);
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li:first-child::before {
+                  top: 50%;
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li:last-child::before {
+                  bottom: 50%;
+                }
+                .wcdp-leaderboard-s1  .wcdp-leaderboard-title {
+                  font-size: 1.2em;
+                  font-weight: bold;
+                }
+                .wcdp-leaderboard-s1 .woocommerce-Price-amount {
+                  font-weight: bold;
+                  color: var(--wcdp-main-2);
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-subtitle {
+                  font-size: 1em;
+                }
+                .wcdp-leaderboard-s1 .wcdp-leaderboard-li::after {
+                  content: "";
+                  position: absolute;
+                  left: 8px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  width: 10px;
+                  height: 10px;
+                  background-color: var(--wcdp-main-2);
+                  border-radius: 50%;
+                }
+            </style>
+            <ul class="wcdp-leaderboard-s1 wcdp-leaderboard" id="' . $id . '">';
+    }
+
+    /**
+     * Get HTML part for leaderboard style 2
+     * @param string $id  leaderboard id
+     * @return string
+     */
+    private function get_css_style_2(string $id): string
+    {
+        return '.wcdp-leaderboard-s2 {
+                  list-style: none;
+                  padding: 0;
+                  margin: 0;
+                }
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li {
+                  padding: 3px 0;
+                }
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li div {
+                  display: inline-block;
+                }
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-li::before {
+                      content: "";
+                      background-image: url(' . WCDP_DIR_URL . 'assets/svg/donation.svg);
+                      background-size: auto;
+                      width: 1.39em;
+                      height: 1em;
+                      margin-right: 5px;
+                      display: inline-block;
+                }
+                .wcdp-leaderboard-s2 .wcdp-leaderboard-title, .wcdp-leaderboard-s2 .woocommerce-Price-amount, .wcdp-leaderboard-s2 .wcdp-emphasized {
+                  font-weight: bold;
+                }
+            </style>
+            <ul class="wcdp-leaderboard-s2 wcdp-leaderboard" id="' . $id . '">';
     }
 }
