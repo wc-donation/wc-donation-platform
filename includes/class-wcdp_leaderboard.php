@@ -134,22 +134,22 @@ class WCDP_Leaderboard
                 $output .= '<li class="wcdp-leaderboard-seperator"><button class="button wcdp-button" type="button">' . esc_html__('Show more', 'wc-donation-platform') . '</button></li>';
             }
             $placeholders = array(
-                '{firstname}' => wp_strip_all_tags($order['first']),
-                '{firstname_initial}' => wp_strip_all_tags($this->get_initials($order['first'])),
-                '{lastname}' => wp_strip_all_tags($order['last']),
-                '{lastname_initial}' => wp_strip_all_tags($this->get_initials($order['last'])),
-                '{company}' => wp_strip_all_tags($order['co']),
-                '{company_or_name}' => $this->get_company_or_name($order['co'], $order['first'], $order['last']),
-                '{amount}' => wc_price($order['total'], array('currency' => $order['cy'],)),
-                '{timediff}' => $this->get_human_time_diff($order['date']),
-                '{datetime}' => date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $order['date']),
-                '{date}' => date_i18n(get_option('date_format'), $order['date']),
-                '{city}' => wp_strip_all_tags($order['city']),
-                '{country}' => WC()->countries->countries[esc_attr($order['country'])],
-                '{country_code}' => wp_strip_all_tags($order['country']),
-                '{postcode}' => wp_strip_all_tags($order['zip']),
-                '{currency}' => wp_strip_all_tags($order['cy']),
-                '{comment}' => wp_strip_all_tags($order['cmnt']),
+                '{firstname}' => "<span class='wcdp-leaderboard-firstname'>" . wp_strip_all_tags($order['first']) . "</span>",
+                '{firstname_initial}' => "<span class='wcdp-leaderboard-firstname_initial'>" . wp_strip_all_tags($this->get_initials($order['first'])) . "</span>",
+                '{lastname}' => "<span class='wcdp-leaderboard-lastname'>" . wp_strip_all_tags($order['last']) . "</span>",
+                '{lastname_initial}' => "<span class='wcdp-leaderboard-lastname_initial'>" . wp_strip_all_tags($this->get_initials($order['last'])) . "</span>",
+                '{company}' => "<span class='wcdp-leaderboard-company'>" . wp_strip_all_tags($order['co']) . "</span>",
+                '{company_or_name}' => "<span class='wcdp-leaderboard-company_or_name'>" . $this->get_company_or_name($order['co'], $order['first'], $order['last']) . "</span>",
+                '{amount}' => "<span class='wcdp-leaderboard-amount'>" . wc_price($order['total'], array('currency' => $order['cy'],)) . "</span>",
+                '{timediff}' => "<span class='wcdp-leaderboard-timediff'>" . $this->get_human_time_diff($order['date']) . "</span>",
+                '{datetime}' => "<span class='wcdp-leaderboard-datetime'>" . date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $order['date']) . "</span>",
+                '{date}' => "<span class='wcdp-leaderboard-date'>" . date_i18n(get_option('date_format'), $order['date']) . "</span>",
+                '{city}' => "<span class='wcdp-leaderboard-city'>" . wp_strip_all_tags($order['city']) . "</span>",
+                '{country}' => "<span class='wcdp-leaderboard-country'>" . WC()->countries->countries[esc_attr($order['country'])] . "</span>",
+                '{country_code}' => "<span class='wcdp-leaderboard-country_code'>" . wp_strip_all_tags($order['country']) . "</span>",
+                '{postcode}' => "<span class='wcdp-leaderboard-postcode'>" . wp_strip_all_tags($order['zip']) . "</span>",
+                '{currency}' => "<span class='wcdp-leaderboard-currency'>" . wp_strip_all_tags($order['cy']) . "</span>",
+                '{comment}' => "<span class='wcdp-leaderboard-comment'>" . wp_strip_all_tags($order['cmnt']) . "</span>",
             );
 
             $output .= '<li class="wcdp-leaderboard-li' . $hideClass . '"><div>';
