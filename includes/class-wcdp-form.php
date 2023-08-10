@@ -109,9 +109,18 @@ class WCDP_Form
 	 */
     public static function wcdp_donation_form(array $value, bool $is_internal): string
 	{
-        //Only one donation form per page
+        if (wp_doing_ajax()) return "";
+
+        if (!$value['id']) {
+            return '<p class="wcdp-error-message">' . esc_html__('id is a required attribute', 'wc-donation-platform' ) . '</p>';
+        }
+        if ( !self::is_donable($value["id"]) ) {
+            return '<p class="wcdp-error-message">' . esc_html__('Donations are not activated for this project.','wc-donation-platform' ) . '</p>';
+        }
         static $no_donation_form_yet = true;
-        if ( !$no_donation_form_yet || (!$is_internal && is_product())) {
+
+        //Only one donation form per page
+        if ( !$no_donation_form_yet || (!$is_internal && is_product() && self::is_donable(get_the_ID()))) {
             return '<p class="wcdp-error-message">' . esc_html__('Only one donation form per page allowed','wc-donation-platform' ) . '</p>';
         }
         $no_donation_form_yet = false;
@@ -133,10 +142,6 @@ class WCDP_Form
         ), $value );
         $product_id = $value['id'];
 
-        if (!$value['id']) {
-            return '<p class="wcdp-error-message">' . esc_html__('id is a required attribute', 'wc-donation-platform' ) . '</p>';
-        }
-
         $checkout = WC()->checkout();
         $id = intval($value['id']);
 
@@ -156,8 +161,6 @@ class WCDP_Form
 
             if (!isset(WC()->cart)) {
 				WCDP_Form::form_error_message('In the current view, the donation form is not available.');
-			} else if(!WCDP_Form::is_donable($id)) {
-				WCDP_Form::form_error_message('Donations are not activated for this project.');
 			} else if(!$product) {
 				WCDP_Form::form_error_message('Invalid project ID: This project is unknown.');
 			} else if(!is_a( $product, 'WC_Product_Grouped' ) && !$product->is_purchasable()) {
