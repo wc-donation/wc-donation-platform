@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.8
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: 1.2.11
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -171,6 +171,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 = 1.3.0 =
 new: leaderboard shortcode
 new: compatibility with WooCommerce API
+new: set supported WP version to 6.3
 fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance #40
 tweak: do not allow to embed donation form when using AJAX
 
