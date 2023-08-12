@@ -172,6 +172,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 new: leaderboard shortcode
 new: compatibility with WooCommerce API
 new: set supported WP version to 6.3
+new: set supported WooCommerce version to 8.0.1
 fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance #40
 tweak: do not allow to embed donation form when using AJAX
 
