@@ -19,9 +19,16 @@ class WCDP_Leaderboard
 
         //Delete cache on order change
         add_action('woocommerce_order_status_changed', array($this, 'delete_old_latest_orders_cache'), 10, 4);
+
+        // Add checkbox to WooCommerce checkout
+        add_action('woocommerce_review_order_before_submit', array($this, 'add_anonymous_donation_checkbox'));
+
+        add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
+
+        add_action('woocommerce_order_details_after_order_table', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
     }
 
-    /**
+    /**<s<
      * get an array with all WooCommerce orders
      * @param string $orderby date or total
      * @return array
@@ -361,5 +368,32 @@ class WCDP_Leaderboard
                 }
             </style>
             <ul class="wcdp-leaderboard-s2 wcdp-leaderboard" id="' . $id . '">';
+    }
+
+    public function add_anonymous_donation_checkbox() {
+        echo '<div class="anonymous-donation-checkbox">';
+        woocommerce_form_field('wcdp_checkout_checkbox', array(
+            'type' => 'checkbox',
+            'class' => array('input-checkbox'),
+            'label' => __('Do not show my name in the leaderboard.', 'wc-donation-platform'),
+        ), WC()->checkout->get_value('wcdp_checkout_checkbox'));
+        echo '</div>';
+    }
+
+    public function save_anonymous_donation_checkbox($order) {
+        if (isset($_POST['wcdp_checkout_checkbox']) && $_POST['wcdp_checkout_checkbox'] == 1) {
+            $order->update_meta_data('_wcdp_checkout_checkbox', 'Yes');
+        } else {
+            $order->update_meta_data('_wcdp_checkout_checkbox', 'No');
+        }
+    }
+
+    public function display_anonymous_donation_checkbox_in_order_details($order) {
+        $checkbox_value = $order->get_meta('_wcdp_checkout_checkbox');
+        if ($checkbox_value == 1) {
+            echo '<p><strong>' . __('Do not show my name in the leaderboard:', 'wc-donation-platform') . '</strong> ' . __('Yes', 'wc-donation-platform') . '</p>';
+        } else {
+            echo '<p><strong>' . __('Do not show my name in the leaderboard:', 'wc-donation-platform') . '</strong> ' . __('No', 'wc-donation-platform') . '</p>';
+        }
     }
 }
