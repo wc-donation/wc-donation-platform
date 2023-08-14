@@ -31,7 +31,8 @@ class WCDP_Progress
             foreach ( $order->get_items() as $item ) {
                 $revenue = get_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
                 //Recalculate the Revenue only if it has not been calculated recently (Avoid performance problems during peak loads)
-                if (!$revenue || time() - $revenue[0]['time'] > 30) {
+                //If the orderid is smaller than 10000 it assumes that the page does not receive many donations
+                if (!$revenue || $orderid <= 10000 || time() - $revenue[0]['time'] > 30) {
                     $this->updateTotalRevenueOfProduct($item->get_product_id());
                 }
             }
@@ -149,10 +150,11 @@ class WCDP_Progress
 
     /**
      * Calculate and update the total revenue of a product
-     * @param $productid
+     * @param int $productid
      * @return float
      */
-	private function updateTotalRevenueOfProduct($productid) {
+	private function updateTotalRevenueOfProduct(int $productid): float
+    {
 		global $wpdb;
 		$query = "SELECT
                         SUM(ltoim.meta_value) as revenue
