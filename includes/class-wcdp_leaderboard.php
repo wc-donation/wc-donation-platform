@@ -23,9 +23,11 @@ class WCDP_Leaderboard
         // Add checkbox to WooCommerce checkout
         add_action('woocommerce_review_order_before_submit', array($this, 'add_anonymous_donation_checkbox'));
 
+        //Save the value of the WooCommerce checkout checkbox
         add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
 
-        add_action('woocommerce_order_details_after_order_table', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
+        //Display the value of the WooCommerce checkout checkbox to the user
+        add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
     }
 
     /**<s<
@@ -370,6 +372,10 @@ class WCDP_Leaderboard
             <ul class="wcdp-leaderboard-s2 wcdp-leaderboard" id="' . $id . '">';
     }
 
+    /**
+     * Add a "anonymous donation" checkbox to the checkout
+     * @return void
+     */
     public function add_anonymous_donation_checkbox() {
         echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
@@ -380,17 +386,27 @@ class WCDP_Leaderboard
         echo '</div>';
     }
 
+    /**
+     * Save the value of the anonymous checkbox
+     * @param $order
+     * @return void
+     */
     public function save_anonymous_donation_checkbox($order) {
         if (isset($_POST['wcdp_checkout_checkbox']) && $_POST['wcdp_checkout_checkbox'] == 1) {
-            $order->update_meta_data('_wcdp_checkout_checkbox', 'Yes');
+            $order->update_meta_data('wcdp_checkout_checkbox', 'yes');
         } else {
-            $order->update_meta_data('_wcdp_checkout_checkbox', 'No');
+            $order->update_meta_data('wcdp_checkout_checkbox', 'no');
         }
     }
 
+    /**
+     * Display the value of the anonymous checkbox to the user
+     * @param $order
+     * @return void
+     */
     public function display_anonymous_donation_checkbox_in_order_details($order) {
-        $checkbox_value = $order->get_meta('_wcdp_checkout_checkbox');
-        if ($checkbox_value == 1) {
+        $checkbox_value = $order->get_meta('wcdp_checkout_checkbox');
+        if ($checkbox_value === "yes") {
             echo '<p><strong>' . __('Do not show my name in the leaderboard:', 'wc-donation-platform') . '</strong> ' . __('Yes', 'wc-donation-platform') . '</p>';
         } else {
             echo '<p><strong>' . __('Do not show my name in the leaderboard:', 'wc-donation-platform') . '</strong> ' . __('No', 'wc-donation-platform') . '</p>';
