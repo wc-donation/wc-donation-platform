@@ -173,8 +173,9 @@ new: leaderboard shortcode
 new: compatibility with WooCommerce API
 new: set supported WP version to 6.3
 new: set supported WooCommerce version to 8.0.1
-fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance #40
+fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance [#40](https://github.com/jonas-hoebenreich/wc-donation-platform/issues/40)
 tweak: do not allow to embed donation form when using AJAX
+tweak: update the revenue of a product directly for small webshops
 
 = 1.2.10 2023-05-30 =
 new: Add progress bar style 4 (with percentage)
