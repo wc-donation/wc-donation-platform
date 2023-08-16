@@ -153,6 +153,13 @@ class WCDP_General_Settings {
 			array(
 					'id'				=> 'wcdp_fee_recovery_values',
 			),
+            array(
+                'title'           => __( 'Enable compatibility mode: run donation platform and webshop simultaneously', 'wc-donation-platform' ),
+                'desc'            => __( 'Some features of Donation Platform for WooCommerce will be disabled so that WooCommerce can be used as a donation platform and webshop at the same time.', 'wc-donation-platform' ),
+                'id'              => 'wcdp_compatibility_mode',
+                'default'         => 'no',
+                'type'            => 'checkbox',
+            ),
 			array(
 				'type' => 'sectionend',
 				'id'   => 'wcdp_section_general',

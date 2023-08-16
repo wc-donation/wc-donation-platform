@@ -16,9 +16,6 @@ class WCDP_Hooks
         //A page with a WCDP form is a checkout page
         add_filter( 'woocommerce_is_checkout', array( $this, 'wcdp_set_is_checkout' ) );
 
-        //Rename Account Order Columns
-        add_filter( 'woocommerce_account_orders_columns', array( $this, 'wcdp_account_orders_columns'), 10 );
-
         //Rename Account Menu "Orders" item to "Donations"
         add_filter( 'woocommerce_account_menu_items', array( $this, 'wcdp_account_menu_items'), 10, 1 );
 
@@ -28,17 +25,29 @@ class WCDP_Hooks
         //Hide Hide Place Order button when cart is empty
         add_filter('woocommerce_order_button_html', array( $this, 'wcdp_order_button_html'), 10, 1);
 
-        //Rename Place Order button
-        add_filter('woocommerce_order_button_text', array( $this, 'wcdp_order_button_text'), 10 );
+        //the following filters are only applied if the compatibility mode is disabled
+        if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+            //Rename Place Order button
+            add_filter('woocommerce_order_button_text', array( $this, 'wcdp_order_button_text'), 10 );
+
+            //Rename Account Order Columns
+            add_filter( 'woocommerce_account_orders_columns', array( $this, 'wcdp_account_orders_columns'), 10 );
+
+            //Rename Order notes to Donation notes
+            add_filter( 'woocommerce_checkout_fields', array( $this, 'woocommerce_checkout_fields'), 10 );
+
+            //Remove x 1 after a product name
+            add_filter('woocommerce_order_item_quantity_html', '__return_empty_string' );
+
+            //Add donation selection form on checkout page
+            add_action( 'woocommerce_product_related_products_heading', array( $this, 'wcdp_product_related_products_heading') );
+        }
 
         //Allow checkout page with empty cart
         add_filter( 'woocommerce_checkout_redirect_empty_cart', '__return_false', 100 );
 
         //Allow checkout page with expired update order review
         add_filter( 'woocommerce_checkout_update_order_review_expired', '__return_false', 15 );
-
-        //Rename Order notes to Donation notes
-        add_filter( 'woocommerce_checkout_fields', array( $this, 'woocommerce_checkout_fields'), 10 );
 
         //Disable Order Again Button on my account page
         add_filter( 'woocommerce_valid_order_statuses_for_order_again', '__return_empty_array' );
@@ -49,9 +58,6 @@ class WCDP_Hooks
         //Change "Add to Cart" Button
         add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text') );
 
-		//Remove x 1 after a product name
-		add_filter('woocommerce_order_item_quantity_html', '__return_empty_string' );
-
         //Set Price of Donation
         add_action( 'woocommerce_before_calculate_totals', array( $this, 'wcdp_set_donation_price'), 99 );
 
@@ -60,9 +66,6 @@ class WCDP_Hooks
 
         //Ensure there is a WooCommerce session so that nonces are not invalidated by new session created on AJAX request
         add_action( 'wp', array( $this, 'ensure_session' ) );
-
-        //Add donation selection form on checkout page
-        add_action( 'woocommerce_product_related_products_heading', array( $this, 'wcdp_product_related_products_heading') );
 
         //Disable Order notes if checked in settings
         if (get_option('wcdp_disable_order_notes', 'no') == 'yes') {
@@ -143,8 +146,9 @@ class WCDP_Hooks
             case 'emails/plain/admin-cancelled-order.php' :
 
             case 'loop/no-products-found.php':
-
-                $template = $path . $template_name;
+                if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+                    $template = $path . $template_name;
+                }
                 break;
 
 			case 'loop/price.php':
