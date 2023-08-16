@@ -132,10 +132,10 @@ class WCDP_Progress
 
     /**
      * Return the Revenue of a Product (sum of all completed orders)
-     * @param int $productid
+     * @param $productid
      * @return float|int
      */
-	private function getTotalRevenueOfProduct(int $productid) {
+	private function getTotalRevenueOfProduct($productid) {
 		$totalrevenue = get_post_meta( $productid, 'wcdp_total_revenue' );
 		if ($totalrevenue === false) {
 			return 0;
