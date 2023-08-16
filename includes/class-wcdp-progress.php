@@ -15,26 +15,26 @@ class WCDP_Progress
 		add_shortcode( 'wcdp_progress', array($this, 'wcdp_progress'));
 
 		//update donation revenue
-		add_action( 'woocommerce_order_status_changed', array($this, 'update_total_revenue'), 10, 4);
+		add_action( 'woocommerce_order_status_changed', array($this, 'reset_total_revenue'), 10, 4);
 	}
 
-	/**
-	 * Update product revenue after order status changed
-	 * @param $orderid
-	 * @param $from
-	 * @param $to
-	 * @param $order
-	 * @return void
-	 */
-	public function update_total_revenue($orderid, $from, $to, $order) {
-        if ($from == 'completed' || $to == 'completed') {
-            foreach ( $order->get_items() as $item ) {
-                $revenue = get_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
-                //Recalculate the Revenue only if it has not been calculated recently (Avoid performance problems during peak loads)
-                //If the orderid is smaller than 10000 it assumes that the page does not receive many donations
-                if (!$revenue || $orderid <= 10000 || time() - $revenue[0]['time'] > 30) {
-                    $this->updateTotalRevenueOfProduct($item->get_product_id());
-                }
+    /**
+     * Reset product revenue after order status changed
+     * @param $orderid
+     * @param $old_status
+     * @param $new_status
+     * @param $order
+     * @return void
+     */
+	public function reset_total_revenue($orderid, $old_status, $new_status, $order) {
+        if ($old_status !== 'completed' && $new_status !== 'completed') return;
+
+        foreach ( $order->get_items() as $item ) {
+            $revenue = get_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
+            //Delete the outdated total revenue meta
+            //If the orderid is smaller than 10000 it assumes that the page does not receive many donations
+            if ($revenue && ($orderid <= 10000 || time() - $revenue[0]['time'] > 30)) {
+                delete_post_meta( $item->get_product_id(), 'wcdp_total_revenue' );
             }
         }
 	}
@@ -130,12 +130,12 @@ class WCDP_Progress
 		return $r;
 	}
 
-	/**
-	 * Return the Revenue of a Product (sum of all completed orders)
-	 * @param $productid
-	 * @return float|int
-	 */
-	private function getTotalRevenueOfProduct($productid) {
+    /**
+     * Return the Revenue of a Product (sum of all completed orders)
+     * @param int $productid
+     * @return float|int
+     */
+	private function getTotalRevenueOfProduct(int $productid) {
 		$totalrevenue = get_post_meta( $productid, 'wcdp_total_revenue' );
 		if ($totalrevenue === false) {
 			return 0;
