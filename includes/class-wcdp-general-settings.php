@@ -154,22 +154,47 @@ class WCDP_General_Settings {
 					'id'				=> 'wcdp_fee_recovery_values',
 			),
             array(
-                'title'           => __( 'Enable compatibility mode: run donation platform and webshop simultaneously', 'wc-donation-platform' ),
-                'desc'            => __( 'Some features of Donation Platform for WooCommerce will be disabled so that WooCommerce can be used as a donation platform and webshop at the same time.', 'wc-donation-platform' ),
+                'title'           => __( 'Enable compatibility mode', 'wc-donation-platform' ),
+                'desc'            => __( 'disable some plugin features to run donation platform and webshop simultaneously', 'wc-donation-platform' ),
                 'id'              => 'wcdp_compatibility_mode',
                 'default'         => 'no',
                 'type'            => 'checkbox',
+                'desc_tip'        => __( 'Some features of Donation Platform for WooCommerce will be disabled so that WooCommerce can be used as a donation platform and webshop at the same time.', 'wc-donation-platform' ),
             ),
-			array(
-				'type' => 'sectionend',
-				'id'   => 'wcdp_section_general',
-			),
+            array(
+                'type' => 'sectionend',
+                'id'   => 'wcdp_section_general',
+            ),
+            array(
+                'title' => __( 'Leaderborard Options', 'wc-donation-platform' ),
+                'type'  => 'title',
+                'id'    => 'wcdp_leaderboard_options',
+            ),
+            array(
+                'title'           => __( 'Enable anonymous / public checkbox', 'wc-donation-platform' ),
+                'desc'            => __( 'Add a checkbox to the checkout allowing users to specify how their donation is displayed in the leaderboard', 'wc-donation-platform' ),
+                'id'              => 'wcdp_enable_checkout_checkbox',
+                'default'         => 'yes',
+                'type'            => 'checkbox',
+                'desc_tip'        => __( 'The checkbox allows you to display anonymous and public donations in your leaderboards.', 'wc-donation-platform' ),
+            ),
+            array(
+                'title'           => __( 'Text of anonymous / public checkbox', 'wc-donation-platform' ),
+                'desc'            => __( 'Checkbox Text', 'wc-donation-platform' ),
+                'id'              => 'wcdp_checkout_checkbox_text',
+                'default'         => __( 'Do not show my name in the leaderboard.', 'wc-donation-platform' ),
+                'type'            => 'text',
+                'desc_tip'        => __( 'The text of the optional checkbox on checkout. It allows you to display anonymous and public donations in your leaderboards.', 'woocommerce' ),
+            ),
+            array(
+                'type' => 'sectionend',
+                'id'   => 'wcdp_section_leaderboard',
+            ),
 			array(
 				'title' => __( 'Design Options', 'wc-donation-platform' ),
 				'type'  => 'title',
-				'id'    => 'wcdp_settings_design',
+				'id'    => 'wcdp_leaderboard_options',
 			),
-
 			array(
 				'title'    => __( 'Main Color', 'woocommerce' ),
 				/* translators: %s: default color */
