@@ -184,7 +184,7 @@ class WCDP_General_Settings {
                 'id'              => 'wcdp_checkout_checkbox_text',
                 'default'         => __( 'Do not show my name in the leaderboard.', 'wc-donation-platform' ),
                 'type'            => 'text',
-                'desc_tip'        => __( 'The text of the optional checkbox on checkout. It allows you to display anonymous and public donations in your leaderboards.', 'woocommerce' ),
+                'desc_tip'        => __( 'The text of the optional checkbox on checkout. It allows you to display anonymous and public donations in your leaderboards.', 'wc-donation-platform' ),
             ),
             array(
                 'type' => 'sectionend',
@@ -196,7 +196,7 @@ class WCDP_General_Settings {
 				'id'    => 'wcdp_leaderboard_options',
 			),
 			array(
-				'title'    => __( 'Main Color', 'woocommerce' ),
+				'title'    => __( 'Main Color', 'wc-donation-platform' ),
 				/* translators: %s: default color */
 				'desc'     => sprintf( __( 'Primary Color used in the frontend. Default: %s.', 'wc-donation-platform' ), '<code>#00753a</code>' ),
 				'id'       => 'wcdp_main_color',
@@ -208,9 +208,9 @@ class WCDP_General_Settings {
 			),
 
 			array(
-				'title'    => __( 'Secondary Color', 'woocommerce' ),
+				'title'    => __( 'Secondary Color', 'wc-donation-platform' ),
 				/* translators: %s: default color */
-				'desc'     => sprintf( __( 'Secondary Color used in the frontend. Default: %s.', 'woocommerce' ), '<code>#30bf76</code>' ),
+				'desc'     => sprintf( __( 'Secondary Color used in the frontend. Default: %s.', 'wc-donation-platform' ), '<code>#30bf76</code>' ),
 				'id'       => 'wcdp_secondary_color',
 				'type'     => 'color',
 				'css'      => 'width:6em;',
@@ -220,9 +220,9 @@ class WCDP_General_Settings {
 			),
 
 			array(
-				'title'    => __( 'Error Color', 'woocommerce' ),
+				'title'    => __( 'Error Color', 'wc-donation-platform' ),
 				// translators: %s: default color //
-				'desc'     => sprintf( __( 'Error Color used in the frontend. Default: %s.', 'woocommerce' ), '<code>#de0000</code>' ),
+				'desc'     => sprintf( __( 'Error Color used in the frontend. Default: %s.', 'wc-donation-platform' ), '<code>#de0000</code>' ),
 				'id'       => 'wcdp_error_color',
 				'type'     => 'color',
 				'css'      => 'width:6em;',
