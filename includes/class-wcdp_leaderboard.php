@@ -412,4 +412,16 @@ class WCDP_Leaderboard
             echo '<p><strong>' . __('Do not show my name in the leaderboard:', 'wc-donation-platform') . '</strong> ' . __('No', 'wc-donation-platform') . '</p>';
         }
     }
+
+    /**
+     * Clear the entire cache of the leaderboard
+     * @return void
+     */
+    public static function delete_cached_leaderboard_total() {
+        foreach (['date', 'total'] as $orderby) {
+            $cache_key = 'wcdp_orders_' . $orderby;
+            delete_transient($cache_key);
+            delete_transient($cache_key . '_timestamp');
+        }
+    }
 }

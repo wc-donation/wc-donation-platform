@@ -201,4 +201,21 @@ class WCDP_Progress
 
 		return $date_to_display;
 	}
+
+    /**
+     * Delete all cached revenue data
+     * @return void
+     */
+    public static function delete_total_revenue_meta_for_all_products() {
+        $args = array(
+            'status' => 'publish',
+            'limit'  => -1,
+        );
+
+        $products = wc_get_products($args);
+
+        foreach ($products as $product) {
+            delete_post_meta($product->get_id(), 'wcdp_total_revenue');
+        }
+    }
 }

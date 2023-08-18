@@ -68,7 +68,6 @@ class WCDP_General_Settings {
         woocommerce_update_options( self::get_settings() );
     }
 
-
     /**
      * Get all the settings for this plugin for @see woocommerce_admin_fields() function.
      *
@@ -76,6 +75,13 @@ class WCDP_General_Settings {
      */
     public function get_settings(): array
 	{
+        if (get_option("wcdp_clear_cache")) {
+            $this->clear_cached_data();
+            update_option("wcdp_clear_cache", "no");
+            $desc_tip = __( 'Cleared cached Data successfully.', 'wc-donation-platform' );
+        } else {
+            $desc_tip = "";
+        }
     	$decimals = pow(10, wc_get_price_decimals() * (-1));
         $settings = array(
 			array(
@@ -160,6 +166,14 @@ class WCDP_General_Settings {
                 'default'         => 'no',
                 'type'            => 'checkbox',
                 'desc_tip'        => __( 'Some features of Donation Platform for WooCommerce will be disabled so that WooCommerce can be used as a donation platform and webshop at the same time.', 'wc-donation-platform' ),
+            ),
+            array(
+                'title' => __( 'Clear Cached Data', 'wc-donation-platform' ),
+                'type'  => 'checkbox',
+                'default'         => 'no',
+                'desc'  => __( 'Clear cached progress bar & leaderboard data.', 'wc-donation-platform' ),
+                'id'    => 'wcdp_clear_cache',
+                'desc_tip'        => $desc_tip,
             ),
             array(
                 'type' => 'sectionend',
@@ -247,6 +261,10 @@ class WCDP_General_Settings {
         return apply_filters( 'wcdp-general-settings', $settings );
     }
 
+    private function clear_cached_data() {
+        WCDP_Progress::delete_total_revenue_meta_for_all_products();
+        WCDP_Leaderboard::delete_cached_leaderboard_total();
+    }
 }
 
 $wc_settings = new WCDP_General_Settings();
