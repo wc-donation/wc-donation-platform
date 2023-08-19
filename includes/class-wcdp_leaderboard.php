@@ -20,14 +20,16 @@ class WCDP_Leaderboard
         //Delete cache on order change
         add_action('woocommerce_order_status_changed', array($this, 'delete_old_latest_orders_cache'), 10, 4);
 
-        // Add checkbox to WooCommerce checkout
-        add_action('woocommerce_review_order_before_submit', array($this, 'add_anonymous_donation_checkbox'));
+        if (get_option("wcdp_enable_checkout_checkbox", "no") === "yes") {
+            // Add checkbox to WooCommerce checkout
+            add_action('woocommerce_review_order_before_submit', array($this, 'add_anonymous_donation_checkbox'));
 
-        //Save the value of the WooCommerce checkout checkbox
-        add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
+            //Save the value of the WooCommerce checkout checkbox
+            add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
 
-        //Display the value of the WooCommerce checkout checkbox to the user
-        add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
+            //Display the value of the WooCommerce checkout checkbox to the user
+            add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
+        }
     }
 
     /**<s<
@@ -119,6 +121,7 @@ class WCDP_Leaderboard
      * @param string $title
      * @param string $subtitle
      * @param int $style
+     * @param int $split
      * @return string
      */
     public function generate_leaderboard(array $orders, string $title, string $subtitle, int $style, int $split): string
@@ -381,7 +384,7 @@ class WCDP_Leaderboard
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
             'class' => array('input-checkbox'),
-            'label' => __('Do not show my name in the leaderboard.', 'wc-donation-platform'),
+            'label' => get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform')),
         ), WC()->checkout->get_value('wcdp_checkout_checkbox'));
         echo '</div>';
     }
@@ -406,11 +409,13 @@ class WCDP_Leaderboard
      */
     public function display_anonymous_donation_checkbox_in_order_details($order) {
         $checkbox_value = $order->get_meta('wcdp_checkout_checkbox');
+        $e = '<p><strong>' . get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform')) . ':</strong> ';
         if ($checkbox_value === "yes") {
-            echo '<p><strong>' . __('Do not show my name in the leaderboard:', 'wc-donation-platform') . '</strong> ' . __('Yes', 'wc-donation-platform') . '</p>';
+            $e .= __('Yes', 'wc-donation-platform');
         } else {
-            echo '<p><strong>' . __('Do not show my name in the leaderboard:', 'wc-donation-platform') . '</strong> ' . __('No', 'wc-donation-platform') . '</p>';
+            $e .= __('No', 'wc-donation-platform');
         }
+        echo $e . '</p>';
     }
 
     /**
