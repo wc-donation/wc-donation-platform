@@ -59,6 +59,12 @@ class WCDP_Leaderboard
             foreach ($order->get_items() as $item) {
                 $product_ids[] = $item->get_product_id();
             }
+            $meta = $order->get_meta('wcdp_checkout_checkbox');
+            if ($meta === "yes") {
+                $chk = 1;
+            } else  {
+                $chk = 0;
+            }
 
             $orders_clean[] = array(
                 'date' => $order->get_date_created()->getTimestamp(),
@@ -72,6 +78,7 @@ class WCDP_Leaderboard
                 'cy' => $order->get_currency(),
                 'ids' => $product_ids,
                 'cmnt' => $order->get_customer_note(),
+                'chk' => $chk,
             );
         }
         return $orders_clean;
@@ -122,12 +129,20 @@ class WCDP_Leaderboard
      * @param string $subtitle
      * @param int $style
      * @param int $split
+     * @param $title_checked
+     * @param $title_unchecked
+     * @param $subtitle_checked
+     * @param $subtitle_unchecked
      * @return string
      */
-    public function generate_leaderboard(array $orders, string $title, string $subtitle, int $style, int $split): string
+    public function generate_leaderboard(array $orders, string $title, string $subtitle, int $style, int $split, $title_checked, $title_unchecked, $subtitle_checked, $subtitle_unchecked): string
     {
         $title = sanitize_text_field($title);
         $subtitle = sanitize_text_field($subtitle);
+        $title_checked = sanitize_text_field($title_checked);
+        $title_unchecked = sanitize_text_field($title_unchecked);
+        $subtitle_checked = sanitize_text_field($subtitle_checked);
+        $subtitle_unchecked = sanitize_text_field($subtitle_unchecked);
         $id = 'wcdp_' . wp_generate_password(6, false);
 
         if (sizeof($orders) === 0) {
@@ -168,11 +183,20 @@ class WCDP_Leaderboard
             );
 
             $output .= '<li class="wcdp-leaderboard-li' . $hideClass . '"><div>';
-            if ($title != "") {
-                $output .= '<span class="wcdp-leaderboard-title">' . strtr($title, $placeholders) . '</span><br>';
+            if ($title_checked !== "" && $order['chk'] == 1) {
+                $output .= '<span class="wcdp-leaderboard-title wcdp-leaderboard-checked-title">' . strtr($title_checked, $placeholders) . '</span><br>';
+            } else if ($title_unchecked !== "" && $order['chk'] == 0) {
+                $output .= '<span class="wcdp-leaderboard-title wcdp-leaderboard-unchecked-title">' . strtr($title_unchecked, $placeholders) . '</span><br>';
+            } else if ($title != "") {
+                $output .= '<span class="wcdp-leaderboard-title wcdp-leaderboard-default-title">' . strtr($title, $placeholders) . '</span><br>';
             }
-            if ($subtitle != "") {
-                $output .= '<span class="wcdp-leaderboard-subtitle">' . strtr($subtitle, $placeholders) . '</span>';
+
+            if ($subtitle_checked !== "" && $order['chk'] == 1) {
+                $output .= '<span class="wcdp-leaderboard-subtitle wcdp-leaderboard-checked-subtitle">' . strtr($subtitle_checked, $placeholders) . '</span>';
+            } else if ($subtitle_unchecked !== "" && $order['chk'] == 0) {
+                $output .= '<span class="wcdp-leaderboard-subtitle wcdp-leaderboard-unchecked-subtitle">' . strtr($subtitle_unchecked, $placeholders) . '</span>';
+            } else if ($subtitle != "") {
+                $output .= '<span class="wcdp-leaderboard-subtitle wcdp-leaderboard-default-subtitle">' . strtr($subtitle, $placeholders) . '</span>';
             }
             $output .= '</div></li>';
         }
@@ -209,13 +233,17 @@ class WCDP_Leaderboard
 
         // Extract attributes
         $atts = shortcode_atts(array(
-            'limit'     => 10,
-            'ids'       => '-1',
-            'title'     => esc_html__('{firstname} donated {amount}', 'wc-donation-platform'),
-            'subtitle'  => '{timediff}',
-            'orderby'   => 'date',
-            "style"     => 1,
-            "split"     => -1
+            'limit'                 => 10,
+            'ids'                   => '-1',
+            'title'                 => esc_html__('{firstname} donated {amount}', 'wc-donation-platform'),
+            'subtitle'              => '{timediff}',
+            'title_checked'         => '',
+            'subtitle_checked'      => '',
+            'title_unchecked'       => '',
+            'subtitle_unchecked'    => '',
+            'orderby'               => 'date',
+            "style"                 => 1,
+            "split"                 => -1
         ), $atts, 'latest_orders');
 
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
@@ -227,7 +255,7 @@ class WCDP_Leaderboard
         $orders = $this->wcdp_get_orders($limit, $ids, $atts['orderby']);
 
         // Generate the HTML output
-        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $atts['style'], (int) $atts['split']);
+        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $atts['style'], (int) $atts['split'], $atts['title_checked'], $atts['title_unchecked'], $atts['subtitle_checked'], $atts['subtitle_unchecked']);
     }
 
     function delete_old_latest_orders_cache($order_id, $old_status, $new_status, $order): void
@@ -238,7 +266,7 @@ class WCDP_Leaderboard
             $cache_key = 'wcdp_orders_' . $orderby;
             $timeout = get_option('_transient_timeout_' . $cache_key);
 
-            if ($timeout && time() + apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS) - $timeout > 90) {
+            if (($timeout && time() + apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS) - $timeout > 90) || $order_id < 10000) {
                 delete_transient($cache_key);
                 delete_transient($cache_key . '_timestamp');
             }
