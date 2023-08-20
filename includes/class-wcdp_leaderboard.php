@@ -147,7 +147,6 @@ class WCDP_Leaderboard
         foreach ($orders as $pos => $order) {
             if ($pos === $split) {
                 $hideClass = ' wcdp-leaderboard-hidden';
-                $output .= '<li class="wcdp-leaderboard-seperator"><button class="button wcdp-button" type="button">' . esc_html__('Show more', 'wc-donation-platform') . '</button></li>';
             }
             $placeholders = array(
                 '{firstname}' => "<span class='wcdp-leaderboard-firstname'>" . wp_strip_all_tags($order['first']) . "</span>",
@@ -179,16 +178,20 @@ class WCDP_Leaderboard
         }
         $output .= '</ul>';
 
-        if ($split !== -1) {
-            $output .= "<script>
-                  const " . $id . " = document.querySelector('#" . $id . " .wcdp-leaderboard-seperator');
-                  " . $id . ".addEventListener('click', () => {
-                    document.querySelectorAll('#" . $id . " .wcdp-leaderboard-hidden').forEach(item => {
-                      item.classList.remove('wcdp-leaderboard-hidden');
-                    });
-                    " . $id . ".style.display = 'none';
-                  });
-                </script>";
+        if (sizeof($orders) > $split) {
+            $output .= '<button class="button wcdp-button" type="button" id="' . $id . '-button">' . esc_html__('Show more', 'wc-donation-platform') . "</button>
+                        <script>
+                          const " . $id . " = document.querySelector('#" . $id . "-button');
+                          " . $id . ".addEventListener('click', () => {
+                            const elementsToToggle = document.querySelectorAll('#" . $id . " .wcdp-leaderboard-hidden');
+                            for (let i = 0; i < Math.min(" . (int) $split . ", elementsToToggle.length); i++) {
+                              elementsToToggle[i].classList.remove('wcdp-leaderboard-hidden');
+                            }
+                            if (elementsToToggle.length <= " . (int) $split . ") {
+                              " . $id . ".style.display = 'none';
+                            }
+                          });
+                        </script>";
         }
 
         return $output;
