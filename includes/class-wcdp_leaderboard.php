@@ -130,6 +130,10 @@ class WCDP_Leaderboard
         $subtitle = sanitize_text_field($subtitle);
         $id = 'wcdp_' . wp_generate_password(6, false);
 
+        if (sizeof($orders) === 0) {
+            return esc_html('No donation to this project yet.', 'wc-donation-platform');
+        }
+
         $output = "<style>#" . $id . " .wcdp-leaderboard-hidden {
                     display: none;
                 }";

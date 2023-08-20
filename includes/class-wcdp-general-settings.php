@@ -75,10 +75,10 @@ class WCDP_General_Settings {
      */
     public function get_settings(): array
 	{
-        if (get_option("wcdp_clear_cache")) {
+        if (get_option("wcdp_clear_cache") === "yes") {
             $this->clear_cached_data();
             update_option("wcdp_clear_cache", "no");
-            $desc_tip = __( 'Cleared cached Data successfully.', 'wc-donation-platform' );
+            $desc_tip = __( 'Cached data cleared successfully.', 'wc-donation-platform' );
         } else {
             $desc_tip = "";
         }
@@ -194,7 +194,7 @@ class WCDP_General_Settings {
             ),
             array(
                 'title'           => __( 'Text of anonymous / public checkbox', 'wc-donation-platform' ),
-                'desc'            => __( 'Checkbox Text', 'wc-donation-platform' ),
+                'desc'            => __( 'Checkbox label', 'wc-donation-platform' ),
                 'id'              => 'wcdp_checkout_checkbox_text',
                 'default'         => __( 'Do not show my name in the leaderboard', 'wc-donation-platform' ),
                 'type'            => 'text',
