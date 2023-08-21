@@ -258,6 +258,15 @@ class WCDP_Leaderboard
         return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $atts['style'], (int) $atts['split'], $atts['title_checked'], $atts['title_unchecked'], $atts['subtitle_checked'], $atts['subtitle_unchecked']);
     }
 
+    /**
+     * Hook that's triggered when an order changes its status
+     * Deletes cache when old/new status is completed and the cache hasn't been recently generated
+     * @param $order_id
+     * @param $old_status
+     * @param $new_status
+     * @param $order
+     * @return void
+     */
     function delete_old_latest_orders_cache($order_id, $old_status, $new_status, $order): void
     {
         if ($old_status !== 'completed' && $new_status !== 'completed') return;
