@@ -335,7 +335,7 @@ class WCDP_Leaderboard
 					--wcdp-main-2: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
                     --label-inactive: lightgrey;
                 }
-                .wcdp-leaderboard-s1 {
+                ul.wcdp-leaderboard-s1 {
                   list-style: none;
                   padding: 0;
                   margin: 0;
@@ -392,7 +392,7 @@ class WCDP_Leaderboard
      */
     private function get_css_style_2(string $id): string
     {
-        return '.wcdp-leaderboard-s2 {
+        return 'ul.wcdp-leaderboard-s2 {
                   list-style: none;
                   padding: 0;
                   margin: 0;
