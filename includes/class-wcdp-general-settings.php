@@ -201,6 +201,42 @@ class WCDP_General_Settings {
                 'desc_tip'        => __( 'The text of the optional checkbox on checkout. It allows you to display anonymous and public donations in your leaderboards.', 'wc-donation-platform' ),
             ),
             array(
+                'title'           => __( 'Leaderboard item heading', 'wc-donation-platform' ),
+                'id'              => 'wcdp_lb_title',
+                'default'         => __('{firstname} donated {amount}', 'wc-donation-platform'),
+                'type'            => 'text',
+            ),
+            array(
+                'title'           => __( 'Leaderboard item description', 'wc-donation-platform' ),
+                'id'              => 'wcdp_lb_subtitle',
+                'default'         => __('{timediff}', 'wc-donation-platform'),
+                'type'            => 'text',
+            ),
+            array(
+                'title'           => __( 'Leaderboard item heading (Checkout checkbox checked)', 'wc-donation-platform' ),
+                'id'              => 'wcdp_lb_title_checked',
+                'default'         => "",
+                'type'            => 'text',
+            ),
+            array(
+                'title'           => __( 'Leaderboard item heading (Checkout checkbox unchecked)', 'wc-donation-platform' ),
+                'id'              => 'wcdp_lb_title_unchecked',
+                'default'         => "",
+                'type'            => 'text',
+            ),
+            array(
+                'title'           => __( 'Leaderboard item description (Checkout checkbox checked)', 'wc-donation-platform' ),
+                'id'              => 'wcdp_lb_subtitle_checked',
+                'default'         => "",
+                'type'            => 'text',
+            ),
+            array(
+                'title'           => __( 'Leaderboard item description (Checkout checkbox unchecked)', 'wc-donation-platform' ),
+                'id'              => 'wcdp_lb_subtitle_unchecked',
+                'default'         => "",
+                'type'            => 'text',
+            ),
+            array(
                 'type' => 'sectionend',
                 'id'   => 'wcdp_section_leaderboard',
             ),

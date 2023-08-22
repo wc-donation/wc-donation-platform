@@ -125,24 +125,19 @@ class WCDP_Leaderboard
     /**
      * Generate the HTML output for the orders
      * @param array $orders
-     * @param string $title
-     * @param string $subtitle
      * @param int $style
      * @param int $split
-     * @param $title_checked
-     * @param $title_unchecked
-     * @param $subtitle_checked
-     * @param $subtitle_unchecked
+     * @param string $button
      * @return string
      */
-    public function generate_leaderboard(array $orders, string $title, string $subtitle, int $style, int $split, $title_checked, $title_unchecked, $subtitle_checked, $subtitle_unchecked): string
+    public function generate_leaderboard(array $orders, int $style, int $split, string $button): string
     {
-        $title = sanitize_text_field($title);
-        $subtitle = sanitize_text_field($subtitle);
-        $title_checked = sanitize_text_field($title_checked);
-        $title_unchecked = sanitize_text_field($title_unchecked);
-        $subtitle_checked = sanitize_text_field($subtitle_checked);
-        $subtitle_unchecked = sanitize_text_field($subtitle_unchecked);
+        $title = sanitize_text_field(get_option("wcdp_lb_title", __('{firstname} donated {amount}', 'wc-donation-platform')));
+        $subtitle = sanitize_text_field(get_option("wcdp_lb_subtitle", "{timediff}"));
+        $title_checked = sanitize_text_field(get_option("wcdp_lb_title_checked", ""));
+        $title_unchecked = sanitize_text_field(get_option("wcdp_lb_title_unchecked", ""));
+        $subtitle_checked = sanitize_text_field(get_option("wcdp_lb_subtitle_checked", ""));
+        $subtitle_unchecked = sanitize_text_field(get_option("wcdp_lb_subtitle_unchecked", ""));
         $id = 'wcdp_' . wp_generate_password(6, false);
 
         if (sizeof($orders) === 0) {
@@ -203,7 +198,7 @@ class WCDP_Leaderboard
         $output .= '</ul>';
 
         if (sizeof($orders) > $split) {
-            $output .= '<button class="button wcdp-button" type="button" id="' . $id . '-button">' . esc_html__('Show more', 'wc-donation-platform') . "</button>
+            $output .= '<button class="button wcdp-button" type="button" id="' . $id . '-button">' . esc_html($button) . "</button>
                         <script>
                           const " . $id . " = document.querySelector('#" . $id . "-button');
                           " . $id . ".addEventListener('click', () => {
@@ -233,17 +228,12 @@ class WCDP_Leaderboard
 
         // Extract attributes
         $atts = shortcode_atts(array(
-            'limit'                 => 10,
-            'ids'                   => '-1',
-            'title'                 => esc_html__('{firstname} donated {amount}', 'wc-donation-platform'),
-            'subtitle'              => '{timediff}',
-            'title_checked'         => '',
-            'subtitle_checked'      => '',
-            'title_unchecked'       => '',
-            'subtitle_unchecked'    => '',
-            'orderby'               => 'date',
-            "style"                 => 1,
-            "split"                 => -1
+            'limit'     => 10,
+            'ids'       => '-1',
+            'orderby'   => 'date',
+            "style"     => 1,
+            "split"     => -1,
+            "button"    => __("Show more", "wc-donation-platform"),
         ), $atts, 'latest_orders');
 
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
@@ -255,7 +245,7 @@ class WCDP_Leaderboard
         $orders = $this->wcdp_get_orders($limit, $ids, $atts['orderby']);
 
         // Generate the HTML output
-        return $this->generate_leaderboard($orders, $atts['title'], $atts['subtitle'], (int) $atts['style'], (int) $atts['split'], $atts['title_checked'], $atts['title_unchecked'], $atts['subtitle_checked'], $atts['subtitle_unchecked']);
+        return $this->generate_leaderboard($orders, (int) $atts['style'], (int) $atts['split'], $atts['button'] );
     }
 
     /**
