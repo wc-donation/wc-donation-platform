@@ -235,6 +235,7 @@ class WCDP_General_Settings {
                 'id'              => 'wcdp_lb_subtitle_unchecked',
                 'default'         => "",
                 'type'            => 'text',
+                'desc'            =>  '<a href="https://wcdp.jonh.eu/documentation/usage/donation-leaderboard/" target="_blank">' . __( 'Detailed leaderboard documentation', 'wc-donation-platform' ) . '<a/>',
             ),
             array(
                 'type' => 'sectionend',
