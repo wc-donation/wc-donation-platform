@@ -110,7 +110,7 @@ class WCDP_Leaderboard
     private function wcdp_get_orders($limit, $ids, string $orderby): array
     {
         $all_orders = $this->get_orders($orderby);
-        if ($ids === '-1') {
+        if ($ids === ['-1']) {
             if ($limit === -1) return $all_orders;
             return array_slice($all_orders, 0, $limit);
         }
