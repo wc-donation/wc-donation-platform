@@ -197,7 +197,7 @@ class WCDP_Leaderboard
         }
         $output .= '</ul>';
 
-        if (sizeof($orders) > $split) {
+        if (sizeof($orders) > $split && $split > 0) {
             $output .= '<button class="button wcdp-button" type="button" id="' . $id . '-button">' . esc_html($button) . "</button>
                         <script>
                           const " . $id . " = document.querySelector('#" . $id . "-button');
