@@ -102,6 +102,28 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 					<?php echo $shop_name; ?>
 				</td>
 			</tr>
+            <?php
+            $order_items = $this->order->get_items();
+
+            if (!empty($order_items)) {
+                echo '<tr class="project">';
+                echo '<td>';
+                esc_html_e('Project: ', 'wc-donation-platform');
+                echo '</td>';
+                echo '<td>';
+
+                $item_names = array();
+
+                foreach ($order_items as $item_id => $item_data) {
+                    $item_names[] = $item_data->get_name();
+                }
+
+                echo implode(', ', $item_names);
+
+                echo '</td>';
+                echo '</tr>';
+            }
+            ?>
 			<tr class="amount">
 				<td>
 					<?php
@@ -135,6 +157,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 					<?php echo wp_kses($this->get_billing_address(), array('br'=>array())); ?>
 				</td>
 			</tr>
+
 			<tr class="payment_method">
 				<td>
 					<?php
