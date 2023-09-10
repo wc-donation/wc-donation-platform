@@ -10,8 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-require WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/documents/abstract-wcpdf-order-document-methods.php';
-
 if ( ! class_exists( 'WCDP_Thank_You_Certificate' ) ) :
 
 	/**
@@ -20,6 +18,19 @@ if ( ! class_exists( 'WCDP_Thank_You_Certificate' ) ) :
 	 * @class       WCDP_Thank_You_Certificate
 	 */
 	class WCDP_Thank_You_Certificate extends Order_Document_Methods {
+        protected static $_instance = null;
+
+        /**
+         * Create only one instance of WCDP_Thank_You_Certificate
+         * @return WCDP_Thank_You_Certificate|null
+         */
+        public static function instance(): ?WCDP_Thank_You_Certificate
+        {
+            if ( is_null( self::$_instance ) ) {
+                self::$_instance = new self();
+            }
+            return self::$_instance;
+        }
 		/**
 		 * Init/load the order object.
 		 *
@@ -220,7 +231,8 @@ if ( ! class_exists( 'WCDP_Thank_You_Certificate' ) ) :
 		 *
 		 * @return string
 		 */
-		public function paper_orientation( $orientation, $type ) {
+		public function paper_orientation( $orientation, $type ): string
+        {
 			if ( $type == 'thank-you-certificate' && 'landscape' == $this->get_setting( 'certificate_orientation', 'landscape' ) ) {
 				return 'landscape';
 			} else {
@@ -230,5 +242,3 @@ if ( ! class_exists( 'WCDP_Thank_You_Certificate' ) ) :
 	}
 
 endif; // class_exists
-
-return new WCDP_Thank_You_Certificate();

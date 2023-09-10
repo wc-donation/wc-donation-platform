@@ -2,6 +2,9 @@
 /**
  * This class integrates WooCommerce PDF Invoices & Packing Slips with Donation Platform for WooCommerce
  */
+
+use WPO\WC\PDF_Invoices\Documents\WCDP_Thank_You_Certificate;
+
 if(!defined('ABSPATH')) exit;
 
 class WCDP_Pdf_Invoices
@@ -55,7 +58,8 @@ class WCDP_Pdf_Invoices
 	public static function add_document_type(array $documents = array()): array
     {
 		if (file_exists(WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/documents/abstract-wcpdf-order-document-methods.php')) {
-			$documents['WCDP_Donation_Receipt'] = include_once 'class-wcdp-thank-you-certificate.php';
+            include_once 'class-wcdp-thank-you-certificate.php';
+            $documents['\WPO\WC\PDF_Invoices\Documents\WCDP_Thank_You_Certificate'] = WCDP_Thank_You_Certificate::instance();
 		}
 		return $documents;
 	}

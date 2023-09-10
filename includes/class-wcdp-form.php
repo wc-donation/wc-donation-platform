@@ -226,7 +226,9 @@ class WCDP_Form
 				&& (has_shortcode( $post->post_content, 'wcdp_donation_form') || has_shortcode( $post->post_content, 'product_page'))
 			)
 		){
-            define('WCDP_FORM', true);
+            if (!defined('WCDP_FORM')) {
+                define('WCDP_FORM', true);
+            }
             return true;
         }
         if (!is_null($post)) {
