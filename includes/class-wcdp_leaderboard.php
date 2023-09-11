@@ -175,6 +175,7 @@ class WCDP_Leaderboard
                 '{postcode}' => "<span class='wcdp-leaderboard-postcode'>" . wp_strip_all_tags($order['zip']) . "</span>",
                 '{currency}' => "<span class='wcdp-leaderboard-currency'>" . wp_strip_all_tags($order['cy']) . "</span>",
                 '{comment}' => "<span class='wcdp-leaderboard-comment'>" . wp_strip_all_tags($order['cmnt']) . "</span>",
+                '{anonymous}' => "<span class='wcdp-leaderboard-anonymous'>" . esc_html__("Anonymous donor", "wc-donation-platform") . "</span>",
             );
 
             $output .= '<li class="wcdp-leaderboard-li' . $hideClass . '"><div>';
