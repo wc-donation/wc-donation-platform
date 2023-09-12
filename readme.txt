@@ -174,6 +174,7 @@ new: compatibility mode: run donation platform and webshop simultaneously
 new: delete cache function
 new: compatibility with WooCommerce API
 fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance [#40](https://github.com/jonas-hoebenreich/wc-donation-platform/issues/40)
+fix: select2 dropdown not visible within popup
 tweak: do not allow to embed donation form when using AJAX
 tweak: improve revenue cache calculation
 tweak: update the revenue of a product directly for small webshops

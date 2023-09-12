@@ -242,7 +242,7 @@ div.wcdp-header > div.wcdp-step {
 .select2 {
     width: 100% !important;
 }
-.select2-dropdown {
+body span.select2-container--open {
     z-index: 1002;
 }
 .wcdp-divider {
