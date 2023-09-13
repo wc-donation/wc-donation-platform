@@ -7,6 +7,8 @@
 
 if (!defined('ABSPATH')) exit;
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 class WCDP_Leaderboard
 {
     /**
@@ -32,15 +34,87 @@ class WCDP_Leaderboard
         }
     }
 
-    /**<s<
+    /**
+     * Get all orders with a specified product
+     * @param int $product_id
+     * @param string $orderby
+     * @param int $limit
+     * @return array
+     */
+    private function get_orders_db_id(int $product_id, string $orderby, int $limit): array
+    {
+        if ($orderby === 'date') {
+            $orderby = 'l.date_created';
+        } else {
+            $orderby = 'l.product_gross_revenue';
+        }
+        global $wpdb;
+        if (OrderUtil::custom_orders_table_usage_is_enabled()) {
+            $query = "SELECT 
+                    o.ID as order_id,
+                    l.product_gross_revenue as revenue
+                FROM 
+                    {$wpdb->prefix}wc_orders o
+                    INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
+                WHERE 
+                    o.status = 'wc-completed'
+                    AND l.product_id = %d
+                ORDER BY $orderby DESC
+                LIMIT %d;";
+        } else {
+            $query = "SELECT 
+                    p.ID as order_id,
+                    l.product_gross_revenue as revenue
+                FROM 
+                    {$wpdb->prefix}posts p
+                    INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON p.ID = l.order_id
+                WHERE 
+                    p.post_type = 'shop_order' 
+                    AND p.post_status = 'wc-completed'
+                    AND l.product_id = %d
+                ORDER BY $orderby DESC
+                LIMIT %d;";
+        }
+        $query = $wpdb->prepare($query, $product_id, $limit);
+
+        $order_data = $wpdb->get_results($query, ARRAY_A);
+        $orders_clean = array();
+
+        foreach ($order_data as $order_row) {
+            $order = wc_get_order($order_row['order_id']);
+
+            if ($order) {
+                $meta = $order->get_meta('wcdp_checkout_checkbox');
+                $chk = ($meta === "yes") ? 1 : 0;
+
+                $orders_clean[] = array(
+                    'date' => $order->get_date_created()->getTimestamp(),
+                    'first' => $order->get_billing_first_name(),
+                    'last' =>  $order->get_billing_last_name(),
+                    'co' => $order->get_billing_company(),
+                    'city' => $order->get_billing_city(),
+                    'country' => $order->get_billing_country(),
+                    'zip' => $order->get_billing_postcode(),
+                    'total' => (double) $order_row['revenue'],
+                    'cy' => $order->get_currency(),
+                    'cmnt' => $order->get_customer_note(),
+                    'chk' => $chk,
+                );
+            }
+        }
+        return $orders_clean;
+    }
+
+
+    /**
      * get an array with all WooCommerce orders
      * @param string $orderby date or total
      * @return array
      */
-    private function get_orders_db(string $orderby): array
+    private function get_orders_db(string $orderby, int $limit): array
     {
         $args = array(
-            'limit' => apply_filters("wcdp_max_order_cache", 1000),
+            'limit' => $limit,
             'status' => 'completed',
             'order'   => 'DESC',
         );
@@ -76,7 +150,6 @@ class WCDP_Leaderboard
                 'zip' => $order->get_billing_postcode(),
                 'total' => $order->get_total(),
                 'cy' => $order->get_currency(),
-                'ids' => $product_ids,
                 'cmnt' => $order->get_customer_note(),
                 'chk' => $chk,
             );
@@ -86,18 +159,29 @@ class WCDP_Leaderboard
 
     /**
      * Return all the latest WooCommerce orders
+     * @param int $product_id
      * @param string $orderby date or total
+     * @param int $limit
      * @return array
      */
-    private function get_orders(string $orderby) : array {
-        $cache_key = 'wcdp_orders_' . $orderby;
-        $all_orders = json_decode(get_transient($cache_key), true);
+    private function get_orders(int $product_id, string $orderby, int $limit) : array {
+        $cache_key = 'wcdp_orders_' . $product_id . '_'. $orderby . '_' . $limit;
+        $orders = json_decode(get_transient($cache_key), true);
 
-        if (empty($all_orders)) {
-            $all_orders = $this->get_orders_db($orderby);
-            set_transient($cache_key, json_encode($all_orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
+        if (empty($orders)) {
+            if ($product_id === -1) {
+                $orders = $this->get_orders_db($orderby, $limit);
+            } else {
+                $orders = $this->get_orders_db_id($product_id, $orderby, $limit);
+            }
+            set_transient($cache_key, json_encode($orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
+
+            // Save the cache key in a separate option for later deletion.
+            $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
+            $cache_keys_option[$cache_key] = time();
+            update_option('wcdp_transient_cache_keys', $cache_keys_option);
         }
-        return $all_orders;
+        return $orders;
     }
 
     /**
@@ -106,7 +190,6 @@ class WCDP_Leaderboard
      * @param $ids
      * @param string $orderby date or total
      * @return array
-     */
     private function wcdp_get_orders($limit, $ids, string $orderby): array
     {
         $all_orders = $this->get_orders($orderby);
@@ -121,6 +204,7 @@ class WCDP_Leaderboard
         if ($limit === -1) return $filtered_orders;
         return array_slice($filtered_orders, 0, $limit);
     }
+    */
 
     /**
      * Generate the HTML output for the orders
@@ -240,10 +324,10 @@ class WCDP_Leaderboard
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
 
         $limit = intval($atts['limit']);
-        $ids = explode(',', $atts['ids']);;
+        $ids = (int) $atts['ids'];
 
         // Get the latest orders
-        $orders = $this->wcdp_get_orders($limit, $ids, $atts['orderby']);
+        $orders = $this->get_orders($ids, $atts['orderby'], $limit);
 
         // Generate the HTML output
         return $this->generate_leaderboard($orders, (int) $atts['style'], (int) $atts['split'], $atts['button'] );
@@ -262,16 +346,27 @@ class WCDP_Leaderboard
     {
         if ($old_status !== 'completed' && $new_status !== 'completed') return;
 
-        foreach (['date', 'total'] as $orderby) {
-            $cache_key = 'wcdp_orders_' . $orderby;
-            $timeout = get_option('_transient_timeout_' . $cache_key);
+        // Retrieve cache keys from the 'wcdp_transient_cache_keys' option.
+        $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
 
-            if (($timeout && time() + apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS) - $timeout > 90) || $order_id < 10000) {
-                delete_transient($cache_key);
-                delete_transient($cache_key . '_timestamp');
-            }
+        if (!is_array($cache_keys_option)) {
+            return; // No cache keys found, nothing to delete.
         }
 
+        // Retrieve the product IDs from the order items.
+        $product_ids = [-1];
+        foreach ($order->get_items() as $item) {
+            $product_ids[] = $item->get_product_id();
+        }
+
+        // Loop through cache keys to find and delete matching keys.
+        foreach ($cache_keys_option as $cache_key => $timestamp) {
+            foreach ($product_ids as $product_id) {
+                if (strpos($cache_key, 'wcdp_orders_' . $product_id) === 0) {
+                    delete_transient($cache_key);
+                }
+            }
+        }
     }
 
     /**
@@ -458,10 +553,15 @@ class WCDP_Leaderboard
      * @return void
      */
     public static function delete_cached_leaderboard_total() {
-        foreach (['date', 'total'] as $orderby) {
-            $cache_key = 'wcdp_orders_' . $orderby;
+        // Retrieve cache keys from the option.
+        $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
+
+        // Loop through the cache keys and delete the corresponding transients.
+        foreach ($cache_keys_option as $cache_key => $timestamp) {
             delete_transient($cache_key);
-            delete_transient($cache_key . '_timestamp');
         }
+
+        // Clear the cache keys option.
+        delete_option('wcdp_transient_cache_keys');
     }
 }
