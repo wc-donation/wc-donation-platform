@@ -169,14 +169,15 @@ If this is not a problem for you, you can continue to sell normal products. Othe
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
 = 1.3.0 =
-new: leaderboard shortcode
+new: leaderboard (donor wall) shortcode
 new: compatibility mode: run donation platform and webshop simultaneously
-new: delete cache function
+new: "delete cache" checkbox
 new: compatibility with WooCommerce API
+new: compatibility with High performance order storage
 fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance [#40](https://github.com/jonas-hoebenreich/wc-donation-platform/issues/40)
 fix: select2 dropdown not visible within popup
 tweak: do not allow to embed donation form when using AJAX
-tweak: improve revenue cache calculation
+tweak: improve revenue cache calculation & invalidation
 tweak: update the revenue of a product directly for small webshops
 tweak: add project name to tax-deductible receipt template
 tweak: set supported WP version to 6.3
