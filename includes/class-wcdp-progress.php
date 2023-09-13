@@ -5,6 +5,8 @@
 
 if(!defined('ABSPATH')) exit;
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 class WCDP_Progress
 {
 	/**
@@ -156,18 +158,26 @@ class WCDP_Progress
 	private function updateTotalRevenueOfProduct(int $productid): float
     {
 		global $wpdb;
-		$query = "SELECT
-                        SUM(ltoim.meta_value) as revenue
-                    FROM
-                        {$wpdb->prefix}woocommerce_order_itemmeta wcoim
-			        LEFT JOIN
-                        {$wpdb->prefix}woocommerce_order_items oi ON wcoim.order_item_id = oi.order_item_id
-			        LEFT JOIN
-                        {$wpdb->prefix}posts wpposts ON order_id = wpposts.ID
-			        LEFT JOIN
-                        {$wpdb->prefix}woocommerce_order_itemmeta ltoim ON ltoim.order_item_id = oi.order_item_id AND ltoim.meta_key = '_line_total'
-			        WHERE
-                        wcoim.meta_key = '_product_id' AND wcoim.meta_value = %d AND wpposts.post_status = 'wc-completed';";
+        if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+            $query = "  SELECT 
+	                        SUM(l.product_gross_revenue) as revenue
+                        FROM 
+                            {$wpdb->prefix}wc_orders o
+                            inner join {$wpdb->prefix}wc_order_product_lookup l on o.id = l.order_id
+                        WHERE 
+                                o.status = 'wc-completed'
+                            AND l.product_id = %d;";
+        } else {
+            $query = "  SELECT 
+                            SUM(l.product_gross_revenue) as revenue
+                        FROM 
+                            {$wpdb->prefix}posts p
+                            inner join {$wpdb->prefix}wc_order_product_lookup l on p.ID = l.order_id
+                        WHERE 
+                                post_type = 'shop_order' 
+                            AND post_status = 'wc-completed'
+                            AND l.product_id = %d;";
+        }
 
 		$result = $wpdb->get_row($wpdb->prepare( $query, $productid ), ARRAY_A);
 
