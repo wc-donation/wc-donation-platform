@@ -129,10 +129,6 @@ class WCDP_Leaderboard
 
         $orders_clean = array();
         foreach ($all_orders as $order) {
-            $product_ids = array();
-            foreach ($order->get_items() as $item) {
-                $product_ids[] = $item->get_product_id();
-            }
             $meta = $order->get_meta('wcdp_checkout_checkbox');
             if ($meta === "yes") {
                 $chk = 1;
@@ -314,7 +310,7 @@ class WCDP_Leaderboard
         // Extract attributes
         $atts = shortcode_atts(array(
             'limit'     => 10,
-            'ids'       => '-1',
+            'id'        => '-1',
             'orderby'   => 'date',
             "style"     => 1,
             "split"     => -1,
@@ -324,10 +320,10 @@ class WCDP_Leaderboard
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
 
         $limit = intval($atts['limit']);
-        $ids = (int) $atts['ids'];
+        $id = (int) $atts['id'];
 
         // Get the latest orders
-        $orders = $this->get_orders($ids, $atts['orderby'], $limit);
+        $orders = $this->get_orders($id, $atts['orderby'], $limit);
 
         // Generate the HTML output
         return $this->generate_leaderboard($orders, (int) $atts['style'], (int) $atts['split'], $atts['button'] );
