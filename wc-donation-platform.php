@@ -173,3 +173,12 @@ if( ! is_woocommerce_active() || version_compare( get_option( 'woocommerce_db_ve
 		new WCDP();
 	});
 }
+
+/**
+ * declare compatibility with High performance order storage
+ */
+add_action( 'before_woocommerce_init', function() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    }
+} );
