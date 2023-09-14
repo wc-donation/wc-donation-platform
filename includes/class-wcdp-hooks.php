@@ -406,16 +406,13 @@ class WCDP_Hooks
      * @return void
      */
     public function add_donation_platform_submenu_link() {
-    global $submenu;
+        global $submenu;
 
-    // Define the URL for your page.
-    $page_url = admin_url('admin.php?page=wc-settings&tab=wc-donation-platform');
-
-    // Add the link to the WooCommerce submenu.
-    $submenu['woocommerce'][] = array(
-        'Donation Platform', // Link name
-        'manage_woocommerce', // Capability required to access the link
-        $page_url, // Link URL
-    );
-}
+        // Add the link to the WooCommerce submenu.
+        $submenu['woocommerce'][] = array(
+            __('Donation Platform', 'wc-donation-platform'),
+            'manage_woocommerce',
+            admin_url('admin.php?page=wc-settings&tab=wc-donation-platform'),
+        );
+    }
 }
