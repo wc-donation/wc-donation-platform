@@ -77,6 +77,8 @@ class WCDP_Hooks
 
         //make sure to update the price for orders created via API
         add_action( 'woocommerce_new_order_item', array( $this, 'wcdp_modify_item_price_after_creation' ), 10, 3 );
+
+        add_action('admin_menu', array( $this, 'add_donation_platform_submenu_link' ));
     }
 
     /**
@@ -398,4 +400,22 @@ class WCDP_Hooks
 		}
 		return false;
 	}
+
+    /**
+     * Add menu item
+     * @return void
+     */
+    public function add_donation_platform_submenu_link() {
+    global $submenu;
+
+    // Define the URL for your page.
+    $page_url = admin_url('admin.php?page=wc-settings&tab=wc-donation-platform');
+
+    // Add the link to the WooCommerce submenu.
+    $submenu['woocommerce'][] = array(
+        'Donation Platform', // Link name
+        'manage_woocommerce', // Capability required to access the link
+        $page_url, // Link URL
+    );
+}
 }
