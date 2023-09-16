@@ -83,7 +83,7 @@ do_action( 'woocommerce_before_add_to_cart_form' );
     ?>
 	<?php if ( $value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5) : ?>
 		<button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" value="2">
-			<?php esc_html_e( 'Next', 'wc-donation-platform' ); ?>&nbsp;<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
+			<?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform' ), $value['id']); ?>&nbsp;<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
 		</button>
 		<div class="lds-ellipsis" id="wcdp-spinner"><div></div><div></div><div></div><div></div></div>
 	<?php elseif ($value['style'] == '4') : ?>
