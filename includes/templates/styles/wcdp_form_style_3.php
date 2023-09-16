@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) exit;
 				<div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>&nbsp;<?php _e('Back', 'wc-donation-platform'); ?>
 			</button>
 			<button type="button" class="button wcdp-button wcdp-right"
-					value="3"><?php _e('Next', 'wc-donation-platform'); ?>&nbsp;
+					value="3"><?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform' ), $value['id'], 2); ?>&nbsp;
 				<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
 			</button>
 		</div>

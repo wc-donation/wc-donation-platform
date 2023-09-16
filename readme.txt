@@ -182,6 +182,7 @@ tweak: update the revenue of a product directly for small webshops
 tweak: add project name to tax-deductible receipt template
 tweak: set supported WP version to 6.3
 tweak: set supported WooCommerce version to 8.0.1
+tweak: add filter wcdp_next_button to edit next button
 
 = 1.2.10 2023-05-30 =
 new: Add progress bar style 4 (with percentage)
