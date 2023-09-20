@@ -418,10 +418,22 @@ class WCDP_Form
 		return $donation_amount >= $min_donation_amount && $donation_amount <= $max_donation_amount;
 	}
 
+    /**
+     * Checks if a product is marked as a donation product
+     *
+     * @param $id
+     * @return mixed|null
+     */
 	public static function is_donable($id) {
 		return apply_filters('wcdp_is_donable', get_post_meta( $id, '_donable', true) == 'yes');
 	}
 
+    /**
+     * returns the HTML markup of a fieldset
+     * @param $args
+     * @param $product
+     * @return mixed|null
+     */
 	public static function wcdp_generate_fieldset($args = array(), $product = null) {
 		$args = wp_parse_args(
 			apply_filters( 'wcdp_generate_fieldset_args', $args ),
