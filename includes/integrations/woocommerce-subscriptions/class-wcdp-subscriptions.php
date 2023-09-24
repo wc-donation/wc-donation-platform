@@ -16,8 +16,10 @@ class WCDP_Subscriptions
  		//add_filter('woocommerce_subscriptions_product_price_string', 'WCDP_Subscriptions::product_price_string', 10, 1);
 		add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
 
-		//Filter specific WC Subscription templates to WCDP templates
-		add_filter( 'wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5 );
+        if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+            //Filter specific WC Subscription templates to WCDP templates
+            add_filter( 'wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5 );
+        }
 
 		//Rename Subscriptions Tab on My Account page
 		add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1 );

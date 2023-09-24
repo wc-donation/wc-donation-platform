@@ -15,8 +15,10 @@ class WCDP_Subscriptions_For_WooCommerce
         //set recurring total for regular donations
         add_filter('wps_sfw_cart_data_for_susbcription', 'WCDP_Subscriptions_For_WooCommerce::price_subscription', 10, 2);
 
-        //Filter specific Subscriptions for WooCommerce to WCDP templates
-        add_filter('wc_get_template', 'WCDP_Subscriptions_For_WooCommerce::modify_template', 10, 5);
+        if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+            //Filter specific Subscriptions for WooCommerce to WCDP templates
+            add_filter('wc_get_template', 'WCDP_Subscriptions_For_WooCommerce::modify_template', 10, 5);
+        }
 
         //Rename Subscriptions Tab on My Account page
         add_filter('woocommerce_account_menu_items', 'WCDP_Subscriptions_For_WooCommerce::rename_menu_item', 11, 1);
