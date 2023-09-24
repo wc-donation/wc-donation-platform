@@ -161,7 +161,7 @@ class WCDP_General_Settings {
 			),
             array(
                 'title'           => __( 'Enable compatibility mode', 'wc-donation-platform' ),
-                'desc'            => __( 'disable some plugin features to run donation platform and webshop simultaneously', 'wc-donation-platform' ),
+                'desc'            => __( 'Disable wording changes to run donation platform and webshop simultaneously', 'wc-donation-platform' ),
                 'id'              => 'wcdp_compatibility_mode',
                 'default'         => 'no',
                 'type'            => 'checkbox',

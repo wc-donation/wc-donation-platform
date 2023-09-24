@@ -53,7 +53,7 @@ This fundraising & donation plugin is a free alternative to tools like Patreon, 
 * **Unlimited Integrations**: WooCommerce integrates with CRM, Marketing & Analytics tools
 * **100% free** and **open source** fundraising & donation management for charities
 
-> Note: Donation Platform for WooCommerce: Fundraising & Donation Management turns WooCommerce into a donation system, parallel use as a normal store is not recommended, as some wording has been changed.
+> Note: Donation Platform for WooCommerce: Fundraising & Donation Management turns WooCommerce into a donation system, parallel use as a normal store is not recommended. You can enable the compatibility mode to deactivate the wording changes.
 
 === Links ===
 
@@ -168,7 +168,7 @@ If this is not a problem for you, you can continue to sell normal products. Othe
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.3.0 =
+= 1.3.0 2023-09-24 =
 new: leaderboard (donor wall) shortcode
 new: compatibility mode: run donation platform and webshop simultaneously
 new: "delete cache" checkbox
@@ -182,7 +182,7 @@ tweak: update the revenue of a product directly for small webshops
 tweak: add project name to tax-deductible receipt template
 tweak: set supported WP version to 6.3
 tweak: set supported WooCommerce version to 8.1.1
-tweak: add filter wcdp_next_button to edit next button
+tweak: add filter wcdp_next_button to edit next button text
 
 = 1.2.10 2023-05-30 =
 new: Add progress bar style 4 (with percentage)
