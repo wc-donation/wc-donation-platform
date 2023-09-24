@@ -290,13 +290,13 @@ class WCDP_Hooks
      * This function is hooked to 'woocommerce_new_order_item'.
      *
      * @param int $item_id The ID of the newly added order item.
-     * @param WC_Order_Item_Product $item_data The order item data.
+     * @param $item_data The order item/fee data.
      * @param int $order_id The WooCommerce order id.
      */
-    public function wcdp_modify_item_price_after_creation(int $item_id, WC_Order_Item_Product $item_data, int $order_id ) {
+    public function wcdp_modify_item_price_after_creation(int $item_id, $item_data, int $order_id ) {
         $new_price = $item_data->get_meta("wcdp_donation_amount");
 
-        if ( $new_price !== null && WCDP_Form::check_donation_amount( $new_price, $item_data['product_id'] ) ) {
+        if ( $new_price !== null && WCDP_Form::check_donation_amount( $new_price, (int) $item_data['product_id'] ) ) {
             // Check if the new price is different from the current item price
             if ( $new_price !== $item_data->get_total() ) {
                 $item_data->set_subtotal( $new_price );
