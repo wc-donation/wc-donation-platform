@@ -26,6 +26,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 * **[100+ Payment Gateways](https://wcdp.jonh.eu/documentation/integrations/payment-gateways/)**
 * **[Express Donations: Apple Pay / Google Pay (Stripe) & PayPal](https://wcdp.jonh.eu/documentation/integrations/express-donations-apple-pay-google-pay-paypal/)**
 * **[Processing Fee Recovery](https://wcdp.jonh.eu/documentation/usage/fee-recovery/)**
+* **[Donation Leaderboard (Donor Wall)](https://wcdp.jonh.eu/documentation/usage/donation-leaderboard/)**
 * **100% free** & **no platform fees** & **open source**
 * **[...and more!](https://wcdp.jonh.eu/features/)**
 
