@@ -499,6 +499,9 @@ class WCDP_Leaderboard
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-title, .wcdp-leaderboard-s2 .woocommerce-Price-amount, .wcdp-leaderboard-s2 .wcdp-emphasized {
                   font-weight: bold;
                 }
+                .wcdp-leaderboard-li div {
+                    max-width: calc(100% - 2em);
+                }
             </style>
             <ul class="wcdp-leaderboard-s2 wcdp-leaderboard" id="' . $id . '">';
     }
