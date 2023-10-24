@@ -46,10 +46,8 @@ ___
 * **[100+ Payment Gateways](https://wcdp.jonh.eu/documentation/integrations/payment-gateways/)**
 * **[Express Donations: Apple Pay & Google Pay & PayPal](https://wcdp.jonh.eu/documentation/integrations/express-donations-apple-pay-google-pay-paypal/)**
 * **[Processing Fee Recovery](https://wcdp.jonh.eu/documentation/usage/fee-recovery/)**
+* **[Donation Leaderboard (Donor Wall)](https://wcdp.jonh.eu/demos/demo-style-1/)**
 * **100% free** & **no platform fees** & **open source**
-
-### Star this repository
-[![Stargazers repo roster for @jonas-hoebenreich/wc-donation-platform](https://reporoster.com/stars/dark/jonas-hoebenreich/wc-donation-platform)](https://github.com/jonas-hoebenreich/wc-donation-platform/stargazers)
 
 <div align="center">
 	<img src="https://ps.w.org/wc-donation-platform/assets/screenshot-1.jpg" width="80%" alt="Donation Platform for WooCommerce"/>
