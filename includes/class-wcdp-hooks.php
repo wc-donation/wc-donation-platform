@@ -16,17 +16,17 @@ class WCDP_Hooks
         //A page with a WCDP form is a checkout page
         add_filter( 'woocommerce_is_checkout', array( $this, 'wcdp_set_is_checkout' ) );
 
-        //Rename Account Menu "Orders" item to "Donations"
-        add_filter( 'woocommerce_account_menu_items', array( $this, 'wcdp_account_menu_items'), 10, 1 );
-
-        //Rename Title in orders page
-        add_filter( 'woocommerce_endpoint_orders_title', array( $this, 'wcdp_endpoint_orders_title'), 10, 1 );
-
-        //Hide Hide Place Order button when cart is empty
+        //Hide Place Order button when cart is empty
         add_filter('woocommerce_order_button_html', array( $this, 'wcdp_order_button_html'), 10, 1);
 
         //the following filters are only applied if the compatibility mode is disabled
         if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+            //Rename Title in orders page
+            add_filter( 'woocommerce_endpoint_orders_title', array( $this, 'wcdp_endpoint_orders_title'), 10, 1 );
+
+            //Rename Account Menu "Orders" item to "Donations"
+            add_filter( 'woocommerce_account_menu_items', array( $this, 'wcdp_account_menu_items'), 10, 1 );
+
             //Rename Place Order button
             add_filter('woocommerce_order_button_text', array( $this, 'wcdp_order_button_text'), 10 );
 
@@ -41,7 +41,13 @@ class WCDP_Hooks
 
             //Add donation selection form on checkout page
             add_action( 'woocommerce_product_related_products_heading', array( $this, 'wcdp_product_related_products_heading') );
+
+            //Change "Add to Cart" Button Text
+            add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text') );
         }
+
+        //Change "Add to Cart" Button
+        add_filter('woocommerce_loop_add_to_cart_link', array($this, 'wcdp_loop_add_to_cart_link'), 10, 3);
 
         //Allow checkout page with empty cart
         add_filter( 'woocommerce_checkout_redirect_empty_cart', '__return_false', 100 );
@@ -51,12 +57,6 @@ class WCDP_Hooks
 
         //Disable Order Again Button on my account page
         add_filter( 'woocommerce_valid_order_statuses_for_order_again', '__return_empty_array' );
-
-        //Change "Add to Cart" Button
-        add_filter('woocommerce_loop_add_to_cart_link', array($this, 'wcdp_loop_add_to_cart_link'), 10, 3);
-
-        //Change "Add to Cart" Button
-        add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text') );
 
         //Set Price of Donation
         add_action( 'woocommerce_before_calculate_totals', array( $this, 'wcdp_set_donation_price'), 99 );
@@ -78,6 +78,7 @@ class WCDP_Hooks
         //make sure to update the price for orders created via API
         add_action( 'woocommerce_new_order_item', array( $this, 'wcdp_modify_item_price_after_creation' ), 10, 3 );
 
+        //add Settings Page Link in Backend
         add_action('admin_menu', array( $this, 'add_donation_platform_submenu_link' ));
     }
 
