@@ -18,10 +18,10 @@ class WCDP_Subscriptions_For_WooCommerce
         if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
             //Filter specific Subscriptions for WooCommerce to WCDP templates
             add_filter('wc_get_template', 'WCDP_Subscriptions_For_WooCommerce::modify_template', 10, 5);
-        }
 
-        //Rename Subscriptions Tab on My Account page
-        add_filter('woocommerce_account_menu_items', 'WCDP_Subscriptions_For_WooCommerce::rename_menu_item', 11, 1);
+            //Rename Subscriptions Tab on My Account page
+            add_filter('woocommerce_account_menu_items', 'WCDP_Subscriptions_For_WooCommerce::rename_menu_item', 11, 1);
+        }
 
         add_filter('wps_sfw_check_pro_plugin', '__return_true');
 

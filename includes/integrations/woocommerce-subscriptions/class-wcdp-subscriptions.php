@@ -13,22 +13,22 @@ class WCDP_Subscriptions
      * Bootstraps the class and hooks required actions & filters
      */
     public static function init() {
- 		//add_filter('woocommerce_subscriptions_product_price_string', 'WCDP_Subscriptions::product_price_string', 10, 1);
+        //make one-time donation not a subscription
 		add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
 
         if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
             //Filter specific WC Subscription templates to WCDP templates
             add_filter( 'wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5 );
+
+            //Rename Subscriptions Tab on My Account page
+            add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1 );
+
+            //Remove Subscription Info message on checkout page
+            add_filter( 'woocommerce_add_message', 'WCDP_Subscriptions::add_message' );
+
+            //Remove Subscription Info message on checkout page
+            add_filter( 'woocommerce_subscriptions_thank_you_message', '__return_empty_string' );
         }
-
-		//Rename Subscriptions Tab on My Account page
-		add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1 );
-
-		//Remove Subscription Info message on checkout page
-		add_filter( 'woocommerce_subscriptions_thank_you_message', '__return_empty_string' );
-
-		//Remove Subscription Info message on checkout page
-		add_filter( 'woocommerce_add_message', 'WCDP_Subscriptions::add_message' );
 
 		//TODO Find Better solution for Edit Recurring Donation
 		//Remove feature to frontend subscription switching
@@ -57,7 +57,8 @@ class WCDP_Subscriptions
      * @param $product
      * @return bool
      */
-    public static function is_subscription($is_subscription, $product_id, $product) {
+    public static function is_subscription($is_subscription, $product_id, $product): bool
+    {
         if ($is_subscription && $product->get_meta( '_subscription_length', true ) == 1 && !is_admin()) {
             return false;
         }
