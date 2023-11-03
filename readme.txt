@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 6.3
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -168,6 +168,9 @@ If this is not a problem for you, you can continue to sell normal products. Othe
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+
+= 1.3.1 =
+fix: compatibility mode improvements on account pages
 
 = 1.3.0 2023-09-24 =
 new: leaderboard (donor wall) shortcode
