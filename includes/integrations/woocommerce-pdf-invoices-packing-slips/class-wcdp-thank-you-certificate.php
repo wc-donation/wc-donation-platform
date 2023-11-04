@@ -57,8 +57,9 @@ if ( ! class_exists( 'WCDP_Thank_You_Certificate' ) ) :
 			$this->settings        = $this->get_settings();
 			$this->latest_settings = $this->get_settings( true );
 			$this->enabled         = $this->get_setting( 'enabled', false );
+            $this->output_formats = array( 'pdf' );
 
-			//Setting of thank you certificate orientation
+            //Setting of thank you certificate orientation
 			add_filter( 'wpo_wcpdf_paper_orientation', array( $this, 'paper_orientation' ), 10, 2 );
 
 			//Add My Account Download Button
