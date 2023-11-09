@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.8
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: 1.3.1
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -171,6 +171,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.3.1 =
 tweak: compatibility with v3.7.1 of PDF Invoices & Packing Slips for WooCommerce
+tweak: set supported WP version to 6.4
 fix: compatibility mode improvements on account pages
 
 = 1.3.0 2023-09-24 =
