@@ -486,7 +486,7 @@ class WCDP_Leaderboard
                 }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-li div {
                   display: inline-block;
-                  width: 100%;
+                  width: calc(100% - 1.4em);
                 }
                 .wcdp-leaderboard-s2 .wcdp-leaderboard-li::before {
                       content: "";
