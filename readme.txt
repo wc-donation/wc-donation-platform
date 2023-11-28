@@ -132,7 +132,7 @@ So it doesn't make sense to reprogram all the features already implemented by Wo
 
 == Frequently Asked Questions ==
 
-Thank you for being an early adopter of Donation Platform for WooCommerce: Fundraising & Donation Management! I'm working hard to improve your experience and add new features. If you find any issues, please reach out to me to ask any questions or file feature requests.
+Thank you for using Donation Platform for WooCommerce: Fundraising & Donation Management! I'm working hard to improve your experience and add new features. If you find any issues, please reach out to me to ask any questions or file feature requests.
 
 = Will my theme work with Donation Platform for WooCommerce: Fundraising & Donation Management? =
 
