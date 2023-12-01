@@ -14,7 +14,7 @@
  * forked from WooCommerce\Templates
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 ?>
-<p class="woocommerce-info"><?php esc_html_e( 'No projects were found matching your selection.', 'wc-donation-platform' ); ?></p>
+<p class="woocommerce-info"><?php esc_html_e('No projects were found matching your selection.', 'wc-donation-platform'); ?></p>

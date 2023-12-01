@@ -14,23 +14,23 @@
  * forked from WooCommerce\Templates
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 global $post;
 global $product;
 
-echo do_shortcode( '[wcdp_progress id="' . $post->ID . '" style="2"]' );
+echo do_shortcode('[wcdp_progress id="' . $post->ID . '" style="2"]');
 
-if ( ! $product->is_purchasable() &&  $product->get_type() != 'grouped') {
-	return;
+if (!$product->is_purchasable() && $product->get_type() != 'grouped') {
+    return;
 }
 
-if ( $product->is_in_stock() ) {
-	/**
-	 * Display Donation Form
-	 */
-	echo WCDP_Form::wcdp_donation_form(array(
+if ($product->is_in_stock()) {
+    /**
+     * Display Donation Form
+     */
+    echo WCDP_Form::wcdp_donation_form(array(
         'id' => $post->ID,
-		'style' => '4',
+        'style' => '4',
     ), true);
 }

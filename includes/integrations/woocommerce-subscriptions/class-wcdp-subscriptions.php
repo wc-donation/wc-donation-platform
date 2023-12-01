@@ -5,34 +5,35 @@
  * Fits WooCommerce Subscriptions to use for recurring donations
  */
 
-if(!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 
 class WCDP_Subscriptions
 {
     /**
      * Bootstraps the class and hooks required actions & filters
      */
-    public static function init() {
+    public static function init()
+    {
         //make one-time donation not a subscription
-		add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
+        add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
 
         if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
             //Filter specific WC Subscription templates to WCDP templates
-            add_filter( 'wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5 );
+            add_filter('wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5);
 
             //Rename Subscriptions Tab on My Account page
-            add_filter( 'woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1 );
+            add_filter('woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1);
 
             //Remove Subscription Info message on checkout page
-            add_filter( 'woocommerce_add_message', 'WCDP_Subscriptions::add_message' );
+            add_filter('woocommerce_add_message', 'WCDP_Subscriptions::add_message');
 
             //Remove Subscription Info message on checkout page
-            add_filter( 'woocommerce_subscriptions_thank_you_message', '__return_empty_string' );
+            add_filter('woocommerce_subscriptions_thank_you_message', '__return_empty_string');
         }
 
-		//TODO Find Better solution for Edit Recurring Donation
-		//Remove feature to frontend subscription switching
-		add_filter( 'woocommerce_subscriptions_can_item_be_switched_by_user', '__return_false' );
+        //TODO Find Better solution for Edit Recurring Donation
+        //Remove feature to frontend subscription switching
+        add_filter('woocommerce_subscriptions_can_item_be_switched_by_user', '__return_false');
     }
 
     /**
@@ -42,8 +43,9 @@ class WCDP_Subscriptions
      * @param string $subscription_string
      * @return array|string|string[]
      */
-    public static function product_price_string(string $subscription_string = '' ) {
-        if ( strpos($subscription_string, ' 1 ') ) {
+    public static function product_price_string(string $subscription_string = '')
+    {
+        if (strpos($subscription_string, ' 1 ')) {
             return substr_replace($subscription_string, ' style="display:none"', strpos($subscription_string, 'class="subscription-details"'), 0);
         }
         return $subscription_string;
@@ -59,7 +61,7 @@ class WCDP_Subscriptions
      */
     public static function is_subscription($is_subscription, $product_id, $product): bool
     {
-        if ($is_subscription && $product->get_meta( '_subscription_length', true ) == 1 && !is_admin()) {
+        if ($is_subscription && $product->get_meta('_subscription_length', true) == 1 && !is_admin()) {
             return false;
         }
         return $is_subscription;
@@ -75,10 +77,10 @@ class WCDP_Subscriptions
      * @param string $default_path
      * @return string
      */
-    public static function modify_template(string $template='', string $template_name='', array $args=array(), string $template_path='', string $default_path='' ): string
+    public static function modify_template(string $template = '', string $template_name = '', array $args = array(), string $template_path = '', string $default_path = ''): string
     {
         //Only apply for WC Subscription Templates
-        if (! strpos($default_path, 'subscriptions')) {
+        if (!strpos($default_path, 'subscriptions')) {
             return $template;
         }
 
@@ -135,15 +137,15 @@ class WCDP_Subscriptions
 
             case 'single-product/add-to-cart/subscription.php' :
             case 'single-product/add-to-cart/variable-subscription.php' :
-				if(WCDP_Form::is_donable(get_queried_object_id())) {
-					$template = WCDP_DIR . 'includes/wc-templates/single-product/add-to-cart/product.php';
-				}
-				break;
+                if (WCDP_Form::is_donable(get_queried_object_id())) {
+                    $template = WCDP_DIR . 'includes/wc-templates/single-product/add-to-cart/product.php';
+                }
+                break;
 
-			default:
+            default:
                 break;
         }
-        return apply_filters( 'wcdp_get_template', $template, $template_name, $args, $template_path, $default_path );
+        return apply_filters('wcdp_get_template', $template, $template_name, $args, $template_path, $default_path);
     }
 
     /**
@@ -152,9 +154,10 @@ class WCDP_Subscriptions
      * @param $menu_items
      * @return mixed
      */
-    public static function rename_menu_item($menu_items) {
+    public static function rename_menu_item($menu_items)
+    {
         if (array_key_exists('subscriptions', $menu_items)) {
-            $menu_items['subscriptions'] = __( 'Recurring Donations', 'wc-donation-platform' );
+            $menu_items['subscriptions'] = __('Recurring Donations', 'wc-donation-platform');
         }
         return $menu_items;
     }
@@ -165,10 +168,11 @@ class WCDP_Subscriptions
      * @param $message
      * @return mixed|string|void
      */
-    public static function add_message($message) {
-        switch($message){
-            case __( 'Complete checkout to renew your subscription.', 'woocommerce-subscriptions' ):
-                return __( 'Complete checkout to renew your recurring donation.', 'wc-donation-platform' );
+    public static function add_message($message)
+    {
+        switch ($message) {
+            case __('Complete checkout to renew your subscription.', 'woocommerce-subscriptions'):
+                return __('Complete checkout to renew your recurring donation.', 'wc-donation-platform');
             default:
                 return $message;
         }

@@ -24,73 +24,6 @@ class WCDP_Form
     }
 
     /**
-     * Register CSS & JS Files
-     */
-    public function wcdp_register_scripts()
-    {
-        //JS Dependencies
-        $jsdeps = array(
-            'jquery',
-            'selectWoo',
-            'wc-checkout',
-            'select2',
-            'wc-cart',
-        );
-        //Require wc-password-strength-meter when necessary
-        if ('yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option('woocommerce_registration_generate_password') && !is_user_logged_in()) {
-            $jsdeps[] = 'wc-password-strength-meter';
-        }
-
-        wp_register_style('wc-donation-platform',
-            WCDP_DIR_URL . 'assets/css/wcdp.min.css',
-            array('select2',),
-            WCDP_VERSION
-        );
-        wp_register_script('wc-donation-platform',
-            WCDP_DIR_URL . 'assets/js/wcdp.min.js',
-            $jsdeps,
-            WCDP_VERSION
-        );
-
-        //Only enqueue if needed
-        if ($this->wcdp_has_donation_form()) {
-            $this->wcdp_enqueue_scripts();
-        }
-    }
-
-    /**
-     * Enqueue CSS & JS Files
-     * @return void
-     */
-    private static function wcdp_enqueue_scripts()
-    {
-        //Dependencies
-        $cssdeps = array(
-            'select2',
-            'wc-donation-platform',
-        );
-        foreach ($cssdeps as $cssdep) {
-            wp_enqueue_style($cssdep);
-        }
-
-        $jsdeps = array(
-            'wc-donation-platform',
-            'jquery',
-            'selectWoo',
-            'wc-checkout',
-            'select2',
-            'wc-cart',
-        );
-        //Require wc-password-strength-meter when necessary
-        if ('yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option('woocommerce_registration_generate_password') && !is_user_logged_in()) {
-            $jsdeps[] = 'wc-password-strength-meter';
-        }
-        foreach ($jsdeps as $jsdep) {
-            wp_enqueue_script($jsdep);
-        }
-    }
-
-    /**
      * Return html of Donation Form
      * @param string $atts
      * @return string
@@ -208,11 +141,184 @@ class WCDP_Form
         }
     }
 
+    /**
+     * Checks if a product is marked as a donation product
+     *
+     * @param $id
+     * @return mixed|null
+     */
+    public static function is_donable($id)
+    {
+        return apply_filters('wcdp_is_donable', get_post_meta($id, '_donable', true) == 'yes');
+    }
+
     private static function form_error_message($message)
     {
         echo '<ul class="woocommerce-error wcdp-error-message" id="wcdp-ajax-error" role="alert"><li>';
         esc_html_e($message, 'wc-donation-platform');
         echo '</li></ul>';
+    }
+
+    /**
+     * Return true if the cart contains a donation product
+     * @return bool
+     */
+    public static function cart_contains_donation(): bool
+    {
+        if (!empty(WC()->cart->get_cart_contents())) {
+            foreach (WC()->cart->get_cart_contents() as $cart_item) {
+                if (isset($cart_item['product_id']) && WCDP_Form::is_donable($cart_item['product_id'])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * returns the HTML markup of a fieldset
+     * @param $args
+     * @param $product
+     * @return mixed|null
+     */
+    public static function wcdp_generate_fieldset($args = array(), $product = null)
+    {
+        $args = wp_parse_args(
+            apply_filters('wcdp_generate_fieldset_args', $args),
+            array(
+                'ul-id' => '',
+                'ul-class' => 'wcdp_options',
+                'name' => '',
+                'options' => array(
+                    'field' => array(
+                        'input-id' => '',
+                        'input-class' => '',
+                        'input-name' => '',
+                        'input-value' => '',
+                        'input-checked' => '',
+                        'label-class' => 'wcdp-button-label',
+                        'label-id' => '',
+                        'label-text' => ''
+                    )
+                )
+            )
+        );
+
+        $allowed_html = array(
+            'span' => array(
+                'class' => array(),
+                'id' => array(),
+            ),
+            'div' => array(
+                'id' => array(),
+                'class' => array(),
+            ),
+            'input' => array(
+                'id' => array(),
+                'class' => array(),
+                'type' => array(),
+                'name' => array(),
+                'step' => array(),
+                'min' => array(),
+                'max' => array(),
+                'required' => array(),
+                'value' => array(),
+            ),
+        );
+
+        $options = array();
+        foreach ($args['options'] as $option) {
+            $options[] = wp_parse_args($option, array(
+                'input-id' => '',
+                'input-class' => '',
+                'input-value' => '',
+                'input-checked' => '0',
+                'label-class' => 'wcdp-button-label',
+                'label-id' => '',
+                'label-text' => ''
+            ));
+        }
+
+        $html = '<ul id="' . esc_attr($args['ul-id']) . '" class="' . esc_attr($args['ul-class']) . '" wcdp-name="' . esc_attr($args['name']) . '"> ';
+        foreach ($options as $option) {
+            $html .= '<li><input type="radio" id="' . esc_attr($option['input-id']) . '" name="' . esc_attr($args['name']) . '" class="' . esc_attr($option['input-class']) . '" value="' . esc_attr($option['input-value']) . '"';
+            if ($option['input-checked']
+                || (isset($_REQUEST[esc_attr($args['name'])]) && $_REQUEST[esc_attr($args['name'])] == esc_attr($option['input-value']))
+                || (!isset($_REQUEST[esc_attr($args['name'])]) && !is_null($product) && $product->get_variation_default_attribute(esc_attr($args['name'])) == esc_attr($option['input-value']))
+            ) {
+                $html .= ' checked="checked"';
+            }
+            $html .= ' required>';
+            $html .= '<label id="' . esc_attr($option['label-id']) . '" class="' . esc_attr($option['label-class']) . '" for="' . esc_attr($option['input-id']) . '">';
+            $html .= wp_kses(apply_filters('wcdp_label_' . esc_attr($option['input-value']), $option['label-text'], $args), $allowed_html);
+            $html .= '</label></li>';
+        }
+        $html .= '</ul>';
+        return apply_filters('wcdp_generate_fieldset_args_html', $html, $args);
+    }
+
+    /**
+     * echo css block with wcdp color variables
+     * @return void
+     */
+    public static function define_ccs_variables()
+    {
+        $wcdp_main_color = get_option('wcdp_secondary_color', '#30bf76');
+        $wcdp_main_color_2 = get_option('wcdp_main_color', '#00753a');
+        $wcdp_main_color_3 = get_option('wcdp_error_color', '#de0000');
+        ?>
+        <style id="wcdp-css">
+            :root {
+                --wcdp-main: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
+                --wcdp-main-2: <?php echo sanitize_hex_color($wcdp_main_color_2); ?>;
+                --wcdp-main-3: <?php echo sanitize_hex_color($wcdp_main_color_3); ?>;
+                --wcdp-step-2: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
+                --wcdp-step-3: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
+                --label-inactive: LightGray;
+                --label-inactive-hover: #b5b5b5;
+                --label-text: black;
+                --label-text-checked: white;
+                --background-color: white;
+                --overlay-color: rgba(0, 0, 0, 0.8);
+                --controls: black;
+            }
+        </style>
+        <?php
+    }
+
+    /**
+     * Register CSS & JS Files
+     */
+    public function wcdp_register_scripts()
+    {
+        //JS Dependencies
+        $jsdeps = array(
+            'jquery',
+            'selectWoo',
+            'wc-checkout',
+            'select2',
+            'wc-cart',
+        );
+        //Require wc-password-strength-meter when necessary
+        if ('yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option('woocommerce_registration_generate_password') && !is_user_logged_in()) {
+            $jsdeps[] = 'wc-password-strength-meter';
+        }
+
+        wp_register_style('wc-donation-platform',
+            WCDP_DIR_URL . 'assets/css/wcdp.min.css',
+            array('select2',),
+            WCDP_VERSION
+        );
+        wp_register_script('wc-donation-platform',
+            WCDP_DIR_URL . 'assets/js/wcdp.min.js',
+            $jsdeps,
+            WCDP_VERSION
+        );
+
+        //Only enqueue if needed
+        if ($this->wcdp_has_donation_form()) {
+            $this->wcdp_enqueue_scripts();
+        }
     }
 
     /**
@@ -244,19 +350,35 @@ class WCDP_Form
     }
 
     /**
-     * Return true if the cart contains a donation product
-     * @return bool
+     * Enqueue CSS & JS Files
+     * @return void
      */
-    public static function cart_contains_donation(): bool
+    private static function wcdp_enqueue_scripts()
     {
-        if (!empty(WC()->cart->get_cart_contents())) {
-            foreach (WC()->cart->get_cart_contents() as $cart_item) {
-                if (isset($cart_item['product_id']) && WCDP_Form::is_donable($cart_item['product_id'])) {
-                    return true;
-                }
-            }
+        //Dependencies
+        $cssdeps = array(
+            'select2',
+            'wc-donation-platform',
+        );
+        foreach ($cssdeps as $cssdep) {
+            wp_enqueue_style($cssdep);
         }
-        return false;
+
+        $jsdeps = array(
+            'wc-donation-platform',
+            'jquery',
+            'selectWoo',
+            'wc-checkout',
+            'select2',
+            'wc-cart',
+        );
+        //Require wc-password-strength-meter when necessary
+        if ('yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option('woocommerce_registration_generate_password') && !is_user_logged_in()) {
+            $jsdeps[] = 'wc-password-strength-meter';
+        }
+        foreach ($jsdeps as $jsdep) {
+            wp_enqueue_script($jsdep);
+        }
     }
 
     /**
@@ -392,6 +514,19 @@ class WCDP_Form
     }
 
     /**
+     * Check if specified donation amount is valid
+     * @param $donation_amount
+     * @param $product_id int
+     * @return bool
+     */
+    public static function check_donation_amount($donation_amount, int $product_id = 0): bool
+    {
+        $min_donation_amount = (float)apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
+        $max_donation_amount = (float)apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 50000), $product_id);
+        return $donation_amount >= $min_donation_amount && $donation_amount <= $max_donation_amount;
+    }
+
+    /**
      * Remove other cart contents if wcdp_multiple_in_cart is enabled
      * if the donation product is already in cart, remove it
      * @param int $product_id
@@ -412,141 +547,6 @@ class WCDP_Form
                 WC()->cart->empty_cart();
             }
         }
-    }
-
-    /**
-     * Check if specified donation amount is valid
-     * @param $donation_amount
-     * @param $product_id int
-     * @return bool
-     */
-    public static function check_donation_amount($donation_amount, int $product_id = 0): bool
-    {
-        $min_donation_amount = (float)apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
-        $max_donation_amount = (float)apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 50000), $product_id);
-        return $donation_amount >= $min_donation_amount && $donation_amount <= $max_donation_amount;
-    }
-
-    /**
-     * Checks if a product is marked as a donation product
-     *
-     * @param $id
-     * @return mixed|null
-     */
-    public static function is_donable($id)
-    {
-        return apply_filters('wcdp_is_donable', get_post_meta($id, '_donable', true) == 'yes');
-    }
-
-    /**
-     * returns the HTML markup of a fieldset
-     * @param $args
-     * @param $product
-     * @return mixed|null
-     */
-    public static function wcdp_generate_fieldset($args = array(), $product = null)
-    {
-        $args = wp_parse_args(
-            apply_filters('wcdp_generate_fieldset_args', $args),
-            array(
-                'ul-id' => '',
-                'ul-class' => 'wcdp_options',
-                'name' => '',
-                'options' => array(
-                    'field' => array(
-                        'input-id' => '',
-                        'input-class' => '',
-                        'input-name' => '',
-                        'input-value' => '',
-                        'input-checked' => '',
-                        'label-class' => 'wcdp-button-label',
-                        'label-id' => '',
-                        'label-text' => ''
-                    )
-                )
-            )
-        );
-
-        $allowed_html = array(
-            'span' => array(
-                'class' => array(),
-                'id' => array(),
-            ),
-            'div' => array(
-                'id' => array(),
-                'class' => array(),
-            ),
-            'input' => array(
-                'id' => array(),
-                'class' => array(),
-                'type' => array(),
-                'name' => array(),
-                'step' => array(),
-                'min' => array(),
-                'max' => array(),
-                'required' => array(),
-                'value' => array(),
-            ),
-        );
-
-        $options = array();
-        foreach ($args['options'] as $option) {
-            $options[] = wp_parse_args($option, array(
-                'input-id' => '',
-                'input-class' => '',
-                'input-value' => '',
-                'input-checked' => '0',
-                'label-class' => 'wcdp-button-label',
-                'label-id' => '',
-                'label-text' => ''
-            ));
-        }
-
-        $html = '<ul id="' . esc_attr($args['ul-id']) . '" class="' . esc_attr($args['ul-class']) . '" wcdp-name="' . esc_attr($args['name']) . '"> ';
-        foreach ($options as $option) {
-            $html .= '<li><input type="radio" id="' . esc_attr($option['input-id']) . '" name="' . esc_attr($args['name']) . '" class="' . esc_attr($option['input-class']) . '" value="' . esc_attr($option['input-value']) . '"';
-            if ($option['input-checked']
-                || (isset($_REQUEST[esc_attr($args['name'])]) && $_REQUEST[esc_attr($args['name'])] == esc_attr($option['input-value']))
-                || (!isset($_REQUEST[esc_attr($args['name'])]) && !is_null($product) && $product->get_variation_default_attribute(esc_attr($args['name'])) == esc_attr($option['input-value']))
-            ) {
-                $html .= ' checked="checked"';
-            }
-            $html .= ' required>';
-            $html .= '<label id="' . esc_attr($option['label-id']) . '" class="' . esc_attr($option['label-class']) . '" for="' . esc_attr($option['input-id']) . '">';
-            $html .= wp_kses(apply_filters('wcdp_label_' . esc_attr($option['input-value']), $option['label-text'], $args), $allowed_html);
-            $html .= '</label></li>';
-        }
-        $html .= '</ul>';
-        return apply_filters('wcdp_generate_fieldset_args_html', $html, $args);
-    }
-
-    /**
-     * echo css block with wcdp color variables
-     * @return void
-     */
-    public static function define_ccs_variables()
-    {
-        $wcdp_main_color = get_option('wcdp_secondary_color', '#30bf76');
-        $wcdp_main_color_2 = get_option('wcdp_main_color', '#00753a');
-        $wcdp_main_color_3 = get_option('wcdp_error_color', '#de0000');
-        ?>
-        <style id="wcdp-css">
-            :root {
-                --wcdp-main: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-                --wcdp-main-2: <?php echo sanitize_hex_color($wcdp_main_color_2); ?>;
-                --wcdp-main-3: <?php echo sanitize_hex_color($wcdp_main_color_3); ?>;
-                --wcdp-step-2: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-                --wcdp-step-3: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-                --label-inactive: LightGray;
-                --label-inactive-hover: #b5b5b5;
-                --label-text: black;
-                --label-text-checked: white;
-                --background-color: white;
-                --overlay-color: rgba(0, 0, 0, 0.8);
-                --controls: black;
-            }
-        </style>
-        <?php
     }
 }
 

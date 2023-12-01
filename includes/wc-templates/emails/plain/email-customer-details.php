@@ -16,10 +16,10 @@
  * forked from WooCommerce\Templates
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
-echo esc_html( wc_strtoupper( esc_html__( 'Donor details', 'wc-donation-platform' ) ) ) . "\n\n";
+echo esc_html(wc_strtoupper(esc_html__('Donor details', 'wc-donation-platform'))) . "\n\n";
 
-foreach ( $fields as $field ) {
-	echo wp_kses_post( $field['label'] ) . ': ' . wp_kses_post( $field['value'] ) . "\n";
+foreach ($fields as $field) {
+    echo wp_kses_post($field['label']) . ': ' . wp_kses_post($field['value']) . "\n";
 }

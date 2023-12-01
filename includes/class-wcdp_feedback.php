@@ -124,6 +124,77 @@ class WCDP_Feedback
     }
 
     /**
+     * Get non-sensitive diagnostic Data
+     *
+     * @return ARRAY Data to send
+     * @since v1.2.7
+     */
+    public function get_data(): array
+    {
+        global $wpdb;
+        $plugins_data = $this->get_plugins();
+
+        return array(
+            'action' => isset($_POST['type']) ? esc_attr($_POST['type']) : '',
+            'name' => get_bloginfo('name'),
+            'home' => esc_url(home_url()),
+            'wp_version' => get_bloginfo('version'),
+            'memory_limit' => WP_MEMORY_LIMIT,
+            'debug_mode' => defined('WP_DEBUG') && WP_DEBUG,
+            'locale' => get_locale(),
+            'multisite' => is_multisite(),
+
+            'active_theme' => get_stylesheet(),
+            'active_plugins' => $plugins_data['active'],
+            'inactive_plugins' => $plugins_data['inactive'],
+            'server' => isset($_SERVER['SERVER_SOFTWARE']) ? sanitize_key($_SERVER['SERVER_SOFTWARE']) : '',
+
+            'timezone' => date_default_timezone_get(),
+            'php_curl' => function_exists('curl_init'),
+            'php_version' => function_exists('phpversion') ? phpversion() : '',
+            'upload_size' => size_format(wp_max_upload_size()),
+            'mysql_version' => $wpdb->db_version(),
+            'php_fsockopen' => function_exists('fsockopen'),
+
+            'cause_id' => isset($_POST['cause_id']) ? esc_attr($_POST['cause_id']) : '',
+            'cause_details' => isset($_POST['cause_details']) ? sanitize_text_field($_POST['cause_details']) : '',
+        );
+    }
+
+    /**
+     * Get All the Installed Plugin Data
+     *
+     * @return ARRAY Plugin Information
+     * @since v1.2.7
+     */
+    public function get_plugins(): array
+    {
+        if (!function_exists('get_plugins')) {
+            include_once ABSPATH . '/wp-admin/includes/plugin.php';
+        }
+
+        $active = array();
+        $inactive = array();
+        $all_plugins = get_plugins();
+        $active_plugins = get_option('active_plugins', array());
+        if (is_multisite()) {
+            $active_plugins = array_merge($active_plugins, array_keys(get_site_option('active_sitewide_plugins', array())));
+        }
+
+        foreach ($all_plugins as $key => $plugin) {
+            $e = $key . '/' . $plugin['Version'];
+
+            if (in_array($key, $active_plugins)) {
+                $active[] = $e;
+            } else {
+                $inactive[] = $e;
+            }
+        }
+
+        return array('active' => $active, 'inactive' => $inactive);
+    }
+
+    /**
      * Set transient value to not show the survey to often
      *
      * @return void
@@ -155,23 +226,6 @@ class WCDP_Feedback
         $this->feedback_modal_html();
         $this->modal_css();
         $this->feedback_js();
-    }
-
-
-    /**
-     * Add Deactivation Survey HTML, JS & CSS
-     *
-     * @return void
-     * @since v1.2.7
-     */
-    public function get_source_data_callback()
-    {
-        global $pagenow;
-        if ($pagenow == 'plugins.php') {
-            $this->on_deactivation_html();
-            $this->modal_css();
-            $this->on_deactivation_js();
-        }
     }
 
     /**
@@ -223,55 +277,6 @@ class WCDP_Feedback
             </div>
         </div>
     <?php }
-
-    /**
-     * echo html of survey modal
-     *
-     * @return void
-     */
-    public function on_deactivation_html()
-    { ?>
-        <div class="wcdp-modal" id="wcdp-feedback-modal">
-            <div class="wcdp-modal-wrap">
-
-                <div class="wcdp-modal-header">
-                    <h2><?php esc_html_e("Can you please help me to improve the plugin?", "wc-donation-platform"); ?></h2>
-                    <button class="wcdp-modal-cancel"><span class="dashicons dashicons-no-alt"></span></button>
-                </div>
-
-                <div class="wcdp-modal-body">
-                    <h3><?php esc_html_e("If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce.", "wc-donation-platform"); ?></h3>
-                    <ul class="wcdp-modal-input">
-                        <?php foreach ($this->deactivation_survey_options as $key => $option) { ?>
-                            <li>
-                                <label>
-                                    <input type="radio" id="<?php echo esc_attr($option['id']); ?>" class="wcdp-survey"
-                                           name="wcdp-survey" value="<?php echo esc_attr($option['text']); ?>">
-                                    <div class="wcdp-reason-text"><?php echo esc_html($option['text']); ?></div>
-                                    <?php if (isset($option['input']) && $option['input']) { ?>
-                                        <textarea placeholder="<?php echo esc_attr($option['placeholder']); ?>"
-                                                  class="wcdp-reason-input <?php echo $key == 0 ? 'wcdp-active' : ''; ?> <?php echo esc_html($option['id']); ?>"></textarea>
-                                    <?php } ?>
-                                </label>
-                            </li>
-                        <?php } ?>
-                    </ul>
-
-                    <div class="wcdp-modal-footer">
-                        <a class="wcdp-modal-submit"
-                           href="#"><?php esc_html_e("Submit & Deactivate", "wc-donation-platform"); ?><span
-                                    class="dashicons dashicons-update rotate"></span></a>
-                        <a class="wcdp-modal-on-deactivation"
-                           href="#"><?php esc_html_e("Skip & Deactivate", "wc-donation-platform"); ?></a>
-                    </div>
-
-                    <p class="wcdp-greyed"><?php esc_html_e("By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send.", "wc-donation-platform"); ?></p>
-
-                </div>
-            </div>
-        </div>
-    <?php }
-
 
     /**
      * Deactivation Forms CSS File
@@ -566,6 +571,70 @@ class WCDP_Feedback
     <?php }
 
     /**
+     * Add Deactivation Survey HTML, JS & CSS
+     *
+     * @return void
+     * @since v1.2.7
+     */
+    public function get_source_data_callback()
+    {
+        global $pagenow;
+        if ($pagenow == 'plugins.php') {
+            $this->on_deactivation_html();
+            $this->modal_css();
+            $this->on_deactivation_js();
+        }
+    }
+
+    /**
+     * echo html of survey modal
+     *
+     * @return void
+     */
+    public function on_deactivation_html()
+    { ?>
+        <div class="wcdp-modal" id="wcdp-feedback-modal">
+            <div class="wcdp-modal-wrap">
+
+                <div class="wcdp-modal-header">
+                    <h2><?php esc_html_e("Can you please help me to improve the plugin?", "wc-donation-platform"); ?></h2>
+                    <button class="wcdp-modal-cancel"><span class="dashicons dashicons-no-alt"></span></button>
+                </div>
+
+                <div class="wcdp-modal-body">
+                    <h3><?php esc_html_e("If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce.", "wc-donation-platform"); ?></h3>
+                    <ul class="wcdp-modal-input">
+                        <?php foreach ($this->deactivation_survey_options as $key => $option) { ?>
+                            <li>
+                                <label>
+                                    <input type="radio" id="<?php echo esc_attr($option['id']); ?>" class="wcdp-survey"
+                                           name="wcdp-survey" value="<?php echo esc_attr($option['text']); ?>">
+                                    <div class="wcdp-reason-text"><?php echo esc_html($option['text']); ?></div>
+                                    <?php if (isset($option['input']) && $option['input']) { ?>
+                                        <textarea placeholder="<?php echo esc_attr($option['placeholder']); ?>"
+                                                  class="wcdp-reason-input <?php echo $key == 0 ? 'wcdp-active' : ''; ?> <?php echo esc_html($option['id']); ?>"></textarea>
+                                    <?php } ?>
+                                </label>
+                            </li>
+                        <?php } ?>
+                    </ul>
+
+                    <div class="wcdp-modal-footer">
+                        <a class="wcdp-modal-submit"
+                           href="#"><?php esc_html_e("Submit & Deactivate", "wc-donation-platform"); ?><span
+                                    class="dashicons dashicons-update rotate"></span></a>
+                        <a class="wcdp-modal-on-deactivation"
+                           href="#"><?php esc_html_e("Skip & Deactivate", "wc-donation-platform"); ?></a>
+                    </div>
+
+                    <p class="wcdp-greyed"><?php esc_html_e("By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send.", "wc-donation-platform"); ?></p>
+
+                </div>
+            </div>
+        </div>
+    <?php }
+
+    /**
      * Deactivation Forms JS script
      *
      * @return void
@@ -624,76 +693,4 @@ class WCDP_Feedback
             });
         </script>
     <?php }
-
-
-    /**
-     * Get All the Installed Plugin Data
-     *
-     * @return ARRAY Plugin Information
-     * @since v1.2.7
-     */
-    public function get_plugins(): array
-    {
-        if (!function_exists('get_plugins')) {
-            include_once ABSPATH . '/wp-admin/includes/plugin.php';
-        }
-
-        $active = array();
-        $inactive = array();
-        $all_plugins = get_plugins();
-        $active_plugins = get_option('active_plugins', array());
-        if (is_multisite()) {
-            $active_plugins = array_merge($active_plugins, array_keys(get_site_option('active_sitewide_plugins', array())));
-        }
-
-        foreach ($all_plugins as $key => $plugin) {
-            $e = $key . '/' . $plugin['Version'];
-
-            if (in_array($key, $active_plugins)) {
-                $active[] = $e;
-            } else {
-                $inactive[] = $e;
-            }
-        }
-
-        return array('active' => $active, 'inactive' => $inactive);
-    }
-
-    /**
-     * Get non-sensitive diagnostic Data
-     *
-     * @return ARRAY Data to send
-     * @since v1.2.7
-     */
-    public function get_data(): array
-    {
-        global $wpdb;
-        $plugins_data = $this->get_plugins();
-
-        return array(
-            'action' => isset($_POST['type']) ? esc_attr($_POST['type']) : '',
-            'name' => get_bloginfo('name'),
-            'home' => esc_url(home_url()),
-            'wp_version' => get_bloginfo('version'),
-            'memory_limit' => WP_MEMORY_LIMIT,
-            'debug_mode' => defined('WP_DEBUG') && WP_DEBUG,
-            'locale' => get_locale(),
-            'multisite' => is_multisite(),
-
-            'active_theme' => get_stylesheet(),
-            'active_plugins' => $plugins_data['active'],
-            'inactive_plugins' => $plugins_data['inactive'],
-            'server' => isset($_SERVER['SERVER_SOFTWARE']) ? sanitize_key($_SERVER['SERVER_SOFTWARE']) : '',
-
-            'timezone' => date_default_timezone_get(),
-            'php_curl' => function_exists('curl_init'),
-            'php_version' => function_exists('phpversion') ? phpversion() : '',
-            'upload_size' => size_format(wp_max_upload_size()),
-            'mysql_version' => $wpdb->db_version(),
-            'php_fsockopen' => function_exists('fsockopen'),
-
-            'cause_id' => isset($_POST['cause_id']) ? esc_attr($_POST['cause_id']) : '',
-            'cause_details' => isset($_POST['cause_details']) ? sanitize_text_field($_POST['cause_details']) : '',
-        );
-    }
 }

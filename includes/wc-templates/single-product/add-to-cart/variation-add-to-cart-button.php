@@ -6,4 +6,4 @@
  * forked from WooCommerce\Templates
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;

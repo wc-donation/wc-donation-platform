@@ -5,81 +5,82 @@
  * @since 1.0.0
  */
 
-if(!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 
 class WCDP_Hooks
 {
-    public function __construct() {
+    public function __construct()
+    {
         //Change some WC templates to WCDP templates
-        add_filter( 'wc_get_template', array( $this, 'wcdp_modify_template'), 11, 5 );
+        add_filter('wc_get_template', array($this, 'wcdp_modify_template'), 11, 5);
 
         //A page with a WCDP form is a checkout page
-        add_filter( 'woocommerce_is_checkout', array( $this, 'wcdp_set_is_checkout' ) );
+        add_filter('woocommerce_is_checkout', array($this, 'wcdp_set_is_checkout'));
 
         //Hide Place Order button when cart is empty
-        add_filter('woocommerce_order_button_html', array( $this, 'wcdp_order_button_html'), 10, 1);
+        add_filter('woocommerce_order_button_html', array($this, 'wcdp_order_button_html'), 10, 1);
 
         //the following filters are only applied if the compatibility mode is disabled
         if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
             //Rename Title in orders page
-            add_filter( 'woocommerce_endpoint_orders_title', array( $this, 'wcdp_endpoint_orders_title'), 10, 1 );
+            add_filter('woocommerce_endpoint_orders_title', array($this, 'wcdp_endpoint_orders_title'), 10, 1);
 
             //Rename Account Menu "Orders" item to "Donations"
-            add_filter( 'woocommerce_account_menu_items', array( $this, 'wcdp_account_menu_items'), 10, 1 );
+            add_filter('woocommerce_account_menu_items', array($this, 'wcdp_account_menu_items'), 10, 1);
 
             //Rename Place Order button
-            add_filter('woocommerce_order_button_text', array( $this, 'wcdp_order_button_text'), 10 );
+            add_filter('woocommerce_order_button_text', array($this, 'wcdp_order_button_text'), 10);
 
             //Rename Account Order Columns
-            add_filter( 'woocommerce_account_orders_columns', array( $this, 'wcdp_account_orders_columns'), 10 );
+            add_filter('woocommerce_account_orders_columns', array($this, 'wcdp_account_orders_columns'), 10);
 
             //Rename Order notes to Donation notes
-            add_filter( 'woocommerce_checkout_fields', array( $this, 'woocommerce_checkout_fields'), 10 );
+            add_filter('woocommerce_checkout_fields', array($this, 'woocommerce_checkout_fields'), 10);
 
             //Remove x 1 after a product name
-            add_filter('woocommerce_order_item_quantity_html', '__return_empty_string' );
+            add_filter('woocommerce_order_item_quantity_html', '__return_empty_string');
 
             //Add donation selection form on checkout page
-            add_action( 'woocommerce_product_related_products_heading', array( $this, 'wcdp_product_related_products_heading') );
+            add_action('woocommerce_product_related_products_heading', array($this, 'wcdp_product_related_products_heading'));
 
             //Change "Add to Cart" Button Text
-            add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text') );
+            add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text'));
         }
 
         //Change "Add to Cart" Button
         add_filter('woocommerce_loop_add_to_cart_link', array($this, 'wcdp_loop_add_to_cart_link'), 10, 3);
 
         //Allow checkout page with empty cart
-        add_filter( 'woocommerce_checkout_redirect_empty_cart', '__return_false', 100 );
+        add_filter('woocommerce_checkout_redirect_empty_cart', '__return_false', 100);
 
         //Allow checkout page with expired update order review
-        add_filter( 'woocommerce_checkout_update_order_review_expired', '__return_false', 15 );
+        add_filter('woocommerce_checkout_update_order_review_expired', '__return_false', 15);
 
         //Disable Order Again Button on my account page
-        add_filter( 'woocommerce_valid_order_statuses_for_order_again', '__return_empty_array' );
+        add_filter('woocommerce_valid_order_statuses_for_order_again', '__return_empty_array');
 
         //Set Price of Donation
-        add_action( 'woocommerce_before_calculate_totals', array( $this, 'wcdp_set_donation_price'), 99 );
+        add_action('woocommerce_before_calculate_totals', array($this, 'wcdp_set_donation_price'), 99);
 
         //Add donation selection form on checkout page
-        add_action( 'woocommerce_before_checkout_form', array( $this, 'wcdp_before_checkout_form') );
+        add_action('woocommerce_before_checkout_form', array($this, 'wcdp_before_checkout_form'));
 
         //Ensure there is a WooCommerce session so that nonces are not invalidated by new session created on AJAX request
-        add_action( 'wp', array( $this, 'ensure_session' ) );
+        add_action('wp', array($this, 'ensure_session'));
 
         //Disable Order notes if checked in settings
         if (get_option('wcdp_disable_order_notes', 'no') == 'yes') {
             add_filter('woocommerce_enable_order_notes_field', '__return_false');
         }
 
-		//donations do not need admin processing
-		add_filter('woocommerce_order_item_needs_processing', array( $this, 'wcdp_autocomplete_order'), 10, 3);
+        //donations do not need admin processing
+        add_filter('woocommerce_order_item_needs_processing', array($this, 'wcdp_autocomplete_order'), 10, 3);
 
         //make sure to update the price for orders created via API
-        add_action( 'woocommerce_new_order_item', array( $this, 'wcdp_modify_item_price_after_creation' ), 10, 3 );
+        add_action('woocommerce_new_order_item', array($this, 'wcdp_modify_item_price_after_creation'), 10, 3);
 
         //add Settings Page Link in Backend
-        add_action('admin_menu', array( $this, 'add_donation_platform_submenu_link' ));
+        add_action('admin_menu', array($this, 'add_donation_platform_submenu_link'));
     }
 
     /**
@@ -92,7 +93,7 @@ class WCDP_Hooks
      * @param string $default_path
      * @return string
      */
-    public function wcdp_modify_template(string $template='', string $template_name='', array $args=array(), string $template_path='', string $default_path='' ): string
+    public function wcdp_modify_template(string $template = '', string $template_name = '', array $args = array(), string $template_path = '', string $default_path = ''): string
     {
         //Return if the template has been overwritten in yourtheme/woocommerce/XXX
         if ($template[strlen($template) - strlen($template_name) - 2] === 'e') {
@@ -154,32 +155,32 @@ class WCDP_Hooks
                 }
                 break;
 
-			case 'loop/price.php':
-				global $product;
-				if(!is_null($product) && WCDP_Form::is_donable($product->get_id())) {
-					$template = $path . $template_name;
-				}
-				break;
+            case 'loop/price.php':
+                global $product;
+                if (!is_null($product) && WCDP_Form::is_donable($product->get_id())) {
+                    $template = $path . $template_name;
+                }
+                break;
 
-			case 'single-product/price.php':
-			case 'single-product/add-to-cart/variation-add-to-cart-button.php' :
-				if(WCDP_Form::is_donable(get_queried_object_id())) {
-					$template = $path . $template_name;
-				}
-				break;
+            case 'single-product/price.php':
+            case 'single-product/add-to-cart/variation-add-to-cart-button.php' :
+                if (WCDP_Form::is_donable(get_queried_object_id())) {
+                    $template = $path . $template_name;
+                }
+                break;
 
             case 'single-product/add-to-cart/simple.php' :
             case 'single-product/add-to-cart/variable.php' :
-			case 'single-product/add-to-cart/grouped.php' :
-            	if(WCDP_Form::is_donable(get_queried_object_id())) {
-					$template = $path . 'single-product/add-to-cart/product.php';
-				}
+            case 'single-product/add-to-cart/grouped.php' :
+                if (WCDP_Form::is_donable(get_queried_object_id())) {
+                    $template = $path . 'single-product/add-to-cart/product.php';
+                }
                 break;
 
             default:
                 break;
         }
-        return apply_filters( 'wcdp_get_template', $template, $template_name, $args, $template_path, $default_path );
+        return apply_filters('wcdp_get_template', $template, $template_name, $args, $template_path, $default_path);
     }
 
     /**
@@ -187,18 +188,18 @@ class WCDP_Hooks
      * @param $is_checkout
      * @return bool
      */
-    public function wcdp_set_is_checkout( $is_checkout ): bool
+    public function wcdp_set_is_checkout($is_checkout): bool
     {
-		if ($is_checkout) {
-			return true;
-		}
+        if ($is_checkout) {
+            return true;
+        }
         if (defined('WCDP_FORM')) {
             return WCDP_FORM;
         }
-		global $post;
-		if (has_block( 'wc-donation-platform/wcdp' )
-            || (!is_null($post) && (has_shortcode( $post->post_content, 'wcdp_donation_form') || has_shortcode( $post->post_content, 'product_page')))
-        ){
+        global $post;
+        if (has_block('wc-donation-platform/wcdp')
+            || (!is_null($post) && (has_shortcode($post->post_content, 'wcdp_donation_form') || has_shortcode($post->post_content, 'product_page')))
+        ) {
             define('WCDP_FORM', true);
             return true;
         } else {
@@ -214,8 +215,8 @@ class WCDP_Hooks
      */
     public function wcdp_account_orders_columns(array $columns): array
     {
-        $columns['order-number'] = __( 'Donation', 'wc-donation-platform' );
-        $columns['order-total'] = __( 'Total', 'wc-donation-platform' );
+        $columns['order-number'] = __('Donation', 'wc-donation-platform');
+        $columns['order-total'] = __('Total', 'wc-donation-platform');
 
         return $columns;
     }
@@ -228,8 +229,8 @@ class WCDP_Hooks
      */
     public function wcdp_account_menu_items(array $items): array
     {
-        return array_merge( $items, array(
-            'orders' => __( 'Donations', 'wc-donation-platform' ),
+        return array_merge($items, array(
+                'orders' => __('Donations', 'wc-donation-platform'),
             )
         );
     }
@@ -243,11 +244,11 @@ class WCDP_Hooks
     public function wcdp_endpoint_orders_title(string $title): string
     {
         global $wp;
-        if ( ! empty( $wp->query_vars['orders'] ) ) {
+        if (!empty($wp->query_vars['orders'])) {
             /* translators: %s: page */
-            $title = sprintf( __( 'Donations (page %d)', 'wc-donation-platform' ), intval( $wp->query_vars['orders'] ) );
+            $title = sprintf(__('Donations (page %d)', 'wc-donation-platform'), intval($wp->query_vars['orders']));
         } else {
-            $title = __( 'Donations', 'wc-donation-platform' );
+            $title = __('Donations', 'wc-donation-platform');
         }
         return $title;
     }
@@ -258,7 +259,8 @@ class WCDP_Hooks
      * @param $html
      * @return string|string[]
      */
-    public function wcdp_order_button_html($html) {
+    public function wcdp_order_button_html($html)
+    {
         if (WC()->cart->is_empty()) {
             return substr_replace($html, 'style="display:none" ', strpos($html, 'id="place_order"'), 0);
         }
@@ -278,9 +280,10 @@ class WCDP_Hooks
     /**
      * Recalculate item price to the amount specified by user
      */
-    public function wcdp_set_donation_price( $cart_object ) {
-        foreach ($cart_object->cart_contents as $value ) {
-            if( isset( $value["wcdp_donation_amount"] ) && WCDP_Form::check_donation_amount($value["wcdp_donation_amount"], (int) $value["product_id"])) {
+    public function wcdp_set_donation_price($cart_object)
+    {
+        foreach ($cart_object->cart_contents as $value) {
+            if (isset($value["wcdp_donation_amount"]) && WCDP_Form::check_donation_amount($value["wcdp_donation_amount"], (int)$value["product_id"])) {
                 $value['data']->set_price($value["wcdp_donation_amount"]);
             }
         }
@@ -294,16 +297,17 @@ class WCDP_Hooks
      * @param $item_data The order item/fee data.
      * @param int $order_id The WooCommerce order id.
      */
-    public function wcdp_modify_item_price_after_creation(int $item_id, $item_data, int $order_id ) {
+    public function wcdp_modify_item_price_after_creation(int $item_id, $item_data, int $order_id)
+    {
         $new_price = $item_data->get_meta("wcdp_donation_amount");
 
-        if ( $new_price !== null && WCDP_Form::check_donation_amount( $new_price, (int) $item_data['product_id'] ) ) {
+        if ($new_price !== null && WCDP_Form::check_donation_amount($new_price, (int)$item_data['product_id'])) {
             // Check if the new price is different from the current item price
-            if ( $new_price !== $item_data->get_total() ) {
-                $item_data->set_subtotal( $new_price );
-                $item_data->set_total( $new_price );
-                $item_data->set_subtotal_tax( 0 );
-                $item_data->set_total_tax( 0 );
+            if ($new_price !== $item_data->get_total()) {
+                $item_data->set_subtotal($new_price);
+                $item_data->set_total($new_price);
+                $item_data->set_subtotal_tax(0);
+                $item_data->set_total_tax(0);
             }
         }
     }
@@ -311,11 +315,12 @@ class WCDP_Hooks
     /**
      * Add donation selection on checkout page
      */
-    public function wcdp_before_checkout_form() {
-		//insert css variables style block
-		WCDP_FORM::define_ccs_variables();
+    public function wcdp_before_checkout_form()
+    {
+        //insert css variables style block
+        WCDP_FORM::define_ccs_variables();
 
-		//add donation form
+        //add donation form
         if (isset($_REQUEST['postid']) && is_checkout()) {
             $id = intval($_REQUEST['postid']);
 
@@ -329,17 +334,19 @@ class WCDP_Hooks
     /**
      * Ensure there is a WooCommerce session so that nonces are not invalidated by new session created on AJAX request
      */
-    public function ensure_session() {
-        if ( ! empty( WC()->session ) && ! WC()->session->has_session() ) {
-            WC()->session->set_customer_session_cookie( true );
+    public function ensure_session()
+    {
+        if (!empty(WC()->session) && !WC()->session->has_session()) {
+            WC()->session->set_customer_session_cookie(true);
         }
     }
 
     /**
      * Change "Related Products Heading"
      */
-    public function wcdp_product_related_products_heading() {
-        return __( 'Related projects', 'wc-donation-platform' );
+    public function wcdp_product_related_products_heading()
+    {
+        return __('Related projects', 'wc-donation-platform');
     }
 
     /**
@@ -350,8 +357,8 @@ class WCDP_Hooks
     public function woocommerce_checkout_fields(array $fields): array
     {
         if (isset($fields['order']['order_comments'])) {
-            $fields['order']['order_comments']['label'] = __( 'Donation notes', 'wc-donation-platform');
-            $fields['order']['order_comments']['placeholder'] = esc_attr__( 'Notes about your donation', 'wc-donation-platform');
+            $fields['order']['order_comments']['label'] = __('Donation notes', 'wc-donation-platform');
+            $fields['order']['order_comments']['placeholder'] = esc_attr__('Notes about your donation', 'wc-donation-platform');
         }
         return $fields;
     }
@@ -362,7 +369,7 @@ class WCDP_Hooks
      */
     public function product_add_to_cart_text(): string
     {
-        return __( 'Learn more', 'wc-donation-platform');
+        return __('Learn more', 'wc-donation-platform');
     }
 
     /**
@@ -378,9 +385,9 @@ class WCDP_Hooks
     {
         return sprintf(
             '<a href="%s" class="button" %s>%s</a>',
-            esc_url( $product->get_permalink()),
-            isset( $args['attributes'] ) ? wc_implode_html_attributes( $args['attributes'] ) : '',
-            esc_html( $product->add_to_cart_text() )
+            esc_url($product->get_permalink()),
+            isset($args['attributes']) ? wc_implode_html_attributes($args['attributes']) : '',
+            esc_html($product->add_to_cart_text())
         );
     }
 
@@ -392,21 +399,22 @@ class WCDP_Hooks
      * @param $order_id int
      * @return bool if order needs processing
      */
-	public function wcdp_autocomplete_order($needs_processing, WC_Product $product, int $order_id): bool
-	{
-		if ($needs_processing && $product->is_virtual()) {
-			if (! WCDP_Form::is_donable($product->get_id()) && ! WCDP_Form::is_donable($product->get_parent_id())) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public function wcdp_autocomplete_order($needs_processing, WC_Product $product, int $order_id): bool
+    {
+        if ($needs_processing && $product->is_virtual()) {
+            if (!WCDP_Form::is_donable($product->get_id()) && !WCDP_Form::is_donable($product->get_parent_id())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Add menu item
      * @return void
      */
-    public function add_donation_platform_submenu_link() {
+    public function add_donation_platform_submenu_link()
+    {
         global $submenu;
 
         // Add the link to the WooCommerce submenu.

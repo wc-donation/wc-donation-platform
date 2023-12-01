@@ -35,6 +35,153 @@ class WCDP_Leaderboard
     }
 
     /**
+     * Clear the entire cache of the leaderboard
+     * @return void
+     */
+    public static function delete_cached_leaderboard_total()
+    {
+        // Retrieve cache keys from the option.
+        $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
+
+        // Loop through the cache keys and delete the corresponding transients.
+        foreach ($cache_keys_option as $cache_key => $timestamp) {
+            delete_transient($cache_key);
+        }
+
+        // Clear the cache keys option.
+        delete_option('wcdp_transient_cache_keys');
+    }
+
+    /**
+     * Leaderboard Shortcode
+     * @param $atts
+     * @return string
+     */
+    function wcdp_leaderboard($atts): string
+    {
+        // Do not allow executing this Shortcode via AJAX
+        if (wp_doing_ajax()) return "";
+
+        // Extract attributes
+        $atts = shortcode_atts(array(
+            'limit' => 10,
+            'id' => '-1',
+            'orderby' => 'date',
+            "style" => 1,
+            "split" => -1,
+            "button" => __("Show more", "wc-donation-platform"),
+        ), $atts, 'latest_orders');
+
+        $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
+
+        $limit = intval($atts['limit']);
+        $id = (int)$atts['id'];
+
+        // Get the latest orders
+        $orders = $this->get_orders($id, $atts['orderby'], $limit);
+
+        // Generate the HTML output
+        return $this->generate_leaderboard($orders, (int)$atts['style'], (int)$atts['split'], $atts['button']);
+    }
+
+    /**
+     * Return all the latest WooCommerce orders
+     * @param int $product_id
+     * @param string $orderby date or total
+     * @param int $limit
+     * @return array
+     */
+    private function get_orders(int $product_id, string $orderby, int $limit): array
+    {
+        $cache_key = 'wcdp_orders_' . $product_id . '_' . $orderby . '_' . $limit;
+        $orders = json_decode(get_transient($cache_key), true);
+
+        if (empty($orders)) {
+            if ($product_id === -1) {
+                $orders = $this->get_orders_db($orderby, $limit);
+            } else {
+                $orders = $this->get_orders_db_id($product_id, $orderby, $limit);
+            }
+            set_transient($cache_key, json_encode($orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
+
+            // Save the cache key in a separate option for later deletion.
+            $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
+            $cache_keys_option[$cache_key] = time();
+            update_option('wcdp_transient_cache_keys', $cache_keys_option);
+        }
+        return $orders;
+    }
+
+    /**
+     * Return orders that included at least one of the specified ids
+     * @param $limit
+     * @param $ids
+     * @param string $orderby date or total
+     * @return array
+     * private function wcdp_get_orders($limit, $ids, string $orderby): array
+     * {
+     * $all_orders = $this->get_orders($orderby);
+     * if ($ids === ['-1']) {
+     * if ($limit === -1) return $all_orders;
+     * return array_slice($all_orders, 0, $limit);
+     * }
+     *
+     * $filtered_orders = array_filter($all_orders, function ($order) use ($ids) {
+     * return !empty(array_intersect($order['ids'], $ids));
+     * });
+     * if ($limit === -1) return $filtered_orders;
+     * return array_slice($filtered_orders, 0, $limit);
+     * }
+     */
+
+    /**
+     * get an array with all WooCommerce orders
+     * @param string $orderby date or total
+     * @return array
+     */
+    private function get_orders_db(string $orderby, int $limit): array
+    {
+        $args = array(
+            'limit' => $limit,
+            'status' => 'completed',
+            'order' => 'DESC',
+        );
+        if ($orderby === 'date') {
+            $args['orderby'] = 'date';
+        } else {
+            $args['orderby'] = 'meta_value_num';
+            $args['meta_key'] = '_order_total';
+        }
+
+        $all_orders = wc_get_orders($args);
+
+        $orders_clean = array();
+        foreach ($all_orders as $order) {
+            $meta = $order->get_meta('wcdp_checkout_checkbox');
+            if ($meta === "yes") {
+                $chk = 1;
+            } else {
+                $chk = 0;
+            }
+
+            $orders_clean[] = array(
+                'date' => $order->get_date_created()->getTimestamp(),
+                'first' => $order->get_billing_first_name(),
+                'last' => $order->get_billing_last_name(),
+                'co' => $order->get_billing_company(),
+                'city' => $order->get_billing_city(),
+                'country' => $order->get_billing_country(),
+                'zip' => $order->get_billing_postcode(),
+                'total' => $order->get_total(),
+                'cy' => $order->get_currency(),
+                'cmnt' => $order->get_customer_note(),
+                'chk' => $chk,
+            );
+        }
+        return $orders_clean;
+    }
+
+    /**
      * Get all orders with a specified product
      * @param int $product_id
      * @param string $orderby
@@ -90,12 +237,12 @@ class WCDP_Leaderboard
                 $orders_clean[] = array(
                     'date' => $order->get_date_created()->getTimestamp(),
                     'first' => $order->get_billing_first_name(),
-                    'last' =>  $order->get_billing_last_name(),
+                    'last' => $order->get_billing_last_name(),
                     'co' => $order->get_billing_company(),
                     'city' => $order->get_billing_city(),
                     'country' => $order->get_billing_country(),
                     'zip' => $order->get_billing_postcode(),
-                    'total' => (double) $order_row['revenue'],
+                    'total' => (double)$order_row['revenue'],
                     'cy' => $order->get_currency(),
                     'cmnt' => $order->get_customer_note(),
                     'chk' => $chk,
@@ -104,103 +251,6 @@ class WCDP_Leaderboard
         }
         return $orders_clean;
     }
-
-
-    /**
-     * get an array with all WooCommerce orders
-     * @param string $orderby date or total
-     * @return array
-     */
-    private function get_orders_db(string $orderby, int $limit): array
-    {
-        $args = array(
-            'limit' => $limit,
-            'status' => 'completed',
-            'order'   => 'DESC',
-        );
-        if ($orderby === 'date') {
-            $args['orderby'] = 'date';
-        } else {
-            $args['orderby'] = 'meta_value_num';
-            $args['meta_key'] = '_order_total';
-        }
-
-        $all_orders = wc_get_orders($args);
-
-        $orders_clean = array();
-        foreach ($all_orders as $order) {
-            $meta = $order->get_meta('wcdp_checkout_checkbox');
-            if ($meta === "yes") {
-                $chk = 1;
-            } else  {
-                $chk = 0;
-            }
-
-            $orders_clean[] = array(
-                'date' => $order->get_date_created()->getTimestamp(),
-                'first' => $order->get_billing_first_name(),
-                'last' =>  $order->get_billing_last_name(),
-                'co' => $order->get_billing_company(),
-                'city' => $order->get_billing_city(),
-                'country' => $order->get_billing_country(),
-                'zip' => $order->get_billing_postcode(),
-                'total' => $order->get_total(),
-                'cy' => $order->get_currency(),
-                'cmnt' => $order->get_customer_note(),
-                'chk' => $chk,
-            );
-        }
-        return $orders_clean;
-    }
-
-    /**
-     * Return all the latest WooCommerce orders
-     * @param int $product_id
-     * @param string $orderby date or total
-     * @param int $limit
-     * @return array
-     */
-    private function get_orders(int $product_id, string $orderby, int $limit) : array {
-        $cache_key = 'wcdp_orders_' . $product_id . '_'. $orderby . '_' . $limit;
-        $orders = json_decode(get_transient($cache_key), true);
-
-        if (empty($orders)) {
-            if ($product_id === -1) {
-                $orders = $this->get_orders_db($orderby, $limit);
-            } else {
-                $orders = $this->get_orders_db_id($product_id, $orderby, $limit);
-            }
-            set_transient($cache_key, json_encode($orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
-
-            // Save the cache key in a separate option for later deletion.
-            $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
-            $cache_keys_option[$cache_key] = time();
-            update_option('wcdp_transient_cache_keys', $cache_keys_option);
-        }
-        return $orders;
-    }
-
-    /**
-     * Return orders that included at least one of the specified ids
-     * @param $limit
-     * @param $ids
-     * @param string $orderby date or total
-     * @return array
-    private function wcdp_get_orders($limit, $ids, string $orderby): array
-    {
-        $all_orders = $this->get_orders($orderby);
-        if ($ids === ['-1']) {
-            if ($limit === -1) return $all_orders;
-            return array_slice($all_orders, 0, $limit);
-        }
-
-        $filtered_orders = array_filter($all_orders, function ($order) use ($ids) {
-            return !empty(array_intersect($order['ids'], $ids));
-        });
-        if ($limit === -1) return $filtered_orders;
-        return array_slice($filtered_orders, 0, $limit);
-    }
-    */
 
     /**
      * Generate the HTML output for the orders
@@ -284,10 +334,10 @@ class WCDP_Leaderboard
                           const " . $id . " = document.querySelector('#" . $id . "-button');
                           " . $id . ".addEventListener('click', () => {
                             const elementsToToggle = document.querySelectorAll('#" . $id . " .wcdp-leaderboard-hidden');
-                            for (let i = 0; i < Math.min(" . (int) $split . ", elementsToToggle.length); i++) {
+                            for (let i = 0; i < Math.min(" . (int)$split . ", elementsToToggle.length); i++) {
                               elementsToToggle[i].classList.remove('wcdp-leaderboard-hidden');
                             }
-                            if (elementsToToggle.length <= " . (int) $split . ") {
+                            if (elementsToToggle.length <= " . (int)$split . ") {
                               " . $id . ".style.display = 'none';
                             }
                           });
@@ -295,116 +345,6 @@ class WCDP_Leaderboard
         }
 
         return $output;
-    }
-
-    /**
-     * Leaderboard Shortcode
-     * @param $atts
-     * @return string
-     */
-    function wcdp_leaderboard($atts): string
-    {
-        // Do not allow executing this Shortcode via AJAX
-        if (wp_doing_ajax()) return "";
-
-        // Extract attributes
-        $atts = shortcode_atts(array(
-            'limit'     => 10,
-            'id'        => '-1',
-            'orderby'   => 'date',
-            "style"     => 1,
-            "split"     => -1,
-            "button"    => __("Show more", "wc-donation-platform"),
-        ), $atts, 'latest_orders');
-
-        $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
-
-        $limit = intval($atts['limit']);
-        $id = (int) $atts['id'];
-
-        // Get the latest orders
-        $orders = $this->get_orders($id, $atts['orderby'], $limit);
-
-        // Generate the HTML output
-        return $this->generate_leaderboard($orders, (int) $atts['style'], (int) $atts['split'], $atts['button'] );
-    }
-
-    /**
-     * Hook that's triggered when an order changes its status
-     * Deletes cache when old/new status is completed and the cache hasn't been recently generated
-     * @param $order_id
-     * @param $old_status
-     * @param $new_status
-     * @param $order
-     * @return void
-     */
-    function delete_old_latest_orders_cache($order_id, $old_status, $new_status, $order): void
-    {
-        if ($old_status !== 'completed' && $new_status !== 'completed') return;
-
-        // Retrieve cache keys from the 'wcdp_transient_cache_keys' option.
-        $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
-
-        if (!is_array($cache_keys_option)) {
-            return; // No cache keys found, nothing to delete.
-        }
-
-        // Retrieve the product IDs from the order items.
-        $product_ids = [-1];
-        foreach ($order->get_items() as $item) {
-            $product_ids[] = $item->get_product_id();
-        }
-
-        // Loop through cache keys to find and delete matching keys.
-        foreach ($cache_keys_option as $cache_key => $timestamp) {
-            foreach ($product_ids as $product_id) {
-                if (strpos($cache_key, 'wcdp_orders_' . $product_id) === 0) {
-                    delete_transient($cache_key);
-                }
-            }
-        }
-    }
-
-    /**
-     * Get the initials of a name
-     * @param $name
-     * @return string
-     */
-    private function get_initials($name): string
-    {
-        $parts = explode(' ', $name);
-        $initials = '';
-        foreach ($parts as $part) {
-            $initials .= strtoupper(substr($part, 0, 1))  . '.';
-        }
-        return $initials;
-    }
-
-    /**
-     * Returns human time diff. Expects $timestamp to be in the past
-     *
-     * @param $timestamp int UNIX timestamp
-     * @return string
-     */
-    private function get_human_time_diff(int $timestamp ): string {
-        $human_diff = '<span class="wcdp-emphasized">' . human_time_diff( $timestamp ) . '</span>';
-        //translators: %s: time difference e.g. 1 week ago or 3 months ago
-        return sprintf( esc_html__( '%s ago', 'wc-donation-platform' ), $human_diff );
-    }
-
-    /**
-     * If company is set return company
-     * else return name as firstname lastname_initial (John D.)
-     * @param string $company
-     * @param string $first
-     * @param string $last
-     * @return string
-     */
-    private function get_company_or_name(string $company, string $first, string $last): string
-    {
-        if (!empty($company)) return esc_html($company);
-
-        return esc_html(esc_html($first) . ' ' . esc_html($this->get_initials($last)));
     }
 
     /**
@@ -470,7 +410,7 @@ class WCDP_Leaderboard
 
     /**
      * Get HTML part for leaderboard style 2
-     * @param string $id  leaderboard id
+     * @param string $id leaderboard id
      * @return string
      */
     private function get_css_style_2(string $id): string
@@ -508,10 +448,90 @@ class WCDP_Leaderboard
     }
 
     /**
+     * Get the initials of a name
+     * @param $name
+     * @return string
+     */
+    private function get_initials($name): string
+    {
+        $parts = explode(' ', $name);
+        $initials = '';
+        foreach ($parts as $part) {
+            $initials .= strtoupper(substr($part, 0, 1)) . '.';
+        }
+        return $initials;
+    }
+
+    /**
+     * If company is set return company
+     * else return name as firstname lastname_initial (John D.)
+     * @param string $company
+     * @param string $first
+     * @param string $last
+     * @return string
+     */
+    private function get_company_or_name(string $company, string $first, string $last): string
+    {
+        if (!empty($company)) return esc_html($company);
+
+        return esc_html(esc_html($first) . ' ' . esc_html($this->get_initials($last)));
+    }
+
+    /**
+     * Returns human time diff. Expects $timestamp to be in the past
+     *
+     * @param $timestamp int UNIX timestamp
+     * @return string
+     */
+    private function get_human_time_diff(int $timestamp): string
+    {
+        $human_diff = '<span class="wcdp-emphasized">' . human_time_diff($timestamp) . '</span>';
+        //translators: %s: time difference e.g. 1 week ago or 3 months ago
+        return sprintf(esc_html__('%s ago', 'wc-donation-platform'), $human_diff);
+    }
+
+    /**
+     * Hook that's triggered when an order changes its status
+     * Deletes cache when old/new status is completed and the cache hasn't been recently generated
+     * @param $order_id
+     * @param $old_status
+     * @param $new_status
+     * @param $order
+     * @return void
+     */
+    function delete_old_latest_orders_cache($order_id, $old_status, $new_status, $order): void
+    {
+        if ($old_status !== 'completed' && $new_status !== 'completed') return;
+
+        // Retrieve cache keys from the 'wcdp_transient_cache_keys' option.
+        $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
+
+        if (!is_array($cache_keys_option)) {
+            return; // No cache keys found, nothing to delete.
+        }
+
+        // Retrieve the product IDs from the order items.
+        $product_ids = [-1];
+        foreach ($order->get_items() as $item) {
+            $product_ids[] = $item->get_product_id();
+        }
+
+        // Loop through cache keys to find and delete matching keys.
+        foreach ($cache_keys_option as $cache_key => $timestamp) {
+            foreach ($product_ids as $product_id) {
+                if (strpos($cache_key, 'wcdp_orders_' . $product_id) === 0) {
+                    delete_transient($cache_key);
+                }
+            }
+        }
+    }
+
+    /**
      * Add a "anonymous donation" checkbox to the checkout
      * @return void
      */
-    public function add_anonymous_donation_checkbox() {
+    public function add_anonymous_donation_checkbox()
+    {
         echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
@@ -526,7 +546,8 @@ class WCDP_Leaderboard
      * @param $order
      * @return void
      */
-    public function save_anonymous_donation_checkbox($order) {
+    public function save_anonymous_donation_checkbox($order)
+    {
         if (isset($_POST['wcdp_checkout_checkbox']) && $_POST['wcdp_checkout_checkbox'] == 1) {
             $order->update_meta_data('wcdp_checkout_checkbox', 'yes');
         } else {
@@ -539,7 +560,8 @@ class WCDP_Leaderboard
      * @param $order
      * @return void
      */
-    public function display_anonymous_donation_checkbox_in_order_details($order) {
+    public function display_anonymous_donation_checkbox_in_order_details($order)
+    {
         $checkbox_value = $order->get_meta('wcdp_checkout_checkbox');
         $e = '<p><strong>' . get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform')) . ':</strong> ';
         if ($checkbox_value === "yes") {
@@ -548,22 +570,5 @@ class WCDP_Leaderboard
             $e .= __('No', 'wc-donation-platform');
         }
         echo $e . '</p>';
-    }
-
-    /**
-     * Clear the entire cache of the leaderboard
-     * @return void
-     */
-    public static function delete_cached_leaderboard_total() {
-        // Retrieve cache keys from the option.
-        $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
-
-        // Loop through the cache keys and delete the corresponding transients.
-        foreach ($cache_keys_option as $cache_key => $timestamp) {
-            delete_transient($cache_key);
-        }
-
-        // Clear the cache keys option.
-        delete_option('wcdp_transient_cache_keys');
     }
 }
