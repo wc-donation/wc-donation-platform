@@ -12,7 +12,11 @@ class WCDP_Fee_Recovery
         $fee_recovery_enabled = get_option('wcdp_fee_recovery', 'no');
         if ($fee_recovery_enabled == 'yes') {
             //Add Checkbox to WC checkout
-            add_action('wcdp_fee_recovery', array($this, 'add_fee_recovery_checkbox'));
+            if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+                add_action('wcdp_fee_recovery', array($this, 'add_fee_recovery_checkbox'));
+            } else {
+                add_action('woocommerce_review_order_after_cart_contents', array($this, 'add_fee_recovery_checkbox'));
+            }
 
             //Add transaction fee to WC cart
             add_action('woocommerce_cart_calculate_fees', array($this, 'add_transaction_fee_cart'), 10, 1);
