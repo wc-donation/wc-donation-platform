@@ -167,6 +167,7 @@ If this is not a problem for you, you can continue to sell normal products. Othe
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
 = 1.3.1 =
+new: new progress bar styles
 tweak: compatibility with v3.7.1 of PDF Invoices & Packing Slips for WooCommerce
 tweak: set supported WP version to 6.4
 fix: various compatibility mode improvements

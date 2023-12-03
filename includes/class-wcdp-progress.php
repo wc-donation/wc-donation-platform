@@ -128,6 +128,9 @@ class WCDP_Progress
             case 4:
                 $template = 'wcdp_progress_style_4.php';
                 break;
+            case 5:
+                $template = 'wcdp_progress_style_5.php';
+                break;
             default:
                 $template = 'wcdp_progress_style_1.php';
         }
