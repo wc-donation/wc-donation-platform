@@ -1,8 +1,6 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-$label = number_format($width, 0, '', wc_get_price_thousand_separator()) . '%';
-
 if (!defined('WCDP_PROGRESS_6')) :
     define('WCDP_PROGRESS_6', 1);
     ?>
