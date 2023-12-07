@@ -74,6 +74,10 @@ class WCDP_Leaderboard
 
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
 
+        if ($atts['id'] === 'current') {
+            $atts['id'] = get_the_ID();
+        }
+
         $limit = intval($atts['limit']);
         $id = (int)$atts['id'];
 
