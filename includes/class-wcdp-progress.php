@@ -68,7 +68,6 @@ class WCDP_Progress
      */
     public function wcdp_progress(array $atts = array())
     {
-
         // Do not allow executing this Shortcode via AJAX
         if (wp_doing_ajax()) return "";
 
@@ -85,6 +84,10 @@ class WCDP_Progress
             'addids' => '',
             'cheat' => 0,
         ), $atts);
+
+        if ($atts['id'] === 'current') {
+            $atts['id'] = get_the_ID();
+        }
 
         if (!is_numeric($atts['goal'])) {
             $atts['goal'] = 100;
