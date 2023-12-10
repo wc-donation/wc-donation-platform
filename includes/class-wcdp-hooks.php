@@ -62,6 +62,9 @@ class WCDP_Hooks
         //Set Price of Donation
         add_action('woocommerce_before_calculate_totals', array($this, 'wcdp_set_donation_price'), 99);
 
+        //Set Price of Donation for cart items
+        add_filter('woocommerce_cart_item_price', array($this, 'wcdp_set_cart_donation_price'), 100, 2);
+
         //Add donation selection form on checkout page
         add_action('woocommerce_before_checkout_form', array($this, 'wcdp_before_checkout_form'));
 
@@ -287,6 +290,22 @@ class WCDP_Hooks
                 $value['data']->set_price($value["wcdp_donation_amount"]);
             }
         }
+    }
+
+    /**
+     * Set the price of the cart item to the donation amount selected by the user
+     *
+     * @param string $price The original price of the cart item.
+     * @param array $cart_item The cart item data.
+     * @return string The modified price to be displayed in the cart.
+     * @since v1.3.1
+     */
+    public function wcdp_set_cart_donation_price(string $price, array $cart_item): string
+    {
+        if (isset($cart_item['wcdp_donation_amount']) && WCDP_Form::check_donation_amount($cart_item["wcdp_donation_amount"], (int)$cart_item["product_id"])) {
+            $price = wc_price($cart_item['wcdp_donation_amount']);
+        }
+        return $price;
     }
 
     /**
