@@ -104,9 +104,6 @@ class WCDP_Form
             } else if (!$product->is_in_stock()) {
                 WCDP_Form::form_error_message('This project is currently not available.');
             } else {
-                if (!WC()->cart->is_empty() && get_option('wcdp_multiple_in_cart', 'no') === 'no') {
-                    WC()->cart->empty_cart();
-                }
                 $has_child = is_a($product, 'WC_Product_Variable') && $product->has_child();
 
                 //enqueue woocommerce variation js

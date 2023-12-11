@@ -4,6 +4,11 @@ WCDP Shortcode Form Style 2: one pager
 */
 
 if (!defined('ABSPATH')) exit;
+
+//remove items from cart
+if (!WC()->cart->is_empty() && get_option('wcdp_multiple_in_cart', 'no') === 'no') {
+    WC()->cart->empty_cart();
+}
 ?>
 
 <div class="wcdp-body">
