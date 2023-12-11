@@ -170,6 +170,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 new: new progress bar styles
 tweak: compatibility with v3.7.1 of PDF Invoices & Packing Slips for WooCommerce
 tweak: set supported WP version to 6.4
+tweak: declare incompatibility with new WooCommerce Checkout Block
 fix: various compatibility mode improvements
 
 = 1.3.0 2023-09-24 =
