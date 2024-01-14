@@ -169,6 +169,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 = 1.3.1 =
 new: new progress bar styles
 new: use "current" in progress & leaderboard shortcode to use current page id
+tweak: add to cart before checkout is loaded
 tweak: compatibility with v3.7.6 of PDF Invoices & Packing Slips for WooCommerce
 tweak: set supported WP version to 6.4
 tweak: set supported WooCommerce version to 8.5

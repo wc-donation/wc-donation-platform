@@ -21,6 +21,9 @@ class WCDP_Form
         //Handle AJAx requests to put Donation Product in cart
         add_action('wp_ajax_wcdp_ajax_donation_calculation', array($this, 'wcdp_ajax_donation_calculation'));
         add_action('wp_ajax_nopriv_wcdp_ajax_donation_calculation', array($this, 'wcdp_ajax_donation_calculation'));
+
+        //Handle checkout request in style 4
+        add_action('init', array($this, 'wcdp_checkout_donation_calculation'), 10);
     }
 
     /**
@@ -424,25 +427,18 @@ class WCDP_Form
     }
 
     /**
-     * Handle wcdp_ajax_donation_calculation AJAX request
+     * Try to add the donation to the cart before the checkout is loaded
+     * @return void
      */
-    public function wcdp_ajax_donation_calculation()
+    public function wcdp_checkout_donation_calculation()
     {
-        if (!isset($_REQUEST['postid'])) {
-            $message = esc_html__('Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
-        } else if (false === check_ajax_referer('wcdp_ajax_nonce' . sanitize_key($_REQUEST['postid']), 'security', false)) {
-            $message = esc_html__('Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
-        } else {
-            wp_send_json($this->wcdp_add_to_cart());
+        if (!isset($_REQUEST['postid']) || !isset($_REQUEST['wcdp-donation-amount']) || !isset($_REQUEST['action']) || $_REQUEST['action'] !== 'wcdp_ajax_donation_calculation' || wp_doing_ajax()) {
             return;
         }
-
-        wp_send_json(array(
-            'success' => false,
-            'message' => $message,
-            'recurring' => false,
-            'reload' => true,
-        ));
+        $nonce = $_REQUEST["security"] ?? null;
+        if (wp_verify_nonce($nonce, 'wcdp_ajax_nonce' . sanitize_key($_REQUEST['postid']))) {
+            $this->wcdp_add_to_cart();
+        }
     }
 
     /**
@@ -548,6 +544,28 @@ class WCDP_Form
                 WC()->cart->empty_cart();
             }
         }
+    }
+
+    /**
+     * Handle wcdp_ajax_donation_calculation AJAX request
+     */
+    public function wcdp_ajax_donation_calculation()
+    {
+        if (!isset($_REQUEST['postid'])) {
+            $message = esc_html__('Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
+        } else if (false === check_ajax_referer('wcdp_ajax_nonce' . sanitize_key($_REQUEST['postid']), 'security', false)) {
+            $message = esc_html__('Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
+        } else {
+            wp_send_json($this->wcdp_add_to_cart());
+            return;
+        }
+
+        wp_send_json(array(
+            'success' => false,
+            'message' => $message,
+            'recurring' => false,
+            'reload' => true,
+        ));
     }
 }
 
