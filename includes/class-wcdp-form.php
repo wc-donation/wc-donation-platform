@@ -157,6 +157,38 @@ class WCDP_Form
     }
 
     /**
+     * Enqueue CSS & JS Files
+     * @return void
+     */
+    private static function wcdp_enqueue_scripts()
+    {
+        //Dependencies
+        $cssdeps = array(
+            'select2',
+            'wc-donation-platform',
+        );
+        foreach ($cssdeps as $cssdep) {
+            wp_enqueue_style($cssdep);
+        }
+
+        $jsdeps = array(
+            'wc-donation-platform',
+            'jquery',
+            'selectWoo',
+            'wc-checkout',
+            'select2',
+            'wc-cart',
+        );
+        //Require wc-password-strength-meter when necessary
+        if ('yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option('woocommerce_registration_generate_password') && !is_user_logged_in()) {
+            $jsdeps[] = 'wc-password-strength-meter';
+        }
+        foreach ($jsdeps as $jsdep) {
+            wp_enqueue_script($jsdep);
+        }
+    }
+
+    /**
      * Return true if the cart contains a donation product
      * @return bool
      */
@@ -347,38 +379,6 @@ class WCDP_Form
     }
 
     /**
-     * Enqueue CSS & JS Files
-     * @return void
-     */
-    private static function wcdp_enqueue_scripts()
-    {
-        //Dependencies
-        $cssdeps = array(
-            'select2',
-            'wc-donation-platform',
-        );
-        foreach ($cssdeps as $cssdep) {
-            wp_enqueue_style($cssdep);
-        }
-
-        $jsdeps = array(
-            'wc-donation-platform',
-            'jquery',
-            'selectWoo',
-            'wc-checkout',
-            'select2',
-            'wc-cart',
-        );
-        //Require wc-password-strength-meter when necessary
-        if ('yes' === get_option('woocommerce_enable_signup_and_login_from_checkout') && 'no' === get_option('woocommerce_registration_generate_password') && !is_user_logged_in()) {
-            $jsdeps[] = 'wc-password-strength-meter';
-        }
-        foreach ($jsdeps as $jsdep) {
-            wp_enqueue_script($jsdep);
-        }
-    }
-
-    /**
      * Registers the block using the metadata loaded from the `block.json` file.
      */
     public function wcdp_block_init()
@@ -457,56 +457,60 @@ class WCDP_Form
             'reload' => true,
         );
 
-        if (isset($_REQUEST['postid']) && isset($_REQUEST['wcdp-donation-amount'])) {
-            $product_id = absint($_REQUEST['postid']);
-            $product = wc_get_product($product_id);
-
-            if (!$product) {
-                $response['message'] = esc_html__('Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
-            }
-
-            //Grouped Product
-            $product_choices = $product->get_children();
-            if (isset($_REQUEST['wcdp_products']) && is_a($product, 'WC_Product_Grouped')) {
-                $product_choice = absint($_REQUEST['wcdp_products']);
-                if (in_array($product_choice, $product_choices)) {
-                    $product_id = $product_choice;
-                }
-            }
-
-            if (WCDP_Form::is_donable($product_id)) {
-                //Variable Product
-                $variation_id = 0;
-                $variation = array();
-                if (isset($_REQUEST['variation_id'])) {
-                    $variation_id = absint($_REQUEST['variation_id']);
-                    foreach ($_REQUEST as $key => $value) {
-                        if (substr($key, 0, 10) === 'attribute_') {
-                            $variation[sanitize_text_field($key)] = sanitize_text_field($value);
-                        }
-                    }
-                }
-
-                $wcdp_donation_amount = sanitize_text_field($_REQUEST['wcdp-donation-amount']);
-                if ($this->check_donation_amount($wcdp_donation_amount, (int)$product_id) && isset(WC()->cart)) {
-                    $this->maybe_empty_cart($product_id, $product_choices);
-                    if (false !== WC()->cart->add_to_cart($product_id, 1, $variation_id, $variation, array('wcdp_donation_amount' => $wcdp_donation_amount))) {
-                        $response['success'] = true;
-                        $response['recurring'] = WCDP_Integrator::wcdp_contains_subscription($product);
-                        $response['reload'] = false;
-                    } else {
-                        $response['message'] = esc_html__('Could not add donation to cart.', 'wc-donation-platform');
-                    }
-                } else {
-                    $response['message'] = esc_html__('Invalid donation amount. Please enter a different donation amount.', 'wc-donation-platform');
-                    $response['reload'] = false;
-                }
-            } else {
-                $response['message'] = esc_html__('Invalid donation product status. Please contact our support team.', 'wc-donation-platform');
-            }
-        } else {
+        if (!isset($_REQUEST['postid']) || !isset($_REQUEST['wcdp-donation-amount'])) {
             $response['message'] = esc_html__('Invalid request. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
+            return $response;
         }
+        $product_id = absint($_REQUEST['postid']);
+        $product = wc_get_product($product_id);
+
+        if (!$product) {
+            $response['message'] = esc_html__('Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
+            return $response;
+        }
+
+        //Grouped Product
+        $product_choices = $product->get_children();
+        if (isset($_REQUEST['wcdp_products']) && is_a($product, 'WC_Product_Grouped')) {
+            $product_choice = absint($_REQUEST['wcdp_products']);
+            if (in_array($product_choice, $product_choices)) {
+                $product_id = $product_choice;
+            }
+        }
+
+        if (!WCDP_Form::is_donable($product_id)) {
+            $response['message'] = esc_html__('Invalid donation product status. Please contact our support team.', 'wc-donation-platform');
+            return $response;
+        }
+
+        //Variable Product
+        $variation_id = 0;
+        $variation = array();
+        if (isset($_REQUEST['variation_id'])) {
+            $variation_id = absint($_REQUEST['variation_id']);
+            foreach ($_REQUEST as $key => $value) {
+                if (substr($key, 0, 10) === 'attribute_') {
+                    $variation[sanitize_text_field($key)] = sanitize_text_field($value);
+                }
+            }
+        }
+
+        $wcdp_donation_amount = sanitize_text_field($_REQUEST['wcdp-donation-amount']);
+        if (!$this->check_donation_amount($wcdp_donation_amount, (int)$product_id) || !isset(WC()->cart)) {
+            $response['message'] = esc_html__('Invalid donation amount. Please enter a different donation amount.', 'wc-donation-platform');
+            $response['reload'] = false;
+            return $response;
+        }
+
+        $this->maybe_empty_cart($product_id, $product_choices);
+        if (false === WC()->cart->add_to_cart($product_id, 1, $variation_id, $variation, array('wcdp_donation_amount' => $wcdp_donation_amount))) {
+            $response['message'] = esc_html__('Could not add donation to cart.', 'wc-donation-platform');
+            return $response;
+        }
+
+        $response['success'] = true;
+        $response['recurring'] = WCDP_Integrator::wcdp_contains_subscription($product);
+        $response['reload'] = false;
         return $response;
     }
 
