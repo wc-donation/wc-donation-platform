@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
     <li class="order">
         <?php
         // translators: placeholder is the subscription order number wrapped in <strong> tags
-        echo wp_kses(sprintf(esc_html__('Regular Donation Number: %s', 'wc-donation-platform'), '<strong>' . esc_html($subscription->get_order_number()) . '</strong>'), array('strong' => true));
+        echo wp_kses(sprintf(esc_html__('Recurring Donation Number: %s', 'wc-donation-platform'), '<strong>' . esc_html($subscription->get_order_number()) . '</strong>'), array('strong' => true));
         ?>
     </li>
     <li class="date">

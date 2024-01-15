@@ -1,4 +1,4 @@
-# Copyright (C) 2023 Jonas Höbenreich
+# Copyright (C) 2024 Jonas Höbenreich
 # This file is distributed under the GNU General Public License v2.0.
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-12T00:04:43+01:00\n"
+"POT-Creation-Date: 2024-01-15T23:34:57+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -66,52 +66,52 @@ msgstr ""
 msgid "(variable)"
 msgstr ""
 
-#: includes/class-wcdp-form.php:51
+#: includes/class-wcdp-form.php:54
 msgid "id is a required attribute"
 msgstr ""
 
-#: includes/class-wcdp-form.php:54
+#: includes/class-wcdp-form.php:57
 msgid "Donations are not activated for this project."
 msgstr ""
 
-#: includes/class-wcdp-form.php:60
+#: includes/class-wcdp-form.php:63
 msgid "Only one donation form per page allowed"
 msgstr ""
 
-#: includes/class-wcdp-form.php:77
+#: includes/class-wcdp-form.php:80
 msgid "Donate now!"
 msgstr ""
 
-#: includes/class-wcdp-form.php:89
+#: includes/class-wcdp-form.php:92
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:432
-msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
+#: includes/class-wcdp-form.php:457
+msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:434
-msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
-msgstr ""
-
-#: includes/class-wcdp-form.php:465
+#: includes/class-wcdp-form.php:464
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:498
-msgid "Could not add donation to cart."
-msgstr ""
-
-#: includes/class-wcdp-form.php:501
-msgid "Invalid donation amount. Please enter a different donation amount."
-msgstr ""
-
-#: includes/class-wcdp-form.php:505
+#: includes/class-wcdp-form.php:478
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:508
-msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
+#: includes/class-wcdp-form.php:496
+msgid "Invalid donation amount. Please enter a different donation amount."
+msgstr ""
+
+#: includes/class-wcdp-form.php:503
+msgid "Could not add donation to cart."
+msgstr ""
+
+#: includes/class-wcdp-form.php:555
+msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
+msgstr ""
+
+#: includes/class-wcdp-form.php:557
+msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:25
@@ -698,8 +698,10 @@ msgid "Update the payment method used for %1$sall%2$s of my current regular dona
 msgstr ""
 
 #. translators: placeholder is the subscription order number wrapped in <strong> tags
+#. translators: %s recurring donation number
 #: includes/integrations/woocommerce-subscriptions/templates/checkout/subscription-receipt.php:16
-msgid "Regular Donation Number: %s"
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/email-order-details.php:20
+msgid "Recurring Donation Number: %s"
 msgstr ""
 
 #. translators: $1: customer's billing first name and last name
@@ -834,12 +836,12 @@ msgstr ""
 msgid "Last Donation Date: %s"
 msgstr ""
 
-#. translators: placeholder is either view or edit url for the subscription
+#. translators: %s donation number
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:46
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:44
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/subscription-info.php:25
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:40
 msgctxt "in plain emails for subscription information"
-msgid "View Recurring Donation: %s"
+msgid "View recurring donation: %s"
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-completed-renewal-order.php:19
@@ -903,26 +905,21 @@ msgstr ""
 msgid "Donation date: %s"
 msgstr ""
 
-#. translators: %s recurring donation number
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/email-order-details.php:20
-msgid "Recurring Donation Number: %s"
-msgstr ""
-
 #. translators: placeholder is last time subscription was paid
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:32
 msgid "Last Donation: %s"
-msgstr ""
-
-#. translators: %s donation number
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:40
-msgctxt "in plain emails for subscription information"
-msgid "View recurring donation: %s"
 msgstr ""
 
 #. translators: placeholder is subscription's number
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/subscription-info.php:23
 msgctxt "in plain emails for subscription information"
 msgid "Recurring Donation: %s"
+msgstr ""
+
+#. translators: placeholder is either view or edit url for the subscription
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/subscription-info.php:25
+msgctxt "in plain emails for subscription information"
+msgid "View Recurring Donation: %s"
 msgstr ""
 
 #. translators: placeholder is the formatted order total for the subscription
