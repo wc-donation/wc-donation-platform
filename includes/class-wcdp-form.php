@@ -100,7 +100,7 @@ class WCDP_Form
 
             if (!isset(WC()->cart)) {
                 WCDP_Form::form_error_message('In the current view, the donation form is not available.');
-            } else if (!$product) {
+            } else if (!$product || !is_a($product, 'WC_Product')) {
                 WCDP_Form::form_error_message('Invalid project ID: This project is unknown.');
             } else if (!is_a($product, 'WC_Product_Grouped') && !$product->is_purchasable()) {
                 WCDP_Form::form_error_message('Currently you can not donate to this project.');
