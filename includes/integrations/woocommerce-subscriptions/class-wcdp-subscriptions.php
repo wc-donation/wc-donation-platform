@@ -17,10 +17,10 @@ class WCDP_Subscriptions
         //make one-time donation not a subscription
         add_filter('woocommerce_is_subscription', 'WCDP_Subscriptions::is_subscription', 10, 3);
 
-        if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
-            //Filter specific WC Subscription templates to WCDP templates
-            add_filter('wc_get_template', 'WCDP_Subscriptions::modify_template', 10, 5);
+        //Filter specific WC Subscription templates to WCDP templates
+        add_filter('wc_get_template', 'WCDP_Subscriptions::modify_template', 11, 5);
 
+        if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
             //Rename Subscriptions Tab on My Account page
             add_filter('woocommerce_account_menu_items', 'WCDP_Subscriptions::rename_menu_item', 11, 1);
 
@@ -132,7 +132,9 @@ class WCDP_Subscriptions
             case 'emails/plain/customer-on-hold-renewal-order.php':
             case 'emails/plain/subscription-info.php':
             case 'emails/plain/customer-payment-retry.php':
-                $template = $path . $template_name;
+                if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+                    $template = $path . $template_name;
+                }
                 break;
 
             case 'single-product/add-to-cart/subscription.php' :
