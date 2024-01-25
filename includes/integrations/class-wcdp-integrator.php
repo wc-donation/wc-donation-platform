@@ -17,7 +17,7 @@ class WCDP_Integrator
 
         //Integration with WooCommerce Subscriptions
         //https://woocommerce.com/products/woocommerce-subscriptions/
-        $subscriptions_active = in_array('woocommerce-subscriptions/woocommerce-subscriptions.php', $active_plugins);
+        $subscriptions_active = in_array('woocommerce-subscriptions/woocommerce-subscriptions.php', $active_plugins) || is_plugin_active_for_network('woocommerce-subscriptions/woocommerce-subscriptions.php');
         if ($subscriptions_active) {
             include_once 'woocommerce-subscriptions/class-wcdp-subscriptions.php';
             WCDP_Subscriptions::init();
@@ -31,8 +31,8 @@ class WCDP_Integrator
         //Add support for Stripe & PayPal Express Checkout
         //https://wordpress.org/plugins/woocommerce-gateway-stripe/
         //https://wordpress.org/plugins/woocommerce-paypal-payments/
-        $stripe_active = in_array('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php', $active_plugins);
-        $paypal_active = in_array('woocommerce-paypal-payments/woocommerce-paypal-payments.php', $active_plugins);
+        $stripe_active = in_array('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php', $active_plugins) || is_plugin_active_for_network('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php');
+        $paypal_active = in_array('woocommerce-paypal-payments/woocommerce-paypal-payments.php', $active_plugins) || is_plugin_active_for_network('woocommerce-paypal-payments/woocommerce-paypal-payments.php');
         if ($stripe_active || $paypal_active) {
             include_once 'express-checkout/class-wcdp-express-checkout.php';
             new WCDP_Express_Checkout();
@@ -43,7 +43,7 @@ class WCDP_Integrator
         include_once 'subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php';
         WCDP_Subscriptions_For_WooCommerce::init();
 
-        $polylang_active = in_array('polylang/polylang.php', $active_plugins);
+        $polylang_active = in_array('polylang/polylang.php', $active_plugins) || is_plugin_active_for_network('polylang/polylang.php');
         if ($polylang_active) {
             include_once 'polylang/class-wcdp-polylang.php';
             //update donation total revenue for translated products
