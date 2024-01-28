@@ -50,6 +50,11 @@ jQuery( function( $ ) {
 		}
 	}
 
+    /**
+     * Add error message banner to Dom
+     * @param message
+     * @param reload
+     */
     function error_message(message="An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.", reload=true) {
         if (!reload) {
             $('#wcdp-ajax-button').show();
@@ -60,6 +65,9 @@ jQuery( function( $ ) {
 		$('#wcdp-ajax-error li').text(message);
     }
 
+    /**
+     * Handle submit of add to cart form
+     */
     $('#wcdp-ajax-send').on('submit', function(e){
 		e.preventDefault();
         const serialized = $("#wcdp-ajax-send").serialize();
@@ -71,7 +79,9 @@ jQuery( function( $ ) {
 		}
 	});
 
-    //Submit step 1 form automatically for style 3
+    /**
+     * Submit step 1 form automatically for style 3
+     */
 	let time = 0;
 	$( '.wcdp-body > #wcdp-ajax-send' ).on('input blur keyup paste change', function (){
         if (currentFormData != $("#wcdp-ajax-send").serialize()) {
@@ -86,14 +96,17 @@ jQuery( function( $ ) {
         }
     });
 
-	let ecpresstime = 0;
+    /**
+     * Handle update of express checkout amount for Stripe Apple/Google Pay & PayPal
+     */
+	let expresstime = 0;
 	let currentprice = 0;
 	$( '.wcdp-body' ).on('input blur keyup paste change', function (){
 		$('.wcdp-express-amount').val($('#wcdp-donation-amount').val());
-		ecpresstime++;
+        expresstime++;
 		setTimeout(function() {
-			ecpresstime--;
-			if (ecpresstime == 0 && currentprice != $('#wcdp-donation-amount').val()) {
+            expresstime--;
+			if (expresstime == 0 && currentprice != $('#wcdp-donation-amount').val()) {
 				currentprice = $('#wcdp-donation-amount').val();
 				$(document.body).trigger('woocommerce_variation_has_changed');
 			}
@@ -171,8 +184,11 @@ jQuery( function( $ ) {
 		}
 	});
 
+    /**
+     * Show the Express Donation Header when Stripe or PayPal express checkout available
+     */
 	function express_checkout_heading() {
-		if ($('#wc-stripe-payment-request-button').children().length + $('#ppc-button').children().length > 0) {
+		if ($('#wc-stripe-payment-request-button').children().length + $('#ppc-button, #ppc-button-ppcp-gateway').children().length > 0) {
 			$('.wcdp-express-heading').show();
 		} else if (express_heading_timeout<10000) {
 			express_heading_timeout = express_heading_timeout*2;

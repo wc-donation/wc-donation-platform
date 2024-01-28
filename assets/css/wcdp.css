@@ -476,13 +476,16 @@ input:disabled ~ label {
 	top: 35px;
 	position: inherit;
 }
-.wcdp-choose-donation #wc-stripe-payment-request-button-separator {
+.wcdp-body #wc-stripe-payment-request-button-separator {
 	display: none !important;
 }
-#wcdp #wc-stripe-payment-request-wrapper {
-	padding: 0 0 14px !important;
+form.woocommerce-checkout #wc-stripe-payment-request-button-separator:first-of-type {
+    display: block !important;
 }
-.woocommerce div.product div.summary .first-payment-date {
+#wcdp #wc-stripe-payment-request-wrapper {
+	padding-top: 0 !important;
+}
+.woocommerce div.product div.summary .first-payment-date, #wcdp #wc-stripe-payment-request-button-separator {
 	margin: 0;
 }
 .wcdp-fee-recovery__body {
