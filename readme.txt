@@ -166,9 +166,10 @@ If this is not a problem for you, you can continue to sell normal products. Othe
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.3.1 =
+= 1.3.1 2024-01-28 =
 new: new progress bar styles
 new: use "current" in progress & leaderboard shortcode to use current page id
+new: donation product is added to the checkout on page load, improving compatibility with WooCommerce Gutenberg Checkout Block
 tweak: add to cart before checkout is loaded
 tweak: compatibility with v3.7.6 of PDF Invoices & Packing Slips for WooCommerce
 tweak: set supported WP version to 6.4
@@ -176,6 +177,7 @@ tweak: set supported WooCommerce version to 8.5
 tweak: declare incompatibility with new WooCommerce Gutenberg Checkout Block
 tweak: improve compatibility with some payment gateways that do not load with empty checkout
 fix: various compatibility mode improvements
+fix: fix Stripe checkout bug
 
 = 1.3.0 2023-09-24 =
 new: leaderboard (donor wall) shortcode
