@@ -149,8 +149,9 @@ class WCDP_General_Settings
                 'id' => 'wcdp_section_general',
             ),
             array(
-                'title' => __('Leaderborard Options', 'wc-donation-platform'),
+                'name' => __('Leaderborard Options', 'wc-donation-platform'),
                 'type' => 'title',
+                'desc' => '<a href="https://wcdp.jonh.eu/documentation/usage/donation-leaderboard/" target="_blank">' . esc_html__('Detailed leaderboard documentation', 'wc-donation-platform') . '</a>',
                 'id' => 'wcdp_leaderboard_options',
             ),
             array(
@@ -204,7 +205,6 @@ class WCDP_General_Settings
                 'id' => 'wcdp_lb_subtitle_unchecked',
                 'default' => "",
                 'type' => 'text',
-                'desc' => '<a href="https://wcdp.jonh.eu/documentation/usage/donation-leaderboard/" target="_blank">' . __('Detailed leaderboard documentation', 'wc-donation-platform') . '<a/>',
             ),
             array(
                 'type' => 'sectionend',
@@ -255,10 +255,14 @@ class WCDP_General_Settings
                 'type' => 'sectionend',
                 'id' => 'wcdp_section_design',
             ),
-
             array(
                 'title' => __('Support', 'wc-donation-platform'),
-                'desc' => __('If you like Donation Platform for WooCommerce, please consider rating it with ★★★★★', 'wc-donation-platform'),
+                //translators: %1$s & %2$s link tags
+                'desc' => sprintf(
+                    __('If you like Donation Platform for WooCommerce, %1$splease consider rating it with ★★★★★ on wordpress.org%2$s', 'wc-donation-platform'),
+                    '<a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">',
+                    '</a>'
+                ),
                 'type' => 'title',
                 'id' => 'wcdp_settings_support',
             ),

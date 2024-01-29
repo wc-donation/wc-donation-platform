@@ -173,11 +173,12 @@ new: donation product is added to the checkout on page load, improving compatibi
 tweak: add to cart before checkout is loaded
 tweak: compatibility with v3.7.6 of PDF Invoices & Packing Slips for WooCommerce
 tweak: set supported WP version to 6.4
-tweak: set supported WooCommerce version to 8.5
+tweak: set supported WooCommerce version to 8.5.2
 tweak: declare incompatibility with new WooCommerce Gutenberg Checkout Block
 tweak: improve compatibility with some payment gateways that do not load with empty checkout
 fix: various compatibility mode improvements
 fix: fix Stripe checkout bug
+fix: take network active plugins into account when checking if certain plugins are active
 
 = 1.3.0 2023-09-24 =
 new: leaderboard (donor wall) shortcode

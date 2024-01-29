@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-15T23:34:57+01:00\n"
+"POT-Creation-Date: 2024-01-29T14:34:28+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -207,71 +207,71 @@ msgstr ""
 msgid "Leaderborard Options"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:157
-msgid "Enable anonymous / public checkbox"
+#: includes/class-wcdp-general-settings.php:154
+msgid "Detailed leaderboard documentation"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:158
+msgid "Enable anonymous / public checkbox"
+msgstr ""
+
+#: includes/class-wcdp-general-settings.php:159
 msgid "Add a checkbox to the checkout allowing users to specify how their donation is displayed in the leaderboard"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:162
+#: includes/class-wcdp-general-settings.php:163
 msgid "The checkbox allows you to display anonymous and public donations in your leaderboards."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:165
+#: includes/class-wcdp-general-settings.php:166
 msgid "Text of anonymous / public checkbox"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:166
+#: includes/class-wcdp-general-settings.php:167
 msgid "Checkbox label"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:168
+#: includes/class-wcdp-general-settings.php:169
 #: includes/class-wcdp_leaderboard.php:543
 #: includes/class-wcdp_leaderboard.php:570
 msgid "Do not show my name in the leaderboard"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:170
+#: includes/class-wcdp-general-settings.php:171
 msgid "The text of the optional checkbox on checkout. It allows you to display anonymous and public donations in your leaderboards."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:173
+#: includes/class-wcdp-general-settings.php:174
 msgid "Leaderboard item heading"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:175
+#: includes/class-wcdp-general-settings.php:176
 #: includes/class-wcdp_leaderboard.php:269
 msgid "{firstname} donated {amount}"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:179
+#: includes/class-wcdp-general-settings.php:180
 msgid "Leaderboard item description"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:181
+#: includes/class-wcdp-general-settings.php:182
 msgid "{timediff}"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:185
+#: includes/class-wcdp-general-settings.php:186
 msgid "Leaderboard item heading (Checkout checkbox checked)"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:191
+#: includes/class-wcdp-general-settings.php:192
 msgid "Leaderboard item heading (Checkout checkbox unchecked)"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:197
+#: includes/class-wcdp-general-settings.php:198
 msgid "Leaderboard item description (Checkout checkbox checked)"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:203
+#: includes/class-wcdp-general-settings.php:204
 msgid "Leaderboard item description (Checkout checkbox unchecked)"
-msgstr ""
-
-#: includes/class-wcdp-general-settings.php:207
-msgid "Detailed leaderboard documentation"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:214
@@ -305,12 +305,12 @@ msgstr ""
 msgid "Error Color used in the frontend. Default: %s."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:260
+#: includes/class-wcdp-general-settings.php:259
 msgid "Support"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:261
-msgid "If you like Donation Platform for WooCommerce, please consider rating it with ★★★★★"
+#: includes/class-wcdp-general-settings.php:262
+msgid "If you like Donation Platform for WooCommerce, %1$splease consider rating it with ★★★★★ on wordpress.org%2$s"
 msgstr ""
 
 #: includes/class-wcdp-hooks.php:221
@@ -496,7 +496,7 @@ msgid "(Donation)"
 msgstr ""
 
 #: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:87
-#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:160
+#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:162
 msgid "Recurring Donations"
 msgstr ""
 
@@ -688,7 +688,7 @@ msgstr ""
 msgid "Donation Date"
 msgstr ""
 
-#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:175
+#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:177
 msgid "Complete checkout to renew your recurring donation."
 msgstr ""
 
