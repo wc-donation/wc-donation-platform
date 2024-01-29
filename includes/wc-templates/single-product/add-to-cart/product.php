@@ -19,6 +19,9 @@ defined('ABSPATH') || exit;
 global $post;
 global $product;
 
+//needed to enable support for PayPal express checkout
+echo '<span class="woocommerce-Price-amount wcdp_pp_amount" style="display:none !important;">1</span>';
+
 echo do_shortcode('[wcdp_progress id="' . $post->ID . '" style="2"]');
 
 if (!$product->is_purchasable() && $product->get_type() != 'grouped') {

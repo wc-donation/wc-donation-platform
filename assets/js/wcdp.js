@@ -101,7 +101,14 @@ jQuery( function( $ ) {
      */
 	let expresstime = 0;
 	let currentprice = 0;
-	$( '.wcdp-body' ).on('input blur keyup paste change', function (){
+	$( '.wcdp-body' ).on('input blur keyup paste change load', function (){
+        const button = document.querySelector('.wcdp-body .single_add_to_cart_button');
+        const form = document.querySelector('#wcdp-post-send');
+        if (button && form && form.checkValidity()) {
+            button.classList.remove('disabled');
+        } else if (button) {
+            button.classList.add('disabled');
+        }
 		$('.wcdp-express-amount').val($('#wcdp-donation-amount').val());
         expresstime++;
 		setTimeout(function() {
@@ -109,6 +116,9 @@ jQuery( function( $ ) {
 			if (expresstime == 0 && currentprice != $('#wcdp-donation-amount').val()) {
 				currentprice = $('#wcdp-donation-amount').val();
 				$(document.body).trigger('woocommerce_variation_has_changed');
+                if (button) {
+                    button.classList.toggle('wcdp_price_changed');
+                }
 			}
 		}, 500);
 	});

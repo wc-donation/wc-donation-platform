@@ -178,6 +178,7 @@ tweak: declare incompatibility with new WooCommerce Gutenberg Checkout Block
 tweak: improve compatibility with some payment gateways that do not load with empty checkout
 fix: various compatibility mode improvements
 fix: fix Stripe checkout bug
+fix: support for PayPal express checkout
 fix: take network active plugins into account when checking if certain plugins are active
 
 = 1.3.0 2023-09-24 =
