@@ -10,6 +10,10 @@ class WCDP_Integrator
      */
     public static function init(): void
     {
+        if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+            require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+        }
+        
         $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 
         //some payment gateways do not load with empty checkout
