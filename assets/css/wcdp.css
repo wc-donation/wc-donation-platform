@@ -479,7 +479,7 @@ input:disabled ~ label {
 .wcdp-body #wc-stripe-payment-request-button-separator {
 	display: none !important;
 }
-form.woocommerce-checkout #wc-stripe-payment-request-button-separator:first-of-type {
+form.woocommerce-checkout #wc-stripe-payment-request-button-separator:first-of-type:not([style*="display:none"]) {
     display: block !important;
 }
 #wcdp #wc-stripe-payment-request-wrapper {
