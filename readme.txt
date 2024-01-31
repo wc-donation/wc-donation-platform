@@ -166,7 +166,7 @@ If this is not a problem for you, you can continue to sell normal products. Othe
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.3.1 2024-01-28 =
+= 1.3.1 2024-01-30 =
 new: new progress bar styles
 new: use "current" in progress & leaderboard shortcode to use current page id
 new: donation product is added to the checkout on page load, improving compatibility with WooCommerce Gutenberg Checkout Block
