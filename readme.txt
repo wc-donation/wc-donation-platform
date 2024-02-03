@@ -158,10 +158,9 @@ To set up recurring donations, please also install Subscriptions for WooCommerce
 
 WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plugin you can use to send out your tax-deductible receipts & thank you certificates. Please follow this guide to set up donation receipts: [Set up donation receipts](https://wcdp.jonh.eu/documentation/integrations/donation-receipts-with-woocommerce-pdf-invoices-packing-slips/)
 
-= Why can’t I run a donation platform and a webshop with WooCommerce in parallel? =
+= How can I run a normal shop in parallel with Donation Platform for WooCommerce? =
 
-In fact, Donation Platform for WooCommerce does not change the core functionality of WooCommerce, so you can continue to sell products normally. However, the wording in the user frontend has been adjusted. For example, the order summary is now called “Your Donation” instead of “Your Order”, the title of the order history and the texts of the emails have also been adjusted accordingly.
-If this is not a problem for you, you can continue to sell normal products. Otherwise, my recommendation would be that you use a WordPress multisite or a separate WordPress installation for the donation page. Or you can use the free Loco Translate plugin to customize the texts.
+If you want to disable the wording changes applied by Donation Platform for WooCommerce you can enable to compatibility mode in the plugin's settings.
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
@@ -170,7 +169,6 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 new: new progress bar styles
 new: use "current" in progress & leaderboard shortcode to use current page id
 new: donation product is added to the checkout on page load, improving compatibility with WooCommerce Gutenberg Checkout Block
-tweak: add to cart before checkout is loaded
 tweak: compatibility with v3.7.6 of PDF Invoices & Packing Slips for WooCommerce
 tweak: set supported WP version to 6.4
 tweak: set supported WooCommerce version to 8.5.2
