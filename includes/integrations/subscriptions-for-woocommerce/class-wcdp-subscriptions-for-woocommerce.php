@@ -56,7 +56,7 @@ class WCDP_Subscriptions_For_WooCommerce
      * @param string $default_path
      * @return string
      */
-    public static function modify_template(string $template = '', string $template_name = '', array $args = array(), string $template_path = '', string $default_path = ''): string
+    public static function modify_template($template = '', $template_name = '', $args = array(), $template_path = '', $default_path = ''): string
     {
         //Only apply for Subscriptions for WooCommerce Templates
         if (!strpos($default_path, 'subscriptions-for-woocommerce')) {
