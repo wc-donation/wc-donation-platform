@@ -23,7 +23,7 @@ class WCDP_Form
         add_action('wp_ajax_nopriv_wcdp_ajax_donation_calculation', array($this, 'wcdp_ajax_donation_calculation'));
 
         //Handle checkout request in style 4
-        add_action('init', array($this, 'wcdp_checkout_donation_calculation'), 10);
+        add_action('wp_loaded', array($this, 'wcdp_checkout_donation_calculation'), 10);
     }
 
     /**
