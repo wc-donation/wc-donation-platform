@@ -118,6 +118,6 @@ do_action( 'woocommerce_before_add_to_cart_form' );
 if ( $value[ 'style' ] == 4 && $is_internal ) {
 	//Add a input field to communicate correct donation amount to Stripe & PayPal Express donation buttons
 	do_action( 'wcdp_express_checkout_amount_variation' );
-}
 
+}
 do_action( 'woocommerce_after_add_to_cart_form' );
