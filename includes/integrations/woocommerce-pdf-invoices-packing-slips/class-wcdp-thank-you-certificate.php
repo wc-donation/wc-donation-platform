@@ -67,6 +67,8 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
             //Setting of thank you certificate orientation
             add_filter('wpo_wcpdf_paper_orientation', array($this, 'paper_orientation'), 10, 2);
 
+            add_filter('wpo_wcpdf_attach_documents', array($this, 'attach_certificate'));
+
             //Add My Account Download Button
             add_filter('wpo_wcpdf_myaccount_actions', function ($actions, $order) {
                 $certificate = wcpdf_get_document('thank-you-certificate', $order);
@@ -246,6 +248,21 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
             } else {
                 return $orientation;
             }
+        }
+
+        /**
+         * Since free version of PDF Invoices & Packing Slips for WooCommerce only allows adding invoice as attachment
+         * we need this workaround and have to add it manually
+         * @param array $attach_documents
+         * @return array
+         */
+        public function attach_certificate(array $attach_documents): array
+        {
+            $is_enabled = $this->get_setting('enabled', false);
+            if (!$is_enabled) return $attach_documents;
+
+            $attach_documents[ 'pdf' ][ 'thank-you-certificate' ] = $this->get_attach_to_email_ids();
+            return $attach_documents;
         }
     }
 
