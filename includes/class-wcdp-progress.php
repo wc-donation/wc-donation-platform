@@ -69,7 +69,9 @@ class WCDP_Progress
     public function wcdp_progress(array $atts = array())
     {
         // Do not allow executing this Shortcode via AJAX
-        if (wp_doing_ajax()) return "";
+        if (wp_doing_ajax()) {
+            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
+        }
 
         if (!isset($atts['id'])) {
             return esc_html__('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
@@ -78,7 +80,7 @@ class WCDP_Progress
         $end_date_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true);
 
         $atts = shortcode_atts(array(
-            'id' => -1,
+            'id' => 'current',
             'goal' => $goal_db,
             'style' => 1,
             'addids' => '',
