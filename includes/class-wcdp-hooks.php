@@ -193,11 +193,8 @@ class WCDP_Hooks
      */
     public function wcdp_set_is_checkout($is_checkout): bool
     {
-        if (is_product()) {
-            return false;
-        }
-        if ($is_checkout) {
-            return true;
+        if (is_product() || $is_checkout) {
+            return $is_checkout;
         }
         if (defined('WCDP_FORM')) {
             return WCDP_FORM;
