@@ -48,7 +48,7 @@ class WCDP_Form
      */
     public static function wcdp_donation_form(array $value, bool $is_internal): string
     {
-        if (wp_doing_ajax()) return "";
+        if (wp_doing_ajax()) return esc_html__('Donation Forms do not support AJAX rendering.', 'wc-donation-platform');
 
         if (!$value['id']) {
             return '<p class="wcdp-error-message">' . esc_html__('id is a required attribute', 'wc-donation-platform') . '</p>';
