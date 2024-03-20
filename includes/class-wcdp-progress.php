@@ -76,6 +76,10 @@ class WCDP_Progress
         if (!isset($atts['id'])) {
             return esc_html__('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
         }
+        if ($atts['id'] === 'current') {
+            $atts['id'] = get_the_ID();
+        }
+
         $goal_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true);
         $end_date_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true);
 
@@ -87,15 +91,13 @@ class WCDP_Progress
             'cheat' => 0,
         ), $atts);
 
-        if ($atts['id'] === 'current') {
-            $atts['id'] = get_the_ID();
-        }
-
         if (!is_numeric($atts['goal'])) {
             $atts['goal'] = 100;
         }
 
         $revenue = (float)$this->getTotalRevenueOfProduct($atts['id']);
+
+        do_action('wcdp_goal_product_status', $revenue, $goal_db, $atts['id']);
 
         //Add revenue of additional Product IDs
         $ids = explode(",", $atts['addids']);
