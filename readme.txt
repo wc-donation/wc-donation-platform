@@ -165,6 +165,9 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
+= 1.3.2 =
+new: add sample language to Privacy Policy Guide page
+
 = 1.3.1 2024-01-30 =
 new: new progress bar styles
 new: use "current" in progress & leaderboard shortcode to use current page id

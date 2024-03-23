@@ -12,6 +12,10 @@ class WCDP_General_Settings
         add_filter('woocommerce_settings_tabs_array', array($this, 'add_settings_tab'), 50);
         add_action('woocommerce_settings_tabs_wc-donation-platform', array($this, 'settings_tab'));
         add_action('woocommerce_update_options_wc-donation-platform', array($this, 'update_settings'));
+
+        if (function_exists('wp_add_privacy_policy_content')) {
+            add_action( 'admin_init', array($this, 'suggest_privacy_policy_content') );
+        }
     }
 
     /**
@@ -309,6 +313,39 @@ class WCDP_General_Settings
         update_option('wcdp_fee_recovery_values', json_encode($wcdp_fee_recovery_values), 'yes');
 
         woocommerce_update_options(self::get_settings());
+    }
+
+    /**
+     * Adds privacy policy content for the Donation Platform for WooCommerce plugin.
+     */
+    public function suggest_privacy_policy_content() {
+        $content = sprintf(
+            '<div class="wp-suggested-text">' .
+            '<p class="privacy-policy-tutorial">' .
+                __( 'This sample language includes the basics around what personal data Donation Platform for WooCommerce may be collecting, storing and sharing. We recommend consulting with a lawyer when deciding what information to disclose on your privacy policy.', 'wc-donation-platform' ) .
+            '</p>' .
+            '<p>' . __('This website utilizes %1$sDonation Platform for WooCommerce%2$s, a plugin designed to facilitate donations.', 'wc-donation-platform') . '</p>' .
+            '<p>' . __('By making a donation through our website, you acknowledge and agree to the following:', 'wc-donation-platform') . '</p>' .
+            '<ul>' .
+                '<li>' . __('Any information provided during the donation process, such as name, email address, and donation amount, may be securely stored in our website’s database.', 'wc-donation-platform') . '</li>' .
+                '<li>' . __('Donation Platform for WooCommerce provides an anonymized donor wall / Leaderboard feature to showcase donations. You have the option to specify how you would like your donation to be listed during the checkout process.', 'wc-donation-platform') . '</li>' .
+                '<li>' . __('We may use the provided information to:', 'wc-donation-platform') . '</li>' .
+                    '<ul>' .
+                        '<li>' . __('Thank you for your donation via email or other communication methods.', 'wc-donation-platform') . '</li>' .
+                        '<li>' . __('Issue receipts for your donations.', 'wc-donation-platform') . '</li>' .
+                        '<li>' . __('Comply with any legal obligations regarding donation records and reporting.', 'wc-donation-platform') . '</li>' .
+                        '<li>' . __('Provide you with a donation thank you certificate.', 'wc-donation-platform') . '</li>' .
+                    '</ul>' .
+                '<li>' . __('Your information will not be disclosed to third parties except when required by law, with your explicit consent, when necessary for providing our services such as payment processing, and in cases where it is in our legitimate interest, such as fraud prevention.', 'wc-donation-platform') . '</li>' .
+            '</ul>' .
+            '</div>',
+            '<a href="https://wcdp.jonh.eu/" target="_blank">',
+            '</a>'
+        );
+
+        $content = apply_filters( 'wcdp_privacy_policy_content', $content );
+
+        wp_add_privacy_policy_content('Donation Platform for WooCommerce', wp_kses_post($content));
     }
 }
 
