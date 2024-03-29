@@ -125,7 +125,7 @@ jQuery( function( $ ) {
 
     //Next and back buttons
 	let currentStep = 1;
-	$('.wcdp-button,.wcdp-step').click(function (){
+	$('.wcdp-form .wcdp-button, .wcdp-step').click(function (){
 		const step = $(this).attr('value');
 		if (currentStep != 1) {
             wcdp_steps(step);

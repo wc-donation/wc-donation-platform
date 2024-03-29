@@ -172,8 +172,9 @@ tweak: add error message to AJAX donation form / progress bar render
 fix: checkout filter now returns the original value
 fix: improved compatibility with rankmath SEO plugin on Product Pages
 fix: fix Thank you certificate not sending
-remove strict type declarations
+fix: remove strict type declarations
 fix: wcdp_checkout_donation_calculation being called to early
+fix: leaderboard "Show more" button no longer triggers the donation form
 
 = 1.3.1 2024-01-30 =
 new: new progress bar styles
