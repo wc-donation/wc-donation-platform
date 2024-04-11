@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://wcdp.jonh.eu/documentation/support/contact/
 Requires at least: 5.8
-Tested up to: 6.4
+Tested up to: 6.5
 Stable tag: 1.3.2
 Requires PHP: 7.1
 License: GPLv2 or later
