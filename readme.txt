@@ -169,6 +169,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 new: add sample language to Privacy Policy Guide page
 improve SEO: mark link as rel="nofollow"
 tweak: update supported WP version to 6.5
+tweak: update supported WC version to 8.7.0
 tweak: add error message to AJAX donation form / progress bar render
 tweak: add blueprint.json for WordPress playground
 fix: checkout filter now returns the original value
