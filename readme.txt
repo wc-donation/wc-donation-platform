@@ -13,8 +13,6 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-=== 100% free donation system for your fundraising that supports recurring donations and more ===
-
 [🚀 Demos](https://wcdp.jonh.eu/demos/demo-style-1/) | [📚 Docs](https://wcdp.jonh.eu/documentation/) | [🏁 Getting Started](https://wcdp.jonh.eu/documentation/getting-started/first-steps/)
 
 **Transform WooCommerce into a robust platform for seamless fundraising, crowdfunding & donation management!**
