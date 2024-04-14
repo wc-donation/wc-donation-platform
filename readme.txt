@@ -9,6 +9,8 @@ Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+100% free donation system for your fundraising that supports recurring donations and more
+
 == Description ==
 
 === 100% free donation system for your fundraising that supports recurring donations and more ===
