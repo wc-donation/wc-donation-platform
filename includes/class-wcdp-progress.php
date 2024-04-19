@@ -201,7 +201,7 @@ class WCDP_Progress
         global $wpdb;
         if (OrderUtil::custom_orders_table_usage_is_enabled()) {
             $query = "  SELECT 
-	                        SUM(l.product_gross_revenue) as revenue
+	                        SUM(l.product_net_revenue) as revenue
                         FROM 
                             {$wpdb->prefix}wc_orders o
                             inner join {$wpdb->prefix}wc_order_product_lookup l on o.id = l.order_id
@@ -210,7 +210,7 @@ class WCDP_Progress
                             AND l.product_id = %d;";
         } else {
             $query = "  SELECT 
-                            SUM(l.product_gross_revenue) as revenue
+                            SUM(l.product_net_revenue) as revenue
                         FROM 
                             {$wpdb->prefix}posts p
                             inner join {$wpdb->prefix}wc_order_product_lookup l on p.ID = l.order_id
