@@ -37,7 +37,7 @@ class WCDP_Pdf_Invoices
      * @param $template_paths
      * @return array
      */
-    public static function add_template($template_paths)
+    public static function add_template($template_paths): array
     {
         $template_paths['wcdp'] = WCDP_DIR . 'includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/';
         return $template_paths;
@@ -45,6 +45,8 @@ class WCDP_Pdf_Invoices
 
     /**
      * @param $filename
+     * @param $type
+     * @param $order_ids
      * @return string
      */
     public static function filename($filename, $type, $order_ids): string

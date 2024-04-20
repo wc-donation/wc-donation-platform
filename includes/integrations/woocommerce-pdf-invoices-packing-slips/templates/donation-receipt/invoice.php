@@ -64,7 +64,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     <p class="right">
         <?php
         //Translators: %$1s shop city, %$2 date of receipt creation
-        printf(esc_html__('%1$s, %2$s', 'wc-donation-platform'), esc_html(WC()->countries->get_base_city()), esc_html($this->get_invoice_date()));
+        printf(esc_html__('%1$s, %2$s', 'wc-donation-platform'), esc_html(WC()->countries->get_base_city()), esc_html($this->get_date()->date_i18n( wc_date_format() )));
         ?>
     </p>
     <p>
