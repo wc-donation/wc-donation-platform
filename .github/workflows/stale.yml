@@ -1,0 +1,29 @@
+# This workflow helps manage issues and pull requests that haven't seen activity for a while.
+#
+# You can customize this file to fit your project's needs.
+# For more information, visit:
+# https://github.com/actions/stale
+
+name: Manage Stale Issues and Pull Requests
+
+on:
+  schedule:
+    # Runs the check every day at 5:25 PM UTC
+    - cron: '0 9 * * *'
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/stale@v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        stale-issue-message: "Hello! It seems like this issue hasn't seen any activity for a while. Is it still relevant? If so, feel free to update us and we'll be happy to assist!"
+        stale-pr-message: "Hi there! This pull request hasn't seen any recent activity. If you're still working on it, please let us know. We're here to help!"
+        stale-issue-label: 'no-issue-activity'
+        stale-pr-label: 'no-pr-activity'
