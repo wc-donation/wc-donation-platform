@@ -167,7 +167,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.3.2 =
 new: add sample language to Privacy Policy Guide page
-improve SEO: mark link as rel="nofollow"
+tweak: mark link as rel="nofollow" for improved SEO
 tweak: use net revenue (excl. shipping etc.) to calculate donation revenue in progress bar
 tweak: update supported WP version to 6.5
 tweak: update supported WC version to 8.7.0
@@ -179,6 +179,7 @@ fix: fix Thank you certificate not sending
 fix: remove strict type declarations
 fix: wcdp_checkout_donation_calculation being called to early
 fix: leaderboard "Show more" button no longer triggers the donation form
+fix: replace deprecated function
 
 = 1.3.1 2024-01-30 =
 new: new progress bar styles
