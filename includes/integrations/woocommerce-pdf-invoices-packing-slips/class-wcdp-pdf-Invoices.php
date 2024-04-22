@@ -21,7 +21,7 @@ class WCDP_Pdf_Invoices
             add_filter('wpo_wcpdf_template_paths', 'WCDP_Pdf_Invoices::add_template', 10, 1);
 
             //Rename pdf file name
-            add_filter('wpo_wcpdf_filename', 'WCDP_Pdf_Invoices::filename', 10, 3);
+            add_filter('wpo_wcpdf_filename', 'WCDP_Pdf_Invoices::filename', 5, 3);
 
             //Rename pdf file name
             add_filter('wpo_wcpdf_document_classes', 'WCDP_Pdf_Invoices::add_document_type');

@@ -173,6 +173,7 @@ tweak: update supported WP version to 6.5
 tweak: update supported WC version to 8.7.0
 tweak: add error message to AJAX donation form / progress bar render
 tweak: add blueprint.json for WordPress playground
+tweak: decrease priority of filename filter
 fix: checkout filter now returns the original value
 fix: improved compatibility with rankmath SEO plugin on Product Pages
 fix: fix Thank you certificate not sending
