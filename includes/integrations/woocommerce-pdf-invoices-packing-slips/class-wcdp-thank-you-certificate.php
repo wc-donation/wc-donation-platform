@@ -69,6 +69,11 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
 
             add_filter('wpo_wcpdf_attach_documents', array($this, 'attach_certificate'));
 
+            add_filter('wpo_wcpdf_number_store_table_name', function ($name, $store, $method) {
+                error_log("wpo_wcpdf_number_store_table_name", $name, $store, $method);
+                return $name;
+            }, 10, 3);
+
             //Add My Account Download Button
             add_filter('wpo_wcpdf_myaccount_actions', function ($actions, $order) {
                 $certificate = wcpdf_get_document('thank-you-certificate', $order);
@@ -120,9 +125,8 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
         public function get_filename($context = 'download', $args = array()): string
         {
             $order_ids = $args['order_ids'] ?? array($this->order_id);
-
-            //Creates a name like your-blog_123.pdf
-            return sanitize_title(get_bloginfo('name')) . '_' . implode('-', $order_ids) . '.pdf';
+            $filename = get_bloginfo('name') . '_' . implode('-', $order_ids);
+            return sanitize_title(apply_filters('wpo_wcpdf_filename', $filename, 'thank-you-certificate', $order_ids, $context )) . '.pdf';
         }
 
         public function init_settings()
