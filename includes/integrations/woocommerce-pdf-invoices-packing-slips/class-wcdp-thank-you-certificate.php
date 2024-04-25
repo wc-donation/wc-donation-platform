@@ -69,11 +69,6 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
 
             add_filter('wpo_wcpdf_attach_documents', array($this, 'attach_certificate'));
 
-            add_filter('wpo_wcpdf_number_store_table_name', function ($name, $store, $method) {
-                error_log("wpo_wcpdf_number_store_table_name", $name, $store, $method);
-                return $name;
-            }, 10, 3);
-
             //Add My Account Download Button
             add_filter('wpo_wcpdf_myaccount_actions', function ($actions, $order) {
                 $certificate = wcpdf_get_document('thank-you-certificate', $order);
