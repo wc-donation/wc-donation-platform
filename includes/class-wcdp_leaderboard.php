@@ -161,6 +161,9 @@ class WCDP_Leaderboard
 
         $orders_clean = array();
         foreach ($all_orders as $order) {
+            if (!($order instanceof WC_Order)) {
+                continue;
+            }
             $meta = $order->get_meta('wcdp_checkout_checkbox');
             if ($meta === "yes") {
                 $chk = 1;

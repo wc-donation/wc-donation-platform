@@ -181,6 +181,7 @@ fix: remove strict type declarations
 fix: wcdp_checkout_donation_calculation being called to early
 fix: leaderboard "Show more" button no longer triggers the donation form
 fix: replace deprecated function
+fix: skip orders in Leaderboard that are not of type WC_ORDER
 
 = 1.3.1 2024-01-30 =
 new: new progress bar styles
