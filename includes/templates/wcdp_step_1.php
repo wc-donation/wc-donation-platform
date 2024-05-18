@@ -51,13 +51,14 @@ if ($value['description']) {
 do_action('woocommerce_before_add_to_cart_form');
 ?>
 
-    <form class="variations_form cart wcdp-choose-donation" id="<?php
+    <form class="variations_form cart wcdp-choose-donation"<?php
     if ($value['style'] != '4') {
-        echo 'wcdp-ajax-send';
+        echo ' id="wcdp-ajax-send"';
+        echo ' method="post"';
     } else {
-        echo 'wcdp-post-send';
-    } ?>"
-          method="post"
+        echo ' id="wcdp-get-send"';
+        echo ' method="get"';
+    } ?>
           action="<?php
           if ($value['style'] != '4') {
               echo admin_url('admin-ajax.php');

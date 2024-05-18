@@ -29,7 +29,7 @@ jQuery( function( $ ) {
                             wcdp_steps(step);
                             break;
                         default:
-                            error_message(response.message, response.reload);
+                            error_message(response.message, response.reload, response.newParams);
                             break;
                     }
                 })
@@ -55,9 +55,15 @@ jQuery( function( $ ) {
      * @param message
      * @param reload
      */
-    function error_message(message="An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.", reload=true) {
+    function error_message(message="An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.", reload=true, newParams= false) {
         if (!reload) {
             $('#wcdp-ajax-button').show();
+        }
+        if (newParams) {
+            alert(message);
+            let currentUrl = new URL(window.location.href);
+            Object.entries(newParams).forEach(([key, value]) => currentUrl.searchParams.set(key, value));
+            window.location.href = currentUrl.toString();
         }
         $('#wcdp-spinner').hide();
         $('#wcdp-ajax-error').remove();
@@ -103,7 +109,7 @@ jQuery( function( $ ) {
 	let currentprice = 0;
 	$( '.wcdp-body' ).on('input blur keyup paste change load', function (){
         const button = document.querySelector('.wcdp-body .single_add_to_cart_button');
-        const form = document.querySelector('#wcdp-post-send');
+        const form = document.querySelector('#wcdp-get-send');
         if (button && form && form.checkValidity()) {
             button.classList.remove('disabled');
         } else if (button) {

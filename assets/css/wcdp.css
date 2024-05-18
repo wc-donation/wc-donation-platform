@@ -320,7 +320,7 @@ input:disabled ~ label {
     opacity: 0.2;
     cursor: default;
 }
-.wcdp-button-label,#wcdp-post-send {
+.wcdp-button-label,#wcdp-get-send {
     margin: 0;
 }
 /* END Step 1 grid */
@@ -543,6 +543,6 @@ button {
     padding: 6px 20px;
     cursor: pointer;
 }
-#wcdp-post-send, #wcdp-ajax-send {
+#wcdp-get-send, #wcdp-ajax-send {
     display: block;
 }
