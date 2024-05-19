@@ -1,4 +1,6 @@
 jQuery( function( $ ) {
+    if (!document.querySelector('#wcdp')) return;
+
 	let currentFormData;
     //Send donation selection form
     function wcdp_submit(step) {
