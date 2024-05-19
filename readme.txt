@@ -167,6 +167,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.3.2 =
 new: add sample language to Privacy Policy Guide page
+tweak: improved invalid nonce handling
 tweak: mark link as rel="nofollow" for improved SEO
 tweak: use net revenue (excl. shipping etc.) to calculate donation revenue in progress bar
 tweak: update supported WP version to 6.5

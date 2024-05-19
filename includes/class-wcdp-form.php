@@ -562,7 +562,7 @@ class WCDP_Form
                 'ignore_cache' => 'true',
                 'cache_bypass' => 'true',
                 'nowprocket' => 'true',
-                'LSCWP_CTRL' => 'private_no_cache',
+                'LSCWP_CTRL' => 'NOCACHE',
             );
         } else {
             wp_send_json($this->wcdp_add_to_cart());
