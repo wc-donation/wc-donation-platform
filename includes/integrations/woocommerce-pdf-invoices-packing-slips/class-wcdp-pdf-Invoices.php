@@ -54,7 +54,7 @@ class WCDP_Pdf_Invoices
         if ($type !== 'invoice') {
             return $filename;
         }
-        return sanitize_title(get_bloginfo('name'), 'wcdp') . '_' . 'receipt' . '_' . implode('-', $order_ids) . '.pdf';
+        return sanitize_title(get_bloginfo('name'), 'wcdp') . '_receipt_' . implode('-', $order_ids) . '.pdf';
     }
 
     /**
