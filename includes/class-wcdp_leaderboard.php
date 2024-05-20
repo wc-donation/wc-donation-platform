@@ -141,6 +141,7 @@ class WCDP_Leaderboard
     /**
      * get an array with all WooCommerce orders
      * @param string $orderby date or total
+     * @param int $limit
      * @return array
      */
     private function get_orders_db(string $orderby, int $limit): array
