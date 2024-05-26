@@ -17,6 +17,9 @@ class WCDP_Progress
         //progress shortcode
         add_shortcode('wcdp_progress', array($this, 'wcdp_progress'));
 
+        //display order count for a product
+        add_shortcode('wcdp_order_counter', array($this, 'wcdp_order_counter'));
+
         //update donation revenue
         add_action('woocommerce_order_status_changed', array($this, 'reset_total_revenue'), 10, 4);
     }
@@ -36,6 +39,7 @@ class WCDP_Progress
 
         foreach ($products as $product) {
             delete_post_meta($product->get_id(), 'wcdp_total_revenue');
+            delete_transient('wcdp_order_counter_' . $product->get_id());
         }
     }
 
@@ -58,6 +62,7 @@ class WCDP_Progress
             if ($revenue && ($orderid <= 10000 || time() - $revenue[0]['time'] > 30)) {
                 delete_post_meta($item->get_product_id(), 'wcdp_total_revenue');
             }
+            delete_transient('wcdp_order_counter_' . $item->get_product_id() );
         }
     }
 
@@ -253,4 +258,92 @@ class WCDP_Progress
 
         return $date_to_display;
     }
+
+    /**
+     * Query the number of completed orders with a specific product
+     * @param int $product_id
+     * @return string|null
+     * @since v1.3.2
+     */
+    private function query_order_count_product(int $product_id): int {
+        global $wpdb;
+
+        if (class_exists('Automattic\WooCommerce\Utilities\OrderUtil') && Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
+            $query = "
+            SELECT 
+                COUNT(*) 
+            FROM 
+                {$wpdb->prefix}wc_orders o
+                INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
+            WHERE 
+                    o.status = 'wc-completed'
+                AND o.type = 'shop_order'
+                AND l.product_id = %d
+        ";
+        } else {
+            $query = "
+            SELECT 
+                COUNT(*) 
+            FROM 
+                {$wpdb->prefix}posts p
+                INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON p.ID = l.order_id
+            WHERE 
+                    p.post_type = 'shop_order'
+                AND p.post_status = 'wc-completed'
+                AND l.product_id = %d
+        ";
+        }
+
+        return intval($wpdb->get_var($wpdb->prepare($query, $product_id)));
+    }
+
+    /**
+     * Get the number of completed orders with a specific product
+     *
+     * @param int $product_id
+     * @return void
+     * @since v1.3.2
+     */
+    function get_order_count_product(int $product_id): int {
+        $cache_key = 'wcdp_order_counter_' . $product_id;
+        $count = get_transient($cache_key);
+
+        if ($count === false) {
+            $count = $this->query_order_count_product($product_id);
+            set_transient($cache_key, $count, 6 * HOUR_IN_SECONDS);
+        }
+        return intval($count);
+    }
+
+    /**
+     * Shortcode to display the number of completed orders for a product
+     *
+     * @param array $atts
+     * @return string
+     * @since v1.3.2
+     */
+    function wcdp_order_counter(array $atts = array()) {
+        $atts = shortcode_atts(array(
+            'id' => 0,
+            // Translators: {ORDER_COUNT} will be replaced with the number of orders
+            'label' => __('{ORDER_COUNT} people have already contributed to this project.', 'wc-donation-platform'),
+        ), $atts, 'wcdp_order_counter');
+
+        $product_id = intval($atts['id']);
+        if ($product_id <= 0) {
+            return 'wcdp_order_counter error: "id" is a required shortcode attribute.';
+        }
+
+        $label = sanitize_text_field($atts['label']);
+
+        if (strpos($label, '{ORDER_COUNT}') === false) {
+            $label .= ' {ORDER_COUNT}';
+        }
+
+        $count = $this->get_order_count_product($product_id);
+        return '<span class="wcdp_order_counter_label">' .
+            str_replace('{ORDER_COUNT}', '<span class="wcdp_order_count">' . $count . '</span>', $label) .
+            '</span>';
+    }
+
 }

@@ -261,8 +261,8 @@ class WCDP_General_Settings
             ),
             array(
                 'title' => __('Support', 'wc-donation-platform'),
-                //translators: %1$s & %2$s link tags
                 'desc' => sprintf(
+                    //Translators: %1$s & %2$s link tags
                     __('If you like Donation Platform for WooCommerce, %1$splease consider rating it with ★★★★★ on wordpress.org%2$s', 'wc-donation-platform'),
                     '<a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">',
                     '</a>'
@@ -324,6 +324,7 @@ class WCDP_General_Settings
             '<p class="privacy-policy-tutorial">' .
                 __( 'This sample language includes the basics around what personal data Donation Platform for WooCommerce may be collecting, storing and sharing. We recommend consulting with a lawyer when deciding what information to disclose on your privacy policy.', 'wc-donation-platform' ) .
             '</p>' .
+            //Translators: %1$s & %2$s: link tags
             '<p>' . __('This website utilizes %1$sDonation Platform for WooCommerce%2$s, a plugin designed to facilitate donations.', 'wc-donation-platform') . '</p>' .
             '<p>' . __('By making a donation through our website, you acknowledge and agree to the following:', 'wc-donation-platform') . '</p>' .
             '<ul>' .
