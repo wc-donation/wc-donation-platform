@@ -210,7 +210,8 @@ class WCDP_Leaderboard
                     {$wpdb->prefix}wc_orders o
                     INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
                 WHERE 
-                    o.status = 'wc-completed'
+                        o.status = 'wc-completed'
+                    AND o.type = 'shop_order'
                     AND l.product_id = %d
                 ORDER BY $orderby DESC
                 LIMIT %d;";

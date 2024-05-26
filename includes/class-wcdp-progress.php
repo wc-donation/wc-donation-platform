@@ -207,6 +207,7 @@ class WCDP_Progress
                             inner join {$wpdb->prefix}wc_order_product_lookup l on o.id = l.order_id
                         WHERE 
                                 o.status = 'wc-completed'
+                            AND o.type = 'shop_order'
                             AND l.product_id = %d;";
         } else {
             $query = "  SELECT 
