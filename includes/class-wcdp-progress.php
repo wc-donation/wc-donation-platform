@@ -322,7 +322,8 @@ class WCDP_Progress
      * @return string
      * @since v1.3.2
      */
-    function wcdp_order_counter(array $atts = array()) {
+    function wcdp_order_counter(array $atts = array()): string
+    {
         $atts = shortcode_atts(array(
             'id' => 0,
             // Translators: {ORDER_COUNT} will be replaced with the number of orders
@@ -345,5 +346,4 @@ class WCDP_Progress
             str_replace('{ORDER_COUNT}', '<span class="wcdp_order_count">' . $count . '</span>', $label) .
             '</span>';
     }
-
 }
