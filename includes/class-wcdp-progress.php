@@ -79,7 +79,7 @@ class WCDP_Progress
         }
 
         if (!isset($atts['id'])) {
-            return esc_html__('wcdp_progress: Required attribute "id" missing.', 'wc-donation-platform');
+            return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
         if ($atts['id'] === 'current') {
             $atts['id'] = get_the_ID();
@@ -332,7 +332,7 @@ class WCDP_Progress
 
         $product_id = intval($atts['id']);
         if ($product_id <= 0) {
-            return 'wcdp_order_counter error: "id" is a required shortcode attribute.';
+            return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
 
         $label = sanitize_text_field($atts['label']);

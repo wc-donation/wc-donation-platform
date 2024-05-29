@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-26T19:47:22+02:00\n"
+"POT-Creation-Date: 2024-05-29T22:42:15+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -419,7 +419,8 @@ msgid "This shortcode does not support AJAX calls."
 msgstr ""
 
 #: includes/class-wcdp-progress.php:82
-msgid "wcdp_progress: Required attribute \"id\" missing."
+#: includes/class-wcdp-progress.php:335
+msgid "Invalid shortcode attribute:"
 msgstr ""
 
 #. Translators: %1$s: donation amount raised, %2$s: fundraising goal
@@ -438,7 +439,7 @@ msgid "ended %s ago"
 msgstr ""
 
 #. Translators: {ORDER_COUNT} will be replaced with the number of orders
-#: includes/class-wcdp-progress.php:329
+#: includes/class-wcdp-progress.php:330
 msgid "{ORDER_COUNT} people have already contributed to this project."
 msgstr ""
 
