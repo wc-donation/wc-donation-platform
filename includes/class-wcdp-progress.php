@@ -310,7 +310,7 @@ class WCDP_Progress
 
         if ($count === false) {
             $count = $this->query_order_count_product($product_id);
-            set_transient($cache_key, $count, 6 * HOUR_IN_SECONDS);
+            set_transient($cache_key, $count, apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
         }
         return intval($count);
     }
