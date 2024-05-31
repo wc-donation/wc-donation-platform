@@ -329,6 +329,7 @@ class WCDP_Progress
             // Translators: {ORDER_COUNT} will be replaced with the number of orders
             'label' => __('{ORDER_COUNT} people have already contributed to this project.', 'wc-donation-platform'),
             'fallback' => '',
+            'cheat' => 0,
         ), $atts, 'wcdp_order_counter');
 
         $product_id = intval($atts['id']);
@@ -343,6 +344,9 @@ class WCDP_Progress
         }
 
         $count = $this->get_order_count_product($product_id);
+        if (intval($atts['cheat']) !== 0) {
+            $count += intval($atts['cheat']);
+        }
         if ($count === 0 && $atts['fallback'] !== '') {
             $label = sanitize_text_field($atts['fallback']);
         }
