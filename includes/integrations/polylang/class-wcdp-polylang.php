@@ -37,9 +37,9 @@ class WCDP_Polylang
 					LEFT JOIN
 						{$wpdb->prefix}woocommerce_order_itemmeta ltoim ON ltoim.order_item_id = oi.order_item_id AND ltoim.meta_key = '_line_total'
 					WHERE
-						wcoim.meta_key = '_product_id' AND wcoim.meta_value in ($placeholder) AND wpposts.post_status = 'wc-completed';";
+						wcoim.meta_key = '_product_id' AND wcoim.meta_value in (%s) AND wpposts.post_status = 'wc-completed';";
 
-            $result = $wpdb->get_row($wpdb->prepare($query, $translationids), ARRAY_A);
+            $result = $wpdb->get_row($wpdb->prepare($query, $placeholder), ARRAY_A);
             if (!is_null($result) && isset($result['revenue'])) {
                 $revenue = (float)$result['revenue'];
             } else {
