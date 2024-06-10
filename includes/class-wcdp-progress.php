@@ -341,21 +341,17 @@ class WCDP_Progress
             return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
 
-        $label = sanitize_text_field($atts['label']);
+        $label = $atts['label'];
 
         if (strpos($label, '{ORDER_COUNT}') === false) {
             $label .= ' {ORDER_COUNT}';
         }
 
-        $count = $this->get_order_count_product($product_id);
-        if (intval($atts['cheat']) !== 0) {
-            $count += intval($atts['cheat']);
-        }
+        $count = $this->get_order_count_product($product_id) + intval($atts['cheat']);
         if ($count === 0 && $atts['fallback'] !== '') {
-            $label = sanitize_text_field($atts['fallback']);
+            $label = $atts['fallback'];
         }
-        return '<span class="wcdp_order_counter_label">' .
-            str_replace('{ORDER_COUNT}', '<span class="wcdp_order_count">' . $count . '</span>', $label) .
-            '</span>';
+        $label = str_replace('{ORDER_COUNT}', '<span class="wcdp_order_count">' . intval($count) . '</span>', sanitize_text_field($label));
+        return apply_filters('wcdp_order_counter', '<span class="wcdp_order_counter_label">' . $label . '</span>', $atts);
     }
 }
