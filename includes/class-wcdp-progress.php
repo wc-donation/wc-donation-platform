@@ -324,6 +324,10 @@ class WCDP_Progress
      */
     function wcdp_order_counter(array $atts = array()): string
     {
+        // Do not allow executing this Shortcode via AJAX
+        if (wp_doing_ajax()) {
+            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
+        }
         $atts = shortcode_atts(array(
             'id' => 0,
             // Translators: {ORDER_COUNT} will be replaced with the number of orders
