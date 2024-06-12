@@ -10,8 +10,11 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see     https://docs.woocommerce.com/document/template-structure/
  * forked from WooCommerce\Templates
+ * 
+ * @see     https://woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 3.2.0
  */
 
 if (!defined('ABSPATH')) {
@@ -32,7 +35,7 @@ if (!defined('ABSPATH')) {
         <?php esc_html_e('Total:', 'woocommerce'); ?>
         <strong><?php echo wp_kses_post($order->get_formatted_order_total()); ?></strong>
     </li>
-    <?php if ($order->get_payment_method_title()) : ?>
+    <?php if ($order->get_payment_method_title()): ?>
         <li class="method">
             <?php esc_html_e('Payment method:', 'woocommerce'); ?>
             <strong><?php echo wp_kses_post($order->get_payment_method_title()); ?></strong>
