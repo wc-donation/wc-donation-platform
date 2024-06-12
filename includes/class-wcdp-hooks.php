@@ -99,14 +99,14 @@ class WCDP_Hooks
     public function wcdp_modify_template($template = '', $template_name = '', $args = array(), $template_path = '', $default_path = ''): string
     {
         //Return if the template has been overwritten in yourtheme/woocommerce/XXX
-        if ($template[strlen($template) - strlen($template_name) - 2] === 'e') {
+        if (!str_starts_with($template_name, 'single-product') && [strlen($template) - strlen($template_name) - 2] === 'e') {
             return $template;
         }
 
         $path = WCDP_DIR . 'includes/wc-templates/';
+        $donable = WCDP_Form::is_donable(get_queried_object_id());
 
         switch ($template_name) {
-
             case 'checkout/review-order.php':
             case 'checkout/form-login.php':
             case 'checkout/thankyou.php':
@@ -167,7 +167,7 @@ class WCDP_Hooks
 
             case 'single-product/price.php':
             case 'single-product/add-to-cart/variation-add-to-cart-button.php' :
-                if (WCDP_Form::is_donable(get_queried_object_id())) {
+                if ($donable) {
                     $template = $path . $template_name;
                 }
                 break;
@@ -175,7 +175,7 @@ class WCDP_Hooks
             case 'single-product/add-to-cart/simple.php' :
             case 'single-product/add-to-cart/variable.php' :
             case 'single-product/add-to-cart/grouped.php' :
-                if (WCDP_Form::is_donable(get_queried_object_id())) {
+                if ($donable) {
                     $template = $path . 'single-product/add-to-cart/product.php';
                 }
                 break;
