@@ -95,7 +95,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
             <td>
                 <?php
                 //translators: %s Shop Name
-                esc_html_e('Organization: ', 'wc-donation-platform');
+                esc_html_e('Organization:', 'wc-donation-platform');
                 ?>
             </td>
             <td>
@@ -107,8 +107,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
         if (!empty($order_items)) {
             echo '<tr class="project">';
-            echo '<td>';
-            esc_html_e('Project: ', 'wc-donation-platform');
+            echo ' <td>';
+            esc_html_e('Project:', 'wc-donation-platform');
             echo '</td>';
             echo '<td>';
 

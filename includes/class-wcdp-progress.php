@@ -77,12 +77,12 @@ class WCDP_Progress
         if (wp_doing_ajax()) {
             return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
         }
-
-        if (!isset($atts['id'])) {
-            return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
-        }
         if ($atts['id'] === 'current') {
             $atts['id'] = get_the_ID();
+        }
+
+        if (!isset($atts['id']) || $atts['id'] <= 0) {
+            return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
 
         $goal_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true);

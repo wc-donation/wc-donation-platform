@@ -34,7 +34,9 @@ class WCDP_Form
     public static function wcdp_donation_form_shortcode($atts = array()): string
     {
         // Do not allow executing this Shortcode via AJAX
-        if (wp_doing_ajax()) return "";
+        if (wp_doing_ajax()) {
+            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
+        }
 
         return WCDP_Form::wcdp_donation_form($atts, false);
     }
@@ -48,10 +50,12 @@ class WCDP_Form
      */
     public static function wcdp_donation_form(array $value, bool $is_internal): string
     {
-        if (wp_doing_ajax()) return esc_html__('Donation Forms do not support AJAX rendering.', 'wc-donation-platform');
+        if (wp_doing_ajax()) {
+            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
+        }
 
-        if (!$value['id']) {
-            return '<p class="wcdp-error-message">' . esc_html__('id is a required attribute', 'wc-donation-platform') . '</p>';
+        if (!$value['id'] || $value['id'] <= 0) {
+            return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
         if (!self::is_donable($value["id"])) {
             return '<p class="wcdp-error-message">' . esc_html__('Donations are not activated for this project.', 'wc-donation-platform') . '</p>';
