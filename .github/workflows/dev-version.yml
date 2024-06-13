@@ -11,13 +11,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Create zip file
-        run: zip -r wc-donation-platform.zip wc-donation-platform
+        uses: actions/checkout@v4
 
       - name: Upload zip file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
+          retention-days: 90
           name: wc-donation-platform
-          path: wc-donation-platform.zip
+          path: .
