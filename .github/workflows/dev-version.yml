@@ -13,15 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create directory for zipping
-        run: mkdir wc-donation-platform
-
-      - name: Copy files to directory
-        run: cp -r * wc-donation-platform
-
-      - name: Remove previous zip if exists
-        run: rm -f wc-donation-platform.zip
-
       - name: Create zip file
         run: zip -r wc-donation-platform.zip wc-donation-platform
 
