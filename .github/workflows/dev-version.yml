@@ -17,7 +17,7 @@ jobs:
         run: mkdir result
 
       - name: Create zip file
-        run: zip -r result/wc-donation-platform.zip . -x "node_modules/*" ".github/*" "package-lock.json" "pnpm-lock.yaml" ".idea/" "result" ".git" ".gitignore"
+        run: zip -r result/wc-donation-platform.zip . -x "node_modules/*" "./.github/*" "package-lock.json" "pnpm-lock.yaml" ".idea/*" "result" ".git/*" ".gitignore"
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -27,7 +27,6 @@ jobs:
           password: ${{ secrets.FTPS_PASSWORD }}
           protocol: ftps
           local-dir: ./result/
-          remote-dir: /
 
       - name: Cleanup zip file
         run: rm result -r
