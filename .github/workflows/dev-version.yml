@@ -13,8 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create Folder
+        run: mkdir result
+
       - name: Create zip file
-        run: zip -r wc-donation-platform.zip .
+        run: zip -r result/wc-donation-platform.zip . -x "node_modules/*" ".github/*" "package-lock.json" "pnpm-lock.yaml" ".idea/"
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -23,8 +26,8 @@ jobs:
           username: ${{ secrets.FTPS_USERNAME }}
           password: ${{ secrets.FTPS_PASSWORD }}
           protocol: ftps
-          local-dir: wc-donation-platform.zip
+          local-dir: remote/
           remote-dir: /
 
       - name: Cleanup zip file
-        run: rm wc-donation-platform.zip
+        run: rm result -r
