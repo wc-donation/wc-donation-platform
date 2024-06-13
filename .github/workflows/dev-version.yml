@@ -1,0 +1,23 @@
+name: Create and Upload Custom Zip
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create zip file
+        run: zip -r wc-donation-platform.zip .
+
+      - name: Upload zip file
+        uses: actions/upload-artifact@v2
+        with:
+          name: wc-donation-platform
+          path: wc-donation-platform.zip
