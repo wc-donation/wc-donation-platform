@@ -9,9 +9,12 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
- *
- * @see https://docs.woocommerce.com/document/template-structure/
+ * 
  * forked from WooCommerce\Templates
+ *
+ * @see https://woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates\Emails\Plain
+ * @version 3.7.0
  */
 
 defined('ABSPATH') || exit;
@@ -25,13 +28,13 @@ echo sprintf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_f
 
 if ($order->has_status('pending')) {
     echo wp_kses_post(
-            sprintf(
+        sprintf(
             /* translators: %1$s: Site title, %2$s: Order pay link */
-                __('A donation has been created for you on %1$s. Your invoice is below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform'),
-                esc_html(get_bloginfo('name', 'display')),
-                esc_url($order->get_checkout_payment_url())
-            )
-        ) . "\n\n";
+            __('A donation has been created for you on %1$s. Your invoice is below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform'),
+            esc_html(get_bloginfo('name', 'display')),
+            esc_url($order->get_checkout_payment_url())
+        )
+    ) . "\n\n";
 
 } else {
     /* translators: %s: Order date */

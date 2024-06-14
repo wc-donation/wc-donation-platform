@@ -9,8 +9,10 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
+ * 
+ * forked from WooCommerce\Templates
  *
- * @see https://docs.woocommerce.com/document/template-structure/
+ * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates\Emails
  * @version 3.7.0
  */
@@ -25,8 +27,8 @@ if (!defined('ABSPATH')) {
 do_action('woocommerce_email_header', $email_heading, $email); ?>
 
 <?php /* translators: %s: Customer first name */ ?>
-    <p><?php printf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name())); ?></p>
-    <p><?php esc_html_e('We have finished processing your donation.', 'wc-donation-platform'); ?></p>
+<p><?php printf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name())); ?></p>
+<p><?php esc_html_e('We have finished processing your donation.', 'wc-donation-platform'); ?></p>
 <?php
 
 /*

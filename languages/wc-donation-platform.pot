@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-12T23:44:55+02:00\n"
+"POT-Creation-Date: 2024-06-15T00:13:57+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -95,31 +95,31 @@ msgstr ""
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:461
+#: includes/class-wcdp-form.php:448
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:468
+#: includes/class-wcdp-form.php:455
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:482
+#: includes/class-wcdp-form.php:469
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:500
+#: includes/class-wcdp-form.php:487
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:507
+#: includes/class-wcdp-form.php:494
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:560
+#: includes/class-wcdp-form.php:547
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:562
+#: includes/class-wcdp-form.php:549
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
@@ -1235,7 +1235,7 @@ msgid "Sign in with your account to contribute faster!"
 msgstr ""
 
 #: includes/wc-templates/checkout/order-receipt.php:27
-#: includes/wc-templates/checkout/thankyou.php:50
+#: includes/wc-templates/checkout/thankyou.php:62
 msgid "Donation number:"
 msgstr ""
 
@@ -1243,19 +1243,19 @@ msgstr ""
 msgid "Donation Amount"
 msgstr ""
 
-#: includes/wc-templates/checkout/thankyou.php:30
+#: includes/wc-templates/checkout/thankyou.php:36
 msgid "Unfortunately your donation cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your donation again."
 msgstr ""
 
-#: includes/wc-templates/checkout/thankyou.php:43
+#: includes/wc-templates/checkout/thankyou.php:52
 msgid "Thank you for your donation"
 msgstr ""
 
-#: includes/wc-templates/checkout/thankyou.php:45
+#: includes/wc-templates/checkout/thankyou.php:56
 msgid "Thank you. Your donation has been received."
 msgstr ""
 
-#: includes/wc-templates/checkout/thankyou.php:88
+#: includes/wc-templates/checkout/thankyou.php:100
 msgid "Your request could not be processed correctly. If the problem persists, please contact us."
 msgstr ""
 
@@ -1273,19 +1273,19 @@ msgstr ""
 
 #. translators: %s: Customer billing full name
 #: includes/wc-templates/emails/admin-new-order.php:26
-#: includes/wc-templates/emails/plain/admin-new-order.php:24
+#: includes/wc-templates/emails/plain/admin-new-order.php:27
 msgid "You’ve received the following donation from %s:"
 msgstr ""
 
 #. translators: %s: Site title
-#: includes/wc-templates/emails/customer-completed-order.php:29
-#: includes/wc-templates/emails/plain/customer-completed-order.php:26
+#: includes/wc-templates/emails/customer-completed-order.php:31
+#: includes/wc-templates/emails/plain/customer-completed-order.php:29
 msgid "We have finished processing your donation."
 msgstr ""
 
 #. translators: %1$s: Site title, %2$s: Order pay link
 #: includes/wc-templates/emails/customer-invoice.php:38
-#: includes/wc-templates/emails/plain/customer-invoice.php:30
+#: includes/wc-templates/emails/plain/customer-invoice.php:33
 msgid "A donation has been created for you on %1$s. Your invoice is below, with a link to make payment when you’re ready: %2$s"
 msgstr ""
 
@@ -1295,7 +1295,7 @@ msgstr ""
 
 #. translators: %s: Order date
 #: includes/wc-templates/emails/customer-invoice.php:55
-#: includes/wc-templates/emails/plain/customer-invoice.php:38
+#: includes/wc-templates/emails/plain/customer-invoice.php:41
 msgid "Here are the details of your donation placed on %s:"
 msgstr ""
 
@@ -1337,7 +1337,7 @@ msgstr ""
 msgid "Donation #%s"
 msgstr ""
 
-#: includes/wc-templates/emails/plain/customer-on-hold-order.php:25
+#: includes/wc-templates/emails/plain/customer-on-hold-order.php:28
 msgid "Thanks for your donation. It’s on-hold until we confirm that payment has been received. In the meantime, here’s a reminder of your donation:"
 msgstr ""
 
