@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-15T00:13:57+02:00\n"
+"POT-Creation-Date: 2024-06-15T12:18:24+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -383,7 +383,6 @@ msgid "Donations (page %d)"
 msgstr ""
 
 #: includes/class-wcdp-hooks.php:280
-#: includes/wc-templates/myaccount/orders.php:103
 msgid "Donate now"
 msgstr ""
 
@@ -1381,12 +1380,12 @@ msgstr ""
 msgid "The following addresses will be used in donation forms by default."
 msgstr ""
 
-#: includes/wc-templates/myaccount/orders.php:50
+#: includes/wc-templates/myaccount/orders.php:57
 msgctxt "hash before donation number"
 msgid "#"
 msgstr ""
 
-#: includes/wc-templates/myaccount/orders.php:104
+#: includes/wc-templates/myaccount/orders.php:110
 msgid "No donation has been made yet."
 msgstr ""
 
@@ -1399,32 +1398,32 @@ msgstr ""
 msgid "Donation updates"
 msgstr ""
 
-#: includes/wc-templates/order/order-details.php:44
+#: includes/wc-templates/order/order-details.php:52
 msgid "Donation details"
 msgstr ""
 
-#: wc-donation-platform.php:114
+#: wc-donation-platform.php:119
 msgid "Donation Platform for WooCommerce requires WooCommerce to be installed & activated."
 msgstr ""
 
 #. translators: %s required WC version
-#: wc-donation-platform.php:117
+#: wc-donation-platform.php:122
 msgid "Donation Platform for WooCommerce is inactive. This version of Donation Platform for WooCommerce requires WooCommerce %s or newer. Please update WooCommerce and run all database migrations."
 msgstr ""
 
-#: wc-donation-platform.php:134
-msgid "View WCDP settings"
+#: wc-donation-platform.php:139
+msgid "View settings"
 msgstr ""
 
-#: wc-donation-platform.php:134
+#: wc-donation-platform.php:139
 msgid "Settings"
 msgstr ""
 
-#: wc-donation-platform.php:152
+#: wc-donation-platform.php:157
 msgid "View Documentation of Donation Platform for WooCommerce"
 msgstr ""
 
-#: wc-donation-platform.php:152
+#: wc-donation-platform.php:157
 msgid "Documentation"
 msgstr ""
 

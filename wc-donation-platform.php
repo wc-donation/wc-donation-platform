@@ -136,7 +136,7 @@ if (!class_exists('WCDP')) {
         public static function plugin_action_links(array $links): array
         {
             $plugin_links = array(
-                'settings' => '<a href="' . admin_url('admin.php?page=wc-settings&tab=wc-donation-platform') . '" aria-label="' . esc_attr__('View WCDP settings', 'wc-donation-platform') . '">' . esc_html__('Settings', 'wc-donation-platform') . '</a>',
+                'settings' => '<a href="' . admin_url('admin.php?page=wc-settings&tab=wc-donation-platform') . '" aria-label="' . esc_attr__('View settings', 'wc-donation-platform') . '">' . esc_html__('Settings', 'wc-donation-platform') . '</a>',
             );
 
             return array_merge($plugin_links, $links);
