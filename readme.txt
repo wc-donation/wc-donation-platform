@@ -172,10 +172,13 @@ tweak: improved invalid nonce handling
 tweak: mark link as rel="nofollow" for improved SEO
 tweak: use net revenue (excl. shipping etc.) to calculate donation revenue in progress bar
 tweak: update supported WP version to 6.5
-tweak: update supported WC version to 8.7.0
+tweak: update supported WC version to 8.9.3
 tweak: add error message to AJAX donation form / progress bar render
 tweak: add blueprint.json for WordPress playground
 tweak: decrease priority of filename filter
+chore: update templates
+fix: remove dependencies from js/css files to improve compatibility with some themes
+fix: make sure single product pages are not overwritten by theme
 fix: checkout filter now returns the original value
 fix: improved compatibility with rankmath SEO plugin on Product Pages
 fix: fix Thank you certificate not sending
@@ -187,7 +190,7 @@ fix: skip orders in Leaderboard that are not of type WC_ORDER
 fix: unexpected price change for shipping fee leads to errors
 fix: fix js error on booking success page
 
-= 1.3.1 2024-01-30 =
+= 1.3.1 2024-01-30 2024-01-30 =
 new: new progress bar styles
 new: use "current" in progress & leaderboard shortcode to use current page id
 new: donation product is added to the checkout on page load, improving compatibility with WooCommerce Gutenberg Checkout Block
