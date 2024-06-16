@@ -20,10 +20,10 @@ jobs:
         run: rsync -av --prune-empty-dirs --exclude 'node_modules/*' --exclude 'wc-donation-platform/*' --exclude '.github/*' --exclude 'package-lock.json' --exclude 'pnpm-lock.yaml' --exclude '.idea/*' --exclude 'result/*' --exclude '.git/*' --exclude '.gitignore' ./ result/wc-donation-platform
 
       - name: Create zip file
-        run: cd ./result && zip -r wc-donation-platform-dev.zip ./wc-donation-platform
+        run: cd ./result && zip -r wc-donation-platform.1.3b.zip ./wc-donation-platform
 
       - name: Cleanup tmp files
-        run: rm ./wc-donation-platform -r && cd ..
+        run: rm ./result/wc-donation-platform -r
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
