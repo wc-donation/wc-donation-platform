@@ -14,10 +14,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create Folder
-        run: mkdir result
+        run: mkdir -p result/wc-donation-platform
+
+      - name: Copy Files
+        run: rsync -av --prune-empty-dirs --exclude 'node_modules/*' --exclude 'wc-donation-platform/*' --exclude '.github/*' --exclude 'package-lock.json' --exclude 'pnpm-lock.yaml' --exclude '.idea/*' --exclude 'result/*' --exclude '.git/*' --exclude '.gitignore' ./ result/wc-donation-platform
+
+      - name: Create Folder
+        run: cd result
 
       - name: Create zip file
-        run: zip -r result/wc-donation-platform.zip . -x "node_modules/*" "./.github/*" "package-lock.json" "pnpm-lock.yaml" ".idea/*" "result/*" ".git/*" ".gitignore"
+        run: zip -r wc-donation-platform-dev.zip ./wc-donation-platform
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
