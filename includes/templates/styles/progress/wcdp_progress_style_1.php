@@ -38,3 +38,4 @@ $label = sprintf($label, wc_price($revenue), wc_price($atts['goal']));
             <div class="wcdp-label"><?php echo $label; ?></div>
         </div>
     </div>
+</div>
