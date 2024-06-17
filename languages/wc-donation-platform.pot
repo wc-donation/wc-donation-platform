@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-17T20:24:52+02:00\n"
+"POT-Creation-Date: 2024-06-17T21:02:52+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -1367,12 +1367,12 @@ msgstr ""
 msgid "Browse projects"
 msgstr ""
 
-#: includes/wc-templates/myaccount/my-address.php:25
-#: includes/wc-templates/myaccount/my-address.php:34
+#: includes/wc-templates/myaccount/my-address.php:28
+#: includes/wc-templates/myaccount/my-address.php:37
 msgid "Donor address"
 msgstr ""
 
-#: includes/wc-templates/myaccount/my-address.php:45
+#: includes/wc-templates/myaccount/my-address.php:48
 msgid "The following addresses will be used in donation forms by default."
 msgstr ""
 
@@ -1386,11 +1386,11 @@ msgid "No donation has been made yet."
 msgstr ""
 
 #. translators: 1: order number 2: order date 3: order status
-#: includes/wc-templates/myaccount/view-order.php:27
+#: includes/wc-templates/myaccount/view-order.php:30
 msgid "Donation #%1$s was placed on %2$s and is currently %3$s."
 msgstr ""
 
-#: includes/wc-templates/myaccount/view-order.php:36
+#: includes/wc-templates/myaccount/view-order.php:39
 msgid "Donation updates"
 msgstr ""
 
