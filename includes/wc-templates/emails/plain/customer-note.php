@@ -9,9 +9,12 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
- *
- * @see https://docs.woocommerce.com/document/template-structure/
+ * 
  * forked from WooCommerce\Templates
+ *
+ * @see https://woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates\Emails\Plain
+ * @version 3.7.0
  */
 
 defined('ABSPATH') || exit;
@@ -26,7 +29,7 @@ echo esc_html__('The following note has been added to your donation:', 'wc-donat
 
 echo "----------\n\n";
 
-echo esc_html(wptexturize($customer_note)) . "\n\n";
+echo wptexturize($customer_note) . "\n\n"; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 
 echo "----------\n\n";
 
