@@ -335,7 +335,10 @@ class WCDP_Form
         wp_register_script('wc-donation-platform',
             WCDP_DIR_URL . 'assets/js/wcdp.min.js',
             array(),
-            WCDP_VERSION
+            WCDP_VERSION,
+            array(
+                'strategy'  => 'defer',
+            )
         );
 
         //Only enqueue if needed

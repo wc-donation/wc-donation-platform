@@ -195,7 +195,7 @@ jQuery( function( $ ) {
 				currentFormData = $("#wcdp-ajax-send").serialize();
 				wcdp_submit();
 			}
-            $('.woocommerce-checkout select').selectWoo();
+            $('form.woocommerce-checkout select').selectWoo();
 		} finally {
 			$( '#wcdp-ajax-send,.wcdp_options' ).trigger('change');
 			setTimeout(express_checkout_heading, express_heading_timeout);
