@@ -177,13 +177,14 @@ tweak: add error message to AJAX donation form / progress bar render
 tweak: add blueprint.json for WordPress playground
 tweak: decrease priority of filename filter
 chore: update templates
+fix: layout issue of progress bar shortcode style 1
 fix: remove dependencies from js/css files to improve compatibility with some themes
 fix: make sure single product pages are not overwritten by theme
 fix: checkout filter now returns the original value
 fix: improved compatibility with rankmath SEO plugin on Product Pages
 fix: fix Thank you certificate not sending
 fix: remove strict type declarations
-fix: wcdp_checkout_donation_calculation being called to early
+fix: wcdp_checkout_donation_calculation being called too early
 fix: leaderboard "Show more" button no longer triggers the donation form
 fix: replace deprecated function
 fix: skip orders in Leaderboard that are not of type WC_ORDER
