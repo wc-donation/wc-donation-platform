@@ -176,7 +176,8 @@ tweak: update supported WC version to 8.9.3
 tweak: add error message to AJAX donation form / progress bar render
 tweak: add blueprint.json for WordPress playground
 tweak: decrease priority of filename filter
-chore: update templates
+tweak: resolve js errors by using optional chaining operator
+tweak: update templates
 fix: layout issue of progress bar shortcode style 1
 fix: remove dependencies from js/css files to improve compatibility with some themes
 fix: make sure single product pages are not overwritten by theme
