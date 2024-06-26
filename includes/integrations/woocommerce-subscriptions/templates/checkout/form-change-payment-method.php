@@ -82,7 +82,7 @@ if (!defined('ABSPATH')) {
                 <span class="update-all-subscriptions-payment-method-wrap">
 				<?php
                 // translators: $1: opening <strong> tag, $2: closing </strong> tag
-                $label = sprintf(esc_html__('Update the payment method used for %1$sall%2$s of my current regular donations.', 'wc-donation-platform'), '<strong>', '</strong>');
+                $label = sprintf(esc_html__('Update the payment method used for %1$sall%2$s of my current recurring donations.', 'wc-donation-platform'), '<strong>', '</strong>');
 
                 woocommerce_form_field(
                     'update_all_subscriptions_payment_method',

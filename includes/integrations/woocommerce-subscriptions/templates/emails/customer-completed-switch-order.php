@@ -15,7 +15,7 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
 
 <?php /* translators: %s: Customer first name */ ?>
     <p><?php printf(esc_html__('Hi %s,', 'woocommerce-subscriptions'), esc_html($order->get_billing_first_name())); ?></p>
-    <p><?php esc_html_e('You have successfully updated your recurring donation. Your new regular donation details are shown below for your reference:', 'wc-donation-platform'); ?></p>
+    <p><?php esc_html_e('You have successfully updated your recurring donation. Your new recurring donation details are shown below for your reference:', 'wc-donation-platform'); ?></p>
 
 <?php
 do_action('woocommerce_subscriptions_email_order_details', $order, $sent_to_admin, $plain_text, $email);

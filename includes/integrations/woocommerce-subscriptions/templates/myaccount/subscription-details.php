@@ -92,7 +92,7 @@ if (!defined('ABSPATH')) {
 </table>
 
 <?php if ($notes = $subscription->get_customer_order_notes()) : ?>
-    <h2><?php esc_html_e('Regular Donation updates', 'wc-donation-platform'); ?></h2>
+    <h2><?php esc_html_e('Recurring Donation updates', 'wc-donation-platform'); ?></h2>
     <ol class="woocommerce-OrderUpdates commentlist notes">
         <?php foreach ($notes as $note) : ?>
             <li class="woocommerce-OrderUpdate comment note">

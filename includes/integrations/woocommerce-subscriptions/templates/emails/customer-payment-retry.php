@@ -15,7 +15,7 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
 <?php /* translators: %s: Customer first name */ ?>
     <p><?php printf(esc_html__('Hi %s,', 'woocommerce-subscriptions'), esc_html($order->get_billing_first_name())); ?></p>
 <?php /* translators: %s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours' */ ?>
-    <p><?php printf(esc_html_x('The automatic payment to renew your regular donation has failed. We will retry the payment %s.', 'In customer renewal invoice email', 'wc-donation-platform'), esc_html(wcs_get_human_time_diff($retry->get_time()))); ?></p>
+    <p><?php printf(esc_html_x('The automatic payment to renew your recurring donation has failed. We will retry the payment %s.', 'In customer renewal invoice email', 'wc-donation-platform'), esc_html(wcs_get_human_time_diff($retry->get_time()))); ?></p>
 
 <?php /* translators: %1$s %2$s: link markup to checkout payment url, note: no full stop due to url at the end */ ?>
     <p><?php echo wp_kses(sprintf(_x('To reactivate the recurring donation now, you can also log in and donate from your account page: %1$sPay Now &raquo;%2$s', 'In customer renewal invoice email', 'wc-donation-platform'), '<a href="' . esc_url($order->get_checkout_payment_url()) . '">', '</a>'), array('a' => array('href' => true))); ?></p>

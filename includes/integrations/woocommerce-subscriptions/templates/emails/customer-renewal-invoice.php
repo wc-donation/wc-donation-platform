@@ -28,7 +28,7 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
     <p><?php echo wp_kses(
             sprintf(
             // translators: %1$s: name of the blog, %2$s: link to checkout payment url, note: no full stop due to url at the end
-                _x('The automatic payment to renew your regular donation with %1$s has failed. Please log in and set up a different payment option: %2$s', 'In customer renewal invoice email', 'wc-donation-platform'),
+                _x('The automatic payment to renew your recurring donation with %1$s has failed. Please log in and set up a different payment option: %2$s', 'In customer renewal invoice email', 'wc-donation-platform'),
                 esc_html(get_bloginfo('name')),
                 '<a href="' . esc_url($order->get_checkout_payment_url()) . '">' . esc_html__('Pay Now &raquo;', 'woocommerce-subscriptions') . '</a>'
             ), array('a' => array('href' => true))); ?>

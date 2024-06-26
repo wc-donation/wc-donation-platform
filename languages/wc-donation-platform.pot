@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-17T21:02:52+02:00\n"
+"POT-Creation-Date: 2024-06-27T00:47:11+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -95,31 +95,31 @@ msgstr ""
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:448
+#: includes/class-wcdp-form.php:451
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:455
+#: includes/class-wcdp-form.php:458
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:469
+#: includes/class-wcdp-form.php:472
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:487
+#: includes/class-wcdp-form.php:490
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:494
+#: includes/class-wcdp-form.php:497
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:547
+#: includes/class-wcdp-form.php:550
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:549
+#: includes/class-wcdp-form.php:552
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
@@ -749,7 +749,7 @@ msgstr ""
 
 #. translators: $1: opening <strong> tag, $2: closing </strong> tag
 #: includes/integrations/woocommerce-subscriptions/templates/checkout/form-change-payment-method.php:85
-msgid "Update the payment method used for %1$sall%2$s of my current regular donations."
+msgid "Update the payment method used for %1$sall%2$s of my current recurring donations."
 msgstr ""
 
 #. translators: %s recurring donation number
@@ -815,7 +815,7 @@ msgid "We have finished processing your recurring donation."
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/customer-completed-switch-order.php:18
-msgid "You have successfully updated your recurring donation. Your new regular donation details are shown below for your reference:"
+msgid "You have successfully updated your recurring donation. Your new recurring donation details are shown below for your reference:"
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/customer-on-hold-renewal-order.php:19
@@ -824,8 +824,9 @@ msgstr ""
 
 #. translators: %s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
 #: includes/integrations/woocommerce-subscriptions/templates/emails/customer-payment-retry.php:18
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-payment-retry.php:18
 msgctxt "In customer renewal invoice email"
-msgid "The automatic payment to renew your regular donation has failed. We will retry the payment %s."
+msgid "The automatic payment to renew your recurring donation has failed. We will retry the payment %s."
 msgstr ""
 
 #. translators: %1$s %2$s: link markup to checkout payment url, note: no full stop due to url at the end
@@ -848,7 +849,7 @@ msgstr ""
 #. translators: %1$s: name of the blog, %2$s: link to checkout payment url, note: no full stop due to url at the end
 #: includes/integrations/woocommerce-subscriptions/templates/emails/customer-renewal-invoice.php:31
 msgctxt "In customer renewal invoice email"
-msgid "The automatic payment to renew your regular donation with %1$s has failed. Please log in and set up a different payment option: %2$s"
+msgid "The automatic payment to renew your recurring donation with %1$s has failed. Please log in and set up a different payment option: %2$s"
 msgstr ""
 
 #. translators: $1-$2: opening and closing <a> tags $3: order's order number $4: date of order in <time> element
@@ -918,12 +919,6 @@ msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-on-hold-renewal-order.php:18
 msgid "Thanks for your renewal donation. It’s on-hold until we confirm that payment has been received. In the meantime, here’s a reminder of your donation:"
-msgstr ""
-
-#. translators: %s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/customer-payment-retry.php:18
-msgctxt "In customer renewal invoice email"
-msgid "The automatic payment to renew your recurring donation has failed. We will retry the payment %s."
 msgstr ""
 
 #. translators: %1$s: link to checkout payment url, note: no full stop due to url at the end
@@ -1019,7 +1014,7 @@ msgid "Last donation date"
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/subscription-details.php:95
-msgid "Regular Donation updates"
+msgid "Recurring Donation updates"
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/subscription-totals-table.php:18
