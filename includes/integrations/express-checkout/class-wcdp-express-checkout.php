@@ -143,7 +143,7 @@ class WCDP_Express_Checkout
     {
         $label = ' ' . __('(Donation)', 'wc-donation-platform');
 
-        $label = strip_tags($label);
+        $label = wp_strip_all_tags($label);
 
         // Strip any HTML entities.
         // Props https://stackoverflow.com/questions/657643/how-to-remove-html-special-chars .
