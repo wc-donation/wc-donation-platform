@@ -106,7 +106,7 @@ class WCDP_Leaderboard
             } else {
                 $orders = $this->get_orders_db_id($product_id, $orderby, $limit);
             }
-            set_transient($cache_key, json_encode($orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
+            set_transient($cache_key, wp_json_encode($orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
 
             // Save the cache key in a separate option for later deletion.
             $cache_keys_option = get_option('wcdp_transient_cache_keys', array());

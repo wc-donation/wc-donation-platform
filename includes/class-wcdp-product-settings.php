@@ -109,7 +109,7 @@ class WCDP_Product_Settings
                 $prices[] = (float)$value;
             }
             sort($prices);
-            $product_settings[1] = json_encode($prices);
+            $product_settings[1] = wp_json_encode($prices);
         } else {
             $product_settings[1] = '';
             if ($product_settings[0] == 1) {

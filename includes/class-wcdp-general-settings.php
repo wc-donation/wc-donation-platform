@@ -310,7 +310,7 @@ class WCDP_General_Settings
                 'variable' => $variable,
             );
         }
-        update_option('wcdp_fee_recovery_values', json_encode($wcdp_fee_recovery_values), 'yes');
+        update_option('wcdp_fee_recovery_values', wp_json_encode($wcdp_fee_recovery_values), 'yes');
 
         woocommerce_update_options(self::get_settings());
     }
