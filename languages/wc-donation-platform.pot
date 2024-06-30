@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-27T00:47:11+02:00\n"
+"POT-Creation-Date: 2024-06-30T14:04:53+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -529,7 +529,7 @@ msgstr ""
 msgid "Anonymous donor"
 msgstr ""
 
-#. translators: %s: time difference e.g. 1 week ago or 3 months ago
+#. Translators: %s: time difference e.g. 1 week ago or 3 months ago
 #: includes/class-wcdp_leaderboard.php:497
 msgid "%s ago"
 msgstr ""
@@ -657,17 +657,17 @@ msgstr ""
 msgid "Dear %1$s %2$s,"
 msgstr ""
 
-#. translators: %s Shop Name
+#. Translators: %s Shop Name
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:79
 msgid "Here is the receipt for your generous donation to %s. Thank you so much for donating."
 msgstr ""
 
-#. translators: %s Donation number
+#. Translators: %s Donation number
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:88
 msgid "Summary of your donation #%s"
 msgstr ""
 
-#. translators: %s Shop Name
+#. Translators: %s Shop Name
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:98
 msgid "Organization:"
 msgstr ""
@@ -703,11 +703,11 @@ msgstr ""
 
 #. Translators: %$1s shop name
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:182
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:57
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:58
 msgid "Your friends at %s"
 msgstr ""
 
-#. translators: Donation Number
+#. Translators: Donation Number
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:34
 msgid "#%s"
 msgstr ""
@@ -721,12 +721,12 @@ msgstr ""
 msgid "Thank you"
 msgstr ""
 
-#. translators: 1. donor firstname, 2. donor second name
+#. Translators: 1. donor firstname, 2. donor second name
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:47
 msgid "%1$s %2$s"
 msgstr ""
 
-#. translators: 1. donation amount, 2. shop name
+#. Translators: 1. donation amount, 2. shop name
 #: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:49
 msgid "for donating %1$s to %2$s."
 msgstr ""
@@ -739,7 +739,7 @@ msgstr ""
 msgid "Signature"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:62
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:64
 msgid "Donation Date"
 msgstr ""
 
@@ -891,6 +891,7 @@ msgstr ""
 msgid "Last Donation Date: %s"
 msgstr ""
 
+#. translators: %s link to donation
 #. translators: %s donation number
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:46
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:44
@@ -977,8 +978,8 @@ msgctxt "in plain emails for subscription information"
 msgid "Recurring amount: %s"
 msgstr ""
 
-#. Translators: Placeholder is the My Account URL.
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/subscription-info.php:49
+#. Translators: %s My Account URL.
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/subscription-info.php:51
 msgid "This recurring donation is set to renew automatically using your payment method on file. You can manage or cancel this recurring donation from your my account page. %s"
 msgid_plural "These recurring donations are set to renew automatically using your payment method on file. You can manage or cancel your recurring donations from your my account page. %s"
 msgstr[0] ""
@@ -989,7 +990,7 @@ msgid "Recurring donation information"
 msgstr ""
 
 #. translators: %s links
-#: includes/integrations/woocommerce-subscriptions/templates/emails/subscription-info.php:68
+#: includes/integrations/woocommerce-subscriptions/templates/emails/subscription-info.php:69
 msgid "This recurring donation is set to renew automatically using your payment method on file. You can manage or cancel this recurring donation from your %smy account page%s."
 msgid_plural "These recurring donations are set to renew automatically using your payment method on file. You can manage or cancel your recurring donations from your %smy account page%s."
 msgstr[0] ""
