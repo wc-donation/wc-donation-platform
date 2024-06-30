@@ -35,7 +35,7 @@ do_action('wcdp_before_product_settings');
             <label><?php esc_html_e('Donation range', 'wc-donation-platform'); ?></label>
             <span class="wrap">
 				<?php
-                //Translators: %1$d minimum donation amount, %2$d maximum donation amount
+                // Translators: %1$d minimum donation amount, %2$d maximum donation amount
                 printf(esc_html__('Min: %1$s, Max: %2$s', 'wc-donation-platform'), wc_price($wcdp_min_amount), wc_price($wcdp_max_amount)); ?>&nbsp;
 				<a href="<?php echo admin_url('admin.php?page=wc-settings&tab=wc-donation-platform'); ?>"
                    target="_blank"><?php esc_html_e('Edit', 'wc-donation-platform'); ?></a>

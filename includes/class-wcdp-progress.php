@@ -125,7 +125,7 @@ class WCDP_Progress
             $width = 100;
         }
 
-        //Translators: %1$s: donation amount raised, %2$s: fundraising goal
+        // Translators: %1$s: donation amount raised, %2$s: fundraising goal
         $label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
 
         $template = '';

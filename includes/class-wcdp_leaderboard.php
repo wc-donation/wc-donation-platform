@@ -493,7 +493,7 @@ class WCDP_Leaderboard
     private function get_human_time_diff(int $timestamp): string
     {
         $human_diff = '<span class="wcdp-emphasized">' . human_time_diff($timestamp) . '</span>';
-        //translators: %s: time difference e.g. 1 week ago or 3 months ago
+        // Translators: %s: time difference e.g. 1 week ago or 3 months ago
         return sprintf(esc_html__('%s ago', 'wc-donation-platform'), $human_diff);
     }
 

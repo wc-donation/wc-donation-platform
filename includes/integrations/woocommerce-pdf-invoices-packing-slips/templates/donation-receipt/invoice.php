@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
                 <div class="divider-top"></div>
                 <div class="sender">
                     <?php
-                    //Translators: %$1s blog name, %2$s shop base address, %3$s shop base postal code, %4$s %2$s shop base city
+                    // Translators: %$1s blog name, %2$s shop base address, %3$s shop base postal code, %4$s %2$s shop base city
                     printf(esc_html__('%1$s, %2$s, %3$s %4$s', 'wc-donation-platform'), $shop_name, esc_html(WC()->countries->get_base_address()), esc_html(WC()->countries->get_base_postcode()), esc_html(WC()->countries->get_base_city()));
                     ?>
                 </div>
@@ -63,19 +63,19 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
     <p class="right">
         <?php
-        //Translators: %$1s shop city, %$2 date of receipt creation
+        // Translators: %$1s shop city, %$2 date of receipt creation
         printf(esc_html__('%1$s, %2$s', 'wc-donation-platform'), esc_html(WC()->countries->get_base_city()), esc_html($this->get_date()->date_i18n( wc_date_format() )));
         ?>
     </p>
     <p>
         <?php
-        //Translators: %$1s firstname, %$2s lastname
+        // Translators: %$1s firstname, %$2s lastname
         printf(esc_html__('Dear %1$s %2$s,', 'wc-donation-platform'), esc_html($this->order->get_billing_first_name()), esc_html($this->order->get_billing_last_name()));
         ?>
     </p>
     <p>
         <?php
-        //translators: %s Shop Name
+        // Translators: %s Shop Name
         printf(esc_html__('Here is the receipt for your generous donation to %s. Thank you so much for donating.', 'wc-donation-platform'), $shop_name);
         ?>
     </p>
@@ -84,7 +84,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
         <tr>
             <th class="order-number">
                 <?php
-                //translators: %s Donation number
+                // Translators: %s Donation number
                 printf(esc_html__('Summary of your donation #%s', 'wc-donation-platform'), intval($this->order->get_id()));
                 ?>
             </th>
@@ -94,7 +94,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
         <tr class="organization">
             <td>
                 <?php
-                //translators: %s Shop Name
+                // Translators: %s Shop Name
                 esc_html_e('Organization:', 'wc-donation-platform');
                 ?>
             </td>
@@ -172,13 +172,13 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     </table>
     <div class="divider"></div>
     <p>
-        <?php //Translators: %$1s, %$2s shop name
+        <?php // Translators: %$1s, %$2s shop name
         printf(esc_html__('%1$s is a registered non-profit organization. Your donation is tax deductible to the extent allowable by law. No goods or service were provided by %2$s in return for this donation.', 'wc-donation-platform'), $shop_name, $shop_name); ?>
     </p>
     <div class="divider"></div>
     <p>
         <?php esc_html_e('Best regards,', 'wc-donation-platform'); ?><br>
-        <?php //Translators: %$1s shop name
+        <?php // Translators: %$1s shop name
         printf(esc_html__('Your friends at %s', 'wc-donation-platform'), $shop_name); ?>
     </p>
 
