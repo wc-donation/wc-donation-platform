@@ -33,6 +33,7 @@ foreach ($subscriptions as $subscription) {
     echo sprintf(_x('Recurring amount: %s', 'in plain emails for subscription information', 'wc-donation-platform'), $subscription->get_formatted_order_total());
 
     if ($is_parent_order && $subscription->get_time('next_payment') > 0) {
+        // Translators: %s next payment date
         echo "\n" . sprintf(esc_html__('Next payment: %s', 'woocommerce-subscriptions'), esc_html(date_i18n(wc_date_format(), $subscription->get_time('next_payment', 'site'))));
     }
 
@@ -46,8 +47,8 @@ if ($has_automatic_renewal && !$is_admin_email && $subscription->get_time('next_
         $my_account_url = wc_get_endpoint_url('subscriptions', '', wc_get_page_permalink('myaccount'));
     }
 
+    // Translators: %s My Account URL.
     echo wp_kses_post(sprintf(_n(
-    // Translators: Placeholder is the My Account URL.
         'This recurring donation is set to renew automatically using your payment method on file. You can manage or cancel this recurring donation from your my account page. %s',
         'These recurring donations are set to renew automatically using your payment method on file. You can manage or cancel your recurring donations from your my account page. %s',
         count($subscriptions),

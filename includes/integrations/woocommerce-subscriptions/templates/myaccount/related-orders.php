@@ -49,7 +49,7 @@ if (!defined('ABSPATH')) {
         <td class="order-number woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
             data-title="<?php esc_attr_e('Donation Number', 'wc-donation-platform'); ?>">
             <a href="<?php echo esc_url($order->get_view_order_url()); ?>">
-                <?php echo sprintf(esc_html_x('#%s', 'hash before order number', 'woocommerce-subscriptions'), esc_html($order->get_order_number())); ?>
+                <?php /* Translators: hash before order number */ echo sprintf(esc_html_x('#%s', 'hash before order number', 'woocommerce-subscriptions'), esc_html($order->get_order_number())); ?>
             </a>
         </td>
         <td class="order-date woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"

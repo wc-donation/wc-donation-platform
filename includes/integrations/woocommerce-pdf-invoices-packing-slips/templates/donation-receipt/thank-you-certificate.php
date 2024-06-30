@@ -54,7 +54,9 @@ if ($url) :?>
                     <img src="<?php echo $url_signature; ?>" style="width: 5cm;"
                          alt="<?php esc_html_e('Signature', 'wc-donation-platform'); ?>"><br>
                 <?php endif; ?>
-                <p><?php printf(esc_html__('Your friends at %s', 'wc-donation-platform'), $shop_name); ?></p>
+                <p><?php // Translators: %$1s shop name
+                    printf(esc_html__('Your friends at %s', 'wc-donation-platform'), $shop_name); ?>
+                </p>
             </th>
             <th class="right-table">
                 <h4><?php echo esc_html(wc_format_datetime($order->get_date_created())); ?></h4>

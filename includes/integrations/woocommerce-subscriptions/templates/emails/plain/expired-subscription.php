@@ -40,7 +40,7 @@ if (!empty($end_time)) {
 }
 
 do_action('woocommerce_email_order_meta', $subscription, $sent_to_admin, $plain_text, $email);
-
+/* translators: %s link to donation */
 echo "\n" . sprintf(_x('View recurring donation: %s', 'in plain emails for subscription information', 'wc-donation-platform'), wcs_get_edit_post_link($subscription->get_id())) . "\n";
 
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";

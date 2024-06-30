@@ -38,7 +38,7 @@ if (!defined('ABSPATH')) {
                 <tr class="order woocommerce-orders-table__row woocommerce-orders-table__row--status-<?php echo esc_attr($subscription->get_status()); ?>">
                     <td class="subscription-id order-number woocommerce-orders-table__cell woocommerce-orders-table__cell-subscription-id woocommerce-orders-table__cell-order-number"
                         data-title="<?php esc_attr_e('ID', 'woocommerce-subscriptions'); ?>">
-                        <a href="<?php echo esc_url($subscription->get_view_order_url()); ?>"><?php echo esc_html(sprintf(_x('#%s', 'hash before order number', 'woocommerce-subscriptions'), $subscription->get_order_number())); ?></a>
+                        <a href="<?php echo esc_url($subscription->get_view_order_url()); ?>"><?php /* Translators: hash before order number */ echo esc_html(sprintf(_x('#%s', 'hash before order number', 'woocommerce-subscriptions'), $subscription->get_order_number())); ?></a>
                         <?php do_action('woocommerce_my_subscriptions_after_subscription_id', $subscription); ?>
                     </td>
                     <td class="subscription-status order-status woocommerce-orders-table__cell woocommerce-orders-table__cell-subscription-status woocommerce-orders-table__cell-order-status"
