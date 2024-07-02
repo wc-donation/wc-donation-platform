@@ -26,10 +26,13 @@ class WCDP_Feedback
         add_action('admin_footer', array($this, 'get_source_data_callback'));
 
         //send survey response to WCDP server
-        //add_action('wp_ajax_wcdp_feedback_survey', array($this, 'send_survey_data'));
+        add_action('wp_ajax_wcdp_feedback_survey', array($this, 'send_survey_data'));
 
         //do not show survey again after dismiss for several days
         //add_action('wp_ajax_wcdp_feedback_survey_dismiss', array($this, 'send_survey_data_dismiss'));
+
+        // Ask users for reviews
+        add_action( 'current_screen', array( $this, 'add_review_notice' ) );
 
         //options of the
         $this->deactivation_survey_options = array(
@@ -92,6 +95,34 @@ class WCDP_Feedback
                 'text' => '😍',
             ),
         );
+    }
+
+    /**
+     * Ask users for reviews on wordpress.org
+     *
+     * @return void
+     * @since 1.3.2
+     */
+    public function add_review_notice() {
+        $key = 'wcdp_review_notice_' . WCDP_VERSION;
+        if (!class_exists('WC_Admin_Notices') || !$this->is_wc_relevant_page() || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
+        $html = '<h3><a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">' . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform') . '</a></h3>';
+        WC_Admin_Notices::add_custom_notice($key, $html);
+    }
+
+    /**
+     * Check if the current admin page is WooCommerce order edit page
+     *
+     * @return bool
+     * @since 1.3.2
+    */
+    private function is_wc_relevant_page(): bool
+    {
+        if (!function_exists('get_current_screen')) {
+            return false;
+        }
+        $screen = get_current_screen();
+        return isset($screen->id) && $screen->id === 'woocommerce_page_wc-orders';
     }
 
     /**

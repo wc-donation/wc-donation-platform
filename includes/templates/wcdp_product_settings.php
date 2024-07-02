@@ -230,7 +230,7 @@ do_action('wcdp_before_product_settings');
 
     <div class="options_group">
         <p class="wcdp_ask_review">
-            <a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/"
+            <a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post"
                target="_blank"><?php esc_html_e('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform'); ?></a>
         </p>
     </div>

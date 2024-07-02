@@ -261,12 +261,7 @@ class WCDP_General_Settings
             ),
             array(
                 'title' => __('Support', 'wc-donation-platform'),
-                'desc' => sprintf(
-                    // Translators: %1$s & %2$s link tags
-                    __('If you like Donation Platform for WooCommerce, %1$splease consider rating it with ★★★★★ on wordpress.org%2$s', 'wc-donation-platform'),
-                    '<a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">',
-                    '</a>'
-                ),
+                'desc' => '<a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">' . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform') . '</a>',
                 'type' => 'title',
                 'id' => 'wcdp_settings_support',
             ),
