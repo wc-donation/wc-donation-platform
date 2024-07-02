@@ -20,15 +20,16 @@ class WCDP_Feedback
     public function __construct()
     {
         //add feedback survey (css, js & html) to product page
-        add_action('wcdp_before_product_settings', array($this, 'wcdp_add_feedback_survey'));
+        //add_action('wcdp_before_product_settings', array($this, 'wcdp_add_feedback_survey'));
 
         //add deactivation survey (css, js & html) to plugin.php page
         add_action('admin_footer', array($this, 'get_source_data_callback'));
 
         //send survey response to WCDP server
-        add_action('wp_ajax_wcdp_feedback_survey', array($this, 'send_survey_data'));
+        //add_action('wp_ajax_wcdp_feedback_survey', array($this, 'send_survey_data'));
+
         //do not show survey again after dismiss for several days
-        add_action('wp_ajax_wcdp_feedback_survey_dismiss', array($this, 'send_survey_data_dismiss'));
+        //add_action('wp_ajax_wcdp_feedback_survey_dismiss', array($this, 'send_survey_data_dismiss'));
 
         //options of the
         $this->deactivation_survey_options = array(
