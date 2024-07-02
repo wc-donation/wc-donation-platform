@@ -122,7 +122,7 @@ class WCDP_Feedback
             return false;
         }
         $screen = get_current_screen();
-        return isset($screen->id) && $screen->id === 'woocommerce_page_wc-orders';
+        return isset($screen->id) && $screen->id === 'woocommerce_page_wc-orders' && $_GET['action'] === 'edit';
     }
 
     /**
