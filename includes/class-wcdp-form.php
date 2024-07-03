@@ -103,13 +103,13 @@ class WCDP_Form
             }
 
             if (!isset(WC()->cart)) {
-                WCDP_Form::form_error_message('In the current view, the donation form is not available.');
+                WCDP_Form::form_error_message(__('In the current view, the donation form is not available.', 'wc-donation-platform'));
             } else if (!$product || !is_a($product, 'WC_Product')) {
-                WCDP_Form::form_error_message('Invalid project ID: This project is unknown.');
+                WCDP_Form::form_error_message(__('Invalid project ID: This project is unknown.', 'wc-donation-platform'));
             } else if (!is_a($product, 'WC_Product_Grouped') && !$product->is_purchasable()) {
-                WCDP_Form::form_error_message('Currently you can not donate to this project.');
+                WCDP_Form::form_error_message(__('Currently you can not donate to this project.', 'wc-donation-platform'));
             } else if (!$product->is_in_stock()) {
-                WCDP_Form::form_error_message('This project is currently not available.');
+                WCDP_Form::form_error_message(__('This project is currently not available.', 'wc-donation-platform'));
             } else {
                 $has_child = is_a($product, 'WC_Product_Variable') && $product->has_child();
 
@@ -156,10 +156,10 @@ class WCDP_Form
         return apply_filters('wcdp_is_donable', get_post_meta($id, '_donable', true) == 'yes');
     }
 
-    private static function form_error_message($message)
+    public static function form_error_message($message)
     {
         echo '<ul class="woocommerce-error wcdp-error-message" id="wcdp-ajax-error" role="alert"><li>';
-        esc_html_e($message, 'wc-donation-platform');
+        echo esc_html($message);
         echo '</li></ul>';
     }
 

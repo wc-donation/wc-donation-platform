@@ -24,16 +24,10 @@ echo '<span class="woocommerce-Price-amount wcdp_pp_amount" style="display:none 
 
 echo do_shortcode('[wcdp_progress id="' . $post->ID . '" style="2"]');
 
-if (!$product->is_purchasable() && $product->get_type() != 'grouped') {
-    return;
-}
-
-if ($product->is_in_stock()) {
-    /**
-     * Display Donation Form
-     */
-    echo WCDP_Form::wcdp_donation_form(array(
-        'id' => $post->ID,
-        'style' => '4',
-    ), true);
-}
+/**
+ * Display Donation Form
+ */
+echo WCDP_Form::wcdp_donation_form(array(
+    'id' => $post->ID,
+    'style' => '4',
+), true);

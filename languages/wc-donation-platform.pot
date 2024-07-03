@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-04T00:18:09+02:00\n"
+"POT-Creation-Date: 2024-07-04T00:46:40+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -93,6 +93,22 @@ msgstr ""
 
 #: includes/class-wcdp-form.php:96
 msgid "Please log in to donate."
+msgstr ""
+
+#: includes/class-wcdp-form.php:106
+msgid "In the current view, the donation form is not available."
+msgstr ""
+
+#: includes/class-wcdp-form.php:108
+msgid "Invalid project ID: This project is unknown."
+msgstr ""
+
+#: includes/class-wcdp-form.php:110
+msgid "Currently you can not donate to this project."
+msgstr ""
+
+#: includes/class-wcdp-form.php:112
+msgid "This project is currently not available."
 msgstr ""
 
 #: includes/class-wcdp-form.php:451
@@ -490,48 +506,48 @@ msgstr ""
 msgid "Name (optional)"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:331
+#: includes/class-wcdp_feedback.php:333
 msgid "Can you please help me to improve Donation Platform for WooCommerce?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:336
+#: includes/class-wcdp_feedback.php:338
 msgid "If you have a moment, please let me know how I can improve Donation Platform for WooCommerce for you. How do you like the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:349
+#: includes/class-wcdp_feedback.php:351
 msgid "Anything else you want to tell me?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:352
+#: includes/class-wcdp_feedback.php:354
 msgid "Comments & Suggestions for Improvement"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:358
+#: includes/class-wcdp_feedback.php:360
 msgid "Submit Feedback"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:360
+#: includes/class-wcdp_feedback.php:362
 msgid "Not now"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:363
-#: includes/class-wcdp_feedback.php:719
+#: includes/class-wcdp_feedback.php:365
+#: includes/class-wcdp_feedback.php:721
 msgid "By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:689
+#: includes/class-wcdp_feedback.php:691
 msgid "Can you please help me to improve the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:694
+#: includes/class-wcdp_feedback.php:696
 msgid "If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:713
+#: includes/class-wcdp_feedback.php:715
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:716
+#: includes/class-wcdp_feedback.php:718
 msgid "Skip & Deactivate"
 msgstr ""
 
