@@ -25,21 +25,19 @@ class WCDP_Polylang
                 $placeholder .= ', %s';
             }
             $placeholder = substr($placeholder, 2);
-            $query = "
+
+            $result = $wpdb->get_row($wpdb->prepare("
 					SELECT
 						SUM(ltoim.meta_value) as revenue
 					FROM
-						{$wpdb->prefix}woocommerce_order_itemmeta wcoim
-					LEFT JOIN
-						{$wpdb->prefix}woocommerce_order_items oi ON wcoim.order_item_id = oi.order_item_id
-					LEFT JOIN
-						{$wpdb->prefix}posts wpposts ON order_id = wpposts.ID
-					LEFT JOIN
-						{$wpdb->prefix}woocommerce_order_itemmeta ltoim ON ltoim.order_item_id = oi.order_item_id AND ltoim.meta_key = '_line_total'
+						          {$wpdb->prefix}woocommerce_order_itemmeta wcoim
+                        LEFT JOIN {$wpdb->prefix}woocommerce_order_items oi ON wcoim.order_item_id = oi.order_item_id
+                        LEFT JOIN {$wpdb->prefix}posts wpposts ON order_id = wpposts.ID
+                        LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta ltoim ON ltoim.order_item_id = oi.order_item_id AND ltoim.meta_key = '_line_total'
 					WHERE
-						wcoim.meta_key = '_product_id' AND wcoim.meta_value in (%s) AND wpposts.post_status = 'wc-completed';";
-
-            $result = $wpdb->get_row($wpdb->prepare($query, $placeholder), ARRAY_A);
+						  wcoim.meta_key = '_product_id' 
+					  AND wcoim.meta_value in (%s) 
+					  AND wpposts.post_status = 'wc-completed';", $placeholder), ARRAY_A);
             if (!is_null($result) && isset($result['revenue'])) {
                 $revenue = (float)$result['revenue'];
             } else {

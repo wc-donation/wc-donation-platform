@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-02T23:49:27+02:00\n"
+"POT-Creation-Date: 2024-07-04T00:18:09+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -124,8 +124,8 @@ msgid "Error: invalid nonce. Please reload the page and try again. If the proble
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:29
-#: includes/class-wcdp-hooks.php:236
-#: includes/class-wcdp-hooks.php:254
+#: includes/class-wcdp-hooks.php:237
+#: includes/class-wcdp-hooks.php:255
 msgid "Donations"
 msgstr ""
 
@@ -319,7 +319,7 @@ msgid "Support"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:264
-#: includes/class-wcdp_feedback.php:109
+#: includes/class-wcdp_feedback.php:112
 #: includes/templates/wcdp_product_settings.php:234
 msgid "If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org."
 msgstr ""
@@ -369,41 +369,41 @@ msgstr ""
 msgid "Your information will not be disclosed to third parties except when required by law, with your explicit consent, when necessary for providing our services such as payment processing, and in cases where it is in our legitimate interest, such as fraud prevention."
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:221
+#: includes/class-wcdp-hooks.php:222
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/related-orders.php:21
 msgid "Donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:222
+#: includes/class-wcdp-hooks.php:223
 msgid "Total"
 msgstr ""
 
 #. translators: %s: page
-#: includes/class-wcdp-hooks.php:252
+#: includes/class-wcdp-hooks.php:253
 msgid "Donations (page %d)"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:280
+#: includes/class-wcdp-hooks.php:281
 msgid "Donate now"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:371
+#: includes/class-wcdp-hooks.php:372
 msgid "Related projects"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:382
+#: includes/class-wcdp-hooks.php:383
 msgid "Donation notes"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:383
+#: includes/class-wcdp-hooks.php:384
 msgid "Notes about your donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:394
+#: includes/class-wcdp-hooks.php:395
 msgid "Learn more"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:444
+#: includes/class-wcdp-hooks.php:445
 msgid "Donation Platform"
 msgstr ""
 
@@ -439,86 +439,99 @@ msgstr ""
 msgid "{ORDER_COUNT} people have already contributed to this project."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:42
+#: includes/class-wcdp_feedback.php:45
 msgid "I no longer need the plugin."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:47
+#: includes/class-wcdp_feedback.php:50
 msgid "I found a better plugin."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:48
+#: includes/class-wcdp_feedback.php:51
 msgid "Please share which plugin."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:53
+#: includes/class-wcdp_feedback.php:56
 msgid "The plugin suddenly stopped working."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:54
-#: includes/class-wcdp_feedback.php:60
+#: includes/class-wcdp_feedback.php:57
+#: includes/class-wcdp_feedback.php:63
 msgid "Please share more details."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:59
+#: includes/class-wcdp_feedback.php:62
 msgid "I could not get the plugin to work."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:65
+#: includes/class-wcdp_feedback.php:68
 msgid "It's a temporary deactivation."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:70
+#: includes/class-wcdp_feedback.php:73
 #: includes/templates/wcdp_step_1_amount.php:91
 msgid "Other"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:71
+#: includes/class-wcdp_feedback.php:74
 msgid "Please share the reason."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:274
+#: includes/class-wcdp_feedback.php:131
+#: includes/class-wcdp_feedback.php:168
+msgid "Subscribe to the Donation Platform for WooCommerce Newsletter"
+msgstr ""
+
+#: includes/class-wcdp_feedback.php:157
+msgid "Email"
+msgstr ""
+
+#: includes/class-wcdp_feedback.php:161
+msgid "Name (optional)"
+msgstr ""
+
+#: includes/class-wcdp_feedback.php:331
 msgid "Can you please help me to improve Donation Platform for WooCommerce?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:279
+#: includes/class-wcdp_feedback.php:336
 msgid "If you have a moment, please let me know how I can improve Donation Platform for WooCommerce for you. How do you like the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:292
+#: includes/class-wcdp_feedback.php:349
 msgid "Anything else you want to tell me?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:295
+#: includes/class-wcdp_feedback.php:352
 msgid "Comments & Suggestions for Improvement"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:301
+#: includes/class-wcdp_feedback.php:358
 msgid "Submit Feedback"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:303
+#: includes/class-wcdp_feedback.php:360
 msgid "Not now"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:306
-#: includes/class-wcdp_feedback.php:662
+#: includes/class-wcdp_feedback.php:363
+#: includes/class-wcdp_feedback.php:719
 msgid "By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:632
+#: includes/class-wcdp_feedback.php:689
 msgid "Can you please help me to improve the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:637
+#: includes/class-wcdp_feedback.php:694
 msgid "If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:656
+#: includes/class-wcdp_feedback.php:713
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:659
+#: includes/class-wcdp_feedback.php:716
 msgid "Skip & Deactivate"
 msgstr ""
 
@@ -783,7 +796,7 @@ msgstr ""
 #: includes/integrations/woocommerce-subscriptions/templates/emails/admin-payment-retry.php:23
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:22
 msgctxt "In customer renewal invoice email"
-msgid "The automatic recurring payment for donation #%d from %s has failed. The payment will be retried %3$s."
+msgid "The automatic recurring payment for donation #%1$s from %2$s has failed. The payment will be retried %3$s."
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/admin-payment-retry.php:24
@@ -1231,6 +1244,11 @@ msgstr ""
 msgid "Donation number:"
 msgstr ""
 
+#: includes/wc-templates/checkout/order-received.php:37
+#: includes/wc-templates/checkout/thankyou.php:56
+msgid "Thank you. Your donation has been received."
+msgstr ""
+
 #: includes/wc-templates/checkout/review-order.php:95
 msgid "Donation Amount"
 msgstr ""
@@ -1241,10 +1259,6 @@ msgstr ""
 
 #: includes/wc-templates/checkout/thankyou.php:52
 msgid "Thank you for your donation"
-msgstr ""
-
-#: includes/wc-templates/checkout/thankyou.php:56
-msgid "Thank you. Your donation has been received."
 msgstr ""
 
 #: includes/wc-templates/checkout/thankyou.php:100

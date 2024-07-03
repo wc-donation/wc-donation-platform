@@ -126,23 +126,23 @@ class WCDP_Form
         $r = ob_get_contents();
         ob_end_clean();
 
-        if ($value['popup']) {
-            add_action('wp_footer', function () use ($r) {
-                echo $r;
-            });
-            if ($value['button']) {
-                return '<p>
-                    <a href="#wcdp-form">
-                        <button id="wcdp-button" type="button" class="button wcdp-modal-open">'
-                    . esc_html($value['label']) .
-                    '</button>
-                    </a>
-                </p>';
-            }
-            return '';
-        } else {
+        if (!$value['popup']) {
             return $r;
         }
+
+        add_action('wp_footer', function () use ($r) {
+            echo $r;
+        });
+        if ($value['button']) {
+            return '<p>
+                <a href="#wcdp-form">
+                    <button id="wcdp-button" type="button" class="button wcdp-modal-open">'
+                . esc_html($value['label']) .
+                '</button>
+                </a>
+            </p>';
+        }
+        return '';
     }
 
     /**

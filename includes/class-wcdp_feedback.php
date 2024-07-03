@@ -179,7 +179,9 @@ class WCDP_Feedback
     private function should_show_newsletter_notice(): bool
     {
         if (!current_user_can( 'edit_shop_orders' )) return false;
-        return ($_GET['page'] === 'wc-orders' && $_GET['action'] === 'edit') || $_GET['tab'] === 'wc-donation-platform' && $_GET['wc-hide-notice'] === null;
+        return (isset($_GET['page']) && $_GET['page'] === 'wc-orders' && isset($_GET['action']) && $_GET['action'] === 'edit')
+            || (isset($_GET['tab']) && $_GET['tab'] === 'wc-donation-platform')
+            && !isset($_GET['wc-hide-notice']);
     }
 
     /**

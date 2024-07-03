@@ -37,7 +37,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly ?>
 <table class="order-data-addresses">
     <tr>
         <td class="address shipping-address">
-            <!-- <h3><?php _e('Shipping Address:', 'woocommerce-pdf-invoices-packing-slips'); ?></h3> -->
+            <!-- <h3><?php esc_html_e('Shipping Address:', 'woocommerce-pdf-invoices-packing-slips'); ?></h3> -->
             <?php do_action('wpo_wcpdf_before_shipping_address', $this->type, $this->order); ?>
             <?php $this->shipping_address(); ?>
             <?php do_action('wpo_wcpdf_after_shipping_address', $this->type, $this->order); ?>
@@ -50,7 +50,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly ?>
         </td>
         <td class="address billing-address">
             <?php if (!empty($this->settings['display_billing_address']) && ($this->ships_to_different_address() || $this->settings['display_billing_address'] == 'always')) { ?>
-                <h3><?php _e('Billing Address:', 'woocommerce-pdf-invoices-packing-slips'); ?></h3>
+                <h3><?php esc_html_e('Billing Address:', 'woocommerce-pdf-invoices-packing-slips'); ?></h3>
                 <?php do_action('wpo_wcpdf_before_billing_address', $this->type, $this->order); ?>
                 <?php $this->billing_address(); ?>
                 <?php do_action('wpo_wcpdf_after_billing_address', $this->type, $this->order); ?>
@@ -60,15 +60,15 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly ?>
             <table>
                 <?php do_action('wpo_wcpdf_before_order_data', $this->type, $this->order); ?>
                 <tr class="order-number">
-                    <th><?php _e('Order Number:', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
+                    <th><?php esc_html_e('Order Number:', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
                     <td><?php $this->order_number(); ?></td>
                 </tr>
                 <tr class="order-date">
-                    <th><?php _e('Order Date:', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
+                    <th><?php esc_html_e('Order Date:', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
                     <td><?php $this->order_date(); ?></td>
                 </tr>
                 <tr class="shipping-method">
-                    <th><?php _e('Shipping Method:', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
+                    <th><?php esc_html_e('Shipping Method:', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
                     <td><?php $this->shipping_method(); ?></td>
                 </tr>
                 <?php do_action('wpo_wcpdf_after_order_data', $this->type, $this->order); ?>
@@ -82,8 +82,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly ?>
 <table class="order-details">
     <thead>
     <tr>
-        <th class="product"><?php _e('Product', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
-        <th class="quantity"><?php _e('Quantity', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
+        <th class="product"><?php esc_html_e('Product', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
+        <th class="quantity"><?php esc_html_e('Quantity', 'woocommerce-pdf-invoices-packing-slips'); ?></th>
     </tr>
     </thead>
     <tbody>
@@ -98,10 +98,10 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly ?>
                 <dl class="meta">
                     <?php $description_label = __('SKU', 'woocommerce-pdf-invoices-packing-slips'); // registering alternate label translation ?>
                     <?php if (!empty($item['sku'])) : ?>
-                        <dt class="sku"><?php _e('SKU:', 'woocommerce-pdf-invoices-packing-slips'); ?></dt>
+                        <dt class="sku"><?php esc_html_e('SKU:', 'woocommerce-pdf-invoices-packing-slips'); ?></dt>
                         <dd class="sku"><?php echo $item['sku']; ?></dd><?php endif; ?>
                     <?php if (!empty($item['weight'])) : ?>
-                        <dt class="weight"><?php _e('Weight:', 'woocommerce-pdf-invoices-packing-slips'); ?></dt>
+                        <dt class="weight"><?php esc_html_e('Weight:', 'woocommerce-pdf-invoices-packing-slips'); ?></dt>
                         <dd class="weight"><?php echo $item['weight']; ?><?php echo get_option('woocommerce_weight_unit'); ?></dd><?php endif; ?>
                 </dl>
                 <?php do_action('wpo_wcpdf_after_item_meta', $this->type, $item, $this->order); ?>
@@ -119,7 +119,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly ?>
 <?php do_action('wpo_wcpdf_before_customer_notes', $this->type, $this->order); ?>
 <div class="customer-notes">
     <?php if ($this->get_shipping_notes()) : ?>
-        <h3><?php _e('Customer Notes', 'woocommerce-pdf-invoices-packing-slips'); ?></h3>
+        <h3><?php esc_html_e('Customer Notes', 'woocommerce-pdf-invoices-packing-slips'); ?></h3>
         <?php $this->shipping_notes(); ?>
     <?php endif; ?>
 </div>

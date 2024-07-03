@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) exit;
             <?php include(WCDP_DIR . 'includes/templates/wcdp_step_2.php'); ?>
             <br>
             <button type="button" class="button wcdp-button wcdp-left" value="1">
-                <div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>&nbsp;<?php _e('Back', 'wc-donation-platform'); ?>
+                <div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>&nbsp;<?php esc_html_e('Back', 'wc-donation-platform'); ?>
             </button>
             <button type="button" class="button wcdp-button wcdp-right"
                     value="3"><?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform'), $value['id'], 2); ?>
@@ -30,7 +30,7 @@ if (!defined('ABSPATH')) exit;
             <br>
             <button type="button" class="button wcdp-button wcdp-left" value="2">
                 <div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>
-                &nbsp;<?php _e('Back', 'wc-donation-platform'); ?></button>
+                &nbsp;<?php esc_html_e('Back', 'wc-donation-platform'); ?></button>
         </div>
     </form>
 

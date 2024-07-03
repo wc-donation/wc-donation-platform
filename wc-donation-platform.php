@@ -116,14 +116,14 @@ if (!class_exists('WCDP')) {
                 $admin_notice_content = '';
 
                 if (!is_woocommerce_active()) {
-                    $admin_notice_content = esc_html__('Donation Platform for WooCommerce requires WooCommerce to be installed & activated.', 'wc-donation-platform');
+                    $admin_notice_content = __('Donation Platform for WooCommerce requires WooCommerce to be installed & activated.', 'wc-donation-platform');
                 } elseif (version_compare(get_option('woocommerce_db_version'), self::$wc_minimum_supported_version, '<')) {
                     // translators: %s required WC version
-                    $admin_notice_content = sprintf(esc_html__('Donation Platform for WooCommerce is inactive. This version of Donation Platform for WooCommerce requires WooCommerce %s or newer. Please update WooCommerce and run all database migrations.', 'wc-donation-platform'), self::$wc_minimum_supported_version);
+                    $admin_notice_content = sprintf(__('Donation Platform for WooCommerce is inactive. This version of Donation Platform for WooCommerce requires WooCommerce %s or newer. Please update WooCommerce and run all database migrations.', 'wc-donation-platform'), self::$wc_minimum_supported_version);
                 }
 
                 if ($admin_notice_content) {
-                    printf('<div class="notice notice-error"><p>%s</p></div>', $admin_notice_content);
+                    printf('<div class="notice notice-error"><p>%s</p></div>', esc_html($admin_notice_content));
                 }
             }
         }

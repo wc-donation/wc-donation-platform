@@ -576,6 +576,7 @@ class WCDP_Leaderboard
         } else {
             $e .= __('No', 'wc-donation-platform');
         }
-        echo $e . '</p>';
+        $e .= '</p>';
+        echo wp_kses_post($e) ;
     }
 }
