@@ -158,7 +158,7 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
                         'id' => 'attach_to_email_ids',
                         'fields' => $this->get_wc_emails(),
                         /* translators: directory path */
-                        'description' => !is_writable(WPO_WCPDF()->main->get_tmp_path('attachments')) ? '<span class="wpo-warning">' . sprintf(__('It looks like the temp folder (<code>%s</code>) is not writable, check the permissions for this folder! Without having write access to this folder, the plugin will not be able to email invoices.', 'wc-donation-platform'), WPO_WCPDF()->main->get_tmp_path('attachments')) . '</span>' : '',
+                        'description' => !wp_is_writable(WPO_WCPDF()->main->get_tmp_path('attachments')) ? '<span class="wpo-warning">' . sprintf(__('It looks like the temp folder (<code>%s</code>) is not writable, check the permissions for this folder! Without having write access to this folder, the plugin will not be able to email invoices.', 'wc-donation-platform'), WPO_WCPDF()->main->get_tmp_path('attachments')) . '</span>' : '',
                     ),
                 ),
                 array(

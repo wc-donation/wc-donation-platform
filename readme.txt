@@ -194,6 +194,7 @@ fix: replace deprecated function
 fix: skip orders in Leaderboard that are not of type WC_ORDER
 fix: unexpected price change for shipping fee leads to errors
 fix: fix js error on booking success page
+fix: improve error messages
 
 = 1.3.1 2024-01-30 2024-01-30 =
 new: new progress bar styles

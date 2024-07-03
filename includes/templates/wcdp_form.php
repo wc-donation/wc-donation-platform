@@ -27,7 +27,7 @@ if ($value['popup']) :
         <div class="wcdp">
             <?php endif; ?>
 
-            <div class="wc-donation-platform woocommerce wcdp-form <?php esc_attr_e($value['className']); ?>" id="wcdp"
+            <div class="wc-donation-platform woocommerce wcdp-form <?php echo esc_attr($value['className']); ?>" id="wcdp"
                  style="visibility:hidden">
                 <div class="lds-ellipsis wcdp-loader">
                     <div></div>
