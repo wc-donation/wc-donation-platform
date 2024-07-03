@@ -107,8 +107,8 @@ class WCDP_Feedback
      * @since 1.3.2
      */
     public function add_review_notice() {
-        $key = 'wcdp_review_notice_' . WCDP_VERSION;
-        if (!class_exists('WC_Admin_Notices') || !$this->is_wc_relevant_page() || (int) get_user_meta( get_current_user_id(), 'dismissed_wcdp_newsletter_notice_' . WCDP_VERSION . '_notice', true) !== 1 || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
+        $key = 'wcdp_review_notice';
+        if (!class_exists('WC_Admin_Notices') || !$this->should_show_newsletter_notice() || (int) get_user_meta( get_current_user_id(), 'dismissed_wcdp_newsletter_notice_notice', true) !== 1 || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
         $html = '<h3><a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">' . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform') . '</a></h3>';
         WC_Admin_Notices::add_custom_notice($key, $html);
     }
@@ -120,7 +120,7 @@ class WCDP_Feedback
      * @since 1.3.2
      */
     public function add_newsletter_notice() {
-        $key = 'wcdp_newsletter_notice_' . WCDP_VERSION;
+        $key = 'wcdp_newsletter_notice';
         if (!class_exists('WC_Admin_Notices') || !$this->should_show_newsletter_notice() || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
         $current_user = wp_get_current_user();
         if (!$current_user) return;
@@ -171,22 +171,7 @@ class WCDP_Feedback
     }
 
     /**
-     * Check if the current admin page is WooCommerce order edit page
-     *
-     * @return bool
-     * @since 1.3.2
-    */
-    private function is_wc_relevant_page(): bool
-    {
-        if (!function_exists('get_current_screen')) {
-            return false;
-        }
-        $screen = get_current_screen();
-        return isset($screen->id) && $screen->id === 'woocommerce_page_wc-orders' && $_GET['action'] === 'edit';
-    }
-
-    /**
-     * Check if it should show the Newsletter Subscription notice
+     * Check if it should show the Newsletter Subscription / Review notice
      *
      * @return bool
      * @since 1.3.2
@@ -194,7 +179,7 @@ class WCDP_Feedback
     private function should_show_newsletter_notice(): bool
     {
         if (!current_user_can( 'edit_shop_orders' )) return false;
-        return ($_GET['page'] === 'wc-orders' && $_GET['action'] === 'edit') || $_GET['tab'] === 'wc-donation-platform';
+        return ($_GET['page'] === 'wc-orders' && $_GET['action'] === 'edit') || $_GET['tab'] === 'wc-donation-platform' && $_GET['wc-hide-notice'] === null;
     }
 
     /**
