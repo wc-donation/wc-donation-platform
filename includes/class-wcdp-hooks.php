@@ -115,6 +115,7 @@ class WCDP_Hooks
             case 'checkout/order-receipt.php':
             case 'checkout/payment.php':
             case 'checkout/form-billing.php':
+            case 'checkout/order-received.php':
 
             case 'myaccount/dashboard.php':
             case 'myaccount/view-order.php':
