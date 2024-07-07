@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-04T00:46:40+02:00\n"
+"POT-Creation-Date: 2024-07-09T16:45:55+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -921,7 +921,6 @@ msgstr ""
 msgid "Last Donation Date: %s"
 msgstr ""
 
-#. translators: %s link to donation
 #. translators: %s donation number
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/cancelled-subscription.php:46
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/expired-subscription.php:44
@@ -996,7 +995,7 @@ msgctxt "in plain emails for subscription information"
 msgid "Recurring Donation: %s"
 msgstr ""
 
-#. translators: placeholder is either view or edit url for the subscription
+#. translators: %s donation number
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/subscription-info.php:25
 msgctxt "in plain emails for subscription information"
 msgid "View Recurring Donation: %s"

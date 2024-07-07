@@ -21,7 +21,7 @@ foreach ($subscriptions as $subscription) {
 
     // translators: placeholder is subscription's number
     echo sprintf(_x('Recurring Donation: %s', 'in plain emails for subscription information', 'wc-donation-platform'), $subscription->get_order_number()) . "\n";
-    // translators: placeholder is either view or edit url for the subscription
+    /* translators: %s donation number */
     echo sprintf(_x('View Recurring Donation: %s', 'in plain emails for subscription information', 'wc-donation-platform'), $is_admin_email ? wcs_get_edit_post_link($subscription->get_id()) : $subscription->get_view_order_url()) . "\n";
     // translators: placeholder is localised start date
     echo sprintf(_x('Start date: %s', 'in plain emails for subscription information', 'woocommerce-subscriptions'), date_i18n(wc_date_format(), $subscription->get_time('start_date', 'site'))) . "\n";
