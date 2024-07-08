@@ -108,7 +108,7 @@ class WCDP_Feedback
      */
     public function add_review_notice() {
         $key = 'wcdp_review_notice';
-        if (!class_exists('WC_Admin_Notices') || !$this->should_show_newsletter_notice() || (int) get_user_meta( get_current_user_id(), 'dismissed_wcdp_newsletter_notice_notice', true) !== 1 || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
+        if (!class_exists('WC_Admin_Notices') || rand(0, 3) !== 0 || !$this->should_show_newsletter_notice() || (int) get_user_meta( get_current_user_id(), 'dismissed_wcdp_newsletter_notice_notice', true) !== 1 || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
         $html = '<h3><a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">' . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform') . '</a></h3>';
         WC_Admin_Notices::add_custom_notice($key, $html);
     }

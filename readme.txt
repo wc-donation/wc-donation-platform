@@ -172,7 +172,7 @@ tweak: improved invalid nonce handling
 tweak: mark link as rel="nofollow" for improved SEO
 tweak: use net revenue (excl. shipping etc.) to calculate donation revenue in progress bar
 tweak: update supported WP version to 6.5
-tweak: update supported WC version to 8.9.3
+tweak: update supported WC version to 9.0.2
 tweak: add error message to AJAX donation form / progress bar render
 tweak: add blueprint.json for WordPress playground
 tweak: decrease priority of filename filter
