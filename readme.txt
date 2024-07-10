@@ -165,7 +165,7 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
-= 1.3.2 =
+= 1.3.2 2024-07-09 =
 new: add [wcdp_order_counter] shortcode that allows you to display the number of orders to a product
 new: add sample language to Privacy Policy Guide page
 tweak: improved invalid nonce handling
@@ -196,7 +196,7 @@ fix: unexpected price change for shipping fee leads to errors
 fix: fix js error on booking success page
 fix: improve error messages
 
-= 1.3.1 2024-01-30 2024-01-30 =
+= 1.3.1 2024-01-30 =
 new: new progress bar styles
 new: use "current" in progress & leaderboard shortcode to use current page id
 new: donation product is added to the checkout on page load, improving compatibility with WooCommerce Gutenberg Checkout Block
