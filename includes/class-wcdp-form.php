@@ -50,10 +50,6 @@ class WCDP_Form
      */
     public static function wcdp_donation_form(array $value, bool $is_internal): string
     {
-        if (wp_doing_ajax()) {
-            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
-        }
-
         if (!$value['id'] || $value['id'] <= 0) {
             return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
@@ -97,10 +93,7 @@ class WCDP_Form
             echo '</li></ul>';
             wc_get_template('templates/form-login.php');
         } else {
-            global $product;
-            if (is_null($product)) {
-                $product = wc_get_product($id);
-            }
+            $product = wc_get_product($id);
 
             if (!isset(WC()->cart)) {
                 WCDP_Form::form_error_message(__('In the current view, the donation form is not available.', 'wc-donation-platform'));
