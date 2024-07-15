@@ -125,6 +125,8 @@ class WCDP_Feedback
         $current_user = wp_get_current_user();
         if (!$current_user) return;
 
+        $name = $current_user->first_name ?? $current_user->display_name;
+
         // Create the notice content
         echo '<div id="message" class="updated woocommerce-message">
                 <a class="woocommerce-message-close notice-dismiss" href="' . esc_url( wp_nonce_url( add_query_arg( 'wc-hide-notice', $key ), 'woocommerce_hide_notices_nonce', '_wc_notice_nonce' ) ) . '">' . esc_html__( 'Dismiss', 'woocommerce' ) . '</a>
@@ -159,7 +161,7 @@ class WCDP_Feedback
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">' . esc_html__('Name (optional)', 'wc-donation-platform') . '</label>
-                        <input type="text" id="name" name="name" class="form-input" value="' . esc_attr($current_user->display_name) . '">
+                        <input type="text" id="name" name="name" class="form-input" value="' . esc_attr($name) . '">
                     </div>
                     <p style="display:none;">
                         <input id="6f21f" type="checkbox" name="l" checked="" value="6f21f9d3-12e2-4da8-9f05-feb3fb62adfc">
