@@ -42,8 +42,7 @@ if (!wp_doing_ajax()) {
     <div class="form-row place-order">
         <noscript>
             <?php
-            /* translators: $1 and $2 opening and closing emphasis tags respectively */
-            printf(esc_html_e('Please activate JavaScript to continue with your donation.', 'wc-donation-platform'), '<em>', '</em>');
+            esc_html_e('Please activate JavaScript to continue with your donation.', 'wc-donation-platform');
             ?>
             <br /><button type="submit"
                 class="button alt<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>"
