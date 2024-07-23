@@ -21,7 +21,7 @@ do_action('wcdp_before_product_settings');
                        value="[wcdp_donation_form id=&quot;<?php echo $post->ID; ?>&quot;]">
 				<?php
                 /* translators: %s & %s: link html (not visible) */
-                echo wc_help_tip(__('Add this shortcode where you want to display the donation form.', 'wc-donation-platform') . '<a href="https://wcdp.jonh.eu/documentation/getting-started/shortcode/" target="_blank" rel="noopener">' . __('Shortcode Documentation', 'wc-donation-platform') . '</a>'); ?>
+                echo wc_help_tip(__('Add this shortcode where you want to display the donation form.', 'wc-donation-platform') . '<a href="https://www.wc-donation.com/documentation/getting-started/shortcode/" target="_blank" rel="noopener">' . __('Shortcode Documentation', 'wc-donation-platform') . '</a>'); ?>
 			</span>
         </p>
         <p class="wcdp_direct_link form-field">

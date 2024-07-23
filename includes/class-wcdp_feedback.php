@@ -201,7 +201,7 @@ class WCDP_Feedback
             set_transient('wcdp_feedback_send', true, 31536000);
         }
 
-        wp_remote_post('https://wcdp.jonh.eu/wp-admin/admin-ajax.php', array(
+        wp_remote_post('https://www.wc-donation.com/wp-admin/admin-ajax.php', array(
             'method' => 'POST',
             'timeout' => 30,
             'redirection' => 5,

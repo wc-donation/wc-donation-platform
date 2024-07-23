@@ -155,7 +155,7 @@ class WCDP_General_Settings
             array(
                 'name' => __('Leaderborard Options', 'wc-donation-platform'),
                 'type' => 'title',
-                'desc' => '<a href="https://wcdp.jonh.eu/documentation/usage/donation-leaderboard/" target="_blank">' . esc_html__('Detailed leaderboard documentation', 'wc-donation-platform') . '</a>',
+                'desc' => '<a href="https://www.wc-donation.com/documentation/usage/donation-leaderboard/" target="_blank">' . esc_html__('Detailed leaderboard documentation', 'wc-donation-platform') . '</a>',
                 'id' => 'wcdp_leaderboard_options',
             ),
             array(
@@ -335,7 +335,7 @@ class WCDP_General_Settings
                 '<li>' . __('Your information will not be disclosed to third parties except when required by law, with your explicit consent, when necessary for providing our services such as payment processing, and in cases where it is in our legitimate interest, such as fraud prevention.', 'wc-donation-platform') . '</li>' .
             '</ul>' .
             '</div>',
-            '<a href="https://wcdp.jonh.eu/" target="_blank">',
+            '<a href="https://www.wc-donation.com/" target="_blank">',
             '</a>'
         );
 

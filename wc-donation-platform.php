@@ -1,12 +1,12 @@
 <?php
 /*
  * Plugin Name: Donation Platform for WooCommerce: Fundraising & Donation Management
- * Plugin URI: https://wcdp.jonh.eu/
+ * Plugin URI: https://www.wc-donation.com/
  * Description: Donation Platform for WooCommerce unlocks the power of WooCommerce for your online fundraising & crowdfunding.
  * Author: Jonas Höbenreich
  * Version: 1.3.3
  * Author URI: https://www.jonh.eu/
- * Plugin URI:  https://wcdp.jonh.eu/
+ * Plugin URI:  https://www.wc-donation.com/
  * License: GNU General Public License v2.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: wc-donation-platform
@@ -154,7 +154,7 @@ if (!class_exists('WCDP')) {
         {
             if (strpos($file, basename(__FILE__))) {
                 $row_meta = array(
-                    'docs' => '<a href="' . esc_url('https://wcdp.jonh.eu/documentation/') . '" aria-label="' . esc_attr__('View Documentation of Donation Platform for WooCommerce', 'wc-donation-platform') . '">' . esc_html__('Documentation', 'wc-donation-platform') . '</a>',
+                    'docs' => '<a href="' . esc_url('https://www.wc-donation.com/documentation/') . '" aria-label="' . esc_attr__('View Documentation of Donation Platform for WooCommerce', 'wc-donation-platform') . '">' . esc_html__('Documentation', 'wc-donation-platform') . '</a>',
                 );
 
                 return array_merge($links, $row_meta);

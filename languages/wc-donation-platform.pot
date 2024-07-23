@@ -19,7 +19,7 @@ msgid "Donation Platform for WooCommerce: Fundraising & Donation Management"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://wcdp.jonh.eu/"
+msgid "https://www.wc-donation.com/"
 msgstr ""
 
 #. Description of the plugin

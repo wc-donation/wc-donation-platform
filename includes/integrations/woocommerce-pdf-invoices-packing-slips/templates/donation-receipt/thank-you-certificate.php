@@ -2,8 +2,8 @@
 /**
  *
  * Template of a Thank You Certificate
- * example 1: https://wcdp.jonh.eu/wp-content/uploads/example-charity_thank-you-certificate_382.pdf
- * example 2: https://wcdp.jonh.eu/wp-content/uploads/example-charity_thank-you-certificate_382_p.pdf
+ * example 1: https://www.wc-donation.com/wp-content/uploads/example-charity_thank-you-certificate_382.pdf
+ * example 2: https://www.wc-donation.com/wp-content/uploads/example-charity_thank-you-certificate_382_p.pdf
  *
  */
 
