@@ -165,6 +165,9 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
+= 1.3.3 =
+chore: update supported WP version to 6.6
+
 = 1.3.2 2024-07-09 =
 new: add [wcdp_order_counter] shortcode that allows you to display the number of orders to a product
 new: add sample language to Privacy Policy Guide page
