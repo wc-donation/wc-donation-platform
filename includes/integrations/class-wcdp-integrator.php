@@ -23,7 +23,7 @@ class WCDP_Integrator
         //https://woocommerce.com/products/woocommerce-subscriptions/
         $subscriptions_active = in_array('woocommerce-subscriptions/woocommerce-subscriptions.php', $active_plugins)
             || in_array('woocommerce-subscriptions-main/woocommerce-subscriptions.php', $active_plugins)
-            || is_plugin_active_for_network('woocommerce-subscriptions/woocommerce-subscriptions.php');
+            || is_plugin_active_for_network('woocommerce-subscriptions/woocommerce-subscriptions.php')
             || is_plugin_active_for_network('woocommerce-subscriptions-main/woocommerce-subscriptions.php');
         if ($subscriptions_active) {
             include_once 'woocommerce-subscriptions/class-wcdp-subscriptions.php';
