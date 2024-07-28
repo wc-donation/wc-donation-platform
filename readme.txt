@@ -39,7 +39,7 @@ Harness the power of WooCommerce for online fundraising, crowdfunding, and donor
 == 🎯 Essential Fundraising Features 🎯 ==
 
 * 🌟 **Beautiful Design**: Five elegant donation form templates, adaptable to suit your [branding](https://www.wc-donation.com/documentation/usage/design-customization/).
-* 🌐 **Mobile-Optimized**: Perfectly designed for [mobile fundraising](https://www.wc-donation.com/documentation/usage/mobile-optimization/), ensuring accessibility from anywhere.
+* 🌐 **Mobile-Optimized**: Perfectly designed for [mobile fundraising](https://www.wc-donation.com/documentation/usage/mobile-fundraising/), ensuring accessibility from anywhere.
 * 🛒 **100+ Payment Gateways**: Variety to reduce transaction fees and accommodate donor preferences.
 * 📊 **Advanced Donation Management**: Streamlined donor & customer management for [efficient tracking](https://www.wc-donation.com/documentation/usage/advanced-donation-management/).
 * 💳 **Express Donations**: [Apple Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal), [Google Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal) & [PayPal](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal) integration for swift contributions.
