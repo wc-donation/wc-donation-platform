@@ -183,10 +183,12 @@ if (!is_woocommerce_active() || version_compare(get_option('woocommerce_db_versi
  * declare
  * - compatibility with High performance order storage
  * - incompatibility with new WooCommerce Checkout Block
+ * - incompatibility with new WooCommerce product editor
  */
 add_action('before_woocommerce_init', function () {
     if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, false);
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('product_block_editor', __FILE__, false);
     }
 });
