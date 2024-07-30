@@ -328,8 +328,9 @@ class WCDP_Progress
         if (wp_doing_ajax()) {
             return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
         }
+        global $post;
         $atts = shortcode_atts(array(
-            'id' => 0,
+            'id' => $post->ID,
             // Translators: {ORDER_COUNT} will be replaced with the number of orders
             'label' => __('{ORDER_COUNT} people have already contributed to this project.', 'wc-donation-platform'),
             'fallback' => '',
