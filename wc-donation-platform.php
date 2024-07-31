@@ -192,3 +192,33 @@ add_action('before_woocommerce_init', function () {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('product_block_editor', __FILE__, false);
     }
 });
+
+/**
+ * Plugin activation hook to automatically enable compatibility mode for sites that already have a proper WooCommerce shop
+ *
+ * @since 1.3.3
+ */
+register_activation_hook( __FILE__, function () {
+    if (!class_exists('WC_Admin_Notices') || !current_user_can('activate_plugins') || get_option('wcdp_compatibility_mode', false)) return;
+
+    // Check if there are at least 3 WooCommerce products
+    $product_query = new WC_Product_Query(array(
+        'status' => 'publish',
+        'limit' => 3,
+        'return' => 'ids',
+    ));
+    $products = $product_query->get_products();
+    if (count($products) == 3) return;
+
+    // Check if there are at least 3 WooCommerce orders
+    $order_query = new WC_Order_Query(array(
+        'status' => array('wc-completed'),
+        'type' => 'shop_order',
+        'limit' => 3,
+        'return' => 'ids',
+    ));
+    $orders = $order_query->get_orders();
+    if (count($orders) == 3) return;
+
+    add_option('wcdp_compatibility_mode', 'yes');
+});
