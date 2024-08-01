@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) exit;
  * needed in order to support Stripe express checkout
  */
 /** @var array $value */
-/** @var boolean $is_internal */
-if ($value['style'] !== 4 && !$is_internal) {
+/** @var boolean $context */
+if ($value['style'] !== 4 && $context == 'shortcode') {
     do_action('woocommerce_after_add_to_cart_form');
 }
 

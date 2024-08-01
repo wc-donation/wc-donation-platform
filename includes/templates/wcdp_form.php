@@ -61,7 +61,7 @@ if ($value['popup']) :
                         break;
                     /** @noinspection PhpMissingBreakStatementInspection */
                     case 'checkout':
-                        if ($is_internal) {
+                        if ($context == 'checkout') {
                             //Just first step, only on Checkout page
                             include_once 'styles/wcdp_form_style_checkout.php';
                             break;

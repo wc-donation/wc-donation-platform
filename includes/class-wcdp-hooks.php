@@ -350,7 +350,7 @@ class WCDP_Hooks
             echo WCDP_Form::wcdp_donation_form(array(
                 'id' => $id,
                 'style' => 'checkout',
-            ), true);
+            ), 'checkout');
         }
     }
 

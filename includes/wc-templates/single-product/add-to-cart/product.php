@@ -30,4 +30,4 @@ echo do_shortcode('[wcdp_progress id="' . $post->ID . '" style="2"]');
 echo WCDP_Form::wcdp_donation_form(array(
     'id' => $post->ID,
     'style' => '4',
-), true);
+), 'product-page');

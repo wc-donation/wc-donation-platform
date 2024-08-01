@@ -38,17 +38,17 @@ class WCDP_Form
             return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
         }
 
-        return WCDP_Form::wcdp_donation_form($atts, false);
+        return WCDP_Form::wcdp_donation_form($atts, 'product-page');
     }
 
     /**
      * Return html of Donation Form
      *
      * @param $value array form attributes
-     * @param $is_internal bool
+     * @param $context string
      * @return string html of donation form
      */
-    public static function wcdp_donation_form(array $value, bool $is_internal): string
+    public static function wcdp_donation_form(array $value, string $context = 'shortcode'): string
     {
         if (!$value['id'] || $value['id'] <= 0) {
             return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
@@ -59,7 +59,7 @@ class WCDP_Form
         static $no_donation_form_yet = true;
 
         //Only one donation form per page
-        if ((!$no_donation_form_yet || (!$is_internal && is_product())) && apply_filters("wcdp_only_one_form_allowed", true)) {
+        if ((!$no_donation_form_yet || (!$context == 'product-page' && is_product())) && apply_filters("wcdp_only_one_form_allowed", true)) {
             return '<p class="wcdp-error-message">' . esc_html__('Only one donation form per page allowed', 'wc-donation-platform') . '</p>';
         }
         $no_donation_form_yet = false;

@@ -105,8 +105,8 @@ do_action('woocommerce_before_add_to_cart_form');
         <?php //WooCommerce Add to Cart & Quantity (invisible) ?>
         <input style="display:none !important;" type="number" name="quantity" class="quantity qty" value="1">
         <?php
-        /** @var bool $is_internal */
-        if ($value['style'] == 4 && $is_internal) {
+        /** @var bool $context */
+        if ($value['style'] == 4 && $context == 'product-page') {
             echo '<input class="wcdp-express-amount" style="display:none !important;" type="number" step="any" name="attribute_wcdp_donation_amount" value="1">';
             do_action('wcdp_express_checkout_heading');
             do_action('woocommerce_after_add_to_cart_quantity');
@@ -119,7 +119,7 @@ do_action('woocommerce_before_add_to_cart_form');
     </form>
 
 <?php
-if ($value['style'] == 4 && $is_internal) {
+if ($value['style'] == 4 && $context == 'product-page') {
     //Add a input field to communicate correct donation amount to Stripe & PayPal Express donation buttons
     do_action('wcdp_express_checkout_amount_variation');
 
