@@ -308,6 +308,9 @@ class WCDP_General_Settings
         update_option('wcdp_fee_recovery_values', wp_json_encode($wcdp_fee_recovery_values), 'yes');
 
         woocommerce_update_options(self::get_settings());
+
+        // Make sure to disable Product block editor
+        update_option('woocommerce_feature_product_block_editor_enabled', 'no');
     }
 
     /**
