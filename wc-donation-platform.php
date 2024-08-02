@@ -199,6 +199,9 @@ add_action('before_woocommerce_init', function () {
  * @since 1.3.3
  */
 register_activation_hook( __FILE__, function () {
+    //Disable new Product editor
+    update_option('woocommerce_feature_product_block_editor_enabled', 'no');
+
     if (!class_exists('WC_Admin_Notices') || !current_user_can('activate_plugins') || get_option('wcdp_compatibility_mode', false)) return;
 
     // Check if there are at least 3 WooCommerce products

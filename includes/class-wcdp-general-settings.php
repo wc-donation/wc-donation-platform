@@ -12,6 +12,7 @@ class WCDP_General_Settings
         add_filter('woocommerce_settings_tabs_array', array($this, 'add_settings_tab'), 50);
         add_action('woocommerce_settings_tabs_wc-donation-platform', array($this, 'settings_tab'));
         add_action('woocommerce_update_options_wc-donation-platform', array($this, 'update_settings'));
+        add_action('woocommerce_update_options_advanced', array($this, 'disable_new_product_editor'));
 
         if (function_exists('wp_add_privacy_policy_content')) {
             add_action( 'admin_init', array($this, 'suggest_privacy_policy_content') );
@@ -28,6 +29,14 @@ class WCDP_General_Settings
     {
         $settings_tabs['wc-donation-platform'] = __('Donations', 'wc-donation-platform');
         return $settings_tabs;
+    }
+
+    /**
+     * Disables the new product block editor since WCDP is not compatible
+     * @return void
+     */
+    public function disable_new_product_editor() {
+        update_option('woocommerce_feature_product_block_editor_enabled', 'no');
     }
 
     /**
