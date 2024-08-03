@@ -166,6 +166,8 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
 
 = 1.3.3 =
+tweak: automatically enable compatibility mode for websites that already have a WooCommerce shop
+tweak: make sure to disable the new product editor
 chore: update supported WP version to 6.6
 
 = 1.3.2 2024-07-09 =
