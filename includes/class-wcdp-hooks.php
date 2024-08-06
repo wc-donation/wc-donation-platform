@@ -99,7 +99,7 @@ class WCDP_Hooks
     public function wcdp_modify_template($template = '', $template_name = '', $args = array(), $template_path = '', $default_path = ''): string
     {
         //Return if the template has been overwritten in yourtheme/woocommerce/XXX
-        if (!str_starts_with($template_name, 'single-product') && [strlen($template) - strlen($template_name) - 2] === 'e') {
+        if (!str_starts_with($template_name, 'single-product') && $template[strlen($template) - strlen($template_name) - 2] === 'e') {
             return $template;
         }
 
