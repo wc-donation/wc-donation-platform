@@ -170,7 +170,9 @@ tweak: automatically enable compatibility mode for websites that already have a 
 tweak: make sure to disable the new product editor
 tweak: fallback id in order progress Shortcode
 chore: update supported WP version to 6.6
+chore: update supported WC version to 9.1.4
 fix: theme templates being overwritten
+fix: wc_get_template invalid template
 
 = 1.3.2 2024-07-09 =
 new: add [wcdp_order_counter] shortcode that allows you to display the number of orders to a product
