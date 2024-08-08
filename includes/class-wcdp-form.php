@@ -91,7 +91,7 @@ class WCDP_Form
             echo '<ul class="woocommerce-info" role="info"><li>';
             esc_html_e('Please log in to donate.', 'wc-donation-platform');
             echo '</li></ul>';
-            wc_get_template('templates/form-login.php');
+            wc_get_template('myaccount/form-login.php');
         } else {
             $product = wc_get_product($id);
 
