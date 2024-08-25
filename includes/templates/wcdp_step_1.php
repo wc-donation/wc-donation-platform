@@ -58,7 +58,11 @@ do_action('woocommerce_before_add_to_cart_form');
     } else {
         echo ' id="wcdp-get-send"';
         echo ' method="get"';
-    } ?>
+    }
+    if ($context === 'embed') {
+        echo ' target="_blank"';
+    }
+    ?>
           action="<?php
           if ($value['style'] != '4') {
               echo admin_url('admin-ajax.php');
