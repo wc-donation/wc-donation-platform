@@ -79,6 +79,13 @@ class WCDP_General_Settings
                 'type' => 'checkbox',
             ),
             array(
+                'title' => __('Redirect to Cart Instead of Checkout', 'wc-donation-platform'),
+                'desc' => __('Would you like to redirect users to the cart when they proceed to the next step in Style 4 or from product pages?', 'wc-donation-platform'),
+                'id' => 'wcdp_redirect_to_cart',
+                'default' => 'no',
+                'type' => 'checkbox',
+            ),
+            array(
                 'title' => __('"Your Contribution" Title Text', 'wc-donation-platform'),
                 'id' => 'wcdp_contribution_title',
                 'type' => 'text',
