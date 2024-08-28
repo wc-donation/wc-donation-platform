@@ -111,7 +111,7 @@ do_action('woocommerce_before_add_to_cart_form');
         <div class="wcdp-divider"></div>
 
         <?php //WooCommerce Add to Cart & Quantity (invisible) ?>
-        <input style="display:none !important;" type="number" name="quantity" class="quantity qty" value="1">
+        <input style="display:none !important;" type="number" name="quantity" class="quantity qty" value="1" aria-hidden="true">
         <?php
         /** @var bool $context */
         if ($value['style'] == 4 && $context == 'product-page') {
