@@ -89,7 +89,7 @@ Harness the power of WooCommerce for online fundraising, crowdfunding, and donor
 * [Overview](https://www.wc-donation.com/)
 * [Documentation](https://www.wc-donation.com/documentation/)
 * [Getting Started](https://www.wc-donation.com/documentation/getting-started/first-steps/)
-* [Github](https://github.com/jonas-hoebenreich/wc-donation-platform)
+* [Github](https://github.com/wc-donation/wc-donation-platform)
 * [Donation Demos](https://www.wc-donation.com/demos/)
 * [Demo Style 1](https://www.wc-donation.com/demos/demo-style-1/)
 * [Demo Style 2](https://www.wc-donation.com/demos/demo-style-2/)

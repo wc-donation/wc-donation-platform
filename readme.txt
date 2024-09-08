@@ -58,7 +58,7 @@ Harness the power of WooCommerce for online fundraising, crowdfunding, and donor
 * [Overview](https://www.wc-donation.com/)
 * [Documentation](https://www.wc-donation.com/documentation/)
 * [Getting Started](https://www.wc-donation.com/documentation/getting-started/first-steps/)
-* [Github](https://github.com/jonas-hoebenreich/wc-donation-platform)
+* [Github](https://github.com/wc-donation/wc-donation-platform)
 * [Donation Demos](https://www.wc-donation.com/demos/)
 * [Demo Style 1](https://www.wc-donation.com/demos/demo-style-1/)
 * [Demo Style 2](https://www.wc-donation.com/demos/demo-style-2/)
@@ -163,7 +163,7 @@ WooCommerce PDF Invoices & Packing Slips is a free and open source WordPress plu
 If you want to disable the wording changes applied by Donation Platform for WooCommerce you can enable to compatibility mode in the plugin's settings.
 
 == Changelog ==
-Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/jonas-hoebenreich/wc-donation-platform/).
+Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
 = 1.3.3 =
 tweak: automatically enable compatibility mode for websites that already have a WooCommerce shop
@@ -225,7 +225,7 @@ new: compatibility mode: run donation platform and webshop simultaneously
 new: "delete cache" checkbox
 new: compatibility with WooCommerce API
 new: compatibility with High performance order storage
-fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance [#40](https://github.com/jonas-hoebenreich/wc-donation-platform/issues/40)
+fix: compatibility with the newest version of PDF Invoices & Packing Slips for WooCommerce, thanks to @kprovance [#40](https://github.com/wc-donation/wc-donation-platform/issues/40)
 fix: select2 dropdown not visible within popup
 tweak: do not allow to embed donation form when using AJAX
 tweak: improve revenue cache calculation & invalidation
