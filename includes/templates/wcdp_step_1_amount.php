@@ -24,7 +24,7 @@ if (isset($_REQUEST["wcdp-donation-amount"])) {
     }
 }
 
-$wcdp_price_field = sprintf(get_woocommerce_price_format(), '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', '<input type="number" class="wcdf-input-field validate-required %s" id="wcdp-donation-amount" name="wcdp-donation-amount" step="%s" min="%s" max="%s" value="%s" required>');
+$wcdp_price_field = sprintf(get_woocommerce_price_format(), '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', '<input type="number" class="wcdp-input-field validate-required %s" id="wcdp-donation-amount" name="wcdp-donation-amount" step="%s" min="%s" max="%s" value="%s" required>');
 $wcdp_price_field = sprintf($wcdp_price_field, '%s %s', $wcdp_price_decimals, $min_donation_amount, $max_donation_amount, $value_donation_amount);
 
 if ($value['style'] != 3 && $value['style'] != 4) {
