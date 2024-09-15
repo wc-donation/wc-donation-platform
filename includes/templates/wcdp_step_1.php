@@ -55,24 +55,21 @@ do_action('woocommerce_before_add_to_cart_form');
     if ($value['style'] != '4') {
         echo ' id="wcdp-ajax-send"';
         echo ' method="post"';
+        echo ' action="' . admin_url('admin-ajax.php') . '"';
     } else {
         echo ' id="wcdp-get-send"';
-        echo ' method="get"';
+        if (get_option('wcdp_redirect_to_cart', 'no') === 'no') {
+            echo ' method="get"';
+            echo ' action="' . wc_get_checkout_url() . '"';
+        } else {
+            echo ' method="post"';
+            echo ' action="' . wc_get_cart_url() . '"';
+        }
     }
     if ($context === 'embed') {
         echo ' target="_blank"';
     }
     ?>
-          action="<?php
-          if ($value['style'] != '4') {
-              echo admin_url('admin-ajax.php');
-          } else {
-              if (get_option('wcdp_redirect_to_cart', 'no') === 'no') {
-                  echo wc_get_checkout_url();
-              } else {
-                  echo wc_get_cart_url();
-              }
-          } ?>"
           autocomplete="off" enctype='multipart/form-data' data-product_id="<?php echo $value['id']; ?>"
         <?php if ($has_child): ?>
             data-product_variations="<?php echo $variations_attr; ?>"
