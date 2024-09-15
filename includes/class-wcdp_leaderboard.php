@@ -72,6 +72,7 @@ class WCDP_Leaderboard
             "style" => 1,
             "split" => -1,
             "button" => __("Show more", "wc-donation-platform"),
+            "fallback" => __('No donation to this project yet.', 'wc-donation-platform'),
         ), $atts, 'latest_orders');
 
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
@@ -87,7 +88,7 @@ class WCDP_Leaderboard
         $orders = $this->get_orders($id, $atts['orderby'], $limit);
 
         // Generate the HTML output
-        return $this->generate_leaderboard($orders, (int)$atts['style'], (int)$atts['split'], $atts['button']);
+        return $this->generate_leaderboard($orders, (int)$atts['style'], (int)$atts['split'], $atts['button'], $atts['fallback']);
     }
 
     /**
@@ -267,9 +268,10 @@ class WCDP_Leaderboard
      * @param int $style
      * @param int $split
      * @param string $button
+     * @param string $fallback
      * @return string
      */
-    public function generate_leaderboard(array $orders, int $style, int $split, string $button): string
+    public function generate_leaderboard(array $orders, int $style, int $split, string $button, string $fallback): string
     {
         $title = sanitize_text_field(get_option("wcdp_lb_title", __('{firstname} donated {amount}', 'wc-donation-platform')));
         $subtitle = sanitize_text_field(get_option("wcdp_lb_subtitle", "{timediff}"));
@@ -280,7 +282,7 @@ class WCDP_Leaderboard
         $id = 'wcdp_' . wp_generate_password(6, false);
 
         if (sizeof($orders) === 0) {
-            return esc_html__('No donation to this project yet.', 'wc-donation-platform');
+            return esc_html($fallback);
         }
 
         $output = "<style>#" . $id . " .wcdp-leaderboard-hidden {
