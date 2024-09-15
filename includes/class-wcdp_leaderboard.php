@@ -60,7 +60,9 @@ class WCDP_Leaderboard
     function wcdp_leaderboard($atts): string
     {
         // Do not allow executing this Shortcode via AJAX
-        if (wp_doing_ajax()) return "";
+        if (wp_doing_ajax()) {
+            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
+        }
 
         // Extract attributes
         $atts = shortcode_atts(array(
