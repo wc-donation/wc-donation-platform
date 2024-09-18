@@ -429,7 +429,7 @@ class WCDP_Hooks
                 return true;
             }
         }
-        return false;
+        return $needs_processing;
     }
 
     /**
