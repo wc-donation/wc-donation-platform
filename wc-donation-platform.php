@@ -198,30 +198,25 @@ add_action('before_woocommerce_init', function () {
  *
  * @since 1.3.3
  */
-register_activation_hook( __FILE__, function () {
+register_activation_hook( __FILE__,
+    /**
+     * @throws Exception
+     */ function () {
     //Disable new Product editor
     update_option('woocommerce_feature_product_block_editor_enabled', 'no');
 
     if (!class_exists('WC_Admin_Notices') || !current_user_can('activate_plugins') || get_option('wcdp_compatibility_mode', false)) return;
 
-    // Check if there are at least 3 WooCommerce products
-    $product_query = new WC_Product_Query(array(
-        'status' => 'publish',
-        'limit' => 3,
-        'return' => 'ids',
-    ));
-    $products = $product_query->get_products();
-    if (count($products) == 3) return;
-
-    // Check if there are at least 3 WooCommerce orders
+    // Check if there are at least 4 WooCommerce orders
     $order_query = new WC_Order_Query(array(
         'status' => array('wc-completed'),
         'type' => 'shop_order',
-        'limit' => 3,
+        'limit' => 4,
         'return' => 'ids',
     ));
     $orders = $order_query->get_orders();
-    if (count($orders) == 3) return;
+    if (count($orders) < 4) return;
 
+    //enable compatibility mode
     add_option('wcdp_compatibility_mode', 'yes');
 });
