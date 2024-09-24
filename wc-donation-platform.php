@@ -220,3 +220,13 @@ register_activation_hook( __FILE__,
     //enable compatibility mode
     add_option('wcdp_compatibility_mode', 'yes');
 });
+
+/**
+ * Clear Donation Platform for WooCommerce Cache
+ *
+ * @return void
+ * @since v1.3.3
+ */
+function wcdp_clear_cache() {
+    WCDP_General_Settings::clear_cached_data();
+}

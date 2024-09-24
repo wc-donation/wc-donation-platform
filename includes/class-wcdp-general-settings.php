@@ -286,7 +286,7 @@ class WCDP_General_Settings
         return apply_filters('wcdp-general-settings', $settings);
     }
 
-    private function clear_cached_data()
+    public static function clear_cached_data()
     {
         WCDP_Progress::delete_total_revenue_meta_for_all_products();
         WCDP_Leaderboard::delete_cached_leaderboard_total();
