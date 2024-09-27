@@ -27,7 +27,10 @@ if (!defined('WCDP_PROGRESS_1')) :
     line-height: 2em;
     }
 <?php endif;
-$label = sprintf($label, wc_price($revenue), wc_price($atts['goal']));
+/** @var string $label */
+/** @var string $revenue_formatted */
+/** @var string $goal_formatted */
+$label = sprintf($label, $revenue_formatted, $goal_formatted);
 ?>
 </style>
 

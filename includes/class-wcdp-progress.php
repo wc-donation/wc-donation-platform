@@ -127,6 +127,8 @@ class WCDP_Progress
 
         // Translators: %1$s: donation amount raised, %2$s: fundraising goal
         $label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
+        $revenue_formatted = apply_filters('wcdp_progress_revenue', wc_price($revenue));
+        $goal_formatted = apply_filters('wcdp_progress_goal', wc_price($atts['goal']));
 
         $template = '';
 

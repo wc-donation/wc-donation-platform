@@ -13,6 +13,6 @@ if (!defined('WCDP_PROGRESS_7')) :
 
 <div class="wcdp-fundraising-progress wcdp-progress-style-7">
     <span class="wcdp-emphasized">
-        <?php echo wc_price($atts['goal'] - $revenue); ?>
+        <?php echo apply_filters('wcdp_progress_remaining', wc_price($atts['goal'] - $revenue)); ?>
     </span>
 </div>

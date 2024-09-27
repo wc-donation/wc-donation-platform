@@ -12,5 +12,5 @@ if (!defined('WCDP_PROGRESS_8')) :
 </style>
 
 <div class="wcdp-fundraising-progress wcdp-progress-style-8">
-    <?php echo sprintf($label, '<span class="wcdp-emphasized">' . wc_price($revenue) . '</span>', '<span class="wcdp-normal">' . wc_price($atts['goal']) . '</span>'); ?>
+    <?php echo sprintf($label, '<span class="wcdp-emphasized">' . $revenue_formatted . '</span>', '<span class="wcdp-normal">' . $goal_formatted . '</span>'); ?>
 </div>

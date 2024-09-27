@@ -13,6 +13,6 @@ if (!defined('WCDP_PROGRESS_6')) :
 
 <div class="wcdp-fundraising-progress wcdp-progress-style-6">
     <span class="wcdp-emphasized">
-        <?php echo wc_price($atts['goal']); ?>
+        <?php echo $goal_formatted; ?>
     </span>
 </div>
