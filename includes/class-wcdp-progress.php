@@ -84,6 +84,9 @@ class WCDP_Progress
         if (!isset($atts['id']) || $atts['id'] <= 0) {
             return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
+        if (!WCDP_Form::is_donable($atts['id'])) {
+            return esc_html__('Donations are not activated for this project.', 'wc-donation-platform');
+        }
 
         $goal_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true);
         $end_date_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true);

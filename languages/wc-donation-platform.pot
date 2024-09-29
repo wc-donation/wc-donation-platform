@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-15T19:22:09+02:00\n"
+"POT-Creation-Date: 2024-09-29T12:56:31+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -68,17 +68,19 @@ msgstr ""
 
 #: includes/class-wcdp-form.php:38
 #: includes/class-wcdp-progress.php:78
-#: includes/class-wcdp-progress.php:329
+#: includes/class-wcdp-progress.php:334
+#: includes/class-wcdp_leaderboard.php:64
 msgid "This shortcode does not support AJAX calls."
 msgstr ""
 
 #: includes/class-wcdp-form.php:54
 #: includes/class-wcdp-progress.php:85
-#: includes/class-wcdp-progress.php:342
+#: includes/class-wcdp-progress.php:347
 msgid "Invalid shortcode attribute:"
 msgstr ""
 
 #: includes/class-wcdp-form.php:57
+#: includes/class-wcdp-progress.php:88
 msgid "Donations are not activated for this project."
 msgstr ""
 
@@ -264,8 +266,8 @@ msgid "Checkbox label"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:189
-#: includes/class-wcdp_leaderboard.php:546
-#: includes/class-wcdp_leaderboard.php:573
+#: includes/class-wcdp_leaderboard.php:550
+#: includes/class-wcdp_leaderboard.php:577
 msgid "Do not show my name in the leaderboard"
 msgstr ""
 
@@ -278,7 +280,7 @@ msgid "Leaderboard item heading"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:196
-#: includes/class-wcdp_leaderboard.php:272
+#: includes/class-wcdp_leaderboard.php:276
 msgid "{firstname} donated {amount}"
 msgstr ""
 
@@ -443,22 +445,22 @@ msgid "This product will only be used for donations if activated"
 msgstr ""
 
 #. Translators: %1$s: donation amount raised, %2$s: fundraising goal
-#: includes/class-wcdp-progress.php:129
+#: includes/class-wcdp-progress.php:132
 msgid "%1$s of %2$s"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:253
+#: includes/class-wcdp-progress.php:258
 msgid "%s to go"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:256
+#: includes/class-wcdp-progress.php:261
 msgid "ended %s ago"
 msgstr ""
 
 #. Translators: {ORDER_COUNT} will be replaced with the number of orders
-#: includes/class-wcdp-progress.php:335
+#: includes/class-wcdp-progress.php:340
 msgid "{ORDER_COUNT} people have already contributed to this project."
 msgstr ""
 
@@ -558,28 +560,28 @@ msgstr ""
 msgid "Skip & Deactivate"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:72
+#: includes/class-wcdp_leaderboard.php:74
 msgid "Show more"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:281
+#: includes/class-wcdp_leaderboard.php:75
 msgid "No donation to this project yet."
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:315
+#: includes/class-wcdp_leaderboard.php:319
 msgid "Anonymous donor"
 msgstr ""
 
 #. Translators: %s: time difference e.g. 1 week ago or 3 months ago
-#: includes/class-wcdp_leaderboard.php:497
+#: includes/class-wcdp_leaderboard.php:501
 msgid "%s ago"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:575
+#: includes/class-wcdp_leaderboard.php:579
 msgid "Yes"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:577
+#: includes/class-wcdp_leaderboard.php:581
 msgid "No"
 msgstr ""
 
@@ -1089,7 +1091,7 @@ msgid "Back"
 msgstr ""
 
 #: includes/templates/styles/wcdp_form_style_3.php:23
-#: includes/templates/wcdp_step_1.php:95
+#: includes/templates/wcdp_step_1.php:92
 msgid "Next"
 msgstr ""
 
@@ -1210,11 +1212,11 @@ msgstr ""
 msgid "Design of the variation selection. Only for variable products."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:80
+#: includes/templates/wcdp_step_1.php:77
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:106
+#: includes/templates/wcdp_step_1.php:103
 msgid "Donate"
 msgstr ""
 
