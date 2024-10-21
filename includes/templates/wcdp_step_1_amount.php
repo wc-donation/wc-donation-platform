@@ -18,7 +18,7 @@ $currency_symbol = get_woocommerce_currency_symbol();
 if (isset($_REQUEST["wcdp-donation-amount"])) {
     $value_donation_amount = floatval($_REQUEST["wcdp-donation-amount"]);
 } else {
-    $value_donation_amount = $product->get_price();
+    $value_donation_amount = apply_filters('wcdp_default_amount', $product->get_price(), $product);
     if (!WCDP_Form::check_donation_amount($value_donation_amount, (int)$value['id'])) {
         $value_donation_amount = '';
     }
