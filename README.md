@@ -30,9 +30,6 @@
 	<a href="https://wordpress.org/plugins/wc-donation-platform/" target="_blank">
 		<img alt="WordPress Plugin Downloads" src="https://img.shields.io/wordpress/plugin/dt/wc-donation-platform?color=0c4a0d">
 	</a>
-	<a href="https://www.codefactor.io/repository/github/jonas-hoebenreich/wc-donation-platform/" target="_blank">
-		<img src="https://www.codefactor.io/repository/github/jonas-hoebenreich/wc-donation-platform/badge" alt="CodeFactor">
-	</a>
 </p>
 
 ___
