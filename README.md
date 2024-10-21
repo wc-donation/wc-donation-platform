@@ -37,7 +37,7 @@ ___
 <div align="center">
 	<img src="https://ps.w.org/wc-donation-platform/assets/screenshot-1.jpg" width="80%" alt="Donation Platform for WooCommerce"/>
 	<p>
-		<strong>100% free donation system for your fundraising that supports recurring donations and more</strong>
+		<strong>Free donation system for your fundraising that supports recurring donations and more</strong>
 	</p>
 </div>
 
@@ -56,13 +56,13 @@ Unlock the potential of WooCommerce for your charity or fundraising efforts:
 * 🚀 **Express Donations**: Your supporters can donate quickly using [Apple Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/), [Google Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/) & [PayPal](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/), providing a hassle-free giving experience.
 * 💰 **Fee Recovery**: Encourage donors to cover transaction costs, ensuring more funds go towards your cause.
 * 🏆 **Donation Leaderboard**: Showcase top donors with a [donor wall](https://www.wc-donation.com/documentation/usage/donation-leaderboard/), recognizing and motivating generous contributions.
-* 🆓 **100% Free & Open Source**: No platform fees or subscriptions, ensuring accessibility for charities of all sizes!
+* 🆓 **Free & Open Source**: No platform fees or subscriptions, ensuring accessibility for charities of all sizes!
 
 ### 🌟 The Ultimate Fundraising Solution
 
 Harness the power of WooCommerce for online fundraising, crowdfunding, and donor management. This fundraising & donation plugin is a free alternative to tools like Patreon, Donorbox, GoFundMe or GiveWP. **There are no platform fees or subscriptions.**
 
-> **100% free**, **open source** and **no platform fees**. There are **no paid extensions** for Donation Platform for WooCommerce.
+> **Free**, **open source** and **no platform fees**. There are **no paid extensions** for Donation Platform for WooCommerce.
 
 ### 🎯 Essential Fundraising Features 🎯
 

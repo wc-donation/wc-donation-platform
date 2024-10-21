@@ -9,7 +9,7 @@ Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-100% free donation system for your fundraising that supports recurring donations and more
+Open source donation system for your fundraising that supports recurring donations and more
 
 == Description ==
 
@@ -28,7 +28,7 @@ Unlock the potential of WooCommerce for your charity or fundraising efforts:
 * 🚀 **Express Donations**: Your supporters can donate quickly using [Apple Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/), [Google Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/) & [PayPal](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/), providing a hassle-free giving experience.
 * 💰 **Fee Recovery**: Encourage donors to cover transaction costs, ensuring more funds go towards your cause.
 * 🏆 **Donation Leaderboard**: Showcase top donors with a [donor wall](https://www.wc-donation.com/documentation/usage/donation-leaderboard/), recognizing and motivating generous contributions.
-* 🆓 **100% Free & Open Source**: No platform fees or subscriptions, ensuring accessibility for charities of all sizes!
+* 🆓 **Free & Open Source**: No platform fees or subscriptions, ensuring accessibility for charities of all sizes!
 
 = 🌟 The Ultimate WooCommerce Donation Solution =
 
