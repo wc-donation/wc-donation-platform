@@ -73,10 +73,6 @@ class WCDP_Progress
      */
     public function wcdp_progress(array $atts = array())
     {
-        // Do not allow executing this Shortcode via AJAX
-        if (wp_doing_ajax()) {
-            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
-        }
         if ($atts['id'] === 'current') {
             $atts['id'] = get_the_ID();
         }
@@ -329,10 +325,6 @@ class WCDP_Progress
      */
     function wcdp_order_counter(array $atts = array()): string
     {
-        // Do not allow executing this Shortcode via AJAX
-        if (wp_doing_ajax()) {
-            return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
-        }
         global $post;
         $atts = shortcode_atts(array(
             'id' => $post->ID,
