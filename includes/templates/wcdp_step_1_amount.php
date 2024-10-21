@@ -70,6 +70,7 @@ if ($value['style'] != 3 && $value['style'] != 4) {
 
             if (!is_null($suggestions)) {
                 foreach ($suggestions as $suggestion) {
+                    $suggestion = apply_filters('wcdp_suggestion', $suggestion, $product);
                     if (is_numeric($suggestion) && $suggestion > 0 && $suggestion >= $min_donation_amount && $suggestion <= $max_donation_amount) {
                         $option = array(
                             'input-id' => 'wcdp_amount_' . str_replace('.', '-', $suggestion),
