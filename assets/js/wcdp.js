@@ -266,18 +266,15 @@ jQuery( function( $ ) {
         }
     });
 
-	$(document).on("change", "#wcdp_fee_recovery" , function() {
-		setTimeout(function() {
-			$( 'body' )?.trigger( 'update_checkout' );
-		}, 400);
-	});
-	$(document)?.on("change", "input[name='payment_method']" , function() {
-		if ($('#wcdp_fee_recovery')?.prop('checked')) {
-			setTimeout(function() {
-				$( 'body' )?.trigger( 'update_checkout' );
-			}, 400);
-		}
-	});
+    function triggerCheckoutUpdate(delay = 400) {
+        setTimeout(() => $('body').trigger('update_checkout'), delay);
+    }
+
+    $(document).on('change', '#wcdp_fee_recovery, input[name="payment_method"]', function () {
+        if ($(this).is('#wcdp_fee_recovery') || $('#wcdp_fee_recovery').prop('checked')) {
+            triggerCheckoutUpdate();
+        }
+    });
 
     //copy value of range slider
     $( '#wcdp-range' )?.on('input', function () {
