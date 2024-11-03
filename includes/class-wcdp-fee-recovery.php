@@ -104,6 +104,7 @@ class WCDP_Fee_Recovery
 
             $amount = $cart->get_cart_contents_total();
             $fee = $value_fixed + $value_variable / 100 * $amount;
+            $fee = apply_filters('wcdp_fee_amount', $fee, $payment_method, $cart);
             $cart->add_fee(__('Transaction costs', 'wc-donation-platform'), $fee);
         }
     }
