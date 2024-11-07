@@ -44,7 +44,7 @@ class WCDP_Hooks
             add_action('woocommerce_product_related_products_heading', array($this, 'wcdp_product_related_products_heading'));
 
             //Change "Add to Cart" Button Text
-            add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text'));
+            add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text'), 10, 2);
         }
 
         //Change "Add to Cart" Button
@@ -388,11 +388,17 @@ class WCDP_Hooks
 
     /**
      * Turn Add to cart text into learn more
+     * @param $text
+     * @param $product WC_Product
      * @return string
      */
-    public function product_add_to_cart_text(): string
+    public function product_add_to_cart_text($text, $product): string
     {
-        return __('Learn more', 'wc-donation-platform');
+        if (WCDP_Form::is_donable($product->get_id())) {
+            return __('Learn more', 'wc-donation-platform');
+        } else {
+            return $text;
+        }
     }
 
     /**
@@ -406,6 +412,9 @@ class WCDP_Hooks
      */
     public function wcdp_loop_add_to_cart_link($html, $product, array $args = array()): string
     {
+        if (!WCDP_Form::is_donable($product->get_id())) {
+            return $html;
+        }
         return sprintf(
             '<a href="%s" class="button" %s>%s</a>',
             esc_url($product->get_permalink()),
