@@ -24,7 +24,8 @@ class WCDP_Leaderboard
 
         if (get_option("wcdp_enable_checkout_checkbox", "no") === "yes") {
             // Add checkbox to WooCommerce checkout
-            add_action('woocommerce_review_order_before_submit', array($this, 'add_anonymous_donation_checkbox'));
+            $checkbox_location = apply_filters('anonymous_donation_checkbox_location', 'woocommerce_review_order_before_submit');
+            add_action($checkbox_location, array($this, 'add_anonymous_donation_checkbox'));
 
             //Save the value of the WooCommerce checkout checkbox
             add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
