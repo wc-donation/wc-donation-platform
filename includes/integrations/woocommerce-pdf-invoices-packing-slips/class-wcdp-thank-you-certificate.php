@@ -42,6 +42,8 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
          */
         public function __construct($order = 0)
         {
+            parent::__construct( $order );
+
             // set properties
             $this->type = $this->slug = 'thank-you-certificate';
             $this->title = esc_html__('Thank You Certificate', 'wc-donation-platform');

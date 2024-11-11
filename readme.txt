@@ -166,13 +166,36 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
 = 1.3.3 =
+feat: option to redirect to cart instead of checkout
+feat: add fallback attribute to Leaderboard Shortcode
 tweak: automatically enable compatibility mode for websites that already have a WooCommerce shop
 tweak: make sure to disable the new product editor
 tweak: fallback id in order progress Shortcode
 chore: update supported WP version to 6.6
 chore: update supported WC version to 9.1.4
+chore: js refactored
+chore: allow progress bar in AJAX calls
+chore: npm update & upgrade
+chore: improve compatibility mode logic on plugin activation
+fix: improve error message when calculating Leaderboard via AJAX
 fix: theme templates being overwritten
 fix: wc_get_template invalid template
+fix: restore compatibility with PDF Invoices & Packing slips (minimum supported version of PDF Invoices & Packing slips: 3.9.0)
+fix: improve compatibility with some payment gateways
+fix: do not change add to card button for normal products on archive pages
+fix: progress bar only for donation projects
+fix: improve order autocomplete logic
+fix: untranslated string
+fix: typo in classname
+fix: make text of "fix invalid fields" banner a <p> element
+fix: style 1 of progress bar template
+a11y: make hidden label also aria-hidden
+dev: add anonymous_donation_checkbox_location filter
+dev: add wcdp_fee_amount filter
+dev: add wcdp_suggestion filter
+add wcdp_default_amount filter
+dev: add wcdp_clear_cache() function to clear the cache
+dev: add wcdp_progress_revenue, wcdp_progress_goal & wcdp_progress_remaining filter
 
 = 1.3.2 2024-07-09 =
 new: add [wcdp_order_counter] shortcode that allows you to display the number of orders to a product
