@@ -4,7 +4,7 @@
  * Forked from https://github.com/wpovernight/woocommerce-pdf-invoices-packing-slips/tree/8418b8caddfdc58b3effa6e17a6e386de14658e2/includes/documents
  */
 
-namespace WPO\WC\PDF_Invoices\Documents;
+namespace WPO\IPS\Documents;
 
 use WC_Order;
 
@@ -19,7 +19,7 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
      *
      * @class       WCDP_Thank_You_Certificate
      */
-    class WCDP_Thank_You_Certificate extends Order_Document_Methods
+    class WCDP_Thank_You_Certificate extends OrderDocumentMethods
     {
         protected static $_instance = null;
 
