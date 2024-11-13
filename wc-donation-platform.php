@@ -61,11 +61,6 @@ if (!class_exists('WCDP')) {
             new WCDP_Feedback();
             WCDP_Integrator::init();
 
-            //Load textdomain
-            add_action('init', function () {
-                load_plugin_textdomain('wc-donation-platform', false, WCDP_DIR . '/languages');
-            });
-
             //Add plugin action links
             add_filter('plugin_action_links_' . plugin_basename(__FILE__), array(__CLASS__, 'plugin_action_links'));
             add_filter('plugin_row_meta', array(__CLASS__, 'plugin_row_meta'), 10, 2);
