@@ -166,6 +166,7 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
 = 1.3.3 =
+feat: add style 9 to progress bar shortcode (just amount raised)
 feat: option to redirect to cart instead of checkout
 feat: add fallback attribute to Leaderboard Shortcode
 tweak: automatically enable compatibility mode for websites that already have a WooCommerce shop
