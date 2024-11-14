@@ -88,7 +88,7 @@ class WCDP_Progress
         $end_date_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true);
 
         $atts = shortcode_atts(array(
-            'id' => 'current',
+            'id' => get_the_ID(),
             'goal' => $goal_db,
             'style' => 1,
             'addids' => '',

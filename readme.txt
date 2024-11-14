@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
-Tested up to: 6.6
+Tested up to: 6.7
 Stable tag: 1.3.3
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -171,12 +171,13 @@ feat: add fallback attribute to Leaderboard Shortcode
 tweak: automatically enable compatibility mode for websites that already have a WooCommerce shop
 tweak: make sure to disable the new product editor
 tweak: fallback id in order progress Shortcode
-chore: update supported WP version to 6.6
+chore: update supported WP version to 6.7
 chore: update supported WC version to 9.1.4
 chore: js refactored
 chore: allow progress bar in AJAX calls
 chore: npm update & upgrade
 chore: improve compatibility mode logic on plugin activation
+chore: Remove load_plugin_textdomain() call, thanks to [todeveni](https://github.com/todeveni)
 fix: improve error message when calculating Leaderboard via AJAX
 fix: theme templates being overwritten
 fix: wc_get_template invalid template
