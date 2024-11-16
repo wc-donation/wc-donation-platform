@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-16T22:31:53+00:00\n"
+"POT-Creation-Date: 2024-11-16T23:05:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -462,11 +462,11 @@ msgstr ""
 msgid "{ORDER_COUNT} people have already contributed to this project."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:381
-msgid "WooCommerce Analytics is disabled. The donation progress bar may not function correctly. Please enable it in WooCommerce settings."
+#: includes/class-wcdp-progress.php:379
+msgid "WooCommerce Analytics is disabled. The donation progress bar will not function correctly. Please enable it in WooCommerce settings."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:383
+#: includes/class-wcdp-progress.php:381
 #: wc-donation-platform.php:152
 msgid "Documentation"
 msgstr ""
