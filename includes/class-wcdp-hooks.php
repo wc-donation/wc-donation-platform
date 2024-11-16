@@ -119,7 +119,6 @@ class WCDP_Hooks
 
             case 'myaccount/dashboard.php':
             case 'myaccount/view-order.php':
-            case 'myaccount/my-address.php':
             case 'myaccount/orders.php':
             case 'myaccount/downloads.php':
 
