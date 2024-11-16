@@ -173,12 +173,17 @@ tweak: automatically enable compatibility mode for websites that already have a 
 tweak: make sure to disable the new product editor
 tweak: fallback id in order progress Shortcode
 chore: update supported WP version to 6.7
-chore: update supported WC version to 9.1.4
+chore: update supported WC version to 9.4.1
 chore: js refactored
 chore: allow progress bar in AJAX calls
 chore: npm update & upgrade
 chore: improve compatibility mode logic on plugin activation
 chore: Remove load_plugin_textdomain() call, thanks to [todeveni](https://github.com/todeveni)
+chore: update orders.php template to latest version
+chore: remove my-address.php template
+chore: update form-checkout.php template to latest version
+chore: show warning when WooCommerce Analytics is disabled
+chore: replace deprecated filter in woocommerce-pdf-invoices-packing-slips integration
 fix: improve error message when calculating Leaderboard via AJAX
 fix: theme templates being overwritten
 fix: wc_get_template invalid template

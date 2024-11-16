@@ -12,7 +12,7 @@
  * Text Domain: wc-donation-platform
  * Domain Path: /languages
  * WC requires at least: 4.0.0
- * WC tested up to: 9.1.4
+ * WC tested up to: 9.4.1
  * Requires at least: 5.8
  */
 
