@@ -27,9 +27,12 @@ class WCDP_Pdf_Invoices
             add_filter('wpo_wcpdf_document_classes', 'WCDP_Pdf_Invoices::add_document_type');
 
             //Rename Invoice to Donation Receipt
-            add_filter('wpo_wcpdf_invoice_title', function () {
-                return __('Donation Receipt', 'wc-donation-platform');
-            });
+            add_filter('wpo_wcpdf_document_title', function ($title, $orderDocument) {
+                if ($orderDocument->get_type() === 'invoice') {
+                    return __('Donation Receipt', 'wc-donation-platform');
+                }
+                return $title;
+            }, 10, 2);
         }
     }
 
