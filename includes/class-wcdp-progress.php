@@ -375,14 +375,12 @@ class WCDP_Progress
 
         // Check if WooCommerce Analytics is disabled
         $analytics_enabled = get_option('woocommerce_analytics_enabled', 'yes');
-        error_log($analytics_enabled);
         if ($analytics_enabled === 'no') {
             $html = '<strong>'
                 . esc_html__('WooCommerce Analytics is disabled. The donation progress bar may not function correctly. Please enable it in WooCommerce settings.', 'wc-donation-platform')
                 . '</strong> <a href="https://www.wc-donation.com/documentation/troubleshooting/how-to-enable-woocommerce-analytics/" target="_blank">'
                 . esc_html__('Documentation', 'wc-donation-platform')
                 . '</a>';
-            error_log('1 ' . $html);
             WC_Admin_Notices::add_custom_notice('wcdp_analytics_notice', $html);
         }
     }
