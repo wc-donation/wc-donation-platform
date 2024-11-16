@@ -22,6 +22,9 @@ class WCDP_Progress
 
         //update donation revenue
         add_action('woocommerce_order_status_changed', array($this, 'reset_total_revenue'), 10, 4);
+
+        //Show a warning to admins if WooCommerce analytics is disabled
+        add_action('admin_init', [$this, 'maybe_show_analytics_warning']);
     }
 
     /**
@@ -354,5 +357,33 @@ class WCDP_Progress
         }
         $label = str_replace('{ORDER_COUNT}', '<span class="wcdp_order_count">' . intval($count) . '</span>', sanitize_text_field($label));
         return apply_filters('wcdp_order_counter', '<span class="wcdp_order_counter_label">' . $label . '</span>', $atts);
+    }
+
+    /**
+     * Show a warning to admins if WooCommerce analytics is disabled
+     * @return void
+     */
+    public function maybe_show_analytics_warning() {
+        // Check if we're in the WooCommerce admin settings
+        if (!is_admin() || !current_user_can('manage_woocommerce') || !class_exists('WC_Admin_Notices')) {
+            return;
+        }
+
+        if (isset($_GET['page']) && strpos('wc-', $_GET['page']) !== 0) {
+            return;
+        }
+
+        // Check if WooCommerce Analytics is disabled
+        $analytics_enabled = get_option('woocommerce_analytics_enabled', 'yes');
+        error_log($analytics_enabled);
+        if ($analytics_enabled === 'no') {
+            $html = '<strong>'
+                . esc_html__('WooCommerce Analytics is disabled. The donation progress bar may not function correctly. Please enable it in WooCommerce settings.', 'wc-donation-platform')
+                . '</strong> <a href="https://www.wc-donation.com/documentation/troubleshooting/how-to-enable-woocommerce-analytics/" target="_blank">'
+                . esc_html__('Documentation', 'wc-donation-platform')
+                . '</a>';
+            error_log('1 ' . $html);
+            WC_Admin_Notices::add_custom_notice('wcdp_analytics_notice', $html);
+        }
     }
 }
