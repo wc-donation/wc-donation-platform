@@ -196,6 +196,7 @@ fix: untranslated string
 fix: typo in classname
 fix: make text of "fix invalid fields" banner a <p> element
 fix: style 1 of progress bar template
+fix: only allow leaderboard for donation projects
 a11y: make hidden label also aria-hidden
 dev: add anonymous_donation_checkbox_location filter
 dev: add wcdp_fee_amount filter

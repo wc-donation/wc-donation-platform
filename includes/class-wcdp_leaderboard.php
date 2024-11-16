@@ -80,6 +80,10 @@ class WCDP_Leaderboard
         $limit = intval($atts['limit']);
         $id = (int)$atts['id'];
 
+        if ($atts['id'] !== '-1' && !WCDP_Form::is_donable($atts['id'])) {
+            return esc_html__('Donations are not activated for this project.', 'wc-donation-platform');
+        }
+
         // Get the latest orders
         $orders = $this->get_orders($id, $atts['orderby'], $limit);
 
