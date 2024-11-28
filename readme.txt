@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 6.7
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,7 +165,10 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
-= 1.3.3 =
+= 1.3.4 =
+fix: fee recovery checkbox not being applied
+
+= 1.3.3 2024-11-17 =
 feat: add style 9 to progress bar shortcode (just amount raised)
 feat: option to redirect to cart instead of checkout
 feat: add fallback attribute to Leaderboard Shortcode

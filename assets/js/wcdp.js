@@ -1,4 +1,11 @@
 jQuery( function( $ ) {
+    $(document).on('change', '#wcdp_fee_recovery, input[name="payment_method"]', function () {
+        console.log('triggerCheckoutUpdate');
+        if ($(this).is('#wcdp_fee_recovery') || $('#wcdp_fee_recovery').prop('checked')) {
+            triggerCheckoutUpdate();
+        }
+    });
+
     if (!document.querySelector('#wcdp')) return;
 
 	let currentFormData;
@@ -76,7 +83,7 @@ jQuery( function( $ ) {
     /**
      * Handle submit of add to cart form
      */
-    $('#wcdp-ajax-send').on('submit', function(e){
+    $('#wcdp-ajax-send')?.on('submit', function(e){
 		e.preventDefault();
         const serialized = $("#wcdp-ajax-send").serialize();
 		if (currentFormData != serialized) {
@@ -91,7 +98,7 @@ jQuery( function( $ ) {
      * Submit step 1 form automatically for style 3
      */
 	let time = 0;
-	$( '.wcdp-body > #wcdp-ajax-send' ).on('input blur keyup paste change', function (){
+	$( '.wcdp-body > #wcdp-ajax-send' )?.on('input blur keyup paste change', function (){
         if (currentFormData != $("#wcdp-ajax-send").serialize()) {
             time++;
             currentFormData = $("#wcdp-ajax-send").serialize();
@@ -109,7 +116,7 @@ jQuery( function( $ ) {
      */
 	let expresstime = 0;
 	let currentprice = 0;
-	$( '.wcdp-body' ).on('input blur keyup paste change load', function (){
+	$( '.wcdp-body' )?.on('input blur keyup paste change load', function (){
         const button = document.querySelector('.wcdp-body .single_add_to_cart_button');
         const form = document.querySelector('#wcdp-get-send');
         if (button && form && form.checkValidity()) {
@@ -269,12 +276,6 @@ jQuery( function( $ ) {
     function triggerCheckoutUpdate(delay = 400) {
         setTimeout(() => $('body').trigger('update_checkout'), delay);
     }
-
-    $(document).on('change', '#wcdp_fee_recovery, input[name="payment_method"]', function () {
-        if ($(this).is('#wcdp_fee_recovery') || $('#wcdp_fee_recovery').prop('checked')) {
-            triggerCheckoutUpdate();
-        }
-    });
 
     //copy value of range slider
     $( '#wcdp-range' )?.on('input', function () {
