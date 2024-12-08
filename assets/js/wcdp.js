@@ -1,6 +1,5 @@
 jQuery( function( $ ) {
     $(document).on('change', '#wcdp_fee_recovery, input[name="payment_method"]', function () {
-        console.log('triggerCheckoutUpdate');
         if ($(this).is('#wcdp_fee_recovery') || $('#wcdp_fee_recovery').prop('checked')) {
             triggerCheckoutUpdate();
         }
