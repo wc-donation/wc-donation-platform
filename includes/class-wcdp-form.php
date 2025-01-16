@@ -93,6 +93,8 @@ class WCDP_Form
             echo '</li></ul>';
             wc_get_template('myaccount/form-login.php');
         } else {
+            global $product;
+
             $product = wc_get_product($id);
 
             if (!isset(WC()->cart)) {
