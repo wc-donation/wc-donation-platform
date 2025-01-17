@@ -75,7 +75,7 @@ if ($value['style'] != 3 && $value['style'] != 4) {
                         $option = array(
                             'input-id' => 'wcdp_amount_' . str_replace('.', '-', $suggestion),
                             'input-value' => $suggestion,
-                            'label-text' => sprintf($price_format, '<span class="woocommerce-Price-currencySymbol">' . $currency_symbol . '</span>', $suggestion),
+                            'label-text' => wc_price($suggestion),
                         );
                         if ($suggestion == $value_donation_amount) {
                             $option['input-checked'] = true;

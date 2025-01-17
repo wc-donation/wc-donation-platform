@@ -167,6 +167,8 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.3.4 =
 fix: fee recovery checkbox not being applied
+fix: make $product variable global to avoid issues with some payment gateways
+chore: use wc_price for amount suggestions
 
 = 1.3.3 2024-11-17 =
 feat: add style 9 to progress bar shortcode (just amount raised)
@@ -204,7 +206,7 @@ a11y: make hidden label also aria-hidden
 dev: add anonymous_donation_checkbox_location filter
 dev: add wcdp_fee_amount filter
 dev: add wcdp_suggestion filter
-add wcdp_default_amount filter
+dev: add wcdp_default_amount filter
 dev: add wcdp_clear_cache() function to clear the cache
 dev: add wcdp_progress_revenue, wcdp_progress_goal & wcdp_progress_remaining filter
 
