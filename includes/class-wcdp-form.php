@@ -425,7 +425,7 @@ class WCDP_Form
             return;
         }
         $nonce = $_REQUEST["security"] ?? null;
-        if (wp_verify_nonce($nonce, 'wcdp_ajax_nonce' . sanitize_key($_REQUEST['postid']))) {
+        if (wp_verify_nonce($nonce, 'wcdp_ajax_nonce' . sanitize_key($_REQUEST['postid'])) && !apply_filters('wcdp_skip_nonce_validation', false)) {
             $this->wcdp_add_to_cart();
         }
     }
@@ -543,7 +543,7 @@ class WCDP_Form
         $newParams = false;
         if (!isset($_REQUEST['postid'])) {
             $message = esc_html__('Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
-        } else if (false === check_ajax_referer('wcdp_ajax_nonce' . sanitize_key($_REQUEST['postid']), 'security', false)) {
+        } else if (false === check_ajax_referer('wcdp_ajax_nonce' . sanitize_key($_REQUEST['postid']), 'security', false) && !apply_filters('wcdp_skip_nonce_validation', false)) {
             $message = esc_html__('Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform');
             $newParams = array(
                 'nocache' => 'true',
