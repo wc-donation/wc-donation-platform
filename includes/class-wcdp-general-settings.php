@@ -17,6 +17,8 @@ class WCDP_General_Settings
         if (function_exists('wp_add_privacy_policy_content')) {
             add_action( 'admin_init', array($this, 'suggest_privacy_policy_content') );
         }
+
+        add_action('upgrader_process_complete', array($this, 'on_plugin_update'), 10, 2);
     }
 
     /**
@@ -361,6 +363,16 @@ class WCDP_General_Settings
         $content = apply_filters( 'wcdp_privacy_policy_content', $content );
 
         wp_add_privacy_policy_content('Donation Platform for WooCommerce', wp_kses_post($content));
+    }
+
+    public function on_plugin_update($upgrader_object, $options) {
+        if ($options['action'] === 'update' && $options['type'] === 'plugin') {
+            if (array_key_exists('plugins', $options) && in_array('woocommerce/woocommerce.php', $options['plugins'], true)) {
+                if (get_option('woocommerce_email_footer_text') === '{site_title} &mdash; Built with {WooCommerce}') {
+                    update_option('woocommerce_email_footer_text', '{site_title} &mdash; Built with {WooCommerce} and <a href="https://www.wc-donation.com/">Donation Platform for WooCommerce</a>');
+                }
+            }
+        }
     }
 }
 
