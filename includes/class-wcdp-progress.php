@@ -344,6 +344,9 @@ class WCDP_Progress
         if ($product_id <= 0) {
             return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
+        if (!WCDP_Form::is_donable($product_id)) {
+            return esc_html__('Donations are not activated for this project.', 'wc-donation-platform');
+        }
 
         $label = $atts['label'];
 
