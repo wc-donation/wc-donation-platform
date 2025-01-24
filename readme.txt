@@ -168,7 +168,10 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 = 1.3.4 =
 fix: fee recovery checkbox not being applied
 fix: make $product variable global to avoid issues with some payment gateways
+fix: make sure order_counter only works for donation projects
+tweak: improve WooCommerce Analytics disabled error message
 chore: use wc_price for amount suggestions
+chore: improve footer text
 dev: add `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 
 = 1.3.3 2024-11-17 =
