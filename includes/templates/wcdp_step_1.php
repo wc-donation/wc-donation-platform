@@ -5,6 +5,7 @@
  * @var bool $has_child
  * @var $product
  * @var array $value
+ * @var string $context
  */
 
 if (!defined('ABSPATH')) exit;
