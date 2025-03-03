@@ -10,5 +10,12 @@ WCDP_FORM::define_ccs_variables();
 ?>
 
 <div class="wcdp-body">
-    <?php include(WCDP_DIR . 'includes/templates/wcdp_step_1.php'); ?>
+    <?php wc_get_template('wcdp_step_1.php',
+        array(
+            'product_id'=> $product_id,
+            'has_child' => $has_child,
+            'product' => $product,
+            'value' => $value,
+            'context' => $context,
+        ), '', WCDP_DIR . 'includes/templates/'); ?>
 </div>

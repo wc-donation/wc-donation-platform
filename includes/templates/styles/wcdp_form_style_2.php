@@ -12,7 +12,14 @@ if (!WC()->cart->is_empty() && get_option('wcdp_multiple_in_cart', 'no') === 'no
 ?>
 
 <div class="wcdp-body">
-    <?php include(WCDP_DIR . 'includes/templates/wcdp_step_1.php'); ?>
+    <?php wc_get_template('wcdp_step_1.php',
+        array(
+            'product_id'=> $product_id,
+            'has_child' => $has_child,
+            'product' => $product,
+            'value' => $value,
+            'context' => $context,
+        ), '', WCDP_DIR . 'includes/templates/'); ?>
     <?php do_action('woocommerce_before_checkout_form', $checkout); ?>
     <form name="checkout" method="post" class="checkout woocommerce-checkout"
           action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
