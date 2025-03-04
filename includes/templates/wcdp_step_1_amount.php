@@ -2,7 +2,10 @@
 /**
  * WCDP Shortcode Form
  * @var float $min_donation_amount
+ * @var float $max_donation_amount
  * @var int $product_id
+ * @var WC_Product $product
+ * @var array $value
  */
 if (!defined('ABSPATH')) exit;
 

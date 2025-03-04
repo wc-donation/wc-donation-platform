@@ -83,7 +83,14 @@ do_action('woocommerce_before_add_to_cart_form');
 
         <?php
         //Donation Amount section
-        include('wcdp_step_1_amount.php');
+        wc_get_template('wcdp_step_1_amount.php',
+            array(
+                'min_donation_amount'=> $min_donation_amount,
+                'max_donation_amount' => $max_donation_amount,
+                'product_id' => $product_id,
+                'product' => $product,
+                'value' => $value,
+            ), '', WCDP_DIR . 'includes/templates/');
 
         //Variation fields
         include('wcdp_step_1_variations.php');
