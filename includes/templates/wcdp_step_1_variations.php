@@ -4,6 +4,8 @@
  *
  * @var bool $has_child
  * @var WC_product $product
+ * @var array $attributes
+ * @var int $product_id
  */
 
 if (!defined('ABSPATH')) exit;
@@ -16,14 +18,14 @@ if ($has_child) : ?>
         $esc_attribute = esc_attr(sanitize_title($attribute));
 
         $terms = wc_get_product_terms(
-            $id,
+            $product_id,
             $esc_attribute,
             array(
                 'fields' => 'all',
             )
         );
 
-        $attributeLayout = get_post_meta($id, 'wcdp-settings[wcdp-attr-' . $esc_attribute . ']', true);
+        $attributeLayout = get_post_meta($product_id, 'wcdp-settings[wcdp-attr-' . $esc_attribute . ']', true);
 
         /*
          * $attributeLayout = 0: Default Layout
@@ -39,7 +41,7 @@ if ($has_child) : ?>
                 </label>
             <?php else :
                 //Display Custom HTML
-                do_action('wcdp_custom_html_' . $esc_attribute . '_' . $id);
+                do_action('wcdp_custom_html_' . $esc_attribute . '_' . $product_id);
             endif;
 
             //Display Box Layout
@@ -55,7 +57,7 @@ if ($has_child) : ?>
                     if ($product && taxonomy_exists($attribute)) {
                         // Get terms if this is a taxonomy - ordered. We need the names too.
                         $terms = wc_get_product_terms(
-                            $id,
+                            $product_id,
                             $attribute,
                             array(
                                 'fields' => 'all',

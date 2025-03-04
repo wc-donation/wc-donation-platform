@@ -55,7 +55,12 @@ if (!WC()->cart->is_empty() && get_option('wcdp_multiple_in_cart', 'no') === 'no
                     <stop offset="1" style="stop-color: var(--controls);stop-opacity:1"></stop>
                 </linearGradient>
             </defs></svg>
-        <?php include(WCDP_DIR . 'includes/templates/wcdp_step_2.php'); ?>
+        <?php wc_get_template('wcdp_step_2.php',
+            array(
+                'value' => $value,
+                'context' => $context,
+            ), '', WCDP_DIR . 'includes/templates/');
+        ?>
         <svg class="wcdp-divider-arrow" width="90%" height="100%" viewBox="0 0 113 4" version="1.1"
              xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
              style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><rect id="export"
@@ -88,7 +93,7 @@ if (!WC()->cart->is_empty() && get_option('wcdp_multiple_in_cart', 'no') === 'no
                     <stop offset="1" style="stop-color: var(--controls);stop-opacity:1"></stop>
                 </linearGradient>
             </defs></svg>
-        <?php include(WCDP_DIR . 'includes/templates/wcdp_step_3.php'); ?>
+        <?php wc_get_template('wcdp_step_3.php', [], '', WCDP_DIR . 'includes/templates/'); ?>
     </form>
     <?php do_action('woocommerce_after_checkout_form', WC()->checkout()); ?>
 </div>

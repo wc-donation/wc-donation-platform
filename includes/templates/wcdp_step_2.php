@@ -1,7 +1,10 @@
 <?php
-/*
-WCDP Shortcode Form
-*/
+/**
+ * WCDP Shortcode Form
+ *
+ * @var array $value
+ * @var string $context
+ */
 
 if (!defined('ABSPATH')) exit;
 
@@ -9,8 +12,6 @@ if (!defined('ABSPATH')) exit;
  * Add woocommerce_after_add_to_cart_form hook in step 2
  * needed in order to support Stripe express checkout
  */
-/** @var array $value */
-/** @var boolean $context */
 if ($value['style'] !== 4 && $context == 'shortcode') {
     do_action('woocommerce_after_add_to_cart_form');
 }

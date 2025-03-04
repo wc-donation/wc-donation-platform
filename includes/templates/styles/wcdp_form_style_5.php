@@ -1,7 +1,13 @@
 <?php
-/*
-WCDP Shortcode Form Style 5: 3 steps with banner header
-*/
+/**
+ * WCDP Shortcode Form Style 5: 3 steps with banner header
+ * @var int $product_id
+ * @var boolean $has_child
+ * @var WC_Product $product
+ * @var array $value
+ * @var string $context
+ * @var $checkout
+ */
 
 if (!defined('ABSPATH')) exit;
 ?>
@@ -19,4 +25,12 @@ if (!defined('ABSPATH')) exit;
     </div>
 
 <?php
-include('wcdp_form_style_3.php');
+wc_get_template('wcdp_form_style_3.php',
+    array(
+        'product_id'=> $product_id,
+        'has_child' => $has_child,
+        'product' => $product,
+        'value' => $value,
+        'context' => $context,
+        'checkout' => $checkout,
+    ), '', WCDP_DIR . 'includes/templates/styles/');

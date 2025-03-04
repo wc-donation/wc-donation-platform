@@ -1,7 +1,7 @@
 <?php
-/*
-WCDP Shortcode Form
-*/
+/**
+ * WCDP Shortcode Form
+ */
 
 if (!defined('ABSPATH')) exit;
 

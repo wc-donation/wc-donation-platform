@@ -93,7 +93,13 @@ do_action('woocommerce_before_add_to_cart_form');
             ), '', WCDP_DIR . 'includes/templates/');
 
         //Variation fields
-        include('wcdp_step_1_variations.php');
+        wc_get_template('wcdp_step_1_variations.php',
+            array(
+                'has_child'=> $has_child,
+                'product' => $product,
+                'attributes' => $attributes,
+                'product_id' => $product_id,
+            ), '', WCDP_DIR . 'includes/templates/');
         ?>
         <?php if ($value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5) : ?>
             <button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" value="2">
