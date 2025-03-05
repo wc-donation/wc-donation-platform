@@ -70,7 +70,7 @@ Harness the power of WooCommerce for online fundraising, crowdfunding, and donor
 * 🌐 **Mobile-Optimized**: Perfectly designed for [mobile fundraising](https://www.wc-donation.com/documentation/usage/mobile-optimization/), ensuring accessibility from anywhere.
 * 🛒 **100+ Payment Gateways**: Variety to reduce transaction fees and accommodate donor preferences.
 * 📊 **Advanced Donation Management**: Streamlined donor & customer management for [efficient tracking](https://www.wc-donation.com/documentation/usage/advanced-donation-management/).
-* 💳 **Express Donations**: [Apple Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal), [Google Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal) & [PayPal](https://wcdp.jonh.eu/documentation/integrations/express-donations-apple-pay-google-pay-paypal) integration for swift contributions.
+* 💳 **Express Donations**: [Apple Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal), [Google Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal) & [PayPal](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/) integration for swift contributions.
 * 🔄 **Recurring Donations**: Secure reliable funding with subscription options tailored to donors.
 * 🧾 **Automated Donation Receipts**: Generate receipts hassle-free, improving transparency.
 * 📜 **Thank You Certificates**: Personalized certificates for donors, acknowledging their support.
