@@ -1,4 +1,11 @@
 <?php
+/**
+ * Progress bar template style 6
+ * /includes/templates/styles/progress/wcdp_progress_style_6.php
+ *
+ * @var string $goal_formatted
+ */
+
 if (!defined('ABSPATH')) exit;
 
 if (!defined('WCDP_PROGRESS_6')) :

@@ -1,4 +1,13 @@
 <?php
+/**
+ * Progress bar template style 1
+ * /includes/templates/styles/progress/wcdp_progress_style_1.php
+ *
+ * @var string $label
+ * @var string $revenue_formatted
+ * @var string $goal_formatted
+ * @var float $width
+ */
 if (!defined('ABSPATH')) exit;
 
 if (!defined('WCDP_PROGRESS_1')) :
@@ -27,9 +36,6 @@ if (!defined('WCDP_PROGRESS_1')) :
     line-height: 2em;
     }
 <?php endif;
-/** @var string $label */
-/** @var string $revenue_formatted */
-/** @var string $goal_formatted */
 $label = sprintf($label, $revenue_formatted, $goal_formatted);
 ?>
 </style>

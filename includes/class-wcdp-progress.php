@@ -132,8 +132,6 @@ class WCDP_Progress
         $revenue_formatted = apply_filters('wcdp_progress_revenue', wc_price($revenue));
         $goal_formatted = apply_filters('wcdp_progress_goal', wc_price($atts['goal']));
 
-        $template = '';
-
         switch ($atts['style']) {
             case 2:
                 $template = 'wcdp_progress_style_2.php';
@@ -177,8 +175,19 @@ class WCDP_Progress
         }
     }
     <?php endif;
+        //Progress Bar template
+        wc_get_template($template,
+            array(
+                'label' => $label,
+                'revenue_formatted' => $revenue_formatted,
+                'goal_formatted' => $goal_formatted,
+                'goal_db' => $goal_db,
+                'end_date_db' => $end_date_db,
+                'width' => $width,
+                'revenue' => $revenue,
+                'goal_user' => $atts['goal'],
+            ), '', WCDP_DIR . 'includes/templates/styles/progress/');
 
-        include(WCDP_DIR . 'includes/templates/styles/progress/' . $template);
         $r = ob_get_contents();
         ob_end_clean();
         return $r;
@@ -250,7 +259,7 @@ class WCDP_Progress
      * @param $timestamp
      * @return string
      */
-    private function get_human_time_diff($timestamp): string
+    public static function get_human_time_diff($timestamp): string
     {
         $time_diff = strtotime($timestamp) - strtotime('now');
 

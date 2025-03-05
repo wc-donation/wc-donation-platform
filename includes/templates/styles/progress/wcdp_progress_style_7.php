@@ -1,4 +1,18 @@
 <?php
+/**
+ * Progress bar template style 7
+ * /includes/templates/styles/progress/wcdp_progress_style_7.php
+ *
+ * @var string $label
+ * @var string $revenue_formatted
+ * @var string $goal_formatted
+ * @var float $goal_db
+ * @var string $end_date_db
+ * @var float $width
+ * @var float $goal_user
+ * @var float $revenue
+ */
+
 if (!defined('ABSPATH')) exit;
 
 if (!defined('WCDP_PROGRESS_7')) :
@@ -13,6 +27,6 @@ if (!defined('WCDP_PROGRESS_7')) :
 
 <div class="wcdp-fundraising-progress wcdp-progress-style-7">
     <span class="wcdp-emphasized">
-        <?php echo apply_filters('wcdp_progress_remaining', wc_price($atts['goal'] - $revenue)); ?>
+        <?php echo apply_filters('wcdp_progress_remaining', wc_price($goal_user - $revenue)); ?>
     </span>
 </div>

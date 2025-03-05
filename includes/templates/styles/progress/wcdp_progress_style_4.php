@@ -1,4 +1,16 @@
 <?php
+/**
+ * Progress bar template style 4
+ * /includes/templates/styles/progress/wcdp_progress_style_4.php
+ *
+ * @var string $label
+ * @var string $revenue_formatted
+ * @var string $goal_formatted
+ * @var float $goal_db
+ * @var string $end_date_db
+ * @var float $width
+ */
+
 if (!defined('ABSPATH')) exit;
 
 $label = number_format($width, 0, '', wc_get_price_thousand_separator()) . '%';
@@ -52,7 +64,7 @@ if (!defined('WCDP_PROGRESS_2')) :
         <div class="wcdp-column">
             <?php
             if ($end_date_db != '') {
-                echo $this->get_human_time_diff($end_date_db);
+                echo WCDP_Progress::get_human_time_diff($end_date_db);
             }
             ?>
         </div>

@@ -95,9 +95,9 @@ do_action('woocommerce_before_add_to_cart_form');
         //Variation fields
         wc_get_template('wcdp_step_1_variations.php',
             array(
-                'has_child'=> $has_child,
+                'has_child' => $has_child,
                 'product' => $product,
-                'attributes' => $attributes,
+                'attributes' => $attributes ?? [],
                 'product_id' => $product_id,
             ), '', WCDP_DIR . 'includes/templates/');
         ?>
