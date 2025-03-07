@@ -35,6 +35,9 @@ class WCDP_Form
     {
         // Do not allow executing this Shortcode via AJAX
         if (wp_doing_ajax()) {
+            if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'elementor_ajax' && current_user_can('edit_posts')) {
+                return esc_html__('Your donation form will be displayed here.', 'wc-donation-platform');
+            }
             return esc_html__('This shortcode does not support AJAX calls.', 'wc-donation-platform');
         }
 

@@ -169,6 +169,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 fix: fee recovery checkbox not being applied
 fix: make $product variable global to avoid issues with some payment gateways
 fix: make sure order_counter only works for donation projects
+fix: improve ajax error message within Elementor editor
 tweak: improve WooCommerce Analytics disabled error message
 chore: switch to using wc_get_template() function
 chore: use wc_price for amount suggestions
