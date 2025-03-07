@@ -71,7 +71,7 @@ class WCDP_General_Settings
             array(
                 'title' => __('General Options', 'wc-donation-platform'),
                 'type' => 'title',
-                'id' => 'wcdp_settings_general',
+                'id' => 'wcdp_section_general',
             ),
             array(
                 'title' => __('Allow more than one product in cart', 'wc-donation-platform'),
@@ -174,7 +174,7 @@ class WCDP_General_Settings
                 'name' => __('Leaderborard Options', 'wc-donation-platform'),
                 'type' => 'title',
                 'desc' => '<a href="https://www.wc-donation.com/documentation/usage/donation-leaderboard/" target="_blank">' . esc_html__('Detailed leaderboard documentation', 'wc-donation-platform') . '</a>',
-                'id' => 'wcdp_leaderboard_options',
+                'id' => 'wcdp_section_leaderboard',
             ),
             array(
                 'title' => __('Enable anonymous / public checkbox', 'wc-donation-platform'),
@@ -235,7 +235,7 @@ class WCDP_General_Settings
             array(
                 'title' => __('Design Options', 'wc-donation-platform'),
                 'type' => 'title',
-                'id' => 'wcdp_leaderboard_options',
+                'id' => 'wcdp_section_design',
             ),
             array(
                 'title' => __('Main Color', 'wc-donation-platform'),
@@ -279,8 +279,16 @@ class WCDP_General_Settings
             ),
             array(
                 'title' => __('Support', 'wc-donation-platform'),
-                'desc' => '<a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">' . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform') . '</a>',
+                // translators: %1$s & %3$s: opening links, %2$s & %4$s closing links
+                'desc' => sprintf(esc_html__('Having issues? First, %1$scheck the documentation%2$s. If that doesn’t solve your problem, feel free to %3$sopen an issue on WordPress.org%4$s!', 'wc-donation-platform'), '<a href="https://www.wc-donation.com/documentation/" target="_blank">', '</a>', '<a href="https://wordpress.org/support/plugin/wc-donation-platform/#new-topic-0" target="_blank">', '</a>')
+                    . '<br><br><a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">'
+                    . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform')
+                    . '</a>',
                 'type' => 'title',
+                'id' => 'wcdp_settings_support',
+            ),
+            array(
+                'type' => 'sectionend',
                 'id' => 'wcdp_settings_support',
             ),
         );

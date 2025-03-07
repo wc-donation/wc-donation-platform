@@ -177,6 +177,7 @@ chore: switch to using wc_get_template() function
 chore: use wc_price for amount suggestions
 chore: improve footer text
 chore: refactor fee recovery code
+chore: improve general settings page
 dev: add `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 
 = 1.3.3 2024-11-17 =
