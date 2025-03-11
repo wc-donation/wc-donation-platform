@@ -4,7 +4,7 @@
  * Plugin URI: https://www.wc-donation.com/
  * Description: Donation Platform for WooCommerce unlocks the power of WooCommerce for your online fundraising & crowdfunding.
  * Author: Jonas Höbenreich
- * Version: 1.3.3
+ * Version: 1.3.4
  * Author URI: https://www.jonh.eu/
  * Plugin URI:  https://www.wc-donation.com/
  * License: GNU General Public License v2.0
