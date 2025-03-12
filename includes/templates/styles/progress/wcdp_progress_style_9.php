@@ -1,4 +1,11 @@
 <?php
+/**
+ * Progress bar template style 9
+ * /includes/templates/styles/progress/wcdp_progress_style_9.php
+ *
+ * @var string $revenue_formatted
+ */
+
 if (!defined('ABSPATH')) exit;
 
 if (!defined('WCDP_PROGRESS_9')) :

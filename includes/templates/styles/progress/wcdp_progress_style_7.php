@@ -3,12 +3,6 @@
  * Progress bar template style 7
  * /includes/templates/styles/progress/wcdp_progress_style_7.php
  *
- * @var string $label
- * @var string $revenue_formatted
- * @var string $goal_formatted
- * @var float $goal_db
- * @var string $end_date_db
- * @var float $width
  * @var float $goal
  * @var float $revenue
  */
