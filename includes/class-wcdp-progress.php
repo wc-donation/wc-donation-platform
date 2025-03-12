@@ -185,7 +185,7 @@ class WCDP_Progress
                 'end_date_db' => $end_date_db,
                 'width' => $width,
                 'revenue' => $revenue,
-                'goal_user' => $atts['goal'],
+                'goal' => (float) $atts['goal'],
             ), '', WCDP_DIR . 'includes/templates/styles/progress/');
 
         $r = ob_get_contents();

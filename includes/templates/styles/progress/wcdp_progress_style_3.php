@@ -6,7 +6,7 @@
  * @var string $label
  * @var string $revenue_formatted
  * @var string $goal_formatted
- * @var float $goal_db
+ * @var float $goal
  * @var string $end_date_db
  * @var float $width
  */
@@ -47,7 +47,7 @@ if (!defined('WCDP_PROGRESS_3')) :
 </style>
 
 <div class="wcdp-fundraising-progress wcdp-progress-style-3">
-    <?php if ($goal_db != '' && $goal_db > 0) : ?>
+    <?php if ($goal != '' && $goal > 0) : ?>
         <div class="wcdp-column">
             <?php echo $label; ?>
         </div>

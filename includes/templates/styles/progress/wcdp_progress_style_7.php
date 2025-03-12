@@ -9,7 +9,7 @@
  * @var float $goal_db
  * @var string $end_date_db
  * @var float $width
- * @var float $goal_user
+ * @var float $goal
  * @var float $revenue
  */
 
@@ -27,6 +27,6 @@ if (!defined('WCDP_PROGRESS_7')) :
 
 <div class="wcdp-fundraising-progress wcdp-progress-style-7">
     <span class="wcdp-emphasized">
-        <?php echo apply_filters('wcdp_progress_remaining', wc_price($goal_user - $revenue)); ?>
+        <?php echo apply_filters('wcdp_progress_remaining', wc_price($goal - $revenue)); ?>
     </span>
 </div>

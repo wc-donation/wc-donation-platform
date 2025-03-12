@@ -6,7 +6,7 @@
  * @var string $label
  * @var string $revenue_formatted
  * @var string $goal_formatted
- * @var float $goal_db
+ * @var float $goal
  * @var string $end_date_db
  * @var float $width
  */
@@ -57,7 +57,7 @@ if (!defined('WCDP_PROGRESS_2')) :
 <div class="wcdp-fundraising-progress wcdp-progress-style-2">
     <div class="wcdp-progress-row">
         <?php
-        if ($goal_db != '' && $goal_db > 0) {
+        if ($goal != '' && $goal > 0) {
             ?>
             <div class="wcdp-column"> <?php
                 echo $label;
@@ -72,7 +72,7 @@ if (!defined('WCDP_PROGRESS_2')) :
             ?>
         </div>
     </div>
-    <?php if ($goal_db != '' && $goal_db > 0) : ?>
+    <?php if ($goal != '' && $goal > 0) : ?>
         <div class="wcdp-progress">
             <div class="wcdp-thermometer wcdp-thermometer-bg"></div>
             <div class="wcdp-thermometer wcdp-thermometer-fg" style="width: <?php echo esc_attr($width); ?>%"></div>
