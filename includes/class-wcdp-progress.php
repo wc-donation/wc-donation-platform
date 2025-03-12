@@ -157,6 +157,9 @@ class WCDP_Progress
             case 9:
                 $template = 'wcdp_progress_style_9.php';
                 break;
+            case 10:
+                $template = 'wcdp_progress_style_10.php';
+                break;
             default:
                 $template = 'wcdp_progress_style_1.php';
         }
@@ -181,7 +184,6 @@ class WCDP_Progress
                 'label' => $label,
                 'revenue_formatted' => $revenue_formatted,
                 'goal_formatted' => $goal_formatted,
-                'goal_db' => $goal_db,
                 'end_date_db' => $end_date_db,
                 'width' => $width,
                 'revenue' => $revenue,
