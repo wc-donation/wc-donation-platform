@@ -5,6 +5,7 @@
  *
  * @var string $goal
  * @var float $revenue
+ * @var int $percentage_decimals
  */
 
 if (!defined('ABSPATH')) exit;
@@ -27,7 +28,7 @@ if (!defined('WCDP_PROGRESS_10')) :
         } else {
             $percentage = 0;
         }
-        $percentage_formatted = number_format($percentage, 0, '', wc_get_price_thousand_separator()) . '%';
+        $percentage_formatted = wc_format_decimal($percentage, $percentage_decimals) . '%';
 
         echo wp_kses_post(apply_filters('wcdp_percentage_formatted', $percentage_formatted)); ?>
     </span>

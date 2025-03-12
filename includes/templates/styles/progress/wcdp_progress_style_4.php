@@ -9,11 +9,12 @@
  * @var string $end_date_db
  * @var float $width
  * @var float $goal
+ * @var int $percentage_decimals
  */
 
 if (!defined('ABSPATH')) exit;
 
-$label = number_format($width, 0, '', wc_get_price_thousand_separator()) . '%';
+$label = number_format($width, $percentage_decimals, '', wc_get_price_thousand_separator()) . '%';
 
 if (!defined('WCDP_PROGRESS_2')) :
     define('WCDP_PROGRESS_2', 1);

@@ -96,6 +96,7 @@ class WCDP_Progress
             'style' => 1,
             'addids' => '',
             'cheat' => 0,
+            'percentage_decimals' => 0,
         ), $atts);
 
         if (!is_numeric($atts['goal'])) {
@@ -126,6 +127,8 @@ class WCDP_Progress
         if ($width > 100) {
             $width = 100;
         }
+
+        $percentage_decimals = max((int)$atts['percentage_decimals'], 0);
 
         // Translators: %1$s: donation amount raised, %2$s: fundraising goal
         $label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
@@ -188,6 +191,7 @@ class WCDP_Progress
                 'width' => $width,
                 'revenue' => $revenue,
                 'goal' => (float) $atts['goal'],
+                'percentage_decimals' => $percentage_decimals,
             ), '', WCDP_DIR . 'includes/templates/styles/progress/');
 
         $r = ob_get_contents();
