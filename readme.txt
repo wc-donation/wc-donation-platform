@@ -182,6 +182,7 @@ chore: refactor fee recovery code
 chore: improve general settings page
 chore: clean up $goal_db & $goal_user variables
 chore: add missing file comments
+chore: refactor $percentage & $width in progress bar
 dev: `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 
 = 1.3.3 2024-11-17 =

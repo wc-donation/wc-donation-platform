@@ -3,9 +3,7 @@
  * Progress bar template style 10
  * /includes/templates/styles/progress/wcdp_progress_style_10.php
  *
- * @var string $goal
- * @var float $revenue
- * @var int $percentage_decimals
+ * @var string $percentage_formatted
  */
 
 if (!defined('ABSPATH')) exit;
@@ -23,13 +21,7 @@ if (!defined('WCDP_PROGRESS_10')) :
 <div class="wcdp-fundraising-progress wcdp-progress-style-10">
     <span class="wcdp-emphasized">
         <?php
-        if ($goal != 0) {
-            $percentage = ($revenue * 100) / $goal;
-        } else {
-            $percentage = 0;
-        }
-        $percentage_formatted = wc_format_decimal($percentage, $percentage_decimals) . '%';
 
-        echo wp_kses_post(apply_filters('wcdp_percentage_formatted', $percentage_formatted)); ?>
+        echo wp_kses_post($percentage_formatted); ?>
     </span>
 </div>

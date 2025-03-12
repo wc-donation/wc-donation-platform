@@ -3,18 +3,15 @@
  * Progress bar template style 4
  * /includes/templates/styles/progress/wcdp_progress_style_4.php
  *
- * @var string $label
  * @var string $revenue_formatted
  * @var string $goal_formatted
  * @var string $end_date_db
  * @var float $width
  * @var float $goal
- * @var int $percentage_decimals
+ * @var string $percentage_formatted
  */
 
 if (!defined('ABSPATH')) exit;
-
-$label = number_format($width, $percentage_decimals, '', wc_get_price_thousand_separator()) . '%';
 
 if (!defined('WCDP_PROGRESS_2')) :
     define('WCDP_PROGRESS_2', 1);
@@ -59,7 +56,7 @@ if (!defined('WCDP_PROGRESS_2')) :
     <div class="wcdp-progress-row">
         <div class="wcdp-column">
             <span class="wcdp-emphasized">
-                <?php echo $label; ?>
+                <?php echo wp_kses_post($percentage_formatted); ?>
             </span>
         </div>
         <div class="wcdp-column">

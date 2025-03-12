@@ -115,20 +115,18 @@ class WCDP_Progress
 
         //Add specified amount to revenue
         $revenue += (float)$atts['cheat'];
-
         $revenue = apply_filters('wcdp_progress_revenue', $revenue, $atts);
 
         if ((float)$atts['goal'] != 0) {
-            $width = ($revenue * 100) / (float)$atts['goal'];
+            $percentage = ($revenue * 100) / (float) $atts['goal'];
         } else {
-            $width = 100;
+            $percentage = 0;
         }
 
-        if ($width > 100) {
-            $width = 100;
-        }
+        $width = max(0, min(100, $percentage));
 
         $percentage_decimals = max((int)$atts['percentage_decimals'], 0);
+        $percentage_formatted = wc_format_decimal($percentage, $percentage_decimals) . '%';
 
         // Translators: %1$s: donation amount raised, %2$s: fundraising goal
         $label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
@@ -191,7 +189,7 @@ class WCDP_Progress
                 'width' => $width,
                 'revenue' => $revenue,
                 'goal' => (float) $atts['goal'],
-                'percentage_decimals' => $percentage_decimals,
+                'percentage_formatted' => $percentage_formatted,
             ), '', WCDP_DIR . 'includes/templates/styles/progress/');
 
         $r = ob_get_contents();
