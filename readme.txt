@@ -183,6 +183,7 @@ chore: improve general settings page
 chore: clean up $goal_db & $goal_user variables
 chore: add missing file comments
 chore: refactor $percentage & $width in progress bar
+chore: set supported WC version to 9.7.1
 dev: `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 dev: `wcdp_sort_order` filter to update the donation amount suggestion order
 
