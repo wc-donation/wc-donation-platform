@@ -166,8 +166,8 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
 = 1.3.4 =
-new: new style 10 to progress shortcode
-new: percentage_decimals attribute to progress shortcode
+feat: new style 10 to progress shortcode
+feat: percentage_decimals attribute to progress shortcode
 fix: fee recovery checkbox not being applied
 fix: make $product variable global to avoid issues with some payment gateways
 fix: make sure order_counter only works for donation projects
@@ -184,6 +184,7 @@ chore: clean up $goal_db & $goal_user variables
 chore: add missing file comments
 chore: refactor $percentage & $width in progress bar
 dev: `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
+dev: `wcdp_sort_order` filter to update the donation amount suggestion order
 
 = 1.3.3 2024-11-17 =
 feat: add style 9 to progress bar shortcode (just amount raised)

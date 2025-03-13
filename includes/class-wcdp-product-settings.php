@@ -62,7 +62,7 @@ class WCDP_Product_Settings
     {
         $product = wc_get_product($post_id);
         $product_settings = $this->product_meta_style(array());
-        $product_settings = $this->product_meta_amount_selection($product_settings);
+        $product_settings = $this->product_meta_amount_selection($product_settings, $post_id);
         $product_settings = $this->product_meta_variation_styles($product_settings, $product);
         $product_settings = $this->product_meta_fundraising_meta($product_settings);
 
@@ -101,14 +101,15 @@ class WCDP_Product_Settings
      * @param $product_settings
      * @return array
      */
-    private function product_meta_amount_selection($product_settings): array
+    private function product_meta_amount_selection($product_settings, $post_id): array
     {
         if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings']) && $product_settings[0] == 1) {
             $prices = array();
             foreach ($_POST['wcdp-settings'] as $value) {
                 $prices[] = (float)$value;
             }
-            sort($prices);
+            $sort_order = apply_filters('wcdp_sort_order', 'ASC', $post_id);
+            ($sort_order === 'DESC') ? rsort($prices, SORT_NUMERIC) : sort($prices, SORT_NUMERIC);
             $product_settings[1] = wp_json_encode($prices);
         } else {
             $product_settings[1] = '';
