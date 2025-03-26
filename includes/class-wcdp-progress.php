@@ -62,7 +62,7 @@ class WCDP_Progress
             $revenue = get_post_meta($item->get_product_id(), 'wcdp_total_revenue');
             //Delete the outdated total revenue meta
             //If the orderid is smaller than 10000 it assumes that the page does not receive many donations
-            if ($revenue && ($orderid <= 10000 || time() - $revenue[0]['time'] > 30)) {
+            if ($revenue && ($orderid <= 10000 || time() - $revenue[0]['time'] > 30) && !apply_filters('wcdp_force_recalculate_total_revenue', false, $item, $revenue)) {
                 delete_post_meta($item->get_product_id(), 'wcdp_total_revenue');
             }
             delete_transient('wcdp_order_counter_' . $item->get_product_id() );
