@@ -538,7 +538,7 @@ class WCDP_Leaderboard
     }
 
     /**
-     * Add a "anonymous donation" checkbox to the checkout
+     * Add an "anonymous donation" checkbox to the checkout
      * @return void
      */
     public function add_anonymous_donation_checkbox()

@@ -186,6 +186,7 @@ chore: refactor $percentage & $width in progress bar
 chore: set supported WC version to 9.7.1
 dev: `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 dev: `wcdp_sort_order` filter to update the donation amount suggestion order
+dev: add wcdp_force_recalculate_total_revenue filter
 
 = 1.3.3 2024-11-17 =
 feat: add style 9 to progress bar shortcode (just amount raised)
