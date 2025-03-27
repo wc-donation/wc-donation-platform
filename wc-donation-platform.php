@@ -171,16 +171,6 @@ if (!is_woocommerce_active() || version_compare(get_option('woocommerce_db_versi
 } else {
     add_action('plugins_loaded', function () {
         new WCDP();
-
-        /**
-         * Clear Donation Platform for WooCommerce Cache
-         *
-         * @return void
-         * @since v1.3.3
-         */
-        function wcdp_clear_cache() {
-            WCDP_General_Settings::clear_cached_data();
-        }
     });
 }
 
@@ -225,3 +215,21 @@ register_activation_hook( __FILE__,
     //enable compatibility mode
     add_option('wcdp_compatibility_mode', 'yes');
 });
+
+if (!function_exists('wcdp_clear_cache')) {
+    /**
+     * Clear Donation Platform for WooCommerce Cache
+     *
+     * @return void
+     * @since v1.3.3
+     */
+    function wcdp_clear_cache() {
+        if (class_exists('WCDP_General_Settings')) {
+            WCDP_General_Settings::clear_cached_data();
+        } else {
+            add_action('init', function () {
+                WCDP_General_Settings::clear_cached_data();
+            });
+        }
+    }
+}
