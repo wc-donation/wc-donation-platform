@@ -279,7 +279,7 @@ class WCDP_Leaderboard
         $title_unchecked = sanitize_text_field(get_option("wcdp_lb_title_unchecked", ""));
         $subtitle_checked = sanitize_text_field(get_option("wcdp_lb_subtitle_checked", ""));
         $subtitle_unchecked = sanitize_text_field(get_option("wcdp_lb_subtitle_unchecked", ""));
-        $id = 'wcdp_' . wp_generate_password(6, false);
+        $id = wp_unique_id('wcdp_');
 
         if (sizeof($orders) === 0) {
             return esc_html($fallback);

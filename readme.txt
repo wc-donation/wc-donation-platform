@@ -174,6 +174,7 @@ fix: make sure order_counter only works for donation projects
 fix: make sure progress bar only works for donation projects
 fix: improve ajax error message within Elementor editor
 fix: fix outdated links
+fix/dev: fix wcdp_clear_cache() function throwing errors when called too early
 tweak: improve WooCommerce Analytics disabled error message
 chore: switch to using wc_get_template() function
 chore: use wc_price for amount suggestions
@@ -184,6 +185,7 @@ chore: clean up $goal_db & $goal_user variables
 chore: add missing file comments
 chore: refactor $percentage & $width in progress bar
 chore: set supported WC version to 9.7.1
+chore: use wp_unique_id for leaderboard id
 dev: `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 dev: `wcdp_sort_order` filter to update the donation amount suggestion order
 dev: add wcdp_force_recalculate_total_revenue filter
