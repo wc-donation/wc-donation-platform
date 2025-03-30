@@ -15,6 +15,7 @@ class WCDP_General_Settings
         add_action('woocommerce_update_options_advanced', array($this, 'disable_new_product_editor'));
         add_action('woocommerce_admin_field_wcdp_clear_cache_button', [$this, 'js_clear_cache']);
         add_action('wp_ajax_wcdp_clear_cache', [$this, 'ajax_clear_cache']);
+        add_action('woocommerce_admin_field_wcdp_leaderboard_js', [$this, 'leaderboard_js']);
 
         if (function_exists('wp_add_privacy_policy_content')) {
             add_action( 'admin_init', array($this, 'suggest_privacy_policy_content') );
@@ -167,6 +168,20 @@ class WCDP_General_Settings
                 'id' => 'wcdp_section_leaderboard',
             ),
             array(
+                'title' => __('Leaderboard item heading', 'wc-donation-platform'),
+                'id' => 'wcdp_lb_title',
+                'default' => __('{firstname} donated {amount}', 'wc-donation-platform'),
+                'type' => 'text',
+                'class' => 'wcdp_leaderboard_default',
+            ),
+            array(
+                'title' => __('Leaderboard item description', 'wc-donation-platform'),
+                'id' => 'wcdp_lb_subtitle',
+                'default' => __('{timediff}', 'wc-donation-platform'),
+                'type' => 'text',
+                'class' => 'wcdp_leaderboard_default',
+            ),
+            array(
                 'title' => __('Enable anonymous / public checkbox', 'wc-donation-platform'),
                 'desc' => __('Add a checkbox to the checkout allowing users to specify how their donation is displayed in the leaderboard', 'wc-donation-platform'),
                 'id' => 'wcdp_enable_checkout_checkbox',
@@ -176,47 +191,43 @@ class WCDP_General_Settings
             ),
             array(
                 'title' => __('Text of anonymous / public checkbox', 'wc-donation-platform'),
-                'desc' => __('Checkbox label', 'wc-donation-platform'),
+                'desc' => __('Checkout checkbox label', 'wc-donation-platform'),
                 'id' => 'wcdp_checkout_checkbox_text',
                 'default' => __('Do not show my name in the leaderboard', 'wc-donation-platform'),
                 'type' => 'text',
                 'desc_tip' => __('The text of the optional checkbox on checkout. It allows you to display anonymous and public donations in your leaderboards.', 'wc-donation-platform'),
-            ),
-            array(
-                'title' => __('Leaderboard item heading', 'wc-donation-platform'),
-                'id' => 'wcdp_lb_title',
-                'default' => __('{firstname} donated {amount}', 'wc-donation-platform'),
-                'type' => 'text',
-            ),
-            array(
-                'title' => __('Leaderboard item description', 'wc-donation-platform'),
-                'id' => 'wcdp_lb_subtitle',
-                'default' => __('{timediff}', 'wc-donation-platform'),
-                'type' => 'text',
+                'class' => 'wcdp_leaderboard_optout_checkbox',
             ),
             array(
                 'title' => __('Leaderboard item heading (Checkout checkbox checked)', 'wc-donation-platform'),
                 'id' => 'wcdp_lb_title_checked',
-                'default' => "",
+                'default' => __('Anonymous donor donated {amount}', 'wc-donation-platform'),
                 'type' => 'text',
+                'class' => 'wcdp_leaderboard_optout_checkbox',
             ),
             array(
                 'title' => __('Leaderboard item heading (Checkout checkbox unchecked)', 'wc-donation-platform'),
                 'id' => 'wcdp_lb_title_unchecked',
-                'default' => "",
+                'default' => __('{firstname} donated {amount}', 'wc-donation-platform'),
                 'type' => 'text',
+                'class' => 'wcdp_leaderboard_optout_checkbox',
             ),
             array(
                 'title' => __('Leaderboard item description (Checkout checkbox checked)', 'wc-donation-platform'),
                 'id' => 'wcdp_lb_subtitle_checked',
-                'default' => "",
+                'default' => __('{timediff}', 'wc-donation-platform'),
                 'type' => 'text',
+                'class' => 'wcdp_leaderboard_optout_checkbox',
             ),
             array(
                 'title' => __('Leaderboard item description (Checkout checkbox unchecked)', 'wc-donation-platform'),
                 'id' => 'wcdp_lb_subtitle_unchecked',
-                'default' => "",
+                'default' => __('{timediff}', 'wc-donation-platform'),
                 'type' => 'text',
+                'class' => 'wcdp_leaderboard_optout_checkbox',
+            ),
+            array(
+                'type' => 'wcdp_leaderboard_js',
             ),
             array(
                 'type' => 'sectionend',
@@ -410,6 +421,11 @@ class WCDP_General_Settings
         <?php
     }
 
+    /**
+     * Handle "Clear Cache" button click via AJAX
+     *
+     * @return void
+     */
     public function ajax_clear_cache() {
         if (!current_user_can('manage_woocommerce')) {
             wp_send_json_error(__('Permission denied.', 'wc-donation-platform'));
@@ -421,6 +437,38 @@ class WCDP_General_Settings
 
         wcdp_clear_cache();
         wp_send_json_success();
+    }
+
+    /**
+     * Show/Hide Leaderboard input fields depending on settings
+     * @return void
+     */
+    public function leaderboard_js() {
+
+        ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                function toggleLeaderboardOptions() {
+                    const isChecked = $('#wcdp_enable_checkout_checkbox').is(':checked');
+
+                    $('.wcdp_leaderboard_optout_checkbox')
+                        .each(function () {
+                            $(this).parent().parent().toggle(isChecked);
+                        });
+                    $('.wcdp_leaderboard_default')
+                        .each(function () {
+                            $(this).parent().parent().toggle(!isChecked);
+                        });
+                }
+
+                // Run on page load
+                toggleLeaderboardOptions();
+
+                // Bind change event
+                $('#wcdp_enable_checkout_checkbox').on('change', toggleLeaderboardOptions);
+            });
+        </script>
+        <?php
     }
 
 }
