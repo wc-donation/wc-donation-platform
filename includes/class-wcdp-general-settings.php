@@ -13,6 +13,8 @@ class WCDP_General_Settings
         add_action('woocommerce_settings_tabs_wc-donation-platform', array($this, 'settings_tab'));
         add_action('woocommerce_update_options_wc-donation-platform', array($this, 'update_settings'));
         add_action('woocommerce_update_options_advanced', array($this, 'disable_new_product_editor'));
+        add_action('woocommerce_admin_field_wcdp_clear_cache_button', [$this, 'js_clear_cache']);
+        add_action('wp_ajax_wcdp_clear_cache', [$this, 'ajax_clear_cache']);
 
         if (function_exists('wp_add_privacy_policy_content')) {
             add_action( 'admin_init', array($this, 'suggest_privacy_policy_content') );
@@ -59,13 +61,6 @@ class WCDP_General_Settings
      */
     public function get_settings(): array
     {
-        if (get_option("wcdp_clear_cache") === "yes") {
-            $this->clear_cached_data();
-            update_option("wcdp_clear_cache", "no");
-            $desc_tip = __('Cached data cleared successfully.', 'wc-donation-platform');
-        } else {
-            $desc_tip = "";
-        }
         $decimals = pow(10, wc_get_price_decimals() * (-1));
         $settings = array(
             array(
@@ -159,12 +154,7 @@ class WCDP_General_Settings
                 'desc_tip' => __('Some features of Donation Platform for WooCommerce will be disabled so that WooCommerce can be used as a donation platform and webshop at the same time.', 'wc-donation-platform'),
             ),
             array(
-                'title' => __('Clear Cached Data', 'wc-donation-platform'),
-                'type' => 'checkbox',
-                'default' => 'no',
-                'desc' => __('Clear cached progress bar & leaderboard data.', 'wc-donation-platform'),
-                'id' => 'wcdp_clear_cache',
-                'desc_tip' => $desc_tip,
+                'type' => 'wcdp_clear_cache_button',
             ),
             array(
                 'type' => 'sectionend',
@@ -382,6 +372,57 @@ class WCDP_General_Settings
             }
         }
     }
+
+    /**
+     * Render a "Clear Cache" button with AJAX submit
+     * @return void
+     */
+    public function js_clear_cache() {
+
+        ?>
+        <tr class="">
+            <th scope="row" class="titledesc"><?php esc_html_e('Clear Cached Data', 'wc-donation-platform');?></th>
+            <td class="forminp forminp-checkbox ">
+                <fieldset>
+                    <button type="button" class="button-secondary" id="wcdp-clear-cache-btn">
+                        <?php esc_html_e('Clear Cache', 'wc-donation-platform');?>
+                    </button>
+                    <p class="description "><?php esc_html_e('Clear cached progress bar & leaderboard data.', 'wc-donation-platform');?></p>
+            </td>
+        </tr>
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                $('#wcdp-clear-cache-btn').on('click', function () {
+                    const $button = $(this);
+                    $button.prop('disabled', true).text('<?php echo esc_js(__('Clearing...', 'wc-donation-platform')); ?>');
+
+                    $.post(ajaxurl, {
+                        action: 'wcdp_clear_cache',
+                        nonce: '<?php echo wp_create_nonce('wcdp_clear_cache'); ?>',
+                    }).done(function (response) {
+                        alert(response.success ? '<?php echo esc_js(__('Cached data cleared successfully.', 'wc-donation-platform')); ?>' : response.data);
+                    }).always(function () {
+                        $button.prop('disabled', false).text('<?php echo esc_js(__('Clear Cache', 'wc-donation-platform')); ?>');
+                    });
+                });
+            });
+        </script>
+        <?php
+    }
+
+    public function ajax_clear_cache() {
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied.', 'wc-donation-platform'));
+        }
+
+        if (!check_ajax_referer('wcdp_clear_cache', 'nonce', false)) {
+            wp_send_json_error(__('Invalid request.', 'wc-donation-platform'));
+        }
+
+        wcdp_clear_cache();
+        wp_send_json_success();
+    }
+
 }
 
 $wc_settings = new WCDP_General_Settings();

@@ -176,6 +176,7 @@ fix: improve ajax error message within Elementor editor
 fix: fix outdated links
 fix/dev: fix wcdp_clear_cache() function throwing errors when called too early
 tweak: improve WooCommerce Analytics disabled error message
+tweak: make Cache clearing functionality more intuitive
 chore: switch to using wc_get_template() function
 chore: use wc_price for amount suggestions
 chore: improve footer text
