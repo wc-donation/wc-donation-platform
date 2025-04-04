@@ -199,18 +199,22 @@ class WCDP_Progress
 
     /**
      * Return the Revenue of a Product (sum of all completed orders)
-     * @param $productid
+     * @param $product_id
      * @return float|int
      */
-    private function getTotalRevenueOfProduct($productid)
+    private function getTotalRevenueOfProduct($product_id)
     {
-        $totalrevenue = get_post_meta($productid, 'wcdp_total_revenue');
+        // only include donable projects
+        if (!WCDP_Form::is_donable($product_id)) {
+            return 0;
+        }
+        $totalrevenue = get_post_meta($product_id, 'wcdp_total_revenue');
         if ($totalrevenue === false) {
             return 0;
         }
         //Calculate revenue if not set or calculated revenue older than 21600 seconds
         if (!$totalrevenue || !isset($totalrevenue[0]) || time() - $totalrevenue[0]['time'] > 21600) {
-            return $this->updateTotalRevenueOfProduct($productid);
+            return $this->updateTotalRevenueOfProduct($product_id);
         }
 
         return (float)$totalrevenue[0]['revenue'];
@@ -218,10 +222,10 @@ class WCDP_Progress
 
     /**
      * Calculate and update the total revenue of a product
-     * @param int $productid
+     * @param int $product_id
      * @return float
      */
-    private function updateTotalRevenueOfProduct(int $productid): float
+    private function updateTotalRevenueOfProduct(int $product_id): float
     {
         global $wpdb;
         if (OrderUtil::custom_orders_table_usage_is_enabled()) {
@@ -246,15 +250,15 @@ class WCDP_Progress
                             AND l.product_id = %d;";
         }
 
-        $result = $wpdb->get_row($wpdb->prepare($query, $productid), ARRAY_A);
+        $result = $wpdb->get_row($wpdb->prepare($query, $product_id), ARRAY_A);
 
         if (!is_null($result) && isset($result['revenue'])) {
             $revenue = $result['revenue'];
         } else {
             $revenue = 0;
         }
-        $revenue = (float)apply_filters('wcdp_update_product_revenue', $revenue, $productid);
-        update_post_meta($productid, 'wcdp_total_revenue', array('revenue' => $revenue, 'time' => time()));
+        $revenue = (float)apply_filters('wcdp_update_product_revenue', $revenue, $product_id);
+        update_post_meta($product_id, 'wcdp_total_revenue', array('revenue' => $revenue, 'time' => time()));
         return $revenue;
     }
 
