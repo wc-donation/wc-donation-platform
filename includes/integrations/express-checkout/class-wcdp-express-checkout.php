@@ -42,12 +42,13 @@ class WCDP_Express_Checkout
     {
         $min_donation_amount = get_option('wcdp_min_amount', 3);
         echo '<div class="variations_form" style="display:none !important;">
-	<div class="variations" style="display:none !important;">
-		<select style="display:none !important;" name="attribute_wcdp_donation_amount">
-			<option value="' . esc_attr($min_donation_amount) . '" style="display:none !important;" class="wcdp-express-amount" selected></option>
-		</select>
-	</div>
-</div>';
+                <input class="wcdp-express-amount" style="display:none !important;" type="number" step="any" name="attribute_wcdp_donation_amount" value="1">
+                <div class="variations" style="display:none !important;">
+                    <select style="display:none !important;" name="attribute_wcdp_donation_amount">
+                        <option value="' . esc_attr($min_donation_amount) . '" style="display:none !important;" class="wcdp-express-amount" selected></option>
+                    </select>
+                </div>
+            </div>';
     }
 
     /**
@@ -113,29 +114,47 @@ class WCDP_Express_Checkout
      */
     public function paypal_modify_add_cart_data($cart_item_data, $product_id, $variation_id, $quantity)
     {
-        if (WCDP_Form::is_donable($product_id)) {
-            $stream = file_get_contents('php://input');
-            $json = json_decode($stream);
+        if (!WCDP_Form::is_donable($product_id)) {
+            return $cart_item_data;
+        }
 
-            if (is_array($json->products)) {
-                foreach ($json->products as $product) {
-                    if ($product->id == $product_id && is_array($product->variations)) {
-                        foreach ($product->variations as $attribute) {
-                            if ($attribute->name == 'attribute_wcdp_donation_amount') {
-                                $amount = sanitize_text_field($attribute->value);
-                                $min_donation_amount = get_option('wcdp_min_amount', 3);
-                                $max_donation_amount = get_option('wcdp_max_amount', 50000);
+        $stream = file_get_contents('php://input');
+        if (!$stream) {
+            return $cart_item_data;
+        }
 
-                                if ($amount >= $min_donation_amount && $amount <= $max_donation_amount) {
-                                    $cart_item_data['wcdp_donation_amount'] = $amount;
-                                    return $cart_item_data;
-                                }
-                            }
-                        }
-                    }
-                }
+        $data = json_decode($stream);
+        if (!is_object($data) || !isset($data->products) || !is_array($data->products)) {
+            return $cart_item_data;
+        }
+
+        foreach ($data->products as $product) {
+
+            if (!is_object($product) || !isset($product->id) || (int) $product->id !== $product_id) {
+                continue;
+            }
+
+            $extra = $product->extra ?? null;
+            if (!is_object($extra)) {
+                continue;
+            }
+
+            $amount = $extra->{'wcdp-donation-amount'} ?? null;
+            $nonce = $extra->{'security'} ?? null;
+
+            if ($amount === null || $nonce === null) {
+                continue;
+            }
+
+            if (
+                WCDP_Form::check_donation_amount($amount, $product_id) &&
+                wp_verify_nonce($nonce, 'wcdp_ajax_nonce' . $product_id)
+            ) {
+                $cart_item_data['wcdp_donation_amount'] = $amount;
+                break; // Found the correct product, no need to keep looping
             }
         }
+
         return $cart_item_data;
     }
 
