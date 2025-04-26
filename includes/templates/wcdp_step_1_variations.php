@@ -6,6 +6,7 @@
  * @var WC_product $product
  * @var array $attributes
  * @var int $product_id
+ * @var string $form_id
  */
 
 if (!defined('ABSPATH')) exit;
@@ -84,7 +85,7 @@ if ($has_child) : ?>
                     }
                 }
 
-                echo WCDP_Form::wcdp_generate_fieldset($args, $product);
+                echo WCDP_Form::wcdp_generate_fieldset($args, $product, $form_id);
             endif;
             ?>
 
@@ -127,6 +128,6 @@ if ($has_child) : ?>
         }
     } ?>
     <div class="wcdp-product-choice wcdp-row">
-        <?php echo WCDP_Form::wcdp_generate_fieldset($args); ?>
+        <?php echo WCDP_Form::wcdp_generate_fieldset($args, null, $form_id); ?>
     </div>
 <?php endif; ?>

@@ -18,6 +18,7 @@ if (!($page_id && is_page($page_id))) {
             'product' => $product,
             'value' => $value,
             'context' => $context,
+            'form_id' => $form_id,
         ), '', WCDP_DIR . 'includes/templates/'); ?>
     <svg class="wcdp-divider-arrow" width="90%" height="100%" viewBox="0 0 113 4" version="1.1"
          xmlns="http://www.w3.org/2000/svg" xml:space="preserve"

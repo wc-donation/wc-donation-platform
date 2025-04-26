@@ -17,5 +17,6 @@ WCDP_FORM::define_ccs_variables();
             'product' => $product,
             'value' => $value,
             'context' => $context,
+            'form_id' => $form_id,
         ), '', WCDP_DIR . 'includes/templates/'); ?>
 </div>

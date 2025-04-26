@@ -19,6 +19,7 @@ if (!WC()->cart->is_empty() && get_option('wcdp_multiple_in_cart', 'no') === 'no
             'product' => $product,
             'value' => $value,
             'context' => $context,
+            'form_id' => $form_id,
         ), '', WCDP_DIR . 'includes/templates/'); ?>
     <?php do_action('woocommerce_before_checkout_form', $checkout); ?>
     <form name="checkout" method="post" class="checkout woocommerce-checkout"
@@ -93,7 +94,7 @@ if (!WC()->cart->is_empty() && get_option('wcdp_multiple_in_cart', 'no') === 'no
                     <stop offset="1" style="stop-color: var(--controls);stop-opacity:1"></stop>
                 </linearGradient>
             </defs></svg>
-        <?php wc_get_template('wcdp_step_3.php', [], '', WCDP_DIR . 'includes/templates/'); ?>
+        <?php wc_get_template('wcdp_step_3.php', ['form_id' => $form_id,], '', WCDP_DIR . 'includes/templates/'); ?>
     </form>
     <?php do_action('woocommerce_after_checkout_form', WC()->checkout()); ?>
 </div>

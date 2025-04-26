@@ -166,8 +166,13 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
 = 1.3.4 =
-feat: new style 10 to progress shortcode
+**small breaking changes**:
+- When you activate the anonymous / public checkbox you now also have to set the headline for both checked and unchecked cases.
+- This version changed some ids of elements which might impact some custom styles added to your site.
+
+feat: new style 10 to progress shortcode (percentage raised)
 feat: percentage_decimals attribute to progress shortcode
+feat: enable anonymous donation checkbox even when compatibility mode is enabled
 fix: fee recovery checkbox not being applied
 fix: make $product variable global to avoid issues with some payment gateways
 fix: make sure order_counter only works for donation projects
@@ -175,9 +180,12 @@ fix: make sure progress bar only works for donation projects
 fix: improve ajax error message within Elementor editor
 fix: fix outdated links
 fix/dev: fix wcdp_clear_cache() function throwing errors when called too early
+fix: PayPal express checkout not working properly
 tweak: improve WooCommerce Analytics disabled error message
 tweak: make Cache clearing functionality more intuitive
 tweak: Show/Hide Leaderboard input fields depending on settings
+tweak: only show anonymous donation checkbox when cart contains a donation
+tweak: preselect minimum amount for variable products
 chore: switch to using wc_get_template() function
 chore: use wc_price for amount suggestions
 chore: improve footer text

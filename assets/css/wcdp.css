@@ -1,9 +1,9 @@
-#main #wcdp, #wcdp {
+main#main .wcdp-form {
     position: relative;
     padding: 0;
 	margin-bottom: 0;
 }
-#wcdp-progress-bar {
+.wcdp-progress-bar {
     position: relative;
     display: block;
     height: 6px;
@@ -14,7 +14,7 @@
     z-index: 1;
     top: 1em;
 }
-#wcdp-progress-bar-background {
+.wcdp-progress-bar-background {
     position: relative;
     height: 6px;
     background: var(--wcdp-main);
@@ -22,7 +22,7 @@
     top: 1em;
     margin: 0 16.6667%;
 }
-div.wcdp-header > div.wcdp-step {
+.wcdp-header > .wcdp-step {
     z-index: 2;
     position: relative;
     width: 33.333%;
@@ -42,7 +42,7 @@ div.wcdp-header > div.wcdp-step {
     margin: auto;
     background: var(--wcdp-main);
     font-size: 1em;
-    content: attr(step);
+    content: attr(data-step);
 }
 #wcdp-step-1 {
     display: block;
@@ -50,7 +50,7 @@ div.wcdp-header > div.wcdp-step {
 #wcdp-step-2, #wcdp-step-3 {
     display: none;
 }
-#wcdp .wcdp-right, .wcdp-right {
+#main .wcdp-right, .wcdp-right {
     float: right;
 }
 .wcdp-left {
@@ -62,7 +62,7 @@ div.wcdp-header > div.wcdp-step {
     padding: 20px;
     /* background-color: var(--background-color); */
 }
-#wcdp-donation-amount {
+.wcdp-body input.wcdp-donation-amount {
     width: calc(100% - 1ch - 20px);
     height: 100%;
     padding: 3px;
@@ -299,7 +299,7 @@ ul.wcdp_options > li > input:hover:not(:disabled):not(:checked) + label {
 	list-style: none;
 }
 
-#wcdp_amount {
+.wcdp_amount {
     /* grid-template-columns: repeat(auto-fit, minmax(14ch, 1fr)); */
     grid-template-columns: 1fr 1fr 1fr;
 }
@@ -341,30 +341,26 @@ input:disabled ~ label {
 	border-color: var(--wcdp-main-3);
 }
 
-#wcdp-header-step-1  {
+.wc-donation-platform .wcdp-header .wcdp-header-step-1  {
     color: var(--wcdp-main-2);
 }
-#wcdp-header-step-1:before {
+.wc-donation-platform .wcdp-header-step-1:before {
     background-color: var(--wcdp-main-2);
 }
-#wcdp-header-step-2 {
+.wc-donation-platform .wcdp-header .wcdp-header-step-2 {
     color: var(--wcdp-step-2);
 }
-#wcdp-header-step-2:before {
+.wc-donation-platform .wcdp-header-step-2:before {
     background-color: var(--wcdp-step-2);
 }
-#wcdp-header-step-3 {
+.wc-donation-platform .wcdp-header .wcdp-header-step-3 {
     color: var(--wcdp-step-3);
 }
-#wcdp-header-step-3:before {
+.wc-donation-platform .wcdp-header-step-3:before {
     background-color: var(--wcdp-step-3);
 }
 
-#wcdp_label_custom_amount {
-    /*
-    padding: 0;
-    height: 100%;
-    */
+.wcdp_label_custom_amount {
     text-align: left;
 }
 
@@ -373,18 +369,18 @@ input:disabled ~ label {
     /* display: inline; */
     text-align: center;
 }
-#wcdp_value_other:checked ~ #wcdp_label_custom_amount > #wcdp_other {
+.wcdp_value_other:checked ~ .wcdp_label_custom_amount > .wcdp_other {
     display: none;
 }
 
 .wcdp_cu_field {
     display: inline;
 }
-#wcdp_value_other:not(:checked) ~ #wcdp_label_custom_amount > .wcdp_cu_field {
+.wcdp_value_other:not(:checked) ~ .wcdp_label_custom_amount > .wcdp_cu_field {
     display: none;
 }
 
-.wcdp-amount > #wcdp-donation-amount {
+.wcdp-amount > input.wcdp-donation-amount {
     font-size: 200%;
     width: 10ch;
 	min-width: 5ch;
