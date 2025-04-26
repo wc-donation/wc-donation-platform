@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 1.3.4
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -196,6 +196,7 @@ chore: add missing file comments
 chore: refactor $percentage & $width in progress bar
 chore: set supported WC version to 9.7.1
 chore: use wp_unique_id for leaderboard id
+chore: set supported/tested WP version to 6.8
 dev: `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 dev: `wcdp_sort_order` filter to update the donation amount suggestion order
 dev: add wcdp_force_recalculate_total_revenue filter
