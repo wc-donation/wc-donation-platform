@@ -9,7 +9,6 @@ defined('ABSPATH') || exit;
 
 class WCDP_Feedback
 {
-    private $deactivation_survey_options;
     private $feedback_survey_options;
 
     /**
@@ -37,45 +36,7 @@ class WCDP_Feedback
         // Ask user to subscribe to the newsletter
         add_action( 'admin_notices', array( $this, 'add_newsletter_notice' ) );
 
-        //options of the
-        $this->deactivation_survey_options = array(
-            array(
-                'id' => 'no-need',
-                'input' => false,
-                'text' => __("I no longer need the plugin.", "wc-donation-platform"),
-            ),
-            array(
-                'id' => 'better-plugin',
-                'input' => true,
-                'text' => __("I found a better plugin.", "wc-donation-platform"),
-                'placeholder' => __("Please share which plugin.", "wc-donation-platform"),
-            ),
-            array(
-                'id' => 'stop-working',
-                'input' => true,
-                'text' => __("The plugin suddenly stopped working.", "wc-donation-platform"),
-                'placeholder' => __("Please share more details.", "wc-donation-platform"),
-            ),
-            array(
-                'id' => 'not-working',
-                'input' => true,
-                'text' => __("I could not get the plugin to work.", "wc-donation-platform"),
-                'placeholder' => __("Please share more details.", "wc-donation-platform"),
-            ),
-            array(
-                'id' => 'temporary-deactivation',
-                'input' => false,
-                'text' => __("It's a temporary deactivation.", "wc-donation-platform"),
-            ),
-            array(
-                'id' => 'other',
-                'input' => true,
-                'text' => __("Other", "wc-donation-platform"),
-                'placeholder' => __("Please share the reason.", "wc-donation-platform"),
-            ),
-        );
-
-        //options of the feedback survey
+        //options of the feedback surveys
         $this->feedback_survey_options = array(
             array(
                 'id' => 'wcdp-0',
@@ -685,7 +646,45 @@ class WCDP_Feedback
      * @return void
      */
     public function on_deactivation_html()
-    { ?>
+    {
+        //options of the deactivation survey
+        $deactivation_survey_options = array(
+            array(
+                'id' => 'no-need',
+                'input' => false,
+                'text' => __("I no longer need the plugin.", "wc-donation-platform"),
+            ),
+            array(
+                'id' => 'better-plugin',
+                'input' => true,
+                'text' => __("I found a better plugin.", "wc-donation-platform"),
+                'placeholder' => __("Please share which plugin.", "wc-donation-platform"),
+            ),
+            array(
+                'id' => 'stop-working',
+                'input' => true,
+                'text' => __("The plugin suddenly stopped working.", "wc-donation-platform"),
+                'placeholder' => __("Please share more details.", "wc-donation-platform"),
+            ),
+            array(
+                'id' => 'not-working',
+                'input' => true,
+                'text' => __("I could not get the plugin to work.", "wc-donation-platform"),
+                'placeholder' => __("Please share more details.", "wc-donation-platform"),
+            ),
+            array(
+                'id' => 'temporary-deactivation',
+                'input' => false,
+                'text' => __("It's a temporary deactivation.", "wc-donation-platform"),
+            ),
+            array(
+                'id' => 'other',
+                'input' => true,
+                'text' => __("Other", "wc-donation-platform"),
+                'placeholder' => __("Please share the reason.", "wc-donation-platform"),
+            ),
+        );
+        ?>
         <div class="wcdp-modal" id="wcdp-feedback-modal">
             <div class="wcdp-modal-wrap">
 
@@ -697,7 +696,7 @@ class WCDP_Feedback
                 <div class="wcdp-modal-body">
                     <h3><?php esc_html_e("If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce.", "wc-donation-platform"); ?></h3>
                     <ul class="wcdp-modal-input">
-                        <?php foreach ($this->deactivation_survey_options as $key => $option) { ?>
+                        <?php foreach ($deactivation_survey_options as $key => $option) { ?>
                             <li>
                                 <label>
                                     <input type="radio" id="<?php echo esc_attr($option['id']); ?>" class="wcdp-survey"
