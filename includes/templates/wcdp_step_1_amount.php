@@ -72,6 +72,8 @@ if ($value['style'] != 3 && $value['style'] != 4) {
                 'options' => array()
             );
 
+            $option_already_checked = false;
+
             if (!is_null($suggestions)) {
                 foreach ($suggestions as $suggestion) {
                     $suggestion = apply_filters('wcdp_suggestion', $suggestion, $product);
@@ -84,20 +86,25 @@ if ($value['style'] != 3 && $value['style'] != 4) {
                         );
                         if ($suggestion == $value_donation_amount) {
                             $option['input-checked'] = true;
+                            $option_already_checked = true;
                         }
                         $args['options'][] = $option;
                     }
                 }
             }
             $wcdp_price_field = sprintf($wcdp_price_field, '');
-            $args['options'][] = array(
+            $option = array(
                 'input-id' => 'wcdp_value_other',
-                'input-value' => '',
+                'input-value' => 'other',
                 'input-class' => 'wcdp_value_other',
                 'label-id' => 'label_custom_amount',
                 'label-class' => 'wcdp_label_custom_amount',
                 'label-text' => '<div id="wcdp_other" class="wcdp_other">' . esc_html__('Other', 'wc-donation-platform') . '</div><div class="wcdp_cu_field">' . $wcdp_price_field . '</div>',
-            ); ?>
+            );
+            if (!$option_already_checked && $value_donation_amount) {
+                $option['input-checked'] = true;
+            }
+            $args['options'][] = $option; ?>
             <label class="wcdp-variation-heading" for="donation-amount">
                 <?php
                 $title = get_option('wcdp_choose_amount_title', __('Choose an amount', 'wc-donation-platform'));
