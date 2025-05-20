@@ -294,10 +294,13 @@ class WCDP_Leaderboard
             $output .= $this->get_css_style_2($id);
         }
         $hideClass = '';
+        $timezone = wp_timezone();
         foreach ($orders as $pos => $order) {
             if ($pos === $split) {
                 $hideClass = ' wcdp-leaderboard-hidden';
             }
+            $datetime = (new DateTime())->setTimestamp($order['date'])->setTimezone($timezone);
+
             $placeholders = array(
                 '{firstname}' => "<span class='wcdp-leaderboard-firstname'>" . wp_strip_all_tags($order['first']) . "</span>",
                 '{firstname_initial}' => "<span class='wcdp-leaderboard-firstname_initial'>" . wp_strip_all_tags($this->get_initials($order['first'])) . "</span>",
@@ -307,8 +310,8 @@ class WCDP_Leaderboard
                 '{company_or_name}' => "<span class='wcdp-leaderboard-company_or_name'>" . $this->get_company_or_name($order['co'], $order['first'], $order['last']) . "</span>",
                 '{amount}' => "<span class='wcdp-leaderboard-amount'>" . wc_price($order['total'], array('currency' => $order['cy'],)) . "</span>",
                 '{timediff}' => "<span class='wcdp-leaderboard-timediff'>" . $this->get_human_time_diff($order['date']) . "</span>",
-                '{datetime}' => "<span class='wcdp-leaderboard-datetime'>" . date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $order['date']) . "</span>",
-                '{date}' => "<span class='wcdp-leaderboard-date'>" . date_i18n(get_option('date_format'), $order['date']) . "</span>",
+                '{datetime}' => "<span class='wcdp-leaderboard-datetime'>" . $datetime->format(get_option('date_format') . ' ' . get_option('time_format')) . "</span>",
+                '{date}' => "<span class='wcdp-leaderboard-date'>" . $datetime->format(get_option('date_format')) . "</span>",
                 '{city}' => "<span class='wcdp-leaderboard-city'>" . wp_strip_all_tags($order['city']) . "</span>",
                 '{country}' => "<span class='wcdp-leaderboard-country'>" . WC()->countries->countries[esc_attr($order['country'])] . "</span>",
                 '{country_code}' => "<span class='wcdp-leaderboard-country_code'>" . wp_strip_all_tags($order['country']) . "</span>",

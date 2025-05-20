@@ -181,6 +181,8 @@ fix: improve ajax error message within Elementor editor
 fix: fix outdated links
 fix/dev: fix wcdp_clear_cache() function throwing errors when called too early
 fix: PayPal express checkout not working properly
+fix: fix _load_textdomain_just_in_time called incorrectly notice
+fix: Leaderboard not using the correct timezone
 tweak: improve WooCommerce Analytics disabled error message
 tweak: make Cache clearing functionality more intuitive
 tweak: Show/Hide Leaderboard input fields depending on settings
