@@ -118,15 +118,16 @@ if ($has_child) : ?>
     );
     $ids = $product->get_children('edit');
     foreach ($ids as $id) {
-        $products = wc_get_product($id);
-        if ($products && $products->is_purchasable() && WCDP_Form::is_donable($id)) {
+        $productChild = wc_get_product($id);
+        if ($productChild && $productChild->is_purchasable() && WCDP_Form::is_donable($id) && (is_a($productChild, 'WC_Product_Simple') || is_a($productChild, 'WC_Product_Subscription') )) {
             $args['options'][] = array(
                 'input-id' => 'wcdp_value_' . $id,
                 'input-value' => $id,
-                'label-text' => esc_html($products->get_title()),
+                'label-text' => esc_html($productChild->get_title()),
             );
         }
-    } ?>
+    }
+    ?>
     <div class="wcdp-product-choice wcdp-row">
         <?php echo WCDP_Form::wcdp_generate_fieldset($args, null, $form_id); ?>
     </div>
