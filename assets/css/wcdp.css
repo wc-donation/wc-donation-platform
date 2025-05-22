@@ -279,7 +279,9 @@ ul.wcdp_options > li > input:hover:not(:disabled):not(:checked) + label {
     padding: 6px;
     cursor: pointer;
 }
-
+.wcdp_value_other:checked + .wcdp_label_custom_amount {
+    text-align: left;
+}
 .wcdp-row > .wcdp_options > li > input[type="radio"], #wcdp_product > li > input[type="radio"] {
     position: absolute;
     z-index: -1;
@@ -356,11 +358,6 @@ input:disabled ~ label {
 .wc-donation-platform .wcdp-header-step-3:before {
     background-color: var(--wcdp-step-3);
 }
-
-.wcdp_label_custom_amount {
-    text-align: left;
-}
-
 
 #wcdp_other  {
     /* display: inline; */
