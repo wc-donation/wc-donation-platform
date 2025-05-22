@@ -103,7 +103,6 @@ class WCDP_Form
             global $product;
 
             $product = wc_get_product($product_id);
-
             if (!isset(WC()->cart)) {
                 WCDP_Form::form_error_message(__('In the current view, the donation form is not available.', 'wc-donation-platform'));
             } else if (!$product || !is_a($product, 'WC_Product')) {
@@ -112,7 +111,7 @@ class WCDP_Form
                 WCDP_Form::form_error_message(__('Currently you can not donate to this project.', 'wc-donation-platform'));
             } else if (!$product->is_in_stock()) {
                 WCDP_Form::form_error_message(__('This project is currently not available.', 'wc-donation-platform'));
-            } if (!WCDP_Form::check_grouped_product($product)) {
+            } else if (!WCDP_Form::check_grouped_product($product)) {
                 WCDP_Form::form_error_message(__('This grouped product has no available child products.', 'wc-donation-platform'));
             } else {
                 $has_child = is_a($product, 'WC_Product_Variable') && $product->has_child();

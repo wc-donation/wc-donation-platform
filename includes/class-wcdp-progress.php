@@ -110,7 +110,9 @@ class WCDP_Progress
         //Add revenue of additional Product IDs
         $ids = explode(",", $atts['addids']);
         foreach ($ids as $id) {
-            $revenue += (float)$this->getTotalRevenueOfProduct($id);
+            if (WCDP_Form::is_donable($id)) {
+                $revenue += (float)$this->getTotalRevenueOfProduct($id);
+            }
         }
 
         //Add specified amount to revenue

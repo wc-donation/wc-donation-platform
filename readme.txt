@@ -169,6 +169,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 **Minor Breaking Changes:**:
 - The Anonymous / Public checkbox now requires you to define a headline for both the checked and unchecked states.
 - Some element IDs have been changed in this version, which may affect any custom CSS you've applied to your site.
+- The addids parameter for the progress bar will now only take donable products into account.
 
 feat: new style 10 to progress shortcode (percentage raised)
 feat: percentage_decimals attribute to progress shortcode
@@ -191,6 +192,7 @@ tweak: make Cache clearing functionality more intuitive
 tweak: Show/Hide Leaderboard input fields depending on settings
 tweak: only show anonymous donation checkbox when cart contains a donation
 tweak: preselect minimum amount for variable products
+tweak: the addids parameter for the progress bar will now only take donable products into account
 chore: switch to using wc_get_template() function
 chore: use wc_price for amount suggestions
 chore: improve footer text
