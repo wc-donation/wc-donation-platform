@@ -112,6 +112,8 @@ class WCDP_Form
                 WCDP_Form::form_error_message(__('Currently you can not donate to this project.', 'wc-donation-platform'));
             } else if (!$product->is_in_stock()) {
                 WCDP_Form::form_error_message(__('This project is currently not available.', 'wc-donation-platform'));
+            } if (!WCDP_Form::check_grouped_product($product)) {
+                WCDP_Form::form_error_message(__('This grouped product has no available child products.', 'wc-donation-platform'));
             } else {
                 $has_child = is_a($product, 'WC_Product_Variable') && $product->has_child();
 
@@ -155,6 +157,20 @@ class WCDP_Form
             '</button>
             </a>
         </p>';
+    }
+
+    private static function check_grouped_product($product) {
+        if (!is_a($product, 'WC_Product_Grouped')) {
+            return true;
+        }
+        $ids = $product->get_children('vier');
+        foreach ($ids as $id) {
+            $productChild = wc_get_product($id);
+            if ($productChild && $productChild->is_purchasable() && WCDP_Form::is_donable($id) && (is_a($productChild, 'WC_Product_Simple') || is_a($productChild, 'WC_Product_Subscription') )) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
