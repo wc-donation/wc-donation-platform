@@ -432,10 +432,8 @@ class WCDP_Hooks
      */
     public function wcdp_autocomplete_order($needs_processing, WC_Product $product, int $order_id): bool
     {
-        if ($needs_processing && $product->is_virtual()) {
-            if (WCDP_Form::is_donable($product->get_id()) || WCDP_Form::is_donable($product->get_parent_id())) {
-                return false;
-            }
+        if ($needs_processing && $product->is_virtual() && (WCDP_Form::is_donable($product->get_id()) || WCDP_Form::is_donable($product->get_parent_id()))) {
+            return false;
         }
         return $needs_processing;
     }

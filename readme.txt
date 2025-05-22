@@ -166,9 +166,9 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
 = 1.3.4 =
-**small breaking changes**:
-- When you activate the anonymous / public checkbox you now also have to set the headline for both checked and unchecked cases.
-- This version changed some ids of elements which might impact some custom styles added to your site.
+**Minor Breaking Changes:**:
+- The Anonymous / Public checkbox now requires you to define a headline for both the checked and unchecked states.
+- Some element IDs have been changed in this version, which may affect any custom CSS you've applied to your site.
 
 feat: new style 10 to progress shortcode (percentage raised)
 feat: percentage_decimals attribute to progress shortcode
@@ -183,6 +183,9 @@ fix/dev: fix wcdp_clear_cache() function throwing errors when called too early
 fix: PayPal express checkout not working properly
 fix: fix _load_textdomain_just_in_time called incorrectly notice
 fix: Leaderboard not using the correct timezone
+fix: improve grouped product error handling
+fix: only allow simple products in grouped product donation form
+fix: button CSS overwriting theme styles
 tweak: improve WooCommerce Analytics disabled error message
 tweak: make Cache clearing functionality more intuitive
 tweak: Show/Hide Leaderboard input fields depending on settings
@@ -196,9 +199,10 @@ chore: improve general settings page
 chore: clean up $goal_db & $goal_user variables
 chore: add missing file comments
 chore: refactor $percentage & $width in progress bar
-chore: set supported WC version to 9.7.1
+chore: set supported WC version to 9.8.5
 chore: use wp_unique_id for leaderboard id
 chore: set supported/tested WP version to 6.8
+chore: upgrade dependencies
 dev: `wcdp_skip_nonce_validation` filter that allows users to disable add2cart nonce verification
 dev: `wcdp_sort_order` filter to update the donation amount suggestion order
 dev: add wcdp_force_recalculate_total_revenue filter
