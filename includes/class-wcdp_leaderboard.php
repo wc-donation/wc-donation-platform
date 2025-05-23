@@ -545,7 +545,7 @@ class WCDP_Leaderboard
      */
     public function add_anonymous_donation_checkbox()
     {
-        if (!WCDP_Form::cart_contains_donation()) {
+        if (!WCDP_Form::cart_contains_donation() || get_option('wcdp_enable_checkout_checkbox', 'no') !== 'yes') {
             return;
         }
         echo '<div class="anonymous-donation-checkbox">';

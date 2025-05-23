@@ -165,6 +165,9 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
+= 1.3.4.1 =
+hotfix: fix anonymous donation checkbox always visible
+
 = 1.3.4 =
 **Minor Breaking Changes:**:
 - The Anonymous / Public checkbox now requires you to define a headline for both the checked and unchecked states.
