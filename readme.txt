@@ -167,6 +167,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.3.4.1 =
 hotfix: fix anonymous donation checkbox always visible
+chore: provide full path name for includes
 
 = 1.3.4 =
 **Minor Breaking Changes:**:

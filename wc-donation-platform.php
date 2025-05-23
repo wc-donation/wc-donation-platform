@@ -72,31 +72,31 @@ if (!class_exists('WCDP')) {
         private function includes()
         {
             //WCDP Donation Form
-            include_once 'includes/class-wcdp-form.php';
+            include_once WCDP_DIR . 'includes/class-wcdp-form.php';
 
             //WC Hooks
-            include_once 'includes/class-wcdp-hooks.php';
+            include_once WCDP_DIR . 'includes/class-wcdp-hooks.php';
 
             //Adapt products to be donable
-            include_once 'includes/class-wcdp-product-settings.php';
+            include_once WCDP_DIR . 'includes/class-wcdp-product-settings.php';
 
             //WooCommerce settings tab
-            include_once 'includes/class-wcdp-general-settings.php';
+            include_once WCDP_DIR . 'includes/class-wcdp-general-settings.php';
 
             //Fundraising Progress
-            include_once 'includes/class-wcdp-progress.php';
+            include_once WCDP_DIR . 'includes/class-wcdp-progress.php';
 
             //Fee Recovery
-            include_once 'includes/class-wcdp-fee-recovery.php';
+            include_once WCDP_DIR . 'includes/class-wcdp-fee-recovery.php';
 
             //Integration with other Extensions
-            include_once 'includes/integrations/class-wcdp-integrator.php';
+            include_once WCDP_DIR . 'includes/integrations/class-wcdp-integrator.php';
 
             //Deactivation survey & Feedback survey
-            include_once 'includes/class-wcdp_feedback.php';
+            include_once WCDP_DIR . 'includes/class-wcdp_feedback.php';
 
             //Leaderboard
-            include_once 'includes/class-wcdp_leaderboard.php';
+            include_once WCDP_DIR . 'includes/class-wcdp_leaderboard.php';
         }
 
         /**
