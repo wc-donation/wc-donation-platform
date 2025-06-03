@@ -118,7 +118,7 @@ do_action('woocommerce_before_add_to_cart_form');
             </div>
         <?php elseif ($value['style'] == '4') : ?>
             <button class="button wcdp-button wcdp-right" type="submit">
-                <?php esc_html_e('Donate', 'wc-donation-platform'); ?>&nbsp;<div class="wcdp-arrow wcdp-right-arrow">
+                <?php echo apply_filters('wcdp_donate_label', esc_html__('Donate', 'wc-donation-platform')); ?>&nbsp;<div class="wcdp-arrow wcdp-right-arrow">
                     &raquo;
                 </div>
             </button>
