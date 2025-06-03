@@ -99,7 +99,7 @@ if ($value['style'] != 3 && $value['style'] != 4) {
                 'input-class' => 'wcdp_value_other',
                 'label-id' => 'label_custom_amount',
                 'label-class' => 'wcdp_label_custom_amount',
-                'label-text' => '<div id="wcdp_other" class="wcdp_other">' . esc_html__('Other', 'wc-donation-platform') . '</div><div class="wcdp_cu_field">' . $wcdp_price_field . '</div>',
+                'label-text' => '<div id="wcdp_other" class="wcdp_other">' . apply_filters('wcdp_other_label', esc_html__('Other', 'wc-donation-platform')) . '</div><div class="wcdp_cu_field">' . $wcdp_price_field . '</div>',
             );
             if (!$option_already_checked && $value_donation_amount) {
                 $option['input-checked'] = true;
