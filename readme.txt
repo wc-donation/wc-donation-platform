@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 6.8
-Stable tag: 1.3.4.1
+Stable tag: 1.3.4.2
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,12 +165,16 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
-= 1.3.4.1 =
+= 1.3.5 =
+dev: add wcdp_donate_label filter
+dev: add wcdp_other_label filter
+
+= 1.3.4.1 2025-05-24 =
 hotfix: fix anonymous donation checkbox always visible
 chore: provide full path name for includes
 
-= 1.3.4 =
-**Minor Breaking Changes:**:
+= 1.3.4 2025-05-22 =
+**Minor Breaking Changes:**
 - The Anonymous / Public checkbox now requires you to define a headline for both the checked and unchecked states.
 - Some element IDs have been changed in this version, which may affect any custom CSS you've applied to your site.
 - The addids parameter for the progress bar will now only take donable products into account.
@@ -242,7 +246,7 @@ fix: progress bar only for donation projects
 fix: improve order autocomplete logic
 fix: untranslated string
 fix: typo in classname
-fix: make text of "fix invalid fields" banner a <p> element
+fix: make text of "fix invalid fields" banner a p element
 fix: style 1 of progress bar template
 fix: only allow leaderboard for donation projects
 a11y: make hidden label also aria-hidden
