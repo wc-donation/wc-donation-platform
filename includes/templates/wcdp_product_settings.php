@@ -68,6 +68,7 @@ do_action('wcdp_before_product_settings');
                 'wrapper_class' => 'form-field',
             )
         );
+        do_action('wcdp_product_settings_fundraising', $post->ID);
         ?>
         <p><?php esc_html_e('Please note: You can still donate to the project after reaching the fundraising goal or end date.', 'wc-donation-platform'); ?></p>
     </div>

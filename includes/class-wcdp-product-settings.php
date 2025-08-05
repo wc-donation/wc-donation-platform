@@ -3,7 +3,8 @@
  * This class adapts WC Products as donable products
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 class WCDP_Product_Settings
 {
@@ -66,6 +67,9 @@ class WCDP_Product_Settings
         $product_settings = $this->product_meta_variation_styles($product_settings, $product);
         $product_settings = $this->product_meta_fundraising_meta($product_settings);
 
+        // Allow pro features to add their own settings.
+        $product_settings = apply_filters('wcdp_process_product_meta_settings', $product_settings, $post_id);
+
         foreach ($product_settings as $key => $value) {
             $product->update_meta_data('wcdp-settings[' . $key . ']', $value);
         }
@@ -106,7 +110,7 @@ class WCDP_Product_Settings
         if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings']) && $product_settings[0] == 1) {
             $prices = array();
             foreach ($_POST['wcdp-settings'] as $value) {
-                $prices[] = (float)$value;
+                $prices[] = (float) $value;
             }
             $sort_order = apply_filters('wcdp_sort_order', 'ASC', $post_id);
             ($sort_order === 'DESC') ? rsort($prices, SORT_NUMERIC) : sort($prices, SORT_NUMERIC);
@@ -153,7 +157,7 @@ class WCDP_Product_Settings
     private function product_meta_fundraising_meta($product_settings): array
     {
         if (isset($_POST['wcdp_fundraising_goal']) && $_POST['wcdp_fundraising_goal'] != '') {
-            $product_settings['wcdp_fundraising_goal'] = (float)$_POST['wcdp_fundraising_goal'];
+            $product_settings['wcdp_fundraising_goal'] = (float) $_POST['wcdp_fundraising_goal'];
         } else {
             $product_settings['wcdp_fundraising_goal'] = 0;
         }
@@ -200,8 +204,10 @@ class WCDP_Product_Settings
         }
         update_post_meta(
             $product->ID
-            , "_donable"
-            , isset($_POST["_donable"]) ? "yes" : "no"
+            ,
+            "_donable"
+            ,
+            isset($_POST["_donable"]) ? "yes" : "no"
         );
     }
 }
