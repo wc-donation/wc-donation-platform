@@ -166,8 +166,10 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
 = 1.3.5 =
+revert: suggested donation amounts without zeros
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
+dev: add wcdp_product_settings_fundraising action
 
 = 1.3.4.1 2025-05-24 =
 hotfix: fix anonymous donation checkbox always visible
