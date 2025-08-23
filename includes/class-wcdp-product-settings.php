@@ -107,11 +107,21 @@ class WCDP_Product_Settings
      */
     private function product_meta_amount_selection($product_settings, $post_id): array
     {
-        if (isset($_POST['wcdp-settings']) && wp_is_numeric_array($_POST['wcdp-settings']) && $product_settings[0] == 1) {
+        if (isset($_POST['wcdp-settings']) && !empty($_POST['wcdp-settings']) && $product_settings[0] == 1) {
+            // Parse comma-separated string into array
+            $input_string = sanitize_text_field($_POST['wcdp-settings']);
+            $amounts_array = array_map('trim', explode(',', $input_string));
+
             $prices = array();
-            foreach ($_POST['wcdp-settings'] as $value) {
-                $prices[] = (float) $value;
+            foreach ($amounts_array as $value) {
+                $value = (float) $value;
+                if (WCDP_Form::check_donation_amount($value, $post_id)) {
+                    $prices[] = $value;
+                }
             }
+
+            // Remove duplicates and sort
+            $prices = array_unique($prices);
             $sort_order = apply_filters('wcdp_sort_order', 'ASC', $post_id);
             ($sort_order === 'DESC') ? rsort($prices, SORT_NUMERIC) : sort($prices, SORT_NUMERIC);
             $product_settings[1] = wp_json_encode($prices);
