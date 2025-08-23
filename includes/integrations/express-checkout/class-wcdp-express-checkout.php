@@ -30,7 +30,7 @@ class WCDP_Express_Checkout
         add_action('wcdp_express_checkout_amount_variation', array($this, 'express_checkout_amount_variation'));
 
         //Rename '(via WooCommerce)' to '(Donation)'
-        add_filter('wc_stripe_payment_request_total_label_suffix', array($this, 'stripe_total_label_suffix'));
+        add_filter('wc_stripe_payment_request_total_label_suffix', '__return_empty_string');
     }
 
     function express_donation_heading()
@@ -156,23 +156,5 @@ class WCDP_Express_Checkout
         }
 
         return $cart_item_data;
-    }
-
-    function stripe_total_label_suffix()
-    {
-        $label = ' ' . __('(Donation)', 'wc-donation-platform');
-
-        $label = wp_strip_all_tags($label);
-
-        // Strip any HTML entities.
-        // Props https://stackoverflow.com/questions/657643/how-to-remove-html-special-chars .
-        $label = preg_replace('/&#?[a-z0-9]{2,8};/i', '', $label);
-
-        // remove any remaining disallowed characters
-        $disallowed_characters = ['<', '>', '\\', '*', '"', "'", '/', '{', '}'];
-        $label = str_replace($disallowed_characters, '', $label);
-
-        // limit to 22 characters
-        return substr($label, 0, 22);
     }
 }
