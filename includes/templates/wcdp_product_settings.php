@@ -152,16 +152,31 @@ do_action('wcdp_before_product_settings');
             (function ($) {
                 $(window).bind("load", function () {
                     show_hide_donable_panel();
-
-                    const price = $('#_regular_price');
-                    if (price.val() === '') {
-                        price.val(0);
-                    }
+                    set_default_prices();
                 });
 
                 $('#wcdp-amount-layout,input#_donable').on('change', function () {
                     show_hide_donable_panel();
+                    set_default_prices();
                 });
+
+                function set_default_prices() {
+                    const is_donable = $('input#_donable:checked').length;
+                    if (is_donable) {
+                        // Set default price for simple products
+                        const price = $('#_regular_price');
+                        if (price.length && price.val() === '') {
+                            price.val(0);
+                        }
+
+                        // Set default price for variable products
+                        $('input[id*="variable_regular_price_"]').each(function () {
+                            if ($(this).val() === '') {
+                                $(this).val(0);
+                            }
+                        });
+                    }
+                }
 
                 function show_hide_donable_panel() {
                     const is_donable = $('input#_donable:checked').length;
