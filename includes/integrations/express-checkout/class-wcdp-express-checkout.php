@@ -2,7 +2,8 @@
 /**
  * This class integrates Stripe & PayPal Express Checkout with Donation Platform for WooCommerce
  */
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 class WCDP_Express_Checkout
 {
@@ -29,7 +30,7 @@ class WCDP_Express_Checkout
         //Add hidden Amount Variation fields
         add_action('wcdp_express_checkout_amount_variation', array($this, 'express_checkout_amount_variation'));
 
-        //Rename '(via WooCommerce)' to '(Donation)'
+        //Remove '(via WooCommerce)' suffix
         add_filter('wc_stripe_payment_request_total_label_suffix', '__return_empty_string');
     }
 
