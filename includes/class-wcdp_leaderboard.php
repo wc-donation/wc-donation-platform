@@ -249,19 +249,12 @@ class WCDP_Leaderboard
         // Get cached donable product IDs
         $donable_product_ids = $this->get_cached_donable_products();
 
-        error_log('WCDP Leaderboard (get_orders_db): Found ' . count($donable_product_ids) . ' cached donable products');
-        if (count($donable_product_ids) > 0) {
-            error_log('WCDP Leaderboard (get_orders_db): First 10 donable product IDs: ' . implode(',', array_slice($donable_product_ids, 0, 10)));
-        }
-
         // If no donable products found, return empty array
         if (empty($donable_product_ids)) {
-            error_log('WCDP Leaderboard (get_orders_db): No donable products found');
             return array();
         }
 
         // Use the consolidated function to get orders for these donable products
-        error_log('WCDP Leaderboard (get_orders_db): Using get_orders_db_by_product_ids with ' . count($donable_product_ids) . ' donable product IDs');
         return $this->get_orders_db_by_product_ids($donable_product_ids, $orderby, $limit);
     }
 
@@ -275,13 +268,11 @@ class WCDP_Leaderboard
         $cached_products = get_transient($cache_key);
 
         if ($cached_products !== false) {
-            error_log('WCDP Leaderboard: Using cached donable products list (' . json_encode($cached_products) . ' products)');
             return $cached_products;
         }
 
         // Cache miss - query database
         global $wpdb;
-        error_log('WCDP Leaderboard: Cache miss - querying database for donable products');
 
         // Query only published products that are donable and available for purchase
         // Excludes trashed, draft, private products
@@ -297,7 +288,6 @@ class WCDP_Leaderboard
 
         // Handle database errors
         if ($wpdb->last_error) {
-            error_log('WCDP Leaderboard DB Error when fetching donable products: ' . $wpdb->last_error);
             return array();
         }
 
@@ -307,8 +297,6 @@ class WCDP_Leaderboard
         // Cache the results for 12 hours (products don't change donation status frequently)
         $cache_duration = apply_filters('wcdp_donable_products_cache_duration', 12 * HOUR_IN_SECONDS);
         set_transient($cache_key, $donable_product_ids, $cache_duration);
-
-        error_log('WCDP Leaderboard: Cached ' . count($donable_product_ids) . ' donable products for ' . $cache_duration . ' seconds');
 
         return $donable_product_ids;
     }
@@ -324,7 +312,6 @@ class WCDP_Leaderboard
     private function get_orders_db_by_product_ids(array $product_ids, string $orderby, int $limit): array
     {
         if (empty($product_ids)) {
-            error_log('WCDP Leaderboard: Empty product IDs array provided');
             return array();
         }
 
@@ -378,19 +365,15 @@ class WCDP_Leaderboard
 
         // Prepare query with product IDs and limit
         $prepare_params = array_merge($product_ids, array($limit));
-        error_log('WCDP Leaderboard DB Query (individual donations): ' . $wpdb->prepare($query, $prepare_params));
-        error_log('WCDP Leaderboard: Querying for individual donations with product IDs: ' . implode(',', $product_ids));
 
         $query = $wpdb->prepare($query, $prepare_params);
         $donation_data = $wpdb->get_results($query, ARRAY_A);
 
         // Handle database errors
         if ($wpdb->last_error) {
-            error_log('WCDP Leaderboard DB Error: ' . $wpdb->last_error);
             return array();
         }
 
-        error_log('WCDP Leaderboard: Individual donations query returned ' . count($donation_data) . ' donation items');
         $donations_clean = array();
 
         foreach ($donation_data as $donation_row) {
@@ -414,7 +397,6 @@ class WCDP_Leaderboard
                 $transaction_fee = $this->get_transaction_fee_for_single_donation_order($order);
                 if ($transaction_fee > 0) {
                     $final_amount += $transaction_fee;
-                    error_log('WCDP Leaderboard: Added transaction fee of ' . $transaction_fee . ' to donation. New total: ' . $final_amount);
                 }
 
                 $donation_clean = array(
@@ -433,12 +415,9 @@ class WCDP_Leaderboard
                 );
 
                 $donations_clean[] = $donation_clean;
-            } else {
-                error_log('WCDP Leaderboard (get_orders_db_by_product_ids): Could not load order object for ID: ' . $order_id);
             }
         }
 
-        error_log('WCDP Leaderboard (get_orders_db_by_product_ids): Final result: ' . count($donations_clean) . ' individual donations');
         return $donations_clean;
     }
 
@@ -626,7 +605,6 @@ class WCDP_Leaderboard
         foreach ($fees as $fee) {
             if ($fee->get_name() === $transaction_costs_label) {
                 $fee_amount = (float) $fee->get_total();
-                error_log('WCDP Leaderboard: Found transaction fee of ' . $fee_amount . ' in order ' . $order->get_id());
                 return $fee_amount;
             }
         }
@@ -744,7 +722,6 @@ class WCDP_Leaderboard
             $should_delete = $this->should_invalidate_cache_key($cache_key, $product_ids);
 
             if ($should_delete) {
-                error_log('delete_stale_orders_cache clear ' . $cache_key);
                 delete_transient($cache_key);
                 unset($cache_keys_option[$cache_key]);
             }
@@ -823,7 +800,6 @@ class WCDP_Leaderboard
         // Only clear cache if the _donable meta key was updated
         if ($meta_key === '_donable') {
             self::clear_donable_products_cache();
-            error_log('WCDP Leaderboard: Cleared donable products cache due to _donable meta update for product ID: ' . $post_id);
         }
     }
 }
