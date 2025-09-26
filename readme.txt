@@ -170,6 +170,7 @@ revert: suggested donation amounts without zeros
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
 dev: add wcdp_product_settings_fundraising action
+a11y: progress bar a11y improvements
 
 = 1.3.4.1 2025-05-24 =
 hotfix: fix anonymous donation checkbox always visible

@@ -132,8 +132,15 @@ class WCDP_Progress
 
         // Translators: %1$s: donation amount raised, %2$s: fundraising goal
         $label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
-        $revenue_formatted = apply_filters('wcdp_progress_revenue', wc_price($revenue));
-        $goal_formatted = apply_filters('wcdp_progress_goal', wc_price($atts['goal']));
+        $revenue_formatted = apply_filters('wcdp_progress_revenue', wc_price($revenue, [ 'in_span' => false ]));
+        $goal_formatted = apply_filters('wcdp_progress_goal', wc_price($atts['goal'], [ 'in_span' => false ]));
+        $aria_label = esc_attr(wp_kses(
+                sprintf(
+                /* translators: 1: raised amount, 2: goal amount */
+                        __('%1$s raised of %2$s goal', 'wc-donation-platform'),
+                        $revenue_formatted,
+                        $goal_formatted
+                ), []));
 
         switch ($atts['style']) {
             case 2:
@@ -192,6 +199,7 @@ class WCDP_Progress
                 'revenue' => $revenue,
                 'goal' => (float) $atts['goal'],
                 'percentage_formatted' => $percentage_formatted,
+                'aria_label' => $aria_label,
             ), '', WCDP_DIR . 'includes/templates/styles/progress/');
 
         $r = ob_get_contents();

@@ -9,13 +9,16 @@
  * @var float $goal
  * @var string $end_date_db
  * @var float $width
+ * @var float $revenue
+ * @var string $aria_label
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 $label = sprintf($label, '<span class="wcdp-emphasized">' . $revenue_formatted . '</span>', '<span class="wcdp-normal">' . $goal_formatted . '</span>');
 
-if (!defined('WCDP_PROGRESS_3')) :
+if (!defined('WCDP_PROGRESS_3')):
     define('WCDP_PROGRESS_3', 1);
     ?>
     :root{
@@ -47,11 +50,12 @@ if (!defined('WCDP_PROGRESS_3')) :
 </style>
 
 <div class="wcdp-fundraising-progress wcdp-progress-style-3">
-    <?php if ($goal != '' && $goal > 0) : ?>
+    <?php if ($goal != '' && $goal > 0): ?>
         <div class="wcdp-column">
             <?php echo $label; ?>
         </div>
-        <div class="wcdp-progress">
+        <div class="wcdp-progress" aria-valuenow="<?php echo esc_attr($revenue); ?>" aria-valuemin="0"
+            aria-valuemax="<?php echo esc_attr($goal); ?>" aria-label="<?php echo $aria_label; ?>">
             <div class="wcdp-thermometer wcdp-thermometer-bg"></div>
             <div class="wcdp-thermometer wcdp-thermometer-fg" style="width: <?php echo esc_attr($width); ?>%"></div>
         </div>
@@ -62,4 +66,3 @@ if (!defined('WCDP_PROGRESS_3')) :
     }
     ?>
 </div>
-
