@@ -1,6 +1,7 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Class WCDP_Form
@@ -122,7 +123,8 @@ class WCDP_Form
                 }
 
                 WCDP_Form::wcdp_enqueue_scripts($value['style'] !== 4);
-                wc_get_template('wcdp_form.php',
+                wc_get_template(
+                    'wcdp_form.php',
                     array(
                         'value' => $value,
                         'product' => $product,
@@ -130,7 +132,10 @@ class WCDP_Form
                         'product_id' => $product_id,
                         'has_child' => $has_child,
                         'checkout' => $checkout,
-                    ), '', WCDP_DIR . 'includes/templates/');
+                    ),
+                    '',
+                    WCDP_DIR . 'includes/templates/'
+                );
             }
         }
 
@@ -158,14 +163,15 @@ class WCDP_Form
         </p>';
     }
 
-    private static function check_grouped_product($product) {
+    private static function check_grouped_product($product)
+    {
         if (!is_a($product, 'WC_Product_Grouped')) {
             return true;
         }
         $ids = $product->get_children('vier');
         foreach ($ids as $id) {
             $productChild = wc_get_product($id);
-            if ($productChild && $productChild->is_purchasable() && WCDP_Form::is_donable($id) && (is_a($productChild, 'WC_Product_Simple') || is_a($productChild, 'WC_Product_Subscription') )) {
+            if ($productChild && $productChild->is_purchasable() && WCDP_Form::is_donable($id) && (is_a($productChild, 'WC_Product_Simple') || is_a($productChild, 'WC_Product_Subscription'))) {
                 return true;
             }
         }
@@ -211,6 +217,7 @@ class WCDP_Form
             'selectWoo',
             'select2',
             'wc-cart',
+            'wp-hooks'
         );
 
         // style 4 only renders an add2cart form
@@ -329,7 +336,8 @@ class WCDP_Form
         $html = '<ul id="' . $ul_id . '" class="' . esc_attr($args['ul-class']) . '" data-name="' . $input_name . '"> ';
         foreach ($options as $option) {
             $html .= '<li><input type="radio" id="' . $form_id . esc_attr($option['input-id']) . '" name="' . $input_name . '" class="' . esc_attr($option['input-class']) . '" value="' . esc_attr($option['input-value']) . '"';
-            if ($option['input-checked']
+            if (
+                $option['input-checked']
                 || (isset($_REQUEST['attribute_' . esc_attr($args['name'])]) && $_REQUEST['attribute_' . esc_attr($args['name'])] == esc_attr($option['input-value']))
                 || (!isset($_REQUEST[esc_attr($args['name'])]) && !is_null($product) && $product->get_variation_default_attribute(esc_attr($args['name'])) == esc_attr($option['input-value']))
                 || (isset($_REQUEST['wcdp_products']) && $_REQUEST['wcdp_products'] == esc_attr($option['input-value']))
@@ -358,11 +366,21 @@ class WCDP_Form
         ?>
         <style id="wcdp-css">
             :root {
-                --wcdp-main: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-                --wcdp-main-2: <?php echo sanitize_hex_color($wcdp_main_color_2); ?>;
-                --wcdp-main-3: <?php echo sanitize_hex_color($wcdp_main_color_3); ?>;
-                --wcdp-step-2: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
-                --wcdp-step-3: <?php echo sanitize_hex_color($wcdp_main_color); ?>;
+                --wcdp-main:
+                    <?php echo sanitize_hex_color($wcdp_main_color); ?>
+                ;
+                --wcdp-main-2:
+                    <?php echo sanitize_hex_color($wcdp_main_color_2); ?>
+                ;
+                --wcdp-main-3:
+                    <?php echo sanitize_hex_color($wcdp_main_color_3); ?>
+                ;
+                --wcdp-step-2:
+                    <?php echo sanitize_hex_color($wcdp_main_color); ?>
+                ;
+                --wcdp-step-3:
+                    <?php echo sanitize_hex_color($wcdp_main_color); ?>
+                ;
                 --label-inactive: LightGray;
                 --label-inactive-hover: #b5b5b5;
                 --label-text: black;
@@ -380,17 +398,19 @@ class WCDP_Form
      */
     public function wcdp_register_scripts()
     {
-        wp_register_style('wc-donation-platform',
+        wp_register_style(
+            'wc-donation-platform',
             WCDP_DIR_URL . 'assets/css/wcdp.min.css',
             array(),
             WCDP_VERSION
         );
-        wp_register_script('wc-donation-platform',
+        wp_register_script(
+            'wc-donation-platform',
             WCDP_DIR_URL . 'assets/js/wcdp.min.js',
             array(),
             WCDP_VERSION,
             array(
-                'strategy'  => 'defer',
+                'strategy' => 'defer',
             )
         );
 
@@ -411,7 +431,8 @@ class WCDP_Form
         }
 
         global $post;
-        if (is_product() || is_checkout()
+        if (
+            is_product() || is_checkout()
             || has_block('wc-donation-platform/wcdp')
             || (!is_null($post)
                 && (has_shortcode($post->post_content, 'wcdp_donation_form') || has_shortcode($post->post_content, 'product_page'))
@@ -565,8 +586,8 @@ class WCDP_Form
      */
     public static function check_donation_amount($donation_amount, int $product_id = 0): bool
     {
-        $min_donation_amount = (float)apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
-        $max_donation_amount = (float)apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 50000), $product_id);
+        $min_donation_amount = (float) apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
+        $max_donation_amount = (float) apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 50000), $product_id);
         return $donation_amount >= $min_donation_amount && $donation_amount <= $max_donation_amount;
     }
 
@@ -632,9 +653,9 @@ class WCDP_Form
      */
     public static function get_default_price(WC_Product $product): ?string
     {
-        if ( $product->is_type( 'variable' ) ) {
+        if ($product->is_type('variable')) {
             // Variable product: get min variation price
-            return $product->get_variation_price( 'min', true );
+            return $product->get_variation_price('min', true);
         } else {
             // Simple or other product types: get the regular price
             return $product->get_price();

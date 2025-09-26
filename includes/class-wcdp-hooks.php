@@ -457,4 +457,40 @@ class WCDP_Hooks
             admin_url('admin.php?page=wc-settings&tab=wc-donation-platform'),
         );
     }
+
+    /**
+     * Get all product IDs from a WooCommerce order.
+     *
+     * This will include both simple product IDs and variation IDs.
+     *
+     * @param WC_Order $order The WooCommerce order object.
+     * @return array<int> Array of unique product IDs.
+     */
+    public static function get_order_product_ids(WC_Order $order): array
+    {
+        // Ensure we received a valid order object
+        if (!$order instanceof WC_Order) {
+            return [];
+        }
+
+        $product_ids = [];
+
+        foreach ($order->get_items() as $item) {
+            // Get the parent product ID (works for simple and variable products)
+            $product_id = $item->get_product_id();
+            if ($product_id) {
+                $product_ids[] = $product_id;
+            }
+
+            // Get the variation ID if applicable (only for variable products)
+            $variation_id = $item->get_variation_id();
+            if ($variation_id) {
+                $product_ids[] = $variation_id;
+            }
+        }
+
+        // Return unique IDs
+        return array_unique($product_ids);
+    }
+
 }
