@@ -10,8 +10,14 @@
  * @var float $goal
  * @var string $percentage_formatted
  * @var float $revenue
- * @var string $aria_label
  */
+
+$aria_label = esc_attr(wp_kses(
+        sprintf(
+        /* translators: 1: percentage raised formatted */
+                __('%1$s raised', 'wc-donation-platform'),
+                $percentage_formatted
+        ), []));
 
 if (!defined('ABSPATH'))
     exit;
@@ -71,8 +77,8 @@ if (!defined('WCDP_PROGRESS_2')):
         </div>
     </div>
     <?php if ($goal != '' && $goal > 0): ?>
-        <div class="wcdp-progress" aria-valuenow="<?php echo esc_attr($revenue); ?>" aria-valuemin="0"
-            aria-valuemax="<?php echo esc_attr($goal); ?>" aria-label="<?php echo $aria_label; ?>">
+        <div class="wcdp-progress" role="progressbar" aria-valuenow="<?php echo esc_attr($width); ?>" aria-valuemin="0"
+            aria-valuemax="100" aria-label="<?php echo $aria_label; ?>">
             <div class="wcdp-thermometer wcdp-thermometer-bg"></div>
             <div class="wcdp-thermometer wcdp-thermometer-fg" style="width: <?php echo esc_attr($width); ?>%"></div>
         </div>

@@ -76,7 +76,7 @@ if (!defined('WCDP_PROGRESS_2')):
         </div>
     </div>
     <?php if ($goal != '' && $goal > 0): ?>
-        <div class="wcdp-progress" aria-valuenow="<?php echo esc_attr($revenue); ?>" aria-valuemin="0"
+        <div class="wcdp-progress" role="progressbar" aria-valuenow="<?php echo esc_attr($revenue); ?>" aria-valuemin="0"
             aria-valuemax="<?php echo esc_attr($goal); ?>" aria-label="<?php echo $aria_label; ?>">
             <div class="wcdp-thermometer wcdp-thermometer-bg"></div>
             <div class="wcdp-thermometer wcdp-thermometer-fg" style="width: <?php echo esc_attr($width); ?>%"></div>
