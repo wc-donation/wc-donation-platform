@@ -31,10 +31,10 @@ class WCDP_Feedback
         //add_action('wp_ajax_wcdp_feedback_survey_dismiss', array($this, 'send_survey_data_dismiss'));
 
         // Ask users for reviews
-        add_action( 'current_screen', array( $this, 'add_review_notice' ) );
+        add_action('current_screen', array($this, 'add_review_notice'));
 
         // Ask user to subscribe to the newsletter
-        add_action( 'admin_notices', array( $this, 'add_newsletter_notice' ) );
+        add_action('admin_notices', array($this, 'add_newsletter_notice'));
 
         //options of the feedback surveys
         $this->feedback_survey_options = array(
@@ -67,9 +67,11 @@ class WCDP_Feedback
      * @return void
      * @since 1.3.2
      */
-    public function add_review_notice() {
+    public function add_review_notice()
+    {
         $key = 'wcdp_review_notice';
-        if (!class_exists('WC_Admin_Notices') || rand(0, 3) !== 0 || !$this->should_show_newsletter_notice() || (int) get_user_meta( get_current_user_id(), 'dismissed_wcdp_newsletter_notice_notice', true) !== 1 || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
+        if (!class_exists('WC_Admin_Notices') || rand(0, 3) !== 0 || !$this->should_show_newsletter_notice() || (int) get_user_meta(get_current_user_id(), 'dismissed_wcdp_newsletter_notice_notice', true) !== 1 || (int) get_user_meta(get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1)
+            return;
         $html = '<h3><a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">' . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform') . '</a></h3>';
         WC_Admin_Notices::add_custom_notice($key, $html);
     }
@@ -80,17 +82,20 @@ class WCDP_Feedback
      * @return void
      * @since 1.3.2
      */
-    public function add_newsletter_notice() {
+    public function add_newsletter_notice()
+    {
         $key = 'wcdp_newsletter_notice';
-        if (!class_exists('WC_Admin_Notices') || !$this->should_show_newsletter_notice() || (int) get_user_meta( get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1) return;
+        if (!class_exists('WC_Admin_Notices') || !$this->should_show_newsletter_notice() || (int) get_user_meta(get_current_user_id(), 'dismissed_' . $key . '_notice', true) === 1)
+            return;
         $current_user = wp_get_current_user();
-        if (!$current_user) return;
+        if (!$current_user)
+            return;
 
         $name = $current_user->first_name ?? $current_user->display_name;
 
         // Create the notice content
         echo '<div id="message" class="updated woocommerce-message">
-                <a class="woocommerce-message-close notice-dismiss" href="' . esc_url( wp_nonce_url( add_query_arg( 'wc-hide-notice', $key ), 'woocommerce_hide_notices_nonce', '_wc_notice_nonce' ) ) . '">' . esc_html__( 'Dismiss', 'woocommerce' ) . '</a>
+                <a class="woocommerce-message-close notice-dismiss" href="' . esc_url(wp_nonce_url(add_query_arg('wc-hide-notice', $key), 'woocommerce_hide_notices_nonce', '_wc_notice_nonce')) . '">' . esc_html__('Dismiss', 'woocommerce') . '</a>
                 <h2>' . esc_html__('Subscribe to the Donation Platform for WooCommerce Newsletter', 'wc-donation-platform') . '</h2>
                 <style>
                     .form-container {
@@ -141,7 +146,8 @@ class WCDP_Feedback
      */
     private function should_show_newsletter_notice(): bool
     {
-        if (!current_user_can( 'edit_shop_orders' )) return false;
+        if (!current_user_can('edit_shop_orders'))
+            return false;
         return (isset($_GET['page']) && $_GET['page'] === 'wc-orders' && isset($_GET['action']) && $_GET['action'] === 'edit')
             || (isset($_GET['tab']) && $_GET['tab'] === 'wc-donation-platform')
             && !isset($_GET['wc-hide-notice']);
@@ -155,7 +161,8 @@ class WCDP_Feedback
      */
     public function send_survey_data()
     {
-        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'wcdp_nonce') || !current_user_can('administrator')) wp_die();
+        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'wcdp_nonce') || !current_user_can('administrator'))
+            wp_die();
 
         $data = $this->get_data();
         if ($data['action'] === 'wcdp_feedback_survey') {
@@ -270,7 +277,8 @@ class WCDP_Feedback
     public function wcdp_add_feedback_survey()
     {
         $filename = 'index.php';
-        if (!file_exists($filename) || time() - filemtime($filename) < 345600 ||
+        if (
+            !file_exists($filename) || time() - filemtime($filename) < 345600 ||
             !current_user_can('administrator') ||
             get_transient('wcdp_feedback_send')
         ) {
@@ -293,18 +301,20 @@ class WCDP_Feedback
             <div class="wcdp-modal-wrap">
 
                 <div class="wcdp-modal-header">
-                    <h2><?php esc_html_e("Can you please help me to improve Donation Platform for WooCommerce?", "wc-donation-platform"); ?></h2>
+                    <h2><?php esc_html_e("Can you please help me to improve Donation Platform for WooCommerce?", "wc-donation-platform"); ?>
+                    </h2>
                     <button class="wcdp-modal-cancel"><span class="dashicons dashicons-no-alt"></span></button>
                 </div>
 
                 <div class="wcdp-modal-body">
-                    <h3><?php esc_html_e("If you have a moment, please let me know how I can improve Donation Platform for WooCommerce for you. How do you like the plugin?", "wc-donation-platform"); ?></h3>
+                    <h3><?php esc_html_e("If you have a moment, please let me know how I can improve Donation Platform for WooCommerce for you. How do you like the plugin?", "wc-donation-platform"); ?>
+                    </h3>
                     <ul class="wcdp-modal-input wcdp-radio-none">
                         <?php foreach ($this->feedback_survey_options as $option) { ?>
                             <li>
                                 <label>
                                     <input type="radio" id="<?php echo esc_attr($option['id']); ?>" class="wcdp-survey"
-                                           name="wcdp-survey" value="<?php echo esc_attr($option['id']); ?>">
+                                        name="wcdp-survey" value="<?php echo esc_attr($option['id']); ?>">
                                     <div class="wcdp-reason-text"><?php echo esc_html($option['text']); ?></div>
                                 </label>
                             </li>
@@ -314,18 +324,21 @@ class WCDP_Feedback
                         <strong><?php esc_html_e("Anything else you want to tell me?", "wc-donation-platform"); ?></strong><br>
                     </label>
                     <textarea id="wcdp_feedback_comments" name="wcdp_feedback_comments"
-                              placeholder="<?php esc_html_e("Comments & Suggestions for Improvement", "wc-donation-platform"); ?>"
-                              class="wcdp-comments-input"></textarea>
+                        placeholder="<?php esc_html_e("Comments & Suggestions for Improvement", "wc-donation-platform"); ?>"
+                        class="wcdp-comments-input"></textarea>
 
 
                     <div class="wcdp-modal-footer">
                         <a class="wcdp-modal-submit"
-                           href="#"><?php esc_html_e("Submit Feedback", "wc-donation-platform"); ?><span
-                                    class="dashicons dashicons-update rotate"></span></a>
-                        <span class="wcdp-modal-on-deactivation wcdp-modal-cancel"><?php esc_html_e("Not now", "wc-donation-platform"); ?></span>
+                            href="#"><?php esc_html_e("Submit Feedback", "wc-donation-platform"); ?><span
+                                class="dashicons dashicons-update rotate"></span></a>
+                        <span
+                            class="wcdp-modal-on-deactivation wcdp-modal-cancel"><?php esc_html_e("Not now", "wc-donation-platform"); ?></span>
                     </div>
 
-                    <p class="wcdp-greyed"><?php esc_html_e("By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send.", "wc-donation-platform"); ?></p>
+                    <p class="wcdp-greyed">
+                        <?php esc_html_e("By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send.", "wc-donation-platform"); ?>
+                    </p>
 
                 </div>
             </div>
@@ -438,7 +451,8 @@ class WCDP_Feedback
                 transition: 400ms;
             }
 
-            #wcdp-feedback-modal .wcdp-modal-header .wcdp-modal-cancel:focus, #wcdp-feedback-modal .wcdp-modal-header .wcdp-modal-cancel:hover {
+            #wcdp-feedback-modal .wcdp-modal-header .wcdp-modal-cancel:focus,
+            #wcdp-feedback-modal .wcdp-modal-header .wcdp-modal-cancel:hover {
                 color: #0e8512;
                 border: 1px solid #0e8512;
                 outline: 0;
@@ -455,7 +469,8 @@ class WCDP_Feedback
                 padding: 25px 30px;
             }
 
-            #wcdp-feedback-modal .wcdp-modal-body h3, .wcdp-label-strong {
+            #wcdp-feedback-modal .wcdp-modal-body h3,
+            .wcdp-label-strong {
                 padding: 0;
                 margin: 0;
                 line-height: 1.4;
@@ -554,7 +569,7 @@ class WCDP_Feedback
                 font-size: 75px;
             }
 
-            .wcdp-radio-none .wcdp-survey:checked + .wcdp-reason-text {
+            .wcdp-radio-none .wcdp-survey:checked+.wcdp-reason-text {
                 font-size: 80px;
                 filter: grayscale(0);
             }
@@ -562,6 +577,37 @@ class WCDP_Feedback
             #wcdp_feedback_comments {
                 width: 100%;
                 height: 5em;
+            }
+
+            .wcdp-feedback-textarea {
+                width: 100%;
+                height: 100px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                resize: vertical;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            }
+
+            .wcdp-modal-next,
+            .wcdp-modal-back {
+                color: white;
+                background-color: #0c4a0d;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 3px;
+                margin-right: 10px;
+            }
+
+            .wcdp-modal-next:hover,
+            .wcdp-modal-back:hover {
+                color: white;
+                background-color: #0e8512;
+            }
+
+            .wcdp-modal-next:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
             }
         </style>
     <?php }
@@ -650,38 +696,20 @@ class WCDP_Feedback
         //options of the deactivation survey
         $deactivation_survey_options = array(
             array(
-                'id' => 'no-need',
-                'input' => false,
-                'text' => __("I no longer need the plugin.", "wc-donation-platform"),
+                'id' => 'not-expected',
+                'text' => __("It didn't work as expected", "wc-donation-platform"),
             ),
             array(
-                'id' => 'better-plugin',
-                'input' => true,
-                'text' => __("I found a better plugin.", "wc-donation-platform"),
-                'placeholder' => __("Please share which plugin.", "wc-donation-platform"),
+                'id' => 'found-bug',
+                'text' => __("I found a bug", "wc-donation-platform"),
             ),
             array(
-                'id' => 'stop-working',
-                'input' => true,
-                'text' => __("The plugin suddenly stopped working.", "wc-donation-platform"),
-                'placeholder' => __("Please share more details.", "wc-donation-platform"),
-            ),
-            array(
-                'id' => 'not-working',
-                'input' => true,
-                'text' => __("I could not get the plugin to work.", "wc-donation-platform"),
-                'placeholder' => __("Please share more details.", "wc-donation-platform"),
-            ),
-            array(
-                'id' => 'temporary-deactivation',
-                'input' => false,
-                'text' => __("It's a temporary deactivation.", "wc-donation-platform"),
+                'id' => 'not-needed',
+                'text' => __("It wasn't what I needed", "wc-donation-platform"),
             ),
             array(
                 'id' => 'other',
-                'input' => true,
                 'text' => __("Other", "wc-donation-platform"),
-                'placeholder' => __("Please share the reason.", "wc-donation-platform"),
             ),
         );
         ?>
@@ -694,32 +722,51 @@ class WCDP_Feedback
                 </div>
 
                 <div class="wcdp-modal-body">
-                    <h3><?php esc_html_e("If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce.", "wc-donation-platform"); ?></h3>
-                    <ul class="wcdp-modal-input">
-                        <?php foreach ($deactivation_survey_options as $key => $option) { ?>
-                            <li>
-                                <label>
-                                    <input type="radio" id="<?php echo esc_attr($option['id']); ?>" class="wcdp-survey"
-                                           name="wcdp-survey" value="<?php echo esc_attr($option['text']); ?>">
-                                    <div class="wcdp-reason-text"><?php echo esc_html($option['text']); ?></div>
-                                    <?php if (isset($option['input']) && $option['input']) { ?>
-                                        <textarea placeholder="<?php echo esc_attr($option['placeholder']); ?>"
-                                                  class="wcdp-reason-input <?php echo $key == 0 ? 'wcdp-active' : ''; ?> <?php echo esc_html($option['id']); ?>"></textarea>
-                                    <?php } ?>
-                                </label>
-                            </li>
-                        <?php } ?>
-                    </ul>
+                    <!-- Step 1: Reason Selection -->
+                    <div class="wcdp-step wcdp-step-1">
+                        <h3><?php esc_html_e("We're sorry to see you go. Could you please tell us why you're uninstalling the plugin?", "wc-donation-platform"); ?>
+                        </h3>
+                        <ul class="wcdp-modal-input">
+                            <?php foreach ($deactivation_survey_options as $key => $option) { ?>
+                                <li>
+                                    <label>
+                                        <input type="radio" id="<?php echo esc_attr($option['id']); ?>" class="wcdp-survey"
+                                            name="wcdp-survey" value="<?php echo esc_attr($option['text']); ?>">
+                                        <div class="wcdp-reason-text"><?php echo esc_html($option['text']); ?></div>
+                                    </label>
+                                </li>
+                            <?php } ?>
+                        </ul>
 
-                    <div class="wcdp-modal-footer">
-                        <a class="wcdp-modal-submit"
-                           href="#"><?php esc_html_e("Submit & Deactivate", "wc-donation-platform"); ?><span
-                                    class="dashicons dashicons-update rotate"></span></a>
-                        <a class="wcdp-modal-on-deactivation"
-                           href="#"><?php esc_html_e("Skip & Deactivate", "wc-donation-platform"); ?></a>
+                        <div class="wcdp-modal-footer">
+                            <a class="wcdp-modal-next"
+                                href="#"><?php esc_html_e("Continue Deactivation", "wc-donation-platform"); ?></a>
+                            <a class="wcdp-modal-on-deactivation"
+                                href="#"><?php esc_html_e("Skip & Deactivate", "wc-donation-platform"); ?></a>
+                        </div>
                     </div>
 
-                    <p class="wcdp-greyed"><?php esc_html_e("By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send.", "wc-donation-platform"); ?></p>
+                    <!-- Step 2: Follow-up Question -->
+                    <div class="wcdp-step wcdp-step-2" style="display: none;">
+                        <h3><?php esc_html_e("What could we change or improve to make you want to keep using Donation Platform for WooCommerce?", "wc-donation-platform"); ?>
+                        </h3>
+                        <textarea id="wcdp_improvement_feedback" name="wcdp_improvement_feedback"
+                            placeholder="<?php esc_attr_e("Your suggestions for improvement...", "wc-donation-platform"); ?>"
+                            class="wcdp-feedback-textarea"></textarea>
+
+                        <div class="wcdp-modal-footer">
+                            <a class="wcdp-modal-back" href="#"><?php esc_html_e("Back", "wc-donation-platform"); ?></a>
+                            <a class="wcdp-modal-submit"
+                                href="#"><?php esc_html_e("Submit & Deactivate", "wc-donation-platform"); ?><span
+                                    class="dashicons dashicons-update rotate"></span></a>
+                            <a class="wcdp-modal-on-deactivation"
+                                href="#"><?php esc_html_e("Skip & Deactivate", "wc-donation-platform"); ?></a>
+                        </div>
+                    </div>
+
+                    <p class="wcdp-greyed">
+                        <?php esc_html_e("By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send.", "wc-donation-platform"); ?>
+                    </p>
 
                 </div>
             </div>
@@ -738,11 +785,7 @@ class WCDP_Feedback
             jQuery(document).ready(function ($) {
                 'use strict';
 
-                // Modal Radio Input Click Action
-                $('.wcdp-modal-input input[type=radio]').on('change', function (e) {
-                    $('.wcdp-reason-input').removeClass('wcdp-active');
-                    $('.wcdp-modal-input').find('.' + $(this).attr('id')).addClass('wcdp-active');
-                });
+                var deactivationUrl = '';
 
                 // Modal Cancel Click Action
                 $(document).on('click', '.wcdp-modal-cancel', function (e) {
@@ -752,9 +795,29 @@ class WCDP_Feedback
                 // Deactivate Button Click Action
                 $(document).on('click', '#deactivate-wc-donation-platform', function (e) {
                     e.preventDefault();
+                    deactivationUrl = $(this).attr('href');
                     $('#wcdp-feedback-modal').addClass('modal-active');
-                    $('.wcdp-modal-on-deactivation').attr('href', $(this).attr('href'));
-                    $('.wcdp-modal-submit').attr('href', $(this).attr('href'));
+                    $('.wcdp-modal-on-deactivation').attr('href', deactivationUrl);
+                });
+
+                // Continue to Step 2
+                $(document).on('click', '.wcdp-modal-next', function (e) {
+                    e.preventDefault();
+
+                    if (!$('input[name="wcdp-survey"]:checked').length) {
+                        alert('<?php esc_html_e("Please select a reason before continuing.", "wc-donation-platform"); ?>');
+                        return;
+                    }
+
+                    $('.wcdp-step-1').hide();
+                    $('.wcdp-step-2').show();
+                });
+
+                // Back to Step 1
+                $(document).on('click', '.wcdp-modal-back', function (e) {
+                    e.preventDefault();
+                    $('.wcdp-step-2').hide();
+                    $('.wcdp-step-1').show();
                 });
 
                 // Submit to Server
@@ -762,23 +825,24 @@ class WCDP_Feedback
                     e.preventDefault();
 
                     $(this).addClass('loading');
-                    const url = $(this).attr('href')
 
                     $.ajax({
                         url: '<?php echo wp_nonce_url(admin_url('admin-ajax.php'), 'wcdp_nonce'); ?>',
                         type: 'POST',
                         data: {
                             action: 'wcdp_feedback_survey',
-                            cause_id: $('input[type=radio]:checked').attr('id'),
-                            cause_details: $('.wcdp-reason-input.wcdp-active').val(),
+                            cause_id: $('input[name="wcdp-survey"]:checked').attr('id'),
+                            cause_details: $('#wcdp_improvement_feedback').val(),
                             type: 'wcdp_deactivation_survey'
                         },
                         success: function () {
                             $('#wcdp-feedback-modal').removeClass('modal-active');
-                            window.location.href = url;
+                            window.location.href = deactivationUrl;
                         },
                         error: function (xhr) {
                             console.log('WCDP: Error occurred. Please try again' + xhr.statusText + xhr.responseText);
+                            $('#wcdp-feedback-modal').removeClass('modal-active');
+                            window.location.href = deactivationUrl;
                         },
                     });
                 });
