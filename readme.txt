@@ -167,7 +167,7 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 
 = 1.3.5 =
 feat: complete refactoring of Leaderboard functionality
-revert: suggested donation amounts without zeros
+feat: suggested donation amounts with correct number of decimals
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
 dev: add wcdp_product_settings_fundraising action

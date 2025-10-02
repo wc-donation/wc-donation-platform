@@ -79,11 +79,12 @@ if ($value['style'] != 3 && $value['style'] != 4) {
             foreach ($suggestions as $suggestion) {
                 $suggestion = apply_filters('wcdp_suggestion', $suggestion, $product);
                 if (is_numeric($suggestion) && $suggestion > 0 && $suggestion >= $min_donation_amount && $suggestion <= $max_donation_amount) {
+                    $decimals = (floor($suggestion) == $suggestion) ? 0 : wc_get_price_decimals();
                     $option = array(
-                        'input-id' => 'amount_' . str_replace('.', '-', $suggestion),
-                        'input-value' => $suggestion,
-                        'input-class' => 'wcdp_amount_suggestion wcdp_amount_' . str_replace('.', '-', $suggestion),
-                        'label-text' => wc_price($suggestion, ['decimals' => 0]),
+                            'input-id'    => 'amount_' . str_replace('.', '-', $suggestion),
+                            'input-value' => $suggestion,
+                            'input-class' => 'wcdp_amount_suggestion wcdp_amount_' . str_replace('.', '-', $suggestion),
+                            'label-text'  => wc_price($suggestion, ['decimals' => $decimals]),
                     );
                     if ($suggestion == $value_donation_amount) {
                         $option['input-checked'] = true;
