@@ -193,28 +193,32 @@ add_action('before_woocommerce_init', function () {
  *
  * @since 1.3.3
  */
-register_activation_hook( __FILE__,
+register_activation_hook(
+    __FILE__,
     /**
      * @throws Exception
      */ function () {
-    //Disable new Product editor
-    update_option('woocommerce_feature_product_block_editor_enabled', 'no');
+        //Disable new Product editor
+        update_option('woocommerce_feature_product_block_editor_enabled', 'no');
 
-    if (!class_exists('WC_Admin_Notices') || !current_user_can('activate_plugins') || get_option('wcdp_compatibility_mode', false)) return;
+        if (!class_exists('WC_Admin_Notices') || !current_user_can('activate_plugins') || get_option('wcdp_compatibility_mode', false))
+            return;
 
-    // Check if there are at least 4 WooCommerce orders
-    $order_query = new WC_Order_Query(array(
-        'status' => array('wc-completed'),
-        'type' => 'shop_order',
-        'limit' => 4,
-        'return' => 'ids',
-    ));
-    $orders = $order_query->get_orders();
-    if (count($orders) < 4) return;
+        // Check if there are at least 4 WooCommerce orders
+        $order_query = new WC_Order_Query(array(
+            'status' => array('wc-completed'),
+            'type' => 'shop_order',
+            'limit' => 4,
+            'return' => 'ids',
+        ));
+        $orders = $order_query->get_orders();
+        if (count($orders) < 4)
+            return;
 
-    //enable compatibility mode
-    add_option('wcdp_compatibility_mode', 'yes');
-});
+        //enable compatibility mode
+        add_option('wcdp_compatibility_mode', 'yes');
+    }
+);
 
 if (!function_exists('wcdp_clear_cache')) {
     /**
@@ -223,7 +227,8 @@ if (!function_exists('wcdp_clear_cache')) {
      * @return void
      * @since v1.3.3
      */
-    function wcdp_clear_cache() {
+    function wcdp_clear_cache()
+    {
         if (class_exists('WCDP_General_Settings')) {
             WCDP_General_Settings::clear_cached_data();
         } else {

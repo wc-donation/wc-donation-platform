@@ -5,7 +5,8 @@
  * Fits WooCommerce Subscriptions to use for recurring donations
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 class WCDP_Subscriptions
 {
@@ -137,8 +138,8 @@ class WCDP_Subscriptions
                 }
                 break;
 
-            case 'single-product/add-to-cart/subscription.php' :
-            case 'single-product/add-to-cart/variable-subscription.php' :
+            case 'single-product/add-to-cart/subscription.php':
+            case 'single-product/add-to-cart/variable-subscription.php':
                 if (WCDP_Form::is_donable(get_queried_object_id())) {
                     $template = WCDP_DIR . 'includes/wc-templates/single-product/add-to-cart/product.php';
                 }

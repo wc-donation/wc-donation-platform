@@ -1,6 +1,6 @@
 <?php
 /**
- * Deactivation Action.
+ * User feedback collection
  *
  * @since v1.2.7
  */
