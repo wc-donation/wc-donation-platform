@@ -384,8 +384,18 @@ input:disabled~label {
     display: block;
 }
 
+.wcdp-branding {
+    font-size: 0.75em;
+    margin: 12px 0 0;
+    text-align: center;
+}
+
 .woocommerce-input-wrapper {
     position: relative;
+}
+
+form[name="checkout"] .wcdp-tab div:first-child {
+    position: static;
 }
 
 .woocommerce-invalid .woocommerce-input-wrapper input {

@@ -160,6 +160,13 @@ class WCDP_General_Settings
                 'type' => 'wcdp_clear_cache_button',
             ),
             array(
+                'title' => __('Enable branding', 'wc-donation-platform'),
+                'desc' => __('Show a small “Powered by Donation Platform for WooCommerce” note below the donation form.', 'wc-donation-platform'),
+                'id' => 'wcdp_branding',
+                'default' => 'no',
+                'type' => 'checkbox',
+            ),
+            array(
                 'type' => 'sectionend',
                 'id' => 'wcdp_section_general',
             ),
@@ -407,7 +414,8 @@ class WCDP_General_Settings
                         <?php esc_html_e('Clear Cache', 'wc-donation-platform'); ?>
                     </button>
                     <p class="description ">
-                        <?php esc_html_e('Clear cached progress bar & leaderboard data.', 'wc-donation-platform'); ?></p>
+                        <?php esc_html_e('Clear cached progress bar & leaderboard data.', 'wc-donation-platform'); ?>
+                    </p>
             </td>
         </tr>
         <script type="text/javascript">
