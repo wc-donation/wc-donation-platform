@@ -679,7 +679,7 @@ class WCDP_Leaderboard
         if (!empty($company))
             return esc_html($company);
 
-        return esc_html(esc_html($first) . ' ' . esc_html($this->get_initials($last)));
+        return esc_html($first) . ' ' . esc_html($this->get_initials($last));
     }
 
     /**
