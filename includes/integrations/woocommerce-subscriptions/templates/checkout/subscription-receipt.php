@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
         echo wp_kses_post(sprintf(esc_html__('Total: %s', 'woocommerce-subscriptions'), '<strong>' . $subscription->get_formatted_order_total() . '</strong>'));
         ?>
     </li>
-    <?php if ($subscription->get_payment_method_title()) : ?>
+    <?php if ($subscription->get_payment_method_title()): ?>
         <li class="method">
             <?php
             // translators: placeholder is the display name of the payment method

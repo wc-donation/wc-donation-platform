@@ -1,5 +1,6 @@
 <?php
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * This class integrates Subscriptions for WooCommerce (Lite) with Donation Platform for WooCommerce
@@ -37,9 +38,10 @@ class WCDP_Subscriptions_For_WooCommerce
      */
     public static function price_subscription($mwb_recurring_data, $cart_item)
     {
-        if (isset($cart_item["wcdp_donation_amount"]) &&
+        if (
+            isset($cart_item["wcdp_donation_amount"]) &&
             isset($cart_item["product_id"]) &&
-            WCDP_Form::check_donation_amount($cart_item["wcdp_donation_amount"], (int)$cart_item["product_id"])
+            WCDP_Form::check_donation_amount($cart_item["wcdp_donation_amount"], (int) $cart_item["product_id"])
         ) {
             $mwb_recurring_data['wps_recurring_total'] = $cart_item["wcdp_donation_amount"];
         }
@@ -98,9 +100,11 @@ class WCDP_Subscriptions_For_WooCommerce
      */
     public static function cart_price($product_price, $cart_item)
     {
-        if (!isset($cart_item["wcdp_donation_amount"]) ||
+        if (
+            !isset($cart_item["wcdp_donation_amount"]) ||
             !isset($cart_item["product_id"]) ||
-            !WCDP_Form::check_donation_amount($cart_item["wcdp_donation_amount"], (int)$cart_item["product_id"])) {
+            !WCDP_Form::check_donation_amount($cart_item["wcdp_donation_amount"], (int) $cart_item["product_id"])
+        ) {
             return $product_price;
         }
 

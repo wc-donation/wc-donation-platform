@@ -6,7 +6,8 @@
  * forked from https://github.com/wpovernight/woocommerce-pdf-invoices-packing-slips/
  */
 
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH'))
+    exit; // Exit if accessed directly
 
 ?>
 <div class="invoice-page">
@@ -44,7 +45,9 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
                 }
                 ?>
                 <?php do_action('wpo_wcpdf_before_shop_name', $this->type, $this->order); ?>
-                <div class="shop-name"><h3><?php echo $shop_name; ?></h3></div>
+                <div class="shop-name">
+                    <h3><?php echo $shop_name; ?></h3>
+                </div>
                 <?php do_action('wpo_wcpdf_after_shop_name', $this->type, $this->order); ?>
                 <?php do_action('wpo_wcpdf_before_shop_address', $this->type, $this->order); ?>
                 <div class="shop-address"><?php $this->shop_address(); ?></div>
@@ -64,7 +67,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     <p class="right">
         <?php
         // Translators: %$1s shop city, %$2 date of receipt creation
-        printf(esc_html__('%1$s, %2$s', 'wc-donation-platform'), esc_html(WC()->countries->get_base_city()), esc_html($this->get_date()->date_i18n( wc_date_format() )));
+        printf(esc_html__('%1$s, %2$s', 'wc-donation-platform'), esc_html(WC()->countries->get_base_city()), esc_html($this->get_date()->date_i18n(wc_date_format())));
         ?>
     </p>
     <p>

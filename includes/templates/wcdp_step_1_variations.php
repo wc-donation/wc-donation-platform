@@ -9,12 +9,13 @@
  * @var string $form_id
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
-if ($has_child) : ?>
+if ($has_child): ?>
 
     <input type="hidden" name="variation_id" id="variation_id" value="">
-    <?php foreach ($attributes as $attribute => $options) :
+    <?php foreach ($attributes as $attribute => $options):
 
         $esc_attribute = esc_attr(sanitize_title($attribute));
 
@@ -40,7 +41,7 @@ if ($has_child) : ?>
                     <?php echo wc_attribute_label($attribute, $product); ?>
                     <abbr class="required" title="<?php esc_html_e('required', 'wc-donation-platform'); ?>">*</abbr>
                 </label>
-            <?php else :
+            <?php else:
                 //Display Custom HTML
                 do_action('wcdp_custom_html_' . $esc_attribute . '_' . $product_id);
             endif;
@@ -119,7 +120,7 @@ if ($has_child) : ?>
     $ids = $product->get_children('edit');
     foreach ($ids as $id) {
         $productChild = wc_get_product($id);
-        if ($productChild && $productChild->is_purchasable() && WCDP_Form::is_donable($id) && (is_a($productChild, 'WC_Product_Simple') || is_a($productChild, 'WC_Product_Subscription') )) {
+        if ($productChild && $productChild->is_purchasable() && WCDP_Form::is_donable($id) && (is_a($productChild, 'WC_Product_Simple') || is_a($productChild, 'WC_Product_Subscription'))) {
             $args['options'][] = array(
                 'input-id' => 'wcdp_value_' . $id,
                 'input-value' => $id,

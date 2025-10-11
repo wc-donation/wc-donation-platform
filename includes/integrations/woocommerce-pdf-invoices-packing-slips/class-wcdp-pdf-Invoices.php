@@ -5,7 +5,8 @@
 
 use WPO\IPS\Documents\WCDP_Thank_You_Certificate;
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 class WCDP_Pdf_Invoices
 {

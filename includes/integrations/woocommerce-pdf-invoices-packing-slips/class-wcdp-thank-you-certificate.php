@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-if (!class_exists('WCDP_Thank_You_Certificate')) :
+if (!class_exists('WCDP_Thank_You_Certificate')):
 
     /**
      * Thank You Certificate
@@ -42,7 +42,7 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
          */
         public function __construct($order = 0)
         {
-            parent::__construct( $order );
+            parent::__construct($order);
 
             // set properties
             $this->type = $this->slug = 'thank-you-certificate';
@@ -123,7 +123,7 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
         {
             $order_ids = $args['order_ids'] ?? array($this->order_id);
             $filename = get_bloginfo('name') . '_' . implode('-', $order_ids);
-            return sanitize_title(apply_filters('wpo_wcpdf_filename', $filename, 'thank-you-certificate', $order_ids, $context )) . '.pdf';
+            return sanitize_title(apply_filters('wpo_wcpdf_filename', $filename, 'thank-you-certificate', $order_ids, $context)) . '.pdf';
         }
 
         public function init_settings()
@@ -260,9 +260,10 @@ if (!class_exists('WCDP_Thank_You_Certificate')) :
         public function attach_certificate(array $attach_documents): array
         {
             $is_enabled = $this->get_setting('enabled', false);
-            if (!$is_enabled) return $attach_documents;
+            if (!$is_enabled)
+                return $attach_documents;
 
-            $attach_documents[ 'pdf' ][ 'thank-you-certificate' ] = $this->get_attach_to_email_ids();
+            $attach_documents['pdf']['thank-you-certificate'] = $this->get_attach_to_email_ids();
             return $attach_documents;
         }
     }

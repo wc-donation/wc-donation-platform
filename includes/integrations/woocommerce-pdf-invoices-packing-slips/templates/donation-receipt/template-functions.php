@@ -5,4 +5,5 @@
  *
  * forked from https://github.com/wpovernight/woocommerce-pdf-invoices-packing-slips/
  */
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH'))
+    exit; // Exit if accessed directly

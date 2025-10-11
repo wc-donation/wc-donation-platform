@@ -172,6 +172,7 @@ feat: add "Powered by" functionality
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
 dev: add wcdp_product_settings_fundraising action
+fix: hide Payment Plugins for Stripe WooCommerce express checkout buttons since they are not working properly
 a11y: progress bar a11y improvements
 chore: improve feedback survey
 

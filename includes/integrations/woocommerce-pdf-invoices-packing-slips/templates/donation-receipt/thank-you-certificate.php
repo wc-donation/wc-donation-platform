@@ -7,7 +7,8 @@
  *
  */
 
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if (!defined('ABSPATH'))
+    exit; // Exit if accessed directly
 
 $shop_name = esc_html($this->get_shop_name());
 
@@ -15,10 +16,10 @@ do_action('wpo_wcpdf_before_document', $this->type, $this->order); ?>
 <?php
 //filter: Order ID, donation amount
 $url = apply_filters('wcdp_certificate_background_image', $this->get_setting('background', ''), $this->order->get_id(), $this->order->get_total());
-if ($url) :?>
+if ($url): ?>
     <style>
         body {
-            background-image: url("<?php echo esc_url( $url, array('http', 'https')); ?>");
+            background-image: url("<?php echo esc_url($url, array('http', 'https')); ?>");
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
@@ -31,7 +32,7 @@ if ($url) :?>
         <tr>
             <th class="left-table">
                 <h4><?php /* Translators: Donation Number */
-                    printf(esc_html__('#%s', 'wc-donation-platform'), $order->get_id()); ?></h4>
+                printf(esc_html__('#%s', 'wc-donation-platform'), $order->get_id()); ?></h4>
                 <p class="label">
                     <?php esc_html_e("Donation Number", 'wc-donation-platform'); ?>
                 </p>
@@ -44,18 +45,20 @@ if ($url) :?>
                 ?>
                 <h4><?php esc_html_e("Thank you", 'wc-donation-platform'); ?></h4>
                 <h1><?php /* Translators: 1. donor firstname, 2. donor second name */
-                    printf(esc_html__('%1$s %2$s', 'wc-donation-platform'), esc_html($order->get_billing_first_name()), esc_html($order->get_billing_last_name())); ?></h1>
+                printf(esc_html__('%1$s %2$s', 'wc-donation-platform'), esc_html($order->get_billing_first_name()), esc_html($order->get_billing_last_name())); ?>
+                </h1>
                 <h4><?php /* Translators: 1. donation amount, 2. shop name */
-                    printf(esc_html__('for donating %1$s to %2$s.', 'wc-donation-platform'), $order->get_formatted_order_total(), $shop_name); ?></h4>
+                printf(esc_html__('for donating %1$s to %2$s.', 'wc-donation-platform'), $order->get_formatted_order_total(), $shop_name); ?>
+                </h4>
                 <h4><?php esc_html_e("Your support helps us to realize our projects.", 'wc-donation-platform'); ?></h4>
 
                 <?php $url_signature = esc_url($this->get_setting('signature', ''), array('http', 'https'));
-                if ($url_signature) :?>
+                if ($url_signature): ?>
                     <img src="<?php echo $url_signature; ?>" style="width: 5cm;"
-                         alt="<?php esc_html_e('Signature', 'wc-donation-platform'); ?>"><br>
+                        alt="<?php esc_html_e('Signature', 'wc-donation-platform'); ?>"><br>
                 <?php endif; ?>
                 <p><?php // Translators: %$1s shop name
-                    printf(esc_html__('Your friends at %s', 'wc-donation-platform'), $shop_name); ?>
+                printf(esc_html__('Your friends at %s', 'wc-donation-platform'), $shop_name); ?>
                 </p>
             </th>
             <th class="right-table">

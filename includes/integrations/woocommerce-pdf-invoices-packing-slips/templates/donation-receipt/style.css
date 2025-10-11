@@ -2,9 +2,11 @@
 @page {
 	margin: 0;
 }
+
 .invoice-page {
 	margin: 1cm 2cm 3cm;
 }
+
 body {
 	background: #fff;
 	color: #000;
@@ -12,10 +14,14 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	/* want to use custom fonts? http://docs.wpovernight.com/woocommerce-pdf-invoices-packing-slips/using-custom-fonts/ */
 	font-size: 9pt;
-	line-height: 100%; /* fixes inherit dompdf bug */
+	line-height: 100%;
+	/* fixes inherit dompdf bug */
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
 	font-weight: bold;
 	margin: 0;
 }
@@ -29,7 +35,8 @@ h2 {
 	font-size: 14pt;
 }
 
-h3, h4 {
+h3,
+h4 {
 	font-size: 11pt;
 }
 
@@ -51,7 +58,7 @@ p {
 	padding: 0;
 }
 
-p + p {
+p+p {
 	margin-top: 1.25em;
 }
 
@@ -70,13 +77,14 @@ table {
 	padding: 0;
 }
 
-th, td {
+th,
+td {
 	vertical-align: top;
 	text-align: left;
 }
 
 table.container {
-	width:100%;
+	width: 100%;
 	border: 0;
 }
 
@@ -100,7 +108,8 @@ table.head {
 }
 
 td.header img {
-	max-height: 3cm; /* may be overriden by the settings */
+	max-height: 3cm;
+	/* may be overriden by the settings */
 	width: auto;
 }
 
@@ -113,6 +122,7 @@ td.shop-info {
 	width: 40%;
 	text-align: right;
 }
+
 .document-type-label {
 	text-transform: uppercase;
 }
@@ -151,7 +161,7 @@ td.order-data table th {
 
 /* Order details */
 table.order-details {
-	width:100%;
+	width: 100%;
 	margin-bottom: 0;
 }
 
@@ -202,7 +212,9 @@ dl {
 	margin: 4px 0;
 }
 
-dt, dd, dd p {
+dt,
+dd,
+dd p {
 	display: inline;
 	font-size: 7pt;
 	line-height: 7pt;
@@ -216,15 +228,18 @@ dd:after {
 	content: "\A";
 	white-space: pre;
 }
+
 /* item-meta formatting for WC3.0+ */
 .wc-item-meta {
 	margin: 4px 0;
 	font-size: 7pt;
 	line-height: 7pt;
 }
+
 .wc-item-meta p {
 	display: inline;
 }
+
 .wc-item-meta li {
 	margin: 0 0 0 5px;
 }
@@ -270,7 +285,8 @@ table.totals tr.payment_method {
 	bottom: -2cm;
 	left: 0;
 	right: 0;
-	height: 2cm; /* if you change the footer height, don't forget to change the bottom (=negative height) and the @page margin-bottom as well! */
+	height: 2cm;
+	/* if you change the footer height, don't forget to change the bottom (=negative height) and the @page margin-bottom as well! */
 	border-top: 0.1mm solid gray;
 	margin-bottom: 0;
 	padding-top: 0;
@@ -280,30 +296,39 @@ table.totals tr.payment_method {
 .pagenum:before {
 	content: counter(page);
 }
-.pagenum,.pagecount {
+
+.pagenum,
+.pagecount {
 	font-family: sans-serif;
 }
-.divider{
-	height:1em;
+
+.divider {
+	height: 1em;
 }
-.divider-top{
-	height:150px;
+
+.divider-top {
+	height: 150px;
 }
+
 .donor-info {
 	vertical-align: bottom;
 }
+
 .sender {
 	font-size: 0.8em;
 	text-decoration: underline;
 }
+
 .right {
 	text-align: right;
 }
+
 .frame-banner {
 	margin: 4% 4% 0;
 	border: 0.8cm solid white;
 	height: 80%;
 }
+
 .banner {
 	margin: -0.8cm 4% 0;
 	width: 92%;
@@ -312,21 +337,26 @@ table.totals tr.payment_method {
 	position: absolute;
 	bottom: 0.8cm;
 }
+
 .center-table {
 	width: 50%;
 	text-align: center;
 	padding: 0.8cm 0;
 }
-.right-table, .left-table {
+
+.right-table,
+.left-table {
 	width: 25%;
 	text-align: center;
 	vertical-align: middle;
 
 }
+
 .table-banner {
-	width:100%;
+	width: 100%;
 	table-layout: fixed;
 }
+
 .label {
 	text-decoration: overline;
 	padding-top: 5px;

@@ -10,8 +10,8 @@ class WCDP_Integrator
      */
     public static function init(): void
     {
-        if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-            require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+        if (!function_exists('is_plugin_active_for_network')) {
+            require_once(ABSPATH . '/wp-admin/includes/plugin.php');
         }
 
         $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
@@ -43,9 +43,11 @@ class WCDP_Integrator
         //Add support for Stripe & PayPal Express Checkout
         //https://wordpress.org/plugins/woocommerce-gateway-stripe/
         //https://wordpress.org/plugins/woocommerce-paypal-payments/
+        //https://wordpress.org/plugins/woo-stripe-payment/
         $stripe_active = in_array('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php', $active_plugins) || is_plugin_active_for_network('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php');
         $paypal_active = in_array('woocommerce-paypal-payments/woocommerce-paypal-payments.php', $active_plugins) || is_plugin_active_for_network('woocommerce-paypal-payments/woocommerce-paypal-payments.php');
-        if ($stripe_active || $paypal_active) {
+        $payment_plugins_stripe_active = in_array('woo-stripe-payment/stripe-payments.php', $active_plugins) || is_plugin_active_for_network('woo-stripe-payment/stripe-payments.php');
+        if ($stripe_active || $paypal_active || $payment_plugins_stripe_active) {
             include_once 'express-checkout/class-wcdp-express-checkout.php';
             new WCDP_Express_Checkout();
         }
@@ -99,7 +101,8 @@ class WCDP_Integrator
      * @param $needs_payment
      * @return mixed|true
      */
-    public static function set_cart_needs_payment($needs_payment) {
+    public static function set_cart_needs_payment($needs_payment)
+    {
         if (!wp_doing_ajax() && !$needs_payment && WCDP_FORM::wcdp_has_donation_form()) {
             return true;
         }

@@ -5,7 +5,8 @@
  * Adjustments for Polylang
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 class WCDP_Polylang
 {
@@ -39,7 +40,7 @@ class WCDP_Polylang
 					  AND wcoim.meta_value in (%s) 
 					  AND wpposts.post_status = 'wc-completed';", $placeholder), ARRAY_A);
             if (!is_null($result) && isset($result['revenue'])) {
-                $revenue = (float)$result['revenue'];
+                $revenue = (float) $result['revenue'];
             } else {
                 $revenue = 0;
             }
