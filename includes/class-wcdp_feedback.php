@@ -396,14 +396,6 @@ class WCDP_Feedback
                 background-color: #0e8512;
             }
 
-            .wcdp-reason-input {
-                display: none;
-            }
-
-            .wcdp-reason-input.wcdp-active {
-                display: block;
-            }
-
             .rotate {
                 animation: rotate 1.5s linear infinite;
             }
@@ -589,8 +581,7 @@ class WCDP_Feedback
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
             }
 
-            .wcdp-modal-next,
-            .wcdp-modal-back {
+            .wcdp-modal-next {
                 color: white;
                 background-color: #0c4a0d;
                 padding: 10px 20px;
@@ -599,10 +590,20 @@ class WCDP_Feedback
                 margin-right: 10px;
             }
 
-            .wcdp-modal-next:hover,
-            .wcdp-modal-back:hover {
+            .wcdp-modal-back {
+                color: black;
+                padding: 10px 20px 10px 0;
+                text-decoration: none;
+                border-radius: 3px;
+            }
+
+            .wcdp-modal-next:hover {
                 color: white;
                 background-color: #0e8512;
+            }
+
+            .wcdp-modal-back:hover {
+                color: #0c4a0d;
             }
 
             .wcdp-modal-next:disabled {

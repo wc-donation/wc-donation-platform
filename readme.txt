@@ -175,6 +175,7 @@ dev: add wcdp_product_settings_fundraising action
 fix: hide Payment Plugins for Stripe WooCommerce express checkout buttons since they are not working properly
 a11y: progress bar a11y improvements
 chore: improve feedback survey
+chore: update bump supported supported WooCommerc version
 
 = 1.3.4.1 2025-05-24 =
 hotfix: fix anonymous donation checkbox always visible
