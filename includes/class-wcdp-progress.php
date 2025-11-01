@@ -179,7 +179,7 @@ class WCDP_Progress
     <?php if (!defined('WCDP_PROGRESS_3') && !defined('WCDP_PROGRESS_2') && !defined('WCDP_PROGRESS_1')) : ?>
     :root {
         --wcdp-main: <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')); ?>;
-        --wcdp-main-2: <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#00753a')); ?>;
+        --wcdp-main-2: <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#006633')); ?>;
         --label-text-checked: white;
     }
     @keyframes wcdp-progress {

@@ -361,8 +361,8 @@ class WCDP_Form
     public static function define_ccs_variables()
     {
         $wcdp_main_color = get_option('wcdp_secondary_color', '#30bf76');
-        $wcdp_main_color_2 = get_option('wcdp_main_color', '#00753a');
-        $wcdp_main_color_3 = get_option('wcdp_error_color', '#de0000');
+        $wcdp_main_color_2 = get_option('wcdp_main_color', '#006633');
+        $wcdp_main_color_3 = get_option('wcdp_error_color', '#B30000');
         ?>
         <style id="wcdp-css">
             :root {

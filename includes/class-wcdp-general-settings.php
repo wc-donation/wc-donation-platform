@@ -250,11 +250,11 @@ class WCDP_General_Settings
             array(
                 'title' => __('Main Color', 'wc-donation-platform'),
                 /* translators: %s: default color */
-                'desc' => sprintf(__('Primary Color used in the frontend. Default: %s.', 'wc-donation-platform'), '<code>#00753a</code>'),
+                'desc' => sprintf(__('Primary Color used in the frontend. Default: %s.', 'wc-donation-platform'), '<code>#006633</code>'),
                 'id' => 'wcdp_main_color',
                 'type' => 'color',
                 'css' => 'width:6em;',
-                'default' => '#00753a',
+                'default' => '#006633',
                 'autoload' => false,
                 'desc_tip' => true,
             ),
@@ -274,11 +274,11 @@ class WCDP_General_Settings
             array(
                 'title' => __('Error Color', 'wc-donation-platform'),
                 // translators: %s: default color //
-                'desc' => sprintf(__('Error Color used in the frontend. Default: %s.', 'wc-donation-platform'), '<code>#de0000</code>'),
+                'desc' => sprintf(__('Error Color used in the frontend. Default: %s.', 'wc-donation-platform'), '<code>#B30000</code>'),
                 'id' => 'wcdp_error_color',
                 'type' => 'color',
                 'css' => 'width:6em;',
-                'default' => '#de0000',
+                'default' => '#B30000',
                 'autoload' => false,
                 'desc_tip' => true,
             ),
