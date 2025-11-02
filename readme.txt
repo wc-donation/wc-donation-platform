@@ -177,6 +177,8 @@ fix: hide Payment Plugins for Stripe WooCommerce express checkout buttons since 
 a11y: progress bar a11y improvements
 a11y: improve contrast of default colors
 a11y: improve accessibility styles in donation form
+a11y: improve accessibility of fee recovery checkbox
+a11y: improve tab flow on step 2 for next/back buttons
 chore: improve feedback survey
 chore: update bump supported supported WooCommerc version
 

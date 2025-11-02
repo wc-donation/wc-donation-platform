@@ -86,10 +86,6 @@ main#main .wcdp-form {
     display: inline-block;
 }
 
-.wcdp-body {
-    overflow: hidden;
-}
-
 .wcdp-step:target:before {
     background-color: var(--wcdp-main-2);
 }
@@ -575,6 +571,19 @@ form.woocommerce-checkout #wc-stripe-payment-request-button-separator:first-of-t
 .woocommerce div.product div.summary .first-payment-date,
 #wcdp #wc-stripe-payment-request-button-separator {
     margin: 0;
+}
+
+input:focus+.wcdp-fee-recovery__body {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--wcdp-main-2);
+}
+
+.wcdp-fee-recovery__input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    pointer-events: none;
 }
 
 .wcdp-fee-recovery__body {

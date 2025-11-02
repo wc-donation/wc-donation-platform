@@ -1,6 +1,7 @@
 <?php
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Class WCDP_Fee_Recovery
@@ -34,10 +35,8 @@ class WCDP_Fee_Recovery
         <tr class="wcdp-fee-recovery-row">
             <th colspan="2">
                 <label class="wcdp-fee-recovery" for="wcdp_fee_recovery">
-                    <input type="checkbox" id="wcdp_fee_recovery" class="wcdp-fee-recovery__input"
-                           name="wcdp_fee_recovery" value="wcdp_fee_recovery" style="display:none;"
-                        <?php checked($this->is_fee_recovery_checked()); ?>
-                    >
+                    <input type="checkbox" id="wcdp_fee_recovery" class="wcdp-fee-recovery__input" name="wcdp_fee_recovery"
+                        value="wcdp_fee_recovery" <?php checked($this->is_fee_recovery_checked()); ?>>
                     <span class="wcdp-fee-recovery__body">
                         <span></span>
                         <span class="wcdp-fee-recovery__body-header">
@@ -74,9 +73,9 @@ class WCDP_Fee_Recovery
             return;
         }
 
-        $value_fixed = isset($fees[$payment_method]['fixed']) ? max(0, (float)$fees[$payment_method]['fixed']) : 0;
+        $value_fixed = isset($fees[$payment_method]['fixed']) ? max(0, (float) $fees[$payment_method]['fixed']) : 0;
         $value_variable = isset($fees[$payment_method]['variable'])
-            ? min(100, max(0, (float)$fees[$payment_method]['variable']))
+            ? min(100, max(0, (float) $fees[$payment_method]['variable']))
             : 0;
 
         $amount = $cart->get_cart_contents_total();
@@ -118,26 +117,24 @@ class WCDP_Fee_Recovery
                     <table>
                         <?php foreach ($payment_methods as $method):
                             $fee_data = $fees[$method->id] ?? [];
-                            $value_fixed = max(0, (float)($fee_data['fixed'] ?? 0));
-                            $value_variable = min(100, max(0, (float)($fee_data['variable'] ?? 0)));
+                            $value_fixed = max(0, (float) ($fee_data['fixed'] ?? 0));
+                            $value_variable = min(100, max(0, (float) ($fee_data['variable'] ?? 0)));
                             ?>
                             <tr>
                                 <td><label><?php echo esc_html($method->get_title()); ?></label></td>
                                 <td>
                                     <?php echo get_woocommerce_currency_symbol(); ?>
                                     <input name="wcdp_fixed_<?php echo esc_attr($method->id); ?>"
-                                           id="wcdp_fixed_<?php echo esc_attr($method->id); ?>"
-                                           type="number" style="width: 100px;"
-                                           value="<?php echo esc_attr($value_fixed); ?>"
-                                           placeholder="<?php esc_html_e('Fixed', 'wc-donation-platform'); ?>"
-                                           min="0" step="<?php echo esc_attr($value['step']); ?>" />
+                                        id="wcdp_fixed_<?php echo esc_attr($method->id); ?>" type="number" style="width: 100px;"
+                                        value="<?php echo esc_attr($value_fixed); ?>"
+                                        placeholder="<?php esc_html_e('Fixed', 'wc-donation-platform'); ?>" min="0"
+                                        step="<?php echo esc_attr($value['step']); ?>" />
                                     <?php esc_html_e('(fixed)', 'wc-donation-platform'); ?>&nbsp;&nbsp;&nbsp;
                                     <input name="wcdp_variable_<?php echo esc_attr($method->id); ?>"
-                                           id="wcdp_variable_<?php echo esc_attr($method->id); ?>"
-                                           type="number" style="width: 100px;"
-                                           value="<?php echo esc_attr($value_variable); ?>"
-                                           placeholder="<?php esc_html_e('Variable', 'wc-donation-platform'); ?>"
-                                           min="0" max="100" step="any" />
+                                        id="wcdp_variable_<?php echo esc_attr($method->id); ?>" type="number" style="width: 100px;"
+                                        value="<?php echo esc_attr($value_variable); ?>"
+                                        placeholder="<?php esc_html_e('Variable', 'wc-donation-platform'); ?>" min="0" max="100"
+                                        step="any" />
                                     % <?php esc_html_e('(variable)', 'wc-donation-platform'); ?>
                                 </td>
                             </tr>
