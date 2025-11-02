@@ -251,6 +251,22 @@ class WCDP_Form
     }
 
     /**
+     * Return true if the cart only contains donation products
+     * @return bool
+     */
+    public static function cart_contains_only_donations(): bool
+    {
+        if (!empty(WC()->cart->get_cart_contents())) {
+            foreach (WC()->cart->get_cart_contents() as $cart_item) {
+                if (isset($cart_item['product_id']) && !WCDP_Form::is_donable($cart_item['product_id'])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Return true if the order contains a donation product
      * @param WC_Order $order
      * @return bool

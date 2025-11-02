@@ -180,7 +180,8 @@ a11y: improve accessibility styles in donation form
 a11y: improve accessibility of fee recovery checkbox
 a11y: improve tab flow on step 2 for next/back buttons
 chore: improve feedback survey
-chore: update bump supported supported WooCommerc version
+chore: bump supported supported WooCommerce version
+chore: Remove Subtotal line from order review when the cart only contains donation products
 
 = 1.3.4.1 2025-05-24 =
 hotfix: fix anonymous donation checkbox always visible

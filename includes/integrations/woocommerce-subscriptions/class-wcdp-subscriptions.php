@@ -103,6 +103,7 @@ class WCDP_Subscriptions
 
             case 'checkout/form-change-payment-method.php':
             case 'checkout/subscription-receipt.php':
+            case 'checkout/recurring-subtotals.php':
 
             case 'emails/admin-new-renewal-order.php':
             case 'emails/customer-processing-renewal-order.php':
