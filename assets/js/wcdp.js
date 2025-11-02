@@ -41,7 +41,7 @@ jQuery(function ($) {
               } else {
                 $(".create-account:has(#createaccount)").show();
               }
-              wcdp_steps(step);
+              wcdp_steps(step, "");
               break;
             default:
               error_message(
@@ -70,6 +70,69 @@ jQuery(function ($) {
     } catch (err) {
       return false;
     }
+  }
+
+  function findScrollableAncestor(el) {
+    var node = el;
+    while (
+      node &&
+      node !== document.body &&
+      node !== document.documentElement
+    ) {
+      var style = window.getComputedStyle(node);
+      if (
+        /(auto|scroll)/.test(style.overflow + style.overflowY + style.overflowX)
+      ) {
+        return node;
+      }
+      node = node.parentElement;
+    }
+    return document.scrollingElement || document.documentElement || window;
+  }
+
+  function scrollToElementWithOffset(el, offset = 200, smooth = true) {
+    if (!el) return;
+    try {
+      var rect = el.getBoundingClientRect();
+      var absoluteTop = rect.top + window.pageYOffset - offset;
+      if (absoluteTop < 0) absoluteTop = 0;
+      var ancestor = findScrollableAncestor(el);
+      var behavior = smooth ? "smooth" : "auto";
+      if (
+        ancestor === document.scrollingElement ||
+        ancestor === document.documentElement ||
+        ancestor === window
+      ) {
+        window.scrollTo({ top: absoluteTop, behavior: behavior });
+      } else {
+        // scroll the ancestor so the element is visible with offset
+        var ancestorRect = ancestor.getBoundingClientRect();
+        var scrollTop =
+          ancestor.scrollTop + (rect.top - ancestorRect.top) - offset;
+        if (scrollTop < 0) scrollTop = 0;
+        ancestor.scrollTo({ top: scrollTop, behavior: behavior });
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  function showRequiredNotice($firstInvalid) {
+    var $notice = $("#wcdp-step-2 .wcdp-required-field-notice");
+    if ($notice.length && $firstInvalid && $firstInvalid.length) {
+      // ensure accessibility attributes
+      $notice.attr("role", "alert");
+      $notice.attr("aria-live", "polite");
+      $firstInvalid.append($notice);
+    }
+  }
+
+  function focusFirstFocusableInStep(stepEl) {
+    stepEl
+      .querySelector(
+        'input:not([disabled]):not([type="hidden"]), button:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      ?.focus();
   }
 
   /**
@@ -169,46 +232,69 @@ jQuery(function ($) {
     }, 500);
   });
 
-  //Next and back buttons
+  // Next and back buttons
   let currentStep = 1;
-  $(".wcdp-form .wcdp-button, .wcdp-step").click(function () {
-    const step = $(this).attr("data-step");
-    if (currentStep != 1) {
-      wcdp_steps(step);
-    } else if (step !== 1) {
+  $(".wcdp-form .wcdp-button, .wcdp-step").click(function (e) {
+    const clickedStep = parseInt($(this).attr("data-step"));
+
+    if (currentStep === clickedStep) return;
+
+    // Determine intended target. If user from step 1 tries to jump directly to step 3, redirect to 2.
+    let targetStep = clickedStep;
+    if (currentStep === 1 && clickedStep === 3) targetStep = 2;
+
+    // If we're on step 1, ensure step-1 form is valid before moving
+    if (currentStep === 1) {
       if (!check_validity("#wcdp-ajax-send")) return;
-      const ajaxSend = $("#wcdp-ajax-send").serialize();
+      var ajaxSend = $("#wcdp-ajax-send").serialize();
       if (currentFormData != ajaxSend) {
         currentFormData = ajaxSend;
-        wcdp_submit(step);
-      } else {
-        wcdp_steps(step);
+        // submit will call wcdp_steps after success; include scroll flag via options when called directly
+        wcdp_submit(targetStep);
+        return;
       }
     }
+
+    // When navigating from step 2 to 3, validate checkout fields first
+    if (currentStep === 2 && targetStep === 3) {
+      $("#wcdp-step-2 .validate-required")
+        .find("input:visible, select:visible")
+        .trigger("validate");
+
+      var $invalids = $("#wcdp-step-2 .woocommerce-invalid:visible");
+      if ($invalids.length > 0) {
+        var $firstInvalid = $invalids.first();
+        showRequiredNotice($firstInvalid);
+        // scroll the first invalid into view (consider header)
+        scrollToElementWithOffset($firstInvalid[0], 200, true);
+        // focus the first invalid field for a11y
+        try {
+          $firstInvalid.find("input,select,textarea,button").first().focus();
+        } catch (e) {}
+        // ensure browser shows native messages
+        var checkoutForm = document.querySelector("form.checkout");
+        if (checkoutForm && typeof checkoutForm.reportValidity === "function") {
+          checkoutForm.reportValidity();
+        }
+        return;
+      }
+    }
+
+    // All checks passed — navigate. Only scroll to top if advancing to the next step (forward) or when redirected forward.
+    wcdp_steps(targetStep, "");
   });
 
   function wcdp_steps(step, formid = "") {
-    const root = $(":root")[0];
+    const root = document.documentElement;
     root.style.setProperty("--wcdp-step-2", "var(--wcdp-main)");
     root.style.setProperty("--wcdp-step-3", "var(--wcdp-main)");
     switch (step) {
-      case "3":
-        $("#wcdp-step-2").show();
-        $("form.checkout")
-          .find(".input-text:visible, select:visible, input:checkbox:visible")
-          .trigger("validate");
-        if ($("#wcdp-step-2 .woocommerce-invalid:visible").length > 0) {
-          $("#wcdp-invalid-fields").show();
-          $("#place_order").hide();
-        } else {
-          $("#wcdp-invalid-fields").hide();
-          $("#place_order").show();
-        }
+      case 3:
         root.style.setProperty("--wcdp-step-3", "var(--wcdp-main-2)");
-      case "2":
+      case 2:
         root.style.setProperty("--wcdp-step-2", "var(--wcdp-main-2)");
         break;
-      case "1":
+      case 1:
         break;
       default:
         return;
@@ -216,9 +302,14 @@ jQuery(function ($) {
     $(".wcdp-style5-active")?.removeClass("wcdp-style5-active");
     $("#wcdp-style5-step-" + step)?.addClass("wcdp-style5-active");
     $("#wcdp-progress-bar")?.css("width", 33.33 * (parseInt(step) - 1) + "%");
-    $(".wcdp-tab")?.hide();
-    $("#wcdp-step-" + step)?.show();
-    currentStep = step;
+    const stepEl = document.getElementById("wcdp-step-" + step);
+    if (stepEl) {
+      $(".wcdp-tab")?.hide();
+      stepEl.style.display = "block";
+      scrollToElementWithOffset(stepEl, 200, true);
+      focusFirstFocusableInStep(stepEl);
+      currentStep = step;
+    }
   }
 
   let express_heading_timeout = 10;
@@ -387,18 +478,4 @@ jQuery(function ($) {
     });
   }
   handleDonationInputs();
-
-  wp.hooks.addFilter(
-    "wcstripe.express-checkout.map-line-items", // Hook name
-    "wc-donation-platform/modify-cart-data", // Unique namespace
-    function (cartData) {
-      cartData.items.forEach((item) => {
-        // Modify each item as needed
-        item.label = item.name;
-      });
-      console.log(cartData);
-
-      return cartData;
-    }
-  );
 });

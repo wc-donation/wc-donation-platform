@@ -6,7 +6,8 @@
  * @var string $context
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Add woocommerce_after_add_to_cart_form hook in step 2
@@ -22,4 +23,5 @@ if (WC()->checkout()->get_checkout_fields()) {
     do_action('woocommerce_checkout_billing');
     do_action('woocommerce_checkout_shipping');
     do_action('woocommerce_checkout_after_customer_details');
+    echo '<div class="wcdp-required-field-notice">' . esc_html__('This is a required field.', 'wc-donation-platform') . '</div>';
 }

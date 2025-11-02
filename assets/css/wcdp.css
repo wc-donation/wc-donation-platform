@@ -54,6 +54,11 @@ main#main .wcdp-form {
     display: none;
 }
 
+.wcdp-required-field-notice {
+    display: none;
+    color: var(--wcdp-main-3);
+}
+
 #main .wcdp-right,
 .wcdp-right {
     float: right;
@@ -360,9 +365,14 @@ ul.wcdp_options>li>input:hover:not(:disabled):not(:checked)+label {
     /*min-width: max-content;*/
 }
 
-ul.wcdp_options>li>input:checked+label {
+ul.wcdp_options>li>input:checked+label,
+ul.wcdp_options>li>input:checked+label span {
     background: var(--wcdp-main-2);
     color: var(--label-text-checked);
+}
+
+ul.wcdp_options>li>input:focus+label {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--wcdp-main-2);
 }
 
 input:disabled~label {
@@ -464,10 +474,6 @@ form[name="checkout"] .wcdp-tab div:first-child {
 
 .wcdp-step {
     cursor: pointer;
-}
-
-#wcdp-invalid-fields {
-    display: none;
 }
 
 .wcdp-loader {
@@ -634,6 +640,7 @@ form.woocommerce-checkout #wc-stripe-payment-request-button-separator:first-of-t
 
 #wcdp-get-send,
 #wcdp-ajax-send,
-#wcdp-step-1 {
+#wcdp-step-1,
+.woocommerce-invalid .wcdp-required-field-notice {
     display: block;
 }

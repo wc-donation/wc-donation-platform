@@ -168,12 +168,15 @@ Active development of Donation Platform for WooCommerce: Fundraising & Donation 
 = 1.3.5 =
 feat: complete refactoring of Leaderboard functionality
 feat: suggested donation amounts with correct number of decimals
+feat: refactor form error handling for improved flow
 feat: add "Powered by" functionality
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
 dev: add wcdp_product_settings_fundraising action
 fix: hide Payment Plugins for Stripe WooCommerce express checkout buttons since they are not working properly
 a11y: progress bar a11y improvements
+a11y: improve contrast of default colors
+a11y: improve accessibility styles in donation form
 chore: improve feedback survey
 chore: update bump supported supported WooCommerc version
 
