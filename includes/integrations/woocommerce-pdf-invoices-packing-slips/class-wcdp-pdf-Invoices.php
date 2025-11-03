@@ -27,14 +27,33 @@ class WCDP_Pdf_Invoices
             //Rename pdf file name
             add_filter('wpo_wcpdf_document_classes', 'WCDP_Pdf_Invoices::add_document_type');
 
-            //Rename Invoice to Donation Receipt
-            add_filter('wpo_wcpdf_document_title', function ($title, $orderDocument) {
-                if ($orderDocument->get_type() === 'invoice') {
+            // Rename Invoice to Donation Receipt (uses dedicated handler)
+            add_filter('wpo_wcpdf_document_title', array('WCDP_Pdf_Invoices', 'document_title'), 10, 2);
+        }
+    }
+
+    /**
+     * Rename invoice document title to 'Donation Receipt' when the order contains a donation
+     *
+     * @param string $title
+     * @param object $orderDocument
+     * @return string
+     */
+    public static function document_title($title, $orderDocument)
+    {
+        try {
+            if (is_object($orderDocument) && method_exists($orderDocument, 'get_type') && $orderDocument->get_type() === 'invoice') {
+                // $orderDocument->order is expected to be a WC_Order instance
+                $order = $orderDocument->order ?? null;
+                if ($order instanceof WC_Order && \WCDP_Form::order_contains_donation($order)) {
                     return __('Donation Receipt', 'wc-donation-platform');
                 }
-                return $title;
-            }, 10, 2);
+            }
+        } catch (\Throwable $e) {
+            // ignore and return original title
         }
+
+        return $title;
     }
 
     /**
