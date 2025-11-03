@@ -63,7 +63,9 @@ if (!class_exists('WCDP_Thank_You_Certificate')):
 
             $this->settings = $this->get_settings();
             $this->latest_settings = $this->get_settings(true);
+
             $this->enabled = $this->get_setting('enabled', false);
+
             $this->output_formats = array('pdf');
 
             //Setting of thank you certificate orientation
@@ -73,6 +75,53 @@ if (!class_exists('WCDP_Thank_You_Certificate')):
 
             // Add My Account Download Button
             add_filter('wpo_wcpdf_myaccount_actions', array($this, 'handle_myaccount_actions'), 10, 2);
+
+            // Ensure thank-you-certificate is only attached to mails
+            // when the order contains a donation product. This hook is applied by the
+            // PDF Invoices plugin while determining whether a document type should be
+            // attached to a given email (see Main::get_documents_for_email()).
+            add_filter('wpo_wcpdf_custom_attachment_condition', array($this, 'custom_attachment_condition'), 10, 5);
+
+        }
+
+        /**
+         * Restrict email attachments for thank-you-certificate
+         * to orders that contain a donation product.
+         *
+         * @param bool         $condition     Existing condition value (true/false)
+         * @param WC_Order|int $order        Order object or ID
+         * @param string       $email_id     Email identifier
+         * @param string       $document_type Document type (e.g. 'invoice')
+         * @param string       $output_format Output format (e.g. 'pdf')
+         * @return bool
+         */
+        public function custom_attachment_condition($condition, $order, $email_id, $document_type, $output_format)
+        {
+            // Only apply for thank-you-certificate types
+            if ($document_type !== 'thank-you-certificate') {
+                return $condition;
+            }
+
+            // Normalize $order to WC_Order when possible
+            if (!$order instanceof WC_Order) {
+                try {
+                    $order = wc_get_order($order);
+                } catch (\Throwable $e) {
+                    $order = null;
+                }
+                if (!$order) {
+                    // Could not resolve order, fall back to provided condition
+                    return $condition;
+                }
+            }
+
+            try {
+                // Allow attachment only when the order contains a donation
+                return (bool) \WCDP_Form::order_contains_donation($order);
+            } catch (\Throwable $e) {
+                // On error, fall back to original behavior
+                return $condition;
+            }
         }
 
         /**
