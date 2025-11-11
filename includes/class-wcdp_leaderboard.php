@@ -472,24 +472,24 @@ class WCDP_Leaderboard
             $datetime = (new DateTime())->setTimestamp($donation['date'])->setTimezone($timezone);
 
             $placeholders = array(
-                '{firstname}' => "<span class='wcdp-leaderboard-firstname'>" . wp_strip_all_tags($donation['first']) . "</span>",
-                '{firstname_initial}' => "<span class='wcdp-leaderboard-firstname_initial'>" . wp_strip_all_tags($this->get_initials($donation['first'])) . "</span>",
-                '{lastname}' => "<span class='wcdp-leaderboard-lastname'>" . wp_strip_all_tags($donation['last']) . "</span>",
-                '{lastname_initial}' => "<span class='wcdp-leaderboard-lastname_initial'>" . wp_strip_all_tags($this->get_initials($donation['last'])) . "</span>",
-                '{company}' => "<span class='wcdp-leaderboard-company'>" . wp_strip_all_tags($donation['co']) . "</span>",
+                '{firstname}' => "<span class='wcdp-leaderboard-firstname'>" . esc_html($donation['first']) . "</span>",
+                '{firstname_initial}' => "<span class='wcdp-leaderboard-firstname_initial'>" . esc_html($this->get_initials($donation['first'])) . "</span>",
+                '{lastname}' => "<span class='wcdp-leaderboard-lastname'>" . esc_html($donation['last']) . "</span>",
+                '{lastname_initial}' => "<span class='wcdp-leaderboard-lastname_initial'>" . esc_html($this->get_initials($donation['last'])) . "</span>",
+                '{company}' => "<span class='wcdp-leaderboard-company'>" . esc_html($donation['co']) . "</span>",
                 '{company_or_name}' => "<span class='wcdp-leaderboard-company_or_name'>" . $this->get_company_or_name($donation['co'], $donation['first'], $donation['last']) . "</span>",
                 '{amount}' => "<span class='wcdp-leaderboard-amount'>" . wc_price($donation['total'], array('currency' => $donation['cy'], )) . "</span>",
                 '{timediff}' => "<span class='wcdp-leaderboard-timediff'>" . $this->get_human_time_diff($donation['date']) . "</span>",
-                '{datetime}' => "<span class='wcdp-leaderboard-datetime'>" . $datetime->format(get_option('date_format') . ' ' . get_option('time_format')) . "</span>",
-                '{date}' => "<span class='wcdp-leaderboard-date'>" . $datetime->format(get_option('date_format')) . "</span>",
-                '{city}' => "<span class='wcdp-leaderboard-city'>" . wp_strip_all_tags($donation['city']) . "</span>",
-                '{country}' => "<span class='wcdp-leaderboard-country'>" . WC()->countries->countries[esc_attr($donation['country'])] . "</span>",
-                '{country_code}' => "<span class='wcdp-leaderboard-country_code'>" . wp_strip_all_tags($donation['country']) . "</span>",
-                '{postcode}' => "<span class='wcdp-leaderboard-postcode'>" . wp_strip_all_tags($donation['zip']) . "</span>",
-                '{currency}' => "<span class='wcdp-leaderboard-currency'>" . wp_strip_all_tags($donation['cy']) . "</span>",
-                '{comment}' => "<span class='wcdp-leaderboard-comment'>" . wp_strip_all_tags($donation['cmnt']) . "</span>",
+                '{datetime}' => "<span class='wcdp-leaderboard-datetime'>" . esc_html($datetime->format(get_option('date_format') . ' ' . get_option('time_format'))) . "</span>",
+                '{date}' => "<span class='wcdp-leaderboard-date'>" . esc_html($datetime->format(get_option('date_format'))) . "</span>",
+                '{city}' => "<span class='wcdp-leaderboard-city'>" . esc_html($donation['city']) . "</span>",
+                '{country}' => "<span class='wcdp-leaderboard-country'>" . esc_html($this->get_country_name($donation['country'])) . "</span>",
+                '{country_code}' => "<span class='wcdp-leaderboard-country_code'>" . esc_html($donation['country']) . "</span>",
+                '{postcode}' => "<span class='wcdp-leaderboard-postcode'>" . esc_html($donation['zip']) . "</span>",
+                '{currency}' => "<span class='wcdp-leaderboard-currency'>" . esc_html($donation['cy']) . "</span>",
+                '{comment}' => "<span class='wcdp-leaderboard-comment'>" . esc_html($donation['cmnt']) . "</span>",
                 '{anonymous}' => "<span class='wcdp-leaderboard-anonymous'>" . esc_html__("Anonymous donor", "wc-donation-platform") . "</span>",
-                '{product_name}' => "<span class='wcdp-leaderboard-product'>" . wp_strip_all_tags(isset($donation['product_name']) ? $donation['product_name'] : '') . "</span>",
+                '{product_name}' => "<span class='wcdp-leaderboard-product'>" . esc_html(isset($donation['product_name']) ? $donation['product_name'] : '') . "</span>",
             );
 
             $output .= '<li class="wcdp-leaderboard-li' . $hideClass . '"><div>';
@@ -691,6 +691,17 @@ class WCDP_Leaderboard
     }
 
     /**
+     * Get country name from country code
+     * @param string $country_code
+     * @return string
+     */
+    private function get_country_name(string $country_code): string
+    {
+        $countries = WC()->countries->get_countries();
+        return isset($countries[$country_code]) ? $countries[$country_code] : $country_code;
+    }
+
+    /**
      * Returns human time diff. Expects $timestamp to be in the past
      *
      * @param $timestamp int UNIX timestamp
@@ -767,7 +778,8 @@ class WCDP_Leaderboard
         if (!WCDP_Form::order_contains_donation($order)) {
             return;
         }
-        if (isset($_POST['wcdp_checkout_checkbox']) && $_POST['wcdp_checkout_checkbox'] == 1) {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verification is handled by WooCommerce checkout process
+        if (isset($_POST['wcdp_checkout_checkbox']) && sanitize_text_field(wp_unslash($_POST['wcdp_checkout_checkbox'])) == 1) {
             $order->update_meta_data('wcdp_checkout_checkbox', 'yes');
         } else {
             $order->update_meta_data('wcdp_checkout_checkbox', 'no');
