@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.3.4.1\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.3.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-22T19:54:11+00:00\n"
+"POT-Creation-Date: 2025-11-11T14:30:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -34,451 +34,460 @@ msgstr ""
 msgid "https://www.jonh.eu/"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:44
+#: includes/class-wcdp-fee-recovery.php:43
 msgid "Yes, I want to cover the transaction fee."
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:86
+#: includes/class-wcdp-fee-recovery.php:85
+#: includes/class-wcdp_leaderboard.php:602
 msgid "Transaction costs"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:111
+#: includes/class-wcdp-fee-recovery.php:110
 msgid "No active payment methods found."
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:115
+#: includes/class-wcdp-fee-recovery.php:114
 msgid "Enter the fixed transaction costs in the left field and the percentage transaction costs in the right field."
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:132
+#: includes/class-wcdp-fee-recovery.php:130
 msgid "Fixed"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:134
+#: includes/class-wcdp-fee-recovery.php:132
 msgid "(fixed)"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:139
+#: includes/class-wcdp-fee-recovery.php:136
 msgid "Variable"
 msgstr ""
 
-#: includes/class-wcdp-fee-recovery.php:141
+#: includes/class-wcdp-fee-recovery.php:138
 msgid "(variable)"
 msgstr ""
 
-#: includes/class-wcdp-form.php:39
+#: includes/class-wcdp-form.php:40
 #: build/index.js:1
 #: src/index.js:142
 msgid "Your donation form will be displayed here."
 msgstr ""
 
-#: includes/class-wcdp-form.php:41
+#: includes/class-wcdp-form.php:42
 msgid "This shortcode does not support AJAX calls."
 msgstr ""
 
-#: includes/class-wcdp-form.php:57
+#: includes/class-wcdp-form.php:58
 #: includes/class-wcdp-progress.php:84
-#: includes/class-wcdp-progress.php:364
+#: includes/class-wcdp-progress.php:372
 msgid "Invalid shortcode attribute:"
 msgstr ""
 
-#: includes/class-wcdp-form.php:60
+#: includes/class-wcdp-form.php:61
 #: includes/class-wcdp-progress.php:87
-#: includes/class-wcdp-progress.php:367
-#: includes/class-wcdp_leaderboard.php:82
+#: includes/class-wcdp-progress.php:375
+#: includes/class-wcdp_leaderboard.php:101
 msgid "Donations are not activated for this project."
 msgstr ""
 
-#: includes/class-wcdp-form.php:66
+#: includes/class-wcdp-form.php:67
 msgid "Only one donation form per page allowed"
 msgstr ""
 
-#: includes/class-wcdp-form.php:88
+#: includes/class-wcdp-form.php:89
 msgid "Donate now!"
 msgstr ""
 
-#: includes/class-wcdp-form.php:99
+#: includes/class-wcdp-form.php:100
 msgid "Please log in to donate."
 msgstr ""
 
-#: includes/class-wcdp-form.php:107
+#: includes/class-wcdp-form.php:108
 msgid "In the current view, the donation form is not available."
 msgstr ""
 
-#: includes/class-wcdp-form.php:109
+#: includes/class-wcdp-form.php:110
 msgid "Invalid project ID: This project is unknown."
 msgstr ""
 
-#: includes/class-wcdp-form.php:111
+#: includes/class-wcdp-form.php:112
 msgid "Currently you can not donate to this project."
 msgstr ""
 
-#: includes/class-wcdp-form.php:113
+#: includes/class-wcdp-form.php:114
 msgid "This project is currently not available."
 msgstr ""
 
-#: includes/class-wcdp-form.php:115
+#: includes/class-wcdp-form.php:116
 msgid "This grouped product has no available child products."
 msgstr ""
 
-#: includes/class-wcdp-form.php:504
+#: includes/class-wcdp-form.php:541
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:511
+#: includes/class-wcdp-form.php:548
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:525
+#: includes/class-wcdp-form.php:562
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:543
+#: includes/class-wcdp-form.php:580
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:550
+#: includes/class-wcdp-form.php:587
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:603
+#: includes/class-wcdp-form.php:640
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:605
+#: includes/class-wcdp-form.php:642
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:35
-#: includes/class-wcdp-hooks.php:236
-#: includes/class-wcdp-hooks.php:254
+#: includes/class-wcdp-general-settings.php:36
+#: includes/class-wcdp-hooks.php:240
+#: includes/class-wcdp-hooks.php:258
 msgid "Donations"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:68
+#: includes/class-wcdp-general-settings.php:70
 msgid "General Options"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:73
+#: includes/class-wcdp-general-settings.php:75
 msgid "Allow more than one product in cart"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:74
+#: includes/class-wcdp-general-settings.php:76
 msgid "Should it be possible to have more than one donation product in the cart at the same time?"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:80
+#: includes/class-wcdp-general-settings.php:82
 msgid "Redirect to Cart Instead of Checkout"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:81
+#: includes/class-wcdp-general-settings.php:83
 msgid "Would you like to redirect users to the cart when they proceed to the next step in Style 4 or from product pages?"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:87
+#: includes/class-wcdp-general-settings.php:89
 msgid "\"Your Contribution\" Title Text"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:90
-#: includes/templates/wcdp_step_1_amount.php:50
-#: includes/templates/wcdp_step_1_amount.php:120
+#: includes/class-wcdp-general-settings.php:92
+#: includes/templates/wcdp_step_1_amount.php:51
+#: includes/templates/wcdp_step_1_amount.php:122
 msgid "Your Contribution"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:93
+#: includes/class-wcdp-general-settings.php:95
 msgid "\"Choose an amount\" Title Text"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:96
-#: includes/templates/wcdp_step_1_amount.php:110
+#: includes/class-wcdp-general-settings.php:98
+#: includes/templates/wcdp_step_1_amount.php:112
 msgid "Choose an amount"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:99
+#: includes/class-wcdp-general-settings.php:101
 msgid "Minimum Donation amount"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:109
+#: includes/class-wcdp-general-settings.php:111
 msgid "Maximum Donation amount"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:119
+#: includes/class-wcdp-general-settings.php:121
 msgid "Maximum Amount for range input"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:129
+#: includes/class-wcdp-general-settings.php:131
 msgid "Disable Order / Donation notes"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:130
+#: includes/class-wcdp-general-settings.php:132
 msgid "Enable to disable notes on checkout"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:136
+#: includes/class-wcdp-general-settings.php:138
 msgid "Fee Recovery"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:137
+#: includes/class-wcdp-general-settings.php:139
 msgid "Ask donors to cover transaction fees."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:150
+#: includes/class-wcdp-general-settings.php:152
 msgid "Enable compatibility mode"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:151
+#: includes/class-wcdp-general-settings.php:153
 msgid "Disable wording changes to run donation platform and webshop simultaneously"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:155
+#: includes/class-wcdp-general-settings.php:157
 msgid "Some features of Donation Platform for WooCommerce will be disabled so that WooCommerce can be used as a donation platform and webshop at the same time."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:165
+#: includes/class-wcdp-general-settings.php:163
+msgid "Enable branding"
+msgstr ""
+
+#: includes/class-wcdp-general-settings.php:164
+msgid "Show a small “Powered by Donation Platform for WooCommerce” note below the donation form."
+msgstr ""
+
+#: includes/class-wcdp-general-settings.php:174
 msgid "Leaderborard Options"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:167
+#: includes/class-wcdp-general-settings.php:176
 msgid "Detailed leaderboard documentation"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:171
+#: includes/class-wcdp-general-settings.php:180
 msgid "Leaderboard item heading"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:173
-#: includes/class-wcdp-general-settings.php:211
-#: includes/class-wcdp_leaderboard.php:275
+#: includes/class-wcdp-general-settings.php:182
+#: includes/class-wcdp-general-settings.php:220
+#: includes/class-wcdp_leaderboard.php:436
 msgid "{firstname} donated {amount}"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:178
+#: includes/class-wcdp-general-settings.php:187
 msgid "Leaderboard item description"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:180
-#: includes/class-wcdp-general-settings.php:218
-#: includes/class-wcdp-general-settings.php:225
+#: includes/class-wcdp-general-settings.php:189
+#: includes/class-wcdp-general-settings.php:227
+#: includes/class-wcdp-general-settings.php:234
 msgid "{timediff}"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:185
+#: includes/class-wcdp-general-settings.php:194
 msgid "Enable anonymous / public checkbox"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:186
+#: includes/class-wcdp-general-settings.php:195
 msgid "Add a checkbox to the checkout allowing users to specify how their donation is displayed in the leaderboard"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:190
+#: includes/class-wcdp-general-settings.php:199
 msgid "The checkbox allows you to display anonymous and public donations in your leaderboards."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:193
+#: includes/class-wcdp-general-settings.php:202
 msgid "Text of anonymous / public checkbox"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:194
+#: includes/class-wcdp-general-settings.php:203
 msgid "Checkout checkbox label"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:196
-#: includes/class-wcdp_leaderboard.php:555
-#: includes/class-wcdp_leaderboard.php:594
+#: includes/class-wcdp-general-settings.php:205
+#: includes/class-wcdp_leaderboard.php:745
+#: includes/class-wcdp_leaderboard.php:785
 msgid "Do not show my name in the leaderboard"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:198
+#: includes/class-wcdp-general-settings.php:207
 msgid "The text of the optional checkbox on checkout. It allows you to display anonymous and public donations in your leaderboards."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:202
+#: includes/class-wcdp-general-settings.php:211
 msgid "Leaderboard item heading (Checkout checkbox checked)"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:204
+#: includes/class-wcdp-general-settings.php:213
 msgid "Anonymous donor donated {amount}"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:209
+#: includes/class-wcdp-general-settings.php:218
 msgid "Leaderboard item heading (Checkout checkbox unchecked)"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:216
+#: includes/class-wcdp-general-settings.php:225
 msgid "Leaderboard item description (Checkout checkbox checked)"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:223
+#: includes/class-wcdp-general-settings.php:232
 msgid "Leaderboard item description (Checkout checkbox unchecked)"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:237
+#: includes/class-wcdp-general-settings.php:246
 msgid "Design Options"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:242
+#: includes/class-wcdp-general-settings.php:251
 msgid "Main Color"
 msgstr ""
 
 #. translators: %s: default color
-#: includes/class-wcdp-general-settings.php:244
+#: includes/class-wcdp-general-settings.php:253
 msgid "Primary Color used in the frontend. Default: %s."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:254
+#: includes/class-wcdp-general-settings.php:263
 msgid "Secondary Color"
 msgstr ""
 
 #. translators: %s: default color
-#: includes/class-wcdp-general-settings.php:256
+#: includes/class-wcdp-general-settings.php:265
 msgid "Secondary Color used in the frontend. Default: %s."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:266
+#: includes/class-wcdp-general-settings.php:275
 msgid "Error Color"
 msgstr ""
 
 #. translators: %s: default color
-#: includes/class-wcdp-general-settings.php:268
+#: includes/class-wcdp-general-settings.php:277
 msgid "Error Color used in the frontend. Default: %s."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:282
+#: includes/class-wcdp-general-settings.php:291
 msgid "Support"
 msgstr ""
 
 #. translators: %1$s & %3$s: opening links, %2$s & %4$s closing links
-#: includes/class-wcdp-general-settings.php:284
+#: includes/class-wcdp-general-settings.php:293
 msgid "Having issues? First, %1$scheck the documentation%2$s. If that doesn’t solve your problem, feel free to %3$sopen an issue on WordPress.org%4$s!"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:286
-#: includes/class-wcdp_feedback.php:73
-#: includes/templates/wcdp_product_settings.php:234
+#: includes/class-wcdp-general-settings.php:295
+#: includes/class-wcdp_feedback.php:75
+#: includes/templates/wcdp_product_settings.php:202
 msgid "If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:350
+#: includes/class-wcdp-general-settings.php:363
 msgid "This sample language includes the basics around what personal data Donation Platform for WooCommerce may be collecting, storing and sharing. We recommend consulting with a lawyer when deciding what information to disclose on your privacy policy."
 msgstr ""
 
 #. Translators: %1$s & %2$s: link tags
-#: includes/class-wcdp-general-settings.php:353
+#: includes/class-wcdp-general-settings.php:366
 msgid "This website utilizes %1$sDonation Platform for WooCommerce%2$s, a plugin designed to facilitate donations."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:354
+#: includes/class-wcdp-general-settings.php:367
 msgid "By making a donation through our website, you acknowledge and agree to the following:"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:356
+#: includes/class-wcdp-general-settings.php:369
 msgid "Any information provided during the donation process, such as name, email address, and donation amount, may be securely stored in our website’s database."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:357
+#: includes/class-wcdp-general-settings.php:370
 msgid "Donation Platform for WooCommerce provides an anonymized donor wall / Leaderboard feature to showcase donations. You have the option to specify how you would like your donation to be listed during the checkout process."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:358
+#: includes/class-wcdp-general-settings.php:371
 msgid "We may use the provided information to:"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:360
+#: includes/class-wcdp-general-settings.php:373
 msgid "Thank you for your donation via email or other communication methods."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:361
+#: includes/class-wcdp-general-settings.php:374
 msgid "Issue receipts for your donations."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:362
+#: includes/class-wcdp-general-settings.php:375
 msgid "Comply with any legal obligations regarding donation records and reporting."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:363
+#: includes/class-wcdp-general-settings.php:376
 msgid "Provide you with a donation thank you certificate."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:365
+#: includes/class-wcdp-general-settings.php:378
 msgid "Your information will not be disclosed to third parties except when required by law, with your explicit consent, when necessary for providing our services such as payment processing, and in cases where it is in our legitimate interest, such as fraud prevention."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:395
+#: includes/class-wcdp-general-settings.php:410
 msgid "Clear Cached Data"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:399
-#: includes/class-wcdp-general-settings.php:416
+#: includes/class-wcdp-general-settings.php:414
+#: includes/class-wcdp-general-settings.php:433
 msgid "Clear Cache"
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:401
+#: includes/class-wcdp-general-settings.php:417
 msgid "Clear cached progress bar & leaderboard data."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:408
+#: includes/class-wcdp-general-settings.php:425
 msgid "Clearing..."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:414
+#: includes/class-wcdp-general-settings.php:431
 msgid "Cached data cleared successfully."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:431
+#: includes/class-wcdp-general-settings.php:449
 msgid "Permission denied."
 msgstr ""
 
-#: includes/class-wcdp-general-settings.php:435
+#: includes/class-wcdp-general-settings.php:453
 msgid "Invalid request."
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:221
+#: includes/class-wcdp-hooks.php:223
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/related-orders.php:21
 msgid "Donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:222
+#: includes/class-wcdp-hooks.php:224
 msgid "Total"
 msgstr ""
 
 #. translators: %s: page
-#: includes/class-wcdp-hooks.php:252
+#: includes/class-wcdp-hooks.php:256
 msgid "Donations (page %d)"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:280
+#: includes/class-wcdp-hooks.php:284
 msgid "Donate now"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:371
+#: includes/class-wcdp-hooks.php:375
 msgid "Related projects"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:382
+#: includes/class-wcdp-hooks.php:386
 msgid "Donation notes"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:383
+#: includes/class-wcdp-hooks.php:387
 msgid "Notes about your donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:397
+#: includes/class-wcdp-hooks.php:401
 msgid "Learn more"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:451
+#: includes/class-wcdp-hooks.php:455
 msgid "Donation Platform"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:40
+#: includes/class-wcdp-product-settings.php:41
 msgid "Donation Form"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:181
+#: includes/class-wcdp-product-settings.php:195
 msgid "Donation Product"
 msgstr ""
 
-#: includes/class-wcdp-product-settings.php:182
+#: includes/class-wcdp-product-settings.php:196
 msgid "This product will only be used for donations if activated"
 msgstr ""
 
@@ -487,161 +496,164 @@ msgstr ""
 msgid "%1$s of %2$s"
 msgstr ""
 
+#. translators: 1: raised amount, 2: goal amount
+#: includes/class-wcdp-progress.php:140
+msgid "%1$s raised of %2$s goal"
+msgstr ""
+
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:279
+#: includes/class-wcdp-progress.php:287
 msgid "%s to go"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:282
+#: includes/class-wcdp-progress.php:290
 msgid "ended %s ago"
 msgstr ""
 
 #. Translators: {ORDER_COUNT} will be replaced with the number of orders
-#: includes/class-wcdp-progress.php:357
+#: includes/class-wcdp-progress.php:365
 msgid "{ORDER_COUNT} people have already contributed to this project."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:401
+#: includes/class-wcdp-progress.php:409
 msgid "WooCommerce Analytics is disabled. The donation progress bar & Leaderboard will not function correctly. Please enable it in WooCommerce settings."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:403
+#: includes/class-wcdp-progress.php:411
 #: wc-donation-platform.php:152
 msgid "Documentation"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:94
-#: includes/class-wcdp_feedback.php:131
+#: includes/class-wcdp_feedback.php:99
+#: includes/class-wcdp_feedback.php:136
 msgid "Subscribe to the Donation Platform for WooCommerce Newsletter"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:120
+#: includes/class-wcdp_feedback.php:125
 msgid "Email"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:124
+#: includes/class-wcdp_feedback.php:129
 msgid "Name (optional)"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:296
+#: includes/class-wcdp_feedback.php:304
 msgid "Can you please help me to improve Donation Platform for WooCommerce?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:301
+#: includes/class-wcdp_feedback.php:310
 msgid "If you have a moment, please let me know how I can improve Donation Platform for WooCommerce for you. How do you like the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:314
+#: includes/class-wcdp_feedback.php:324
 msgid "Anything else you want to tell me?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:317
+#: includes/class-wcdp_feedback.php:327
 msgid "Comments & Suggestions for Improvement"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:323
+#: includes/class-wcdp_feedback.php:333
 msgid "Submit Feedback"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:325
+#: includes/class-wcdp_feedback.php:336
 msgid "Not now"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:328
-#: includes/class-wcdp_feedback.php:722
+#: includes/class-wcdp_feedback.php:340
+#: includes/class-wcdp_feedback.php:769
 msgid "By submitting the survey, you agree that some non-sensitive technical diagnostic data will be send."
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:655
-msgid "I no longer need the plugin."
+#: includes/class-wcdp_feedback.php:701
+msgid "It didn't work as expected"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:660
-msgid "I found a better plugin."
+#: includes/class-wcdp_feedback.php:705
+msgid "I found a bug"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:661
-msgid "Please share which plugin."
+#: includes/class-wcdp_feedback.php:709
+msgid "It wasn't what I needed"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:666
-msgid "The plugin suddenly stopped working."
-msgstr ""
-
-#: includes/class-wcdp_feedback.php:667
-#: includes/class-wcdp_feedback.php:673
-msgid "Please share more details."
-msgstr ""
-
-#: includes/class-wcdp_feedback.php:672
-msgid "I could not get the plugin to work."
-msgstr ""
-
-#: includes/class-wcdp_feedback.php:678
-msgid "It's a temporary deactivation."
-msgstr ""
-
-#: includes/class-wcdp_feedback.php:683
-#: includes/templates/wcdp_step_1_amount.php:102
+#: includes/class-wcdp_feedback.php:713
+#: includes/templates/wcdp_step_1_amount.php:104
 msgid "Other"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:684
-msgid "Please share the reason."
-msgstr ""
-
-#: includes/class-wcdp_feedback.php:692
+#: includes/class-wcdp_feedback.php:721
 msgid "Can you please help me to improve the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:697
-msgid "If you have a moment, please let me know why you are deactivating Donation Platform for WooCommerce."
+#: includes/class-wcdp_feedback.php:728
+msgid "We're sorry to see you go. Could you please tell us why you're uninstalling the plugin?"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:716
-msgid "Submit & Deactivate"
+#: includes/class-wcdp_feedback.php:744
+msgid "Continue Deactivation"
 msgstr ""
 
-#: includes/class-wcdp_feedback.php:719
+#: includes/class-wcdp_feedback.php:746
+#: includes/class-wcdp_feedback.php:764
 msgid "Skip & Deactivate"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:68
+#: includes/class-wcdp_feedback.php:752
+msgid "What could we change or improve to make you want to keep using Donation Platform for WooCommerce?"
+msgstr ""
+
+#: includes/class-wcdp_feedback.php:755
+msgid "Your suggestions for improvement..."
+msgstr ""
+
+#: includes/class-wcdp_feedback.php:759
+#: includes/templates/styles/wcdp_form_style_3.php:55
+#: includes/templates/styles/wcdp_form_style_3.php:63
+msgid "Back"
+msgstr ""
+
+#: includes/class-wcdp_feedback.php:761
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: includes/class-wcdp_feedback.php:809
+msgid "Please select a reason before continuing."
+msgstr ""
+
+#: includes/class-wcdp_leaderboard.php:83
 msgid "Show more"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:69
-msgid "No donation to this project yet."
+#: includes/class-wcdp_leaderboard.php:84
+msgid "No donation data to display."
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:321
+#: includes/class-wcdp_leaderboard.php:483
 msgid "Anonymous donor"
 msgstr ""
 
 #. Translators: %s: time difference e.g. 1 week ago or 3 months ago
-#: includes/class-wcdp_leaderboard.php:503
+#: includes/class-wcdp_leaderboard.php:695
 msgid "%s ago"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:595
+#: includes/class-wcdp_leaderboard.php:786
 msgid "Yes"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:595
+#: includes/class-wcdp_leaderboard.php:786
 msgid "No"
 msgstr ""
 
-#: includes/integrations/express-checkout/class-wcdp-express-checkout.php:38
+#: includes/integrations/express-checkout/class-wcdp-express-checkout.php:41
 msgid "Express Donation"
 msgstr ""
 
-#: includes/integrations/express-checkout/class-wcdp-express-checkout.php:163
-msgid "(Donation)"
-msgstr ""
-
-#: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:87
-#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:162
+#: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:89
+#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:164
 msgid "Recurring Donations"
 msgstr ""
 
@@ -667,7 +679,7 @@ msgstr ""
 msgid "Project"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-pdf-Invoices.php:32
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-pdf-Invoices.php:49
 msgid "Donation Receipt"
 msgstr ""
 
@@ -675,165 +687,165 @@ msgstr ""
 msgid "Thank You Certificate"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:144
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:157
 msgid "Enable"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:155
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:168
 msgid "Attach to:"
 msgstr ""
 
 #. translators: directory path
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:163
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:176
 msgid "It looks like the temp folder (<code>%s</code>) is not writable, check the permissions for this folder! Without having write access to this folder, the plugin will not be able to email invoices."
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:169
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:182
 msgid "Orientation of the Certificate"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:176
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:189
 msgid "Portrait"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:177
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:190
 msgid "Landscape"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:184
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:197
 msgid "Allow My Account thank you certificate download"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:191
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:204
 msgid "Only when a thank you certificate is already created/emailed"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:192
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:205
 msgid "Only for specific order statuses (define below)"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:193
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:206
 msgid "Always"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:194
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:207
 msgid "Never"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:209
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:222
 msgid "URL of background image"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:221
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/class-wcdp-thank-you-certificate.php:234
 msgid "URL to image of signature"
 msgstr ""
 
 #. Translators: %$1s blog name, %2$s shop base address, %3$s shop base postal code, %4$s %2$s shop base city
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:26
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:27
 msgid "%1$s, %2$s, %3$s %4$s"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:59
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:62
 msgid "Tax Deductible Receipt"
 msgstr ""
 
 #. Translators: %$1s shop city, %$2 date of receipt creation
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:67
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:70
 msgid "%1$s, %2$s"
 msgstr ""
 
 #. Translators: %$1s firstname, %$2s lastname
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:73
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:76
 msgid "Dear %1$s %2$s,"
 msgstr ""
 
 #. Translators: %s Shop Name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:79
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:82
 msgid "Here is the receipt for your generous donation to %s. Thank you so much for donating."
 msgstr ""
 
 #. Translators: %s Donation number
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:88
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:91
 msgid "Summary of your donation #%s"
 msgstr ""
 
 #. Translators: %s Shop Name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:98
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:101
 msgid "Organization:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:111
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:114
 msgid "Project:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:130
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:133
 msgid "Amount:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:141
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:144
 msgid "Donation Date:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:152
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:155
 msgid "Donor:"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:164
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:167
 msgid "Payment Method:"
 msgstr ""
 
 #. Translators: %$1s, %$2s shop name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:176
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:179
 msgid "%1$s is a registered non-profit organization. Your donation is tax deductible to the extent allowable by law. No goods or service were provided by %2$s in return for this donation."
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:180
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:183
 msgid "Best regards,"
 msgstr ""
 
 #. Translators: %$1s shop name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:182
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:58
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/invoice.php:185
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:61
 msgid "Your friends at %s"
 msgstr ""
 
 #. Translators: Donation Number
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:34
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:35
 msgid "#%s"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:36
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:37
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/related-orders.php:50
 msgid "Donation Number"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:45
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:46
 msgid "Thank you"
 msgstr ""
 
 #. Translators: 1. donor firstname, 2. donor second name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:47
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:48
 msgid "%1$s %2$s"
 msgstr ""
 
 #. Translators: 1. donation amount, 2. shop name
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:49
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:51
 msgid "for donating %1$s to %2$s."
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:50
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:53
 msgid "Your support helps us to realize our projects."
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:55
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:58
 msgid "Signature"
 msgstr ""
 
-#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:64
+#: includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/donation-receipt/thank-you-certificate.php:67
 msgid "Donation Date"
 msgstr ""
 
-#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:177
+#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:179
 msgid "Complete checkout to renew your recurring donation."
 msgstr ""
 
@@ -1120,6 +1132,11 @@ msgstr ""
 msgid "Recurring Donation Totals"
 msgstr ""
 
+#. translators: 1: percentage raised formatted
+#: includes/templates/styles/progress/wcdp_progress_style_4.php:18
+msgid "%1$s raised"
+msgstr ""
+
 #: includes/templates/styles/wcdp_form_style_1.php:20
 msgid "Amount"
 msgstr ""
@@ -1132,13 +1149,8 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
-#: includes/templates/styles/wcdp_form_style_3.php:40
-#: includes/templates/styles/wcdp_form_style_3.php:53
-msgid "Back"
-msgstr ""
-
-#: includes/templates/styles/wcdp_form_style_3.php:43
-#: includes/templates/wcdp_step_1.php:110
+#: includes/templates/styles/wcdp_form_style_3.php:49
+#: includes/templates/wcdp_step_1.php:118
 msgid "Next"
 msgstr ""
 
@@ -1154,136 +1166,141 @@ msgstr ""
 msgid "3. Payment"
 msgstr ""
 
-#: includes/templates/wcdp_form.php:18
+#: includes/templates/wcdp_form.php:19
 #: includes/wc-templates/checkout/payment.php:45
 msgid "Please activate JavaScript to continue with your donation."
 msgstr ""
 
-#: includes/templates/wcdp_form.php:31
+#: includes/templates/wcdp_form.php:33
 msgid "Close"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:18
+#: includes/templates/wcdp_product_settings.php:19
 msgid "Shortcode"
 msgstr ""
 
 #. translators: %s & %s: link html (not visible)
-#: includes/templates/wcdp_product_settings.php:24
+#: includes/templates/wcdp_product_settings.php:25
 msgid "Add this shortcode where you want to display the donation form."
 msgstr ""
 
 #. translators: %s & %s: link html (not visible)
-#: includes/templates/wcdp_product_settings.php:24
+#: includes/templates/wcdp_product_settings.php:25
 msgid "Shortcode Documentation"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:28
+#: includes/templates/wcdp_product_settings.php:29
 msgid "Direct Link"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:35
+#: includes/templates/wcdp_product_settings.php:36
 msgid "Donation range"
 msgstr ""
 
 #. Translators: %1$d minimum donation amount, %2$d maximum donation amount
-#: includes/templates/wcdp_product_settings.php:39
+#: includes/templates/wcdp_product_settings.php:40
 msgid "Min: %1$s, Max: %2$s"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:41
+#: includes/templates/wcdp_product_settings.php:42
 msgid "Edit"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:53
+#: includes/templates/wcdp_product_settings.php:54
 msgid "Fundraising Goal"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:55
+#: includes/templates/wcdp_product_settings.php:56
 msgid "Enter 0 to deactivate"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:58
+#: includes/templates/wcdp_product_settings.php:59
 msgid "The amount you want to collect with this campaign. Leave the field empty to hide the goal. Please note: You can still donate to the project after reaching the goal."
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:67
+#: includes/templates/wcdp_product_settings.php:68
 msgid "End Date"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:72
+#: includes/templates/wcdp_product_settings.php:74
 msgid "Please note: You can still donate to the project after reaching the fundraising goal or end date."
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:83
+#: includes/templates/wcdp_product_settings.php:86
 msgid "Layout of Amount suggestions"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:85
+#: includes/templates/wcdp_product_settings.php:88
 msgid "Just input box"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:86
-#: includes/templates/wcdp_product_settings.php:168
-msgid "Radio/button selection"
-msgstr ""
-
-#: includes/templates/wcdp_product_settings.php:87
-msgid "Input box + Range slider"
+#: includes/templates/wcdp_product_settings.php:89
+#: includes/templates/wcdp_product_settings.php:137
+msgid "Radio/Button selection"
 msgstr ""
 
 #: includes/templates/wcdp_product_settings.php:90
+msgid "Input box + Range slider"
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:93
 msgid "Design of the amount field."
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:145
+#: includes/templates/wcdp_product_settings.php:115
 msgid "Amount Suggestions"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:148
-msgid "Display buttons with donation amount suggestions. Create new options by entering a number (decimals seperated by period) and hit space bar."
+#: includes/templates/wcdp_product_settings.php:117
+msgid "Enter donation amounts separated by commas (e.g. 5, 15, 25, 75, 100). Values must be between the minimum and maximum donation amounts."
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:165
+#: includes/templates/wcdp_product_settings.php:134
 msgid "Layout of "
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:167
+#: includes/templates/wcdp_product_settings.php:136
 msgid "Default layout"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:169
+#: includes/templates/wcdp_product_settings.php:138
 msgid "Expert: custom code with action wcdp_custom_html_"
 msgstr ""
 
-#: includes/templates/wcdp_product_settings.php:171
+#: includes/templates/wcdp_product_settings.php:140
 msgid "Design of the variation selection. Only for variable products."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:79
+#: includes/templates/wcdp_step_1.php:80
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:121
+#: includes/templates/wcdp_step_1.php:129
 msgid "Donate"
 msgstr ""
 
-#: includes/templates/wcdp_step_1_amount.php:53
-#: includes/templates/wcdp_step_1_amount.php:113
-#: includes/templates/wcdp_step_1_amount.php:123
-#: includes/templates/wcdp_step_1_variations.php:41
+#: includes/templates/wcdp_step_1_amount.php:54
+#: includes/templates/wcdp_step_1_amount.php:115
+#: includes/templates/wcdp_step_1_amount.php:125
+#: includes/templates/wcdp_step_1_variations.php:42
 msgid "required"
 msgstr ""
 
-#: includes/templates/wcdp_step_3.php:12
+#: includes/templates/wcdp_step_2.php:26
+msgid "This is a required field."
+msgstr ""
+
+#: includes/templates/wcdp_step_3.php:13
 msgid "Your Donation"
 msgstr ""
 
-#: includes/templates/wcdp_step_3.php:20
-msgid "Please fill in all fields under Donor Details correctly before checking out."
+#. translators: %s is a link to the plugin website
+#: includes/templates/wcdp_step_3.php:27
+msgid "Powered by %s"
 msgstr ""
 
-#: includes/templates/wcdp_step_3.php:22
-msgid "Fix Invalid Fields"
+#: includes/templates/wcdp_step_3.php:28
+msgid "Donation Platform for WooCommerce"
 msgstr ""
 
 #: includes/wc-templates/checkout/cart-errors.php:23
