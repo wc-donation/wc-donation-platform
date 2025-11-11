@@ -33,6 +33,9 @@ class WCDP_Leaderboard
         //Display the value of the WooCommerce checkout checkbox to the user
         add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
 
+        // Display the value in My Account order details page too
+        add_action('woocommerce_view_order', array($this, 'display_anonymous_donation_checkbox_in_account_order_details'), 20);
+
         // Clear donable products cache when product meta is updated
         add_action('updated_post_meta', array($this, 'maybe_clear_donable_cache'), 10, 4);
         add_action('added_post_meta', array($this, 'maybe_clear_donable_cache'), 10, 4);
@@ -73,6 +76,11 @@ class WCDP_Leaderboard
      */
     function wcdp_leaderboard($atts): string
     {
+        // Check if leaderboard feature is enabled
+        if (get_option('wcdp_enable_leaderboard', 'yes') !== 'yes') {
+            return '<p class="wcdp-error-message">' . esc_html__('The leaderboard feature is currently disabled.', 'wc-donation-platform') . '</p>';
+        }
+
         // Extract attributes
         $atts = shortcode_atts(array(
             'limit' => 10,
@@ -735,7 +743,9 @@ class WCDP_Leaderboard
      */
     public function add_anonymous_donation_checkbox()
     {
-        if (!WCDP_Form::cart_contains_donation() || get_option('wcdp_enable_checkout_checkbox', 'no') !== 'yes') {
+        if (!WCDP_Form::cart_contains_donation() || 
+            get_option('wcdp_enable_leaderboard', 'yes') !== 'yes' ||
+            get_option('wcdp_enable_checkout_checkbox', 'no') !== 'yes') {
             return;
         }
         echo '<div class="anonymous-donation-checkbox">';
@@ -775,6 +785,11 @@ class WCDP_Leaderboard
             return;
         }
 
+        // Only show if leaderboard is enabled
+        if (get_option('wcdp_enable_leaderboard', 'yes') !== 'yes') {
+            return;
+        }
+
         $checkbox_value = $order->get_meta('wcdp_checkout_checkbox');
 
         if ($checkbox_value === null || $checkbox_value === '')
@@ -782,6 +797,37 @@ class WCDP_Leaderboard
 
         echo wp_kses_post(sprintf(
             '<p><strong>%s:</strong> %s</p>',
+            esc_html(get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform'))),
+            esc_html($checkbox_value === "yes" ? __('Yes', 'wc-donation-platform') : __('No', 'wc-donation-platform'))
+        ));
+    }
+
+    /**
+     * Display the value of the anonymous checkbox in My Account order details page
+     * @param int $order_id
+     * @return void
+     */
+    public function display_anonymous_donation_checkbox_in_account_order_details($order_id)
+    {
+        $order = wc_get_order($order_id);
+        
+        if (!$order || !WCDP_Form::order_contains_donation($order)) {
+            return;
+        }
+
+        // Only show if leaderboard is enabled
+        if (get_option('wcdp_enable_leaderboard', 'yes') !== 'yes') {
+            return;
+        }
+
+        $checkbox_value = $order->get_meta('wcdp_checkout_checkbox');
+
+        if ($checkbox_value === null || $checkbox_value === '')
+            return;
+
+        echo wp_kses_post(sprintf(
+            '<section class="woocommerce-order-leaderboard-preference"><h2>%s</h2><p><strong>%s:</strong> %s</p></section>',
+            esc_html__('Leaderboard Preference', 'wc-donation-platform'),
             esc_html(get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform'))),
             esc_html($checkbox_value === "yes" ? __('Yes', 'wc-donation-platform') : __('No', 'wc-donation-platform'))
         ));
