@@ -23,15 +23,20 @@ class WCDP_Leaderboard
         //Delete cache on order change
         add_action('woocommerce_order_status_changed', array($this, 'delete_stale_orders_cache'), 10, 4);
 
-        // Add checkbox to WooCommerce checkout
-        $checkbox_location = apply_filters('anonymous_donation_checkbox_location', 'woocommerce_review_order_before_submit');
-        add_action($checkbox_location, array($this, 'add_anonymous_donation_checkbox'));
+        if (get_option('wcdp_enable_checkout_checkbox', 'no') === 'yes') {
+            // Add checkbox to WooCommerce checkout
+            $checkbox_location = apply_filters('anonymous_donation_checkbox_location', 'woocommerce_review_order_before_submit');
+            add_action($checkbox_location, array($this, 'add_anonymous_donation_checkbox'));
 
-        //Save the value of the WooCommerce checkout checkbox
-        add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
+            //Save the value of the WooCommerce checkout checkbox
+            add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
 
-        //Display the value of the WooCommerce checkout checkbox to the user
-        add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
+            //Display the value of the WooCommerce checkout checkbox to the user
+            add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
+
+            // Display the value in My Account order details page too
+            add_action('woocommerce_view_order', array($this, 'display_anonymous_donation_checkbox_in_account_order_details'), 20);
+        }
 
         // Clear donable products cache when product meta is updated
         add_action('updated_post_meta', array($this, 'maybe_clear_donable_cache'), 10, 4);
@@ -735,7 +740,7 @@ class WCDP_Leaderboard
      */
     public function add_anonymous_donation_checkbox()
     {
-        if (!WCDP_Form::cart_contains_donation() || get_option('wcdp_enable_checkout_checkbox', 'no') !== 'yes') {
+        if (!WCDP_Form::cart_contains_donation()) {
             return;
         }
         echo '<div class="anonymous-donation-checkbox">';
@@ -801,5 +806,33 @@ class WCDP_Leaderboard
         if ($meta_key === '_donable') {
             self::clear_donable_products_cache();
         }
+    }
+
+
+    /**
+     * Display the value of the anonymous checkbox in My Account order details page
+     * @param int $order_id
+     * @since 1.3.5
+     * @return void
+     */
+    public function display_anonymous_donation_checkbox_in_account_order_details($order_id)
+    {
+        $order = wc_get_order($order_id);
+
+        if (!$order || !WCDP_Form::order_contains_donation($order)) {
+            return;
+        }
+
+        $checkbox_value = $order->get_meta('wcdp_checkout_checkbox');
+
+        if ($checkbox_value === null || $checkbox_value === '')
+            return;
+
+        echo wp_kses_post(sprintf(
+            '<section class="woocommerce-order-leaderboard-preference"><h2>%s</h2><p><strong>%s:</strong> %s</p></section>',
+            esc_html__('Leaderboard Preference', 'wc-donation-platform'),
+            esc_html(get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform'))),
+            esc_html($checkbox_value === "yes" ? __('Yes', 'wc-donation-platform') : __('No', 'wc-donation-platform'))
+        ));
     }
 }

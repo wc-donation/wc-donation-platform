@@ -170,6 +170,7 @@ feat: complete refactoring of Leaderboard functionality
 feat: suggested donation amounts with correct number of decimals
 feat: refactor form error handling for improved flow
 feat: add "Powered by" functionality
+feat: add Leaderboard anonymous status info in account order details page
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
 dev: add wcdp_product_settings_fundraising action
@@ -177,6 +178,7 @@ fix: hide Payment Plugins for Stripe WooCommerce express checkout buttons since 
 fix: show "thank you certificate" action button only for donation orders
 fix: do not attach thank you certificates to orders that do not contain a donation
 fix: rename invoice button to "donation receipt" only for orders that contain a donation 
+fix: only show Leaderboard anonymous status info in frontend when anonymous donation setting is enabled
 a11y: progress bar a11y improvements
 a11y: improve contrast of default colors
 a11y: improve accessibility styles in donation form
