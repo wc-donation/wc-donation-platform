@@ -17,7 +17,7 @@ echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 $count = count($subscriptions);
 
 // translators: $1: customer's first name and last name, $2: how many subscriptions customer switched
-printf(_nx('Customer %1$s has switched their recurring donation. The details of their new recurring donation are as follows:', 'Customer %1$s has switched %2$d of their recurring donations. The details of their new recurring donations are as follows:', $count, 'Used in switch notification admin email', 'wc-donation-platform'), $order->get_formatted_billing_full_name(), $count);
+printf(esc_html(_nx('Customer %1$s has switched their recurring donation. The details of their new recurring donation are as follows:', 'Customer %1$s has switched %2$d of their recurring donations. The details of their new recurring donations are as follows:', $count, 'Used in switch notification admin email', 'wc-donation-platform')), $order->get_formatted_billing_full_name(), $count);
 
 echo "\n\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 

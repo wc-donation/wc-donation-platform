@@ -291,7 +291,7 @@ class WCDP_General_Settings
                 'title' => __('Support', 'wc-donation-platform'),
                 // translators: %1$s & %3$s: opening links, %2$s & %4$s closing links
                 'desc' => sprintf(esc_html__('Having issues? First, %1$scheck the documentation%2$s. If that doesn’t solve your problem, feel free to %3$sopen an issue on WordPress.org%4$s!', 'wc-donation-platform'), '<a href="https://www.wc-donation.com/documentation/" target="_blank">', '</a>', '<a href="https://wordpress.org/support/plugin/wc-donation-platform/#new-topic-0" target="_blank">', '</a>')
-                    . '<br><br><a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/?filter=5#new-post" target="_blank">'
+                    . '<br><br><a href="https://wordpress.org/support/plugin/wc-donation-platform/reviews/#new-post" target="_blank">'
                     . esc_html__('If you like Donation Platform for WooCommerce and want to support the further growth and development of the plugin, please consider a 5-star rating on wordpress.org.', 'wc-donation-platform')
                     . '</a>',
                 'type' => 'title',

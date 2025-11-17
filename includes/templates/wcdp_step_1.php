@@ -75,13 +75,13 @@ if ($context === 'embed') {
     echo ' target="_blank"';
 }
 ?> autocomplete="off" enctype='multipart/form-data'
-    data-product_id="<?php echo $value['id']; ?>" data-formid="<?php echo $form_id; ?>" <?php if ($has_child): ?>
-        data-product_variations="<?php echo $variations_attr; ?>" <?php endif; ?>
-    wcdp-error-default="<?php echo _wp_specialchars(wp_kses(__('An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform'), array()), ENT_QUOTES, 'UTF-8', true); ?>">
+    data-product_id="<?php echo esc_attr($product_id); ?>" data-formid="<?php echo esc_attr($form_id); ?>" <?php if ($has_child): ?> data-product_variations="<?php echo esc_attr($variations_attr); ?>" <?php endif; ?>
+    wcdp-error-default="<?php echo esc_attr(wp_kses(__('An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform'), array()), ENT_QUOTES, 'UTF-8', true); ?>">
     <input type="hidden" name="action" value="wcdp_ajax_donation_calculation">
-    <input type="hidden" name="security" value="<?php echo wp_create_nonce('wcdp_ajax_nonce' . $value['id']); ?>">
-    <input type="hidden" name="postid" value="<?php echo $value['id'] ?>">
-    <input type="hidden" name="wcdp_form_id" value="<?php echo $form_id ?>">
+    <input type="hidden" name="security"
+        value="<?php echo esc_attr(wp_create_nonce('wcdp_ajax_nonce' . $value['id'])); ?>">
+    <input type="hidden" name="postid" value="<?php echo esc_attr($value['id']); ?>">
+    <input type="hidden" name="wcdp_form_id" value="<?php echo esc_attr($form_id); ?>">
 
     <?php
     //Donation Amount section

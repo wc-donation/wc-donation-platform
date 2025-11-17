@@ -253,7 +253,7 @@ class WCDP_Hooks
         global $wp;
         if (!empty($wp->query_vars['orders'])) {
             /* translators: %s: page */
-            $title = sprintf(__('Donations (page %d)', 'wc-donation-platform'), intval($wp->query_vars['orders']));
+            $title = sprintf(esc_html__('Donations (page %d)', 'wc-donation-platform'), intval($wp->query_vars['orders']));
         } else {
             $title = __('Donations', 'wc-donation-platform');
         }

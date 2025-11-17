@@ -29,14 +29,14 @@ $last_order_time_created = $subscription->get_time('last_order_date_created', 's
 
 if (!empty($last_order_time_created)) {
     // translators: placeholder is last time subscription was paid
-    echo sprintf(__('Last Donation Date: %s', 'wc-donation-platform'), date_i18n(wc_date_format(), $last_order_time_created)) . "\n";
+    echo sprintf(esc_html__('Last Donation Date: %s', 'wc-donation-platform'), date_i18n(wc_date_format(), $last_order_time_created)) . "\n";
 }
 
 $end_time = $subscription->get_time('end', 'site');
 
 if (!empty($end_time)) {
     // translators: placeholder is localised date string
-    echo sprintf(__('End Date: %s', 'woocommerce-subscriptions'), date_i18n(wc_date_format(), $end_time)) . "\n";
+    echo sprintf(esc_html__('End Date: %s', 'woocommerce-subscriptions'), date_i18n(wc_date_format(), $end_time)) . "\n";
 }
 
 do_action('woocommerce_email_order_meta', $subscription, $sent_to_admin, $plain_text, $email);

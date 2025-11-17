@@ -3,7 +3,8 @@
  * This class illustrates the progress of a fundraising campaign
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 use Automattic\WooCommerce\Utilities\OrderUtil;
 
@@ -56,7 +57,8 @@ class WCDP_Progress
      */
     public function reset_total_revenue($orderid, $old_status, $new_status, $order)
     {
-        if ($old_status !== 'completed' && $new_status !== 'completed') return;
+        if ($old_status !== 'completed' && $new_status !== 'completed')
+            return;
 
         foreach ($order->get_items() as $item) {
             $revenue = get_post_meta($item->get_product_id(), 'wcdp_total_revenue');
@@ -65,7 +67,7 @@ class WCDP_Progress
             if ($revenue && ($orderid <= 10000 || time() - $revenue[0]['time'] > 30) && !apply_filters('wcdp_force_recalculate_total_revenue', false, $item, $revenue)) {
                 delete_post_meta($item->get_product_id(), 'wcdp_total_revenue');
             }
-            delete_transient('wcdp_order_counter_' . $item->get_product_id() );
+            delete_transient('wcdp_order_counter_' . $item->get_product_id());
         }
     }
 
@@ -103,7 +105,7 @@ class WCDP_Progress
             $atts['goal'] = 100;
         }
 
-        $revenue = (float)$this->getTotalRevenueOfProduct($atts['id']);
+        $revenue = (float) $this->getTotalRevenueOfProduct($atts['id']);
 
         do_action('wcdp_goal_product_status', $revenue, $goal_db, $atts['id']);
 
@@ -111,15 +113,15 @@ class WCDP_Progress
         $ids = explode(",", $atts['addids']);
         foreach ($ids as $id) {
             if (WCDP_Form::is_donable($id)) {
-                $revenue += (float)$this->getTotalRevenueOfProduct($id);
+                $revenue += (float) $this->getTotalRevenueOfProduct($id);
             }
         }
 
         //Add specified amount to revenue
-        $revenue += (float)$atts['cheat'];
+        $revenue += (float) $atts['cheat'];
         $revenue = apply_filters('wcdp_progress_revenue', $revenue, $atts);
 
-        if ((float)$atts['goal'] != 0) {
+        if ((float) $atts['goal'] != 0) {
             $percentage = ($revenue * 100) / (float) $atts['goal'];
         } else {
             $percentage = 0;
@@ -127,20 +129,22 @@ class WCDP_Progress
 
         $width = max(0, min(100, $percentage));
 
-        $percentage_decimals = max((int)$atts['percentage_decimals'], 0);
+        $percentage_decimals = max((int) $atts['percentage_decimals'], 0);
         $percentage_formatted = wc_format_decimal($percentage, $percentage_decimals) . '%';
 
         // Translators: %1$s: donation amount raised, %2$s: fundraising goal
         $label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
-        $revenue_formatted = apply_filters('wcdp_progress_revenue', wc_price($revenue, [ 'in_span' => false ]));
-        $goal_formatted = apply_filters('wcdp_progress_goal', wc_price($atts['goal'], [ 'in_span' => false ]));
+        $revenue_formatted = apply_filters('wcdp_progress_revenue', wc_price($revenue, ['in_span' => false]));
+        $goal_formatted = apply_filters('wcdp_progress_goal', wc_price($atts['goal'], ['in_span' => false]));
         $aria_label = esc_attr(wp_kses(
-                sprintf(
+            sprintf(
                 /* translators: 1: raised amount, 2: goal amount */
-                        __('%1$s raised of %2$s goal', 'wc-donation-platform'),
-                        $revenue_formatted,
-                        $goal_formatted
-                ), []));
+                __('%1$s raised of %2$s goal', 'wc-donation-platform'),
+                $revenue_formatted,
+                $goal_formatted
+            ),
+            []
+        ));
 
         switch ($atts['style']) {
             case 2:
@@ -176,35 +180,45 @@ class WCDP_Progress
 
         ob_start(); ?>
         <style>
-    <?php if (!defined('WCDP_PROGRESS_3') && !defined('WCDP_PROGRESS_2') && !defined('WCDP_PROGRESS_1')) : ?>
-    :root {
-        --wcdp-main: <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')); ?>;
-        --wcdp-main-2: <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#006633')); ?>;
-        --label-text-checked: white;
-    }
-    @keyframes wcdp-progress {
-        0% {
-            width: 0;
-        }
-    }
-    <?php endif;
-        //Progress Bar template
-        wc_get_template($template,
-            array(
-                'label' => $label,
-                'revenue_formatted' => $revenue_formatted,
-                'goal_formatted' => $goal_formatted,
-                'end_date_db' => $end_date_db,
-                'width' => $width,
-                'revenue' => $revenue,
-                'goal' => (float) $atts['goal'],
-                'percentage_formatted' => $percentage_formatted,
-                'aria_label' => $aria_label,
-            ), '', WCDP_DIR . 'includes/templates/styles/progress/');
+            <?php if (!defined('WCDP_PROGRESS_3') && !defined('WCDP_PROGRESS_2') && !defined('WCDP_PROGRESS_1')): ?>
+                :root {
+                    --wcdp-main:
+                        <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')); ?>
+                    ;
+                    --wcdp-main-2:
+                        <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#006633')); ?>
+                    ;
+                    --label-text-checked: white;
+                }
 
-        $r = ob_get_contents();
-        ob_end_clean();
-        return $r;
+                @keyframes wcdp-progress {
+                    0% {
+                        width: 0;
+                    }
+                }
+
+            <?php endif;
+            //Progress Bar template
+            wc_get_template(
+                $template,
+                array(
+                    'label' => $label,
+                    'revenue_formatted' => $revenue_formatted,
+                    'goal_formatted' => $goal_formatted,
+                    'end_date_db' => $end_date_db,
+                    'width' => $width,
+                    'revenue' => $revenue,
+                    'goal' => (float) $atts['goal'],
+                    'percentage_formatted' => $percentage_formatted,
+                    'aria_label' => $aria_label,
+                ),
+                '',
+                WCDP_DIR . 'includes/templates/styles/progress/'
+            );
+
+            $r = ob_get_contents();
+            ob_end_clean();
+            return $r;
     }
 
     /**
@@ -227,7 +241,7 @@ class WCDP_Progress
             return $this->updateTotalRevenueOfProduct($product_id);
         }
 
-        return (float)$totalrevenue[0]['revenue'];
+        return (float) $totalrevenue[0]['revenue'];
     }
 
     /**
@@ -267,7 +281,7 @@ class WCDP_Progress
         } else {
             $revenue = 0;
         }
-        $revenue = (float)apply_filters('wcdp_update_product_revenue', $revenue, $product_id);
+        $revenue = (float) apply_filters('wcdp_update_product_revenue', $revenue, $product_id);
         update_post_meta($product_id, 'wcdp_total_revenue', array('revenue' => $revenue, 'time' => time()));
         return $revenue;
     }
@@ -284,10 +298,10 @@ class WCDP_Progress
         $human_diff = '<span class="wcdp-emphasized">' . human_time_diff(strtotime($timestamp)) . '</span>';
         if ($time_diff > 0) {
             // translators: placeholder is human time diff (e.g. "3 weeks")
-            $date_to_display = sprintf(__('%s to go', 'wc-donation-platform'), $human_diff);
+            $date_to_display = sprintf(esc_html__('%s to go', 'wc-donation-platform'), $human_diff);
         } else {
             // translators: placeholder is human time diff (e.g. "3 weeks")
-            $date_to_display = sprintf(__('ended %s ago', 'wc-donation-platform'), $human_diff);
+            $date_to_display = sprintf(esc_html__('ended %s ago', 'wc-donation-platform'), $human_diff);
         }
 
         return $date_to_display;
@@ -299,7 +313,8 @@ class WCDP_Progress
      * @return string|null
      * @since v1.3.2
      */
-    private function query_order_count_product(int $product_id): int {
+    private function query_order_count_product(int $product_id): int
+    {
         global $wpdb;
 
         if (class_exists('Automattic\WooCommerce\Utilities\OrderUtil') && Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
@@ -338,7 +353,8 @@ class WCDP_Progress
      * @return void
      * @since v1.3.2
      */
-    function get_order_count_product(int $product_id): int {
+    function get_order_count_product(int $product_id): int
+    {
         $cache_key = 'wcdp_order_counter_' . $product_id;
         $count = get_transient($cache_key);
 
@@ -393,7 +409,8 @@ class WCDP_Progress
      * Show a warning to admins if WooCommerce analytics is disabled
      * @return void
      */
-    public function maybe_show_analytics_warning() {
+    public function maybe_show_analytics_warning()
+    {
         if (!is_admin() || !current_user_can('manage_woocommerce') || !class_exists('WC_Admin_Notices')) {
             return;
         }

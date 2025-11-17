@@ -29,11 +29,11 @@ $last_order_time_created = $subscription->get_time('last_order_date_created', 's
 
 if (!empty($last_order_time_created)) {
     // translators: placeholder is last time subscription was paid
-    echo sprintf(__('Last Donation: %s', 'wc-donation-platform'), date_i18n(wc_date_format(), $last_order_time_created)) . "\n";
+    echo sprintf(esc_html__('Last Donation: %s', 'wc-donation-platform'), date_i18n(wc_date_format(), $last_order_time_created)) . "\n";
 }
 
 // translators: placeholder is localised date string
-echo sprintf(__('Date Suspended: %s', 'woocommerce-subscriptions'), date_i18n(wc_date_format(), time())) . "\n";
+echo sprintf(esc_html__('Date Suspended: %s', 'woocommerce-subscriptions'), date_i18n(wc_date_format(), time())) . "\n";
 
 do_action('woocommerce_email_order_meta', $subscription, $sent_to_admin, $plain_text, $email);
 /* translators: %s donation number */
