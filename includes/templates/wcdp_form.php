@@ -50,7 +50,7 @@ if ($value['popup']):
 
                 //Display title of product
                 if ($value['image']) {
-                    echo $product->get_image('large');
+                    echo '<div class="wcdp-product-image">' . $product->get_image('medium_large') . '</div>';
                 }
 
                 switch ($value['style']) {

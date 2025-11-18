@@ -71,7 +71,7 @@ main#main .wcdp-form {
 
 #wcdp-popup .wcdp-body {
     overflow: hidden;
-    padding: 20px;
+    padding: 18px;
     /* background-color: var(--background-color); */
 }
 
@@ -645,6 +645,12 @@ input:focus+.wcdp-fee-recovery__body {
     text-align: center;
     padding: 6px 20px;
     cursor: pointer;
+}
+
+.wcdp-product-image {
+    margin: 18px auto 12px;
+    width: max-content;
+    max-width: 100%;
 }
 
 #wcdp-get-send,

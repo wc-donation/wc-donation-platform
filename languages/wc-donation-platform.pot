@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-11T14:30:06+00:00\n"
+"POT-Creation-Date: 2025-11-18T21:57:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -39,7 +39,7 @@ msgid "Yes, I want to cover the transaction fee."
 msgstr ""
 
 #: includes/class-wcdp-fee-recovery.php:85
-#: includes/class-wcdp_leaderboard.php:602
+#: includes/class-wcdp_leaderboard.php:607
 msgid "Transaction costs"
 msgstr ""
 
@@ -78,15 +78,15 @@ msgid "This shortcode does not support AJAX calls."
 msgstr ""
 
 #: includes/class-wcdp-form.php:58
-#: includes/class-wcdp-progress.php:84
-#: includes/class-wcdp-progress.php:372
+#: includes/class-wcdp-progress.php:86
+#: includes/class-wcdp-progress.php:388
 msgid "Invalid shortcode attribute:"
 msgstr ""
 
 #: includes/class-wcdp-form.php:61
-#: includes/class-wcdp-progress.php:87
-#: includes/class-wcdp-progress.php:375
-#: includes/class-wcdp_leaderboard.php:101
+#: includes/class-wcdp-progress.php:89
+#: includes/class-wcdp-progress.php:391
+#: includes/class-wcdp_leaderboard.php:106
 msgid "Donations are not activated for this project."
 msgstr ""
 
@@ -257,7 +257,7 @@ msgstr ""
 
 #: includes/class-wcdp-general-settings.php:182
 #: includes/class-wcdp-general-settings.php:220
-#: includes/class-wcdp_leaderboard.php:436
+#: includes/class-wcdp_leaderboard.php:441
 msgid "{firstname} donated {amount}"
 msgstr ""
 
@@ -292,8 +292,9 @@ msgid "Checkout checkbox label"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:205
-#: includes/class-wcdp_leaderboard.php:745
-#: includes/class-wcdp_leaderboard.php:785
+#: includes/class-wcdp_leaderboard.php:750
+#: includes/class-wcdp_leaderboard.php:790
+#: includes/class-wcdp_leaderboard.php:834
 msgid "Do not show my name in the leaderboard"
 msgstr ""
 
@@ -492,35 +493,35 @@ msgid "This product will only be used for donations if activated"
 msgstr ""
 
 #. Translators: %1$s: donation amount raised, %2$s: fundraising goal
-#: includes/class-wcdp-progress.php:134
+#: includes/class-wcdp-progress.php:136
 msgid "%1$s of %2$s"
 msgstr ""
 
 #. translators: 1: raised amount, 2: goal amount
-#: includes/class-wcdp-progress.php:140
+#: includes/class-wcdp-progress.php:142
 msgid "%1$s raised of %2$s goal"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:287
+#: includes/class-wcdp-progress.php:301
 msgid "%s to go"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:290
+#: includes/class-wcdp-progress.php:304
 msgid "ended %s ago"
 msgstr ""
 
 #. Translators: {ORDER_COUNT} will be replaced with the number of orders
-#: includes/class-wcdp-progress.php:365
+#: includes/class-wcdp-progress.php:381
 msgid "{ORDER_COUNT} people have already contributed to this project."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:409
+#: includes/class-wcdp-progress.php:426
 msgid "WooCommerce Analytics is disabled. The donation progress bar & Leaderboard will not function correctly. Please enable it in WooCommerce settings."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:411
+#: includes/class-wcdp-progress.php:428
 #: wc-donation-platform.php:152
 msgid "Documentation"
 msgstr ""
@@ -623,29 +624,35 @@ msgstr ""
 msgid "Please select a reason before continuing."
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:83
+#: includes/class-wcdp_leaderboard.php:88
 msgid "Show more"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:84
+#: includes/class-wcdp_leaderboard.php:89
 msgid "No donation data to display."
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:483
+#: includes/class-wcdp_leaderboard.php:488
 msgid "Anonymous donor"
 msgstr ""
 
 #. Translators: %s: time difference e.g. 1 week ago or 3 months ago
-#: includes/class-wcdp_leaderboard.php:695
+#: includes/class-wcdp_leaderboard.php:700
 msgid "%s ago"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:786
+#: includes/class-wcdp_leaderboard.php:791
+#: includes/class-wcdp_leaderboard.php:835
 msgid "Yes"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:786
+#: includes/class-wcdp_leaderboard.php:791
+#: includes/class-wcdp_leaderboard.php:835
 msgid "No"
+msgstr ""
+
+#: includes/class-wcdp_leaderboard.php:833
+msgid "Leaderboard Preference"
 msgstr ""
 
 #: includes/integrations/express-checkout/class-wcdp-express-checkout.php:41
@@ -1271,7 +1278,7 @@ msgstr ""
 msgid "Design of the variation selection. Only for variable products."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:80
+#: includes/templates/wcdp_step_1.php:79
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
