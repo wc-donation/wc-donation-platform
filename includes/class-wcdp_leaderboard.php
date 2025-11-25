@@ -31,11 +31,8 @@ class WCDP_Leaderboard
             //Save the value of the WooCommerce checkout checkbox
             add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
 
-            //Display the value of the WooCommerce checkout checkbox to the user
-            add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_order_details'));
-
-            // Display the value in My Account order details page too
-            add_action('woocommerce_view_order', array($this, 'display_anonymous_donation_checkbox_in_account_order_details'), 20);
+            // Display the value of the WooCommerce checkout checkbox to the user
+            add_action('woocommerce_order_details_after_customer_details', array($this, 'display_anonymous_donation_checkbox_in_account_order_details'), 20);
         }
 
         // Clear donable products cache when product meta is updated
@@ -770,29 +767,6 @@ class WCDP_Leaderboard
     }
 
     /**
-     * Display the value of the anonymous checkbox to the user
-     * @param $order
-     * @return void
-     */
-    public function display_anonymous_donation_checkbox_in_order_details($order)
-    {
-        if (!WCDP_Form::order_contains_donation($order)) {
-            return;
-        }
-
-        $checkbox_value = $order->get_meta('wcdp_checkout_checkbox');
-
-        if ($checkbox_value === null || $checkbox_value === '')
-            return;
-
-        echo wp_kses_post(sprintf(
-            '<p><strong>%s:</strong> %s</p>',
-            esc_html(get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform'))),
-            esc_html($checkbox_value === "yes" ? __('Yes', 'wc-donation-platform') : __('No', 'wc-donation-platform'))
-        ));
-    }
-
-    /**
      * Clear donable products cache when _donable meta is updated
      * @param int $meta_id
      * @param int $post_id
@@ -829,7 +803,7 @@ class WCDP_Leaderboard
             return;
 
         echo wp_kses_post(sprintf(
-            '<section class="woocommerce-order-leaderboard-preference"><h2>%s</h2><p><strong>%s:</strong> %s</p></section>',
+            '<section class="woocommerce-order-leaderboard-preference"><h2 style="margin: 1em 0 0;">%s</h2><p><strong>%s:</strong> %s</p></section>',
             esc_html__('Leaderboard Preference', 'wc-donation-platform'),
             esc_html(get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform'))),
             esc_html($checkbox_value === "yes" ? __('Yes', 'wc-donation-platform') : __('No', 'wc-donation-platform'))
