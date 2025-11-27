@@ -282,6 +282,21 @@ class WCDP_Form
     }
 
     /**
+     * Return true if the order contains only donation products
+     * @param WC_Order $order
+     * @return bool
+     */
+    public static function order_contains_only_donations(WC_Order $order): bool
+    {
+        foreach ($order->get_items() as $item) {
+            if (isset($item['product_id']) && !WCDP_Form::is_donable($item['product_id'])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * returns the HTML markup of a fieldset
      * @param array $args
      * @param null $product

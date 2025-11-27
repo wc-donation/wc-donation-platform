@@ -104,19 +104,33 @@ class WCDP_Hooks
             return $template;
         }
 
+        $order = null;
+        if (isset($args['order'])) {
+            $order = $args['order'];
+        } else if (isset($args['order_id'])) {
+            $order = wc_get_order($args['order_id']);
+        }
         $path = WCDP_DIR . 'includes/wc-templates/';
         $donable = WCDP_Form::is_donable(get_queried_object_id());
 
         switch ($template_name) {
             case 'checkout/review-order.php':
             case 'checkout/form-login.php':
-            case 'checkout/thankyou.php':
             case 'checkout/cart-errors.php':
             case 'checkout/form-checkout.php':
-            case 'checkout/order-receipt.php':
             case 'checkout/payment.php':
             case 'checkout/form-billing.php':
+                if (
+                    get_option('wcdp_compatibility_mode', 'no') === 'no' &&
+                    WCDP_Form::cart_contains_only_donations()
+                ) {
+                    $template = $path . $template_name;
+                }
+                break;
+
+            case 'checkout/order-receipt.php':
             case 'checkout/order-received.php':
+            case 'checkout/thankyou.php':
 
             case 'myaccount/dashboard.php':
             case 'myaccount/view-order.php':
@@ -152,6 +166,13 @@ class WCDP_Hooks
             case 'emails/plain/admin-new-order.php':
             case 'emails/plain/admin-failed-order.php':
             case 'emails/plain/admin-cancelled-order.php':
+                if (
+                    get_option('wcdp_compatibility_mode', 'no') === 'no' &&
+                    ($order === null || WCDP_Form::order_contains_only_donations($order))
+                ) {
+                    $template = $path . $template_name;
+                }
+                break;
 
             case 'loop/no-products-found.php':
                 if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
@@ -279,9 +300,12 @@ class WCDP_Hooks
      *
      * @return string
      */
-    public function wcdp_order_button_text(): string
+    public function wcdp_order_button_text($label): string
     {
-        return __('Donate now', 'wc-donation-platform');
+        if (WCDP_Form::cart_contains_only_donations(WC()->cart)) {
+            return __('Donate now', 'wc-donation-platform');
+        }
+        return $label;
     }
 
     /**
