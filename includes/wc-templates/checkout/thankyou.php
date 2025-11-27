@@ -48,9 +48,9 @@ defined('ABSPATH') || exit;
 
         <?php else: ?>
 
-            <h1 class="wcdp-heading wcdp-donation-received-heading">
+            <h2 class="wcdp-heading wcdp-donation-received-heading">
                 <?php echo apply_filters('wcdp_thankyou_donation_received_heading', esc_html__('Thank you for your donation', 'wc-donation-platform'), $order); ?>
-            </h1>
+            </h2>
 
             <p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
                 <?php echo apply_filters('woocommerce_thankyou_order_received_text', esc_html__('Thank you. Your donation has been received.', 'wc-donation-platform'), $order); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
