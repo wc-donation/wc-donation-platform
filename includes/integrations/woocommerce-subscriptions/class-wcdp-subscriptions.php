@@ -91,19 +91,31 @@ class WCDP_Subscriptions
             return $template;
         }
 
+        $order = null;
+        if (isset($args['order'])) {
+            $order = $args['order'];
+        } else if (isset($args['order_id'])) {
+            $order = wc_get_order($args['order_id']);
+        }
+
         $path = WCDP_DIR . 'includes/integrations/woocommerce-subscriptions/templates/';
 
         switch ($template_name) {
+            case 'checkout/form-change-payment-method.php':
+            case 'checkout/subscription-receipt.php':
+            case 'checkout/recurring-subtotals.php':
+
             case 'myaccount/my-subscriptions.php':
+                if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+                    $template = $path . $template_name;
+                }
+                break;
+
             case 'myaccount/related-orders.php':
             case 'myaccount/related-subscriptions.php':
             case 'myaccount/subscription-details.php':
             case 'myaccount/subscription-totals.php':
             case 'myaccount/subscription-totals-table.php':
-
-            case 'checkout/form-change-payment-method.php':
-            case 'checkout/subscription-receipt.php':
-            case 'checkout/recurring-subtotals.php':
 
             case 'emails/admin-new-renewal-order.php':
             case 'emails/customer-processing-renewal-order.php':
@@ -134,7 +146,10 @@ class WCDP_Subscriptions
             case 'emails/plain/customer-on-hold-renewal-order.php':
             case 'emails/plain/subscription-info.php':
             case 'emails/plain/customer-payment-retry.php':
-                if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
+                if (
+                    get_option('wcdp_compatibility_mode', 'no') === 'no' &&
+                    ($order === null || WCDP_Form::order_contains_only_donations($order))
+                ) {
                     $template = $path . $template_name;
                 }
                 break;
