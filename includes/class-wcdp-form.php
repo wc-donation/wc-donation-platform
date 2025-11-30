@@ -163,12 +163,18 @@ class WCDP_Form
         </p>';
     }
 
+    /**
+     * Checks if a grouped product has at least one purchasable donation child product
+     * 
+     * @param mixed $product
+     * @return bool
+     */
     private static function check_grouped_product($product)
     {
         if (!is_a($product, 'WC_Product_Grouped')) {
             return true;
         }
-        $ids = $product->get_children('vier');
+        $ids = $product->get_children('view');
         foreach ($ids as $id) {
             $productChild = wc_get_product($id);
             if ($productChild && $productChild->is_purchasable() && WCDP_Form::is_donable($id) && (is_a($productChild, 'WC_Product_Simple') || is_a($productChild, 'WC_Product_Subscription'))) {
@@ -189,6 +195,10 @@ class WCDP_Form
         return apply_filters('wcdp_is_donable', get_post_meta($id, '_donable', true) == 'yes');
     }
 
+    /**
+     * Output a styled error message HTML
+     * @param string $message
+     */
     public static function form_error_message($message)
     {
         echo '<ul class="woocommerce-error wcdp-error-message" id="wcdp-ajax-error" role="alert"><li>';
@@ -256,7 +266,7 @@ class WCDP_Form
      */
     public static function cart_contains_only_donations(): bool
     {
-        if (!empty(WC()->cart->get_cart_contents())) {
+        if (WC()->cart && !empty(WC()->cart->get_cart_contents())) {
             foreach (WC()->cart->get_cart_contents() as $cart_item) {
                 if (isset($cart_item['product_id']) && !WCDP_Form::is_donable($cart_item['product_id'])) {
                     return false;
