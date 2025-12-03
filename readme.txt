@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: 1.3.5
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -187,6 +187,7 @@ a11y: improve accessibility of fee recovery checkbox
 a11y: improve tab flow on step 2 for next/back buttons
 chore: improve feedback survey
 chore: bump supported supported WooCommerce version
+chore: bump supported supported WP version
 chore: Remove Subtotal line from order review when the cart only contains donation products
 chore: improve next/back button placement
 
