@@ -45,23 +45,28 @@ if (!defined('ABSPATH'))
             );
             ?>
             <br>
-            <button type="button" class="button wcdp-button wcdp-right" data-step="3">
-                <?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform'), $value['id'], 2); ?>
-                &nbsp;
-                <div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
-            </button>
-            <button type="button" class="button wcdp-button wcdp-left" data-step="1">
-                <div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>
-                &nbsp;<?php esc_html_e('Back', 'wc-donation-platform'); ?>
-            </button>
+            <div class="button-row">
+                <button type="button" class="button wcdp-button wcdp-right" data-step="3">
+                    <?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform'), $value['id'], 2); ?>
+                    &nbsp;
+                    <div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
+                </button>
+                <button type="button" class="button wcdp-button wcdp-left" data-step="1">
+                    <div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>
+                    &nbsp;<?php esc_html_e('Back', 'wc-donation-platform'); ?>
+                </button>
+            </div>
         </div>
         <div class="wcdp-tab" id="wcdp-step-3">
             <?php wc_get_template('wcdp_step_3.php', ['form_id' => $form_id,], '', WCDP_DIR . 'includes/templates/'); ?>
             <br>
-            <button type="button" class="button wcdp-button wcdp-left" data-step="2">
-                <div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>
-                &nbsp;<?php esc_html_e('Back', 'wc-donation-platform'); ?>
-            </button>
+            <div class="button-row">
+                <div></div>
+                <button type="button" class="button wcdp-button wcdp-left" data-step="2">
+                    <div class="wcdp-arrow wcdp-left-arrow">&laquo;</div>
+                    &nbsp;<?php esc_html_e('Back', 'wc-donation-platform'); ?>
+                </button>
+            </div>
         </div>
     </form>
 

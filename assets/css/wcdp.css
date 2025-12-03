@@ -59,14 +59,10 @@ main#main .wcdp-form {
     color: var(--wcdp-main-3);
 }
 
-#main .wcdp-right,
-.wcdp-right {
-    float: right;
-}
-
-.wcdp-left {
-    display: inline-block;
-    float: left;
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
 }
 
 #wcdp-popup .wcdp-body {
@@ -648,7 +644,7 @@ input:focus+.wcdp-fee-recovery__body {
 }
 
 .wcdp-product-image {
-    margin: 18px auto 12px;
+    margin: 0 auto 12px;
     width: max-content;
     max-width: 100%;
 }

@@ -188,6 +188,7 @@ a11y: improve tab flow on step 2 for next/back buttons
 chore: improve feedback survey
 chore: bump supported supported WooCommerce version
 chore: Remove Subtotal line from order review when the cart only contains donation products
+chore: improve next/back button placement
 
 = 1.3.4.1 2025-05-24 =
 hotfix: fix anonymous donation checkbox always visible

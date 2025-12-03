@@ -63,7 +63,7 @@ class WCDP_Form
         static $no_donation_form_yet = true;
 
         //Only one donation form per page
-        if ((!$no_donation_form_yet || ($context !== 'product-page' && is_product())) && apply_filters("wcdp_only_one_form_allowed", true)) {
+        if ((!$no_donation_form_yet || ($context !== 'product-page' && $context !== 'embed' && is_product())) && apply_filters("wcdp_only_one_form_allowed", true)) {
             return '<p class="wcdp-error-message">' . esc_html__('Only one donation form per page allowed', 'wc-donation-platform') . '</p>';
         }
         $no_donation_form_yet = false;

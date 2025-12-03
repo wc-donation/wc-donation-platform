@@ -71,7 +71,7 @@ if ($value['style'] != '4') {
         echo ' action="' . wc_get_cart_url() . '"';
     }
 }
-if ($context === 'embed') {
+if ($context === 'embed' && $value['style'] === 4) {
     echo ' target="_blank"';
 }
 ?> autocomplete="off" enctype='multipart/form-data'
@@ -114,6 +114,7 @@ if ($context === 'embed') {
     );
     ?>
     <?php if ($value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5): ?>
+    <div class="button-row">
         <button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" data-step="2">
             <?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform'), $value['id'], 1); ?>
             &nbsp;<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
@@ -124,13 +125,16 @@ if ($context === 'embed') {
             <div></div>
             <div></div>
         </div>
+    </div>
     <?php elseif ($value['style'] == '4'): ?>
+    <div class="button-row">
         <button class="button wcdp-button wcdp-right" type="submit">
             <?php echo apply_filters('wcdp_donate_label', esc_html__('Donate', 'wc-donation-platform')); ?>&nbsp;<div
                 class="wcdp-arrow wcdp-right-arrow">
                 &raquo;
             </div>
         </button>
+    </div>
     <?php endif; ?>
     <div class="wcdp-divider"></div>
 
