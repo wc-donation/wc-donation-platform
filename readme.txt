@@ -175,6 +175,7 @@ feat: add product image in styled div
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
 dev: add wcdp_product_settings_fundraising action
+fix: update donation revenue when wc_order_product_lookup table is updated
 fix: hide Payment Plugins for Stripe WooCommerce express checkout buttons since they are not working properly
 fix: show "thank you certificate" action button only for donation orders
 fix: do not attach thank you certificates to orders that do not contain a donation

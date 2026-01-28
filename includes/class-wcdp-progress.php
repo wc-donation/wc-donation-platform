@@ -21,8 +21,8 @@ class WCDP_Progress
         //display order count for a product
         add_shortcode('wcdp_order_counter', array($this, 'wcdp_order_counter'));
 
-        //update donation revenue
-        add_action('woocommerce_order_status_changed', array($this, 'reset_total_revenue'), 10, 4);
+        //update donation revenue when wc_order_product_lookup table is updated
+        add_action('woocommerce_analytics_update_product', array($this, 'reset_total_revenue'), 10, 2);
 
         //Show a warning to admins if WooCommerce analytics is disabled
         add_action('admin_init', [$this, 'maybe_show_analytics_warning']);
@@ -48,27 +48,30 @@ class WCDP_Progress
     }
 
     /**
-     * Reset product revenue after order status changed
-     * @param $orderid
-     * @param $old_status
-     * @param $new_status
-     * @param $order
+     * Reset product revenue when wc_order_product_lookup table is updated
+     * @param $order_item_id - the WC_Order_Item id
+     * @param $order_id - the order id
      * @return void
      */
-    public function reset_total_revenue($orderid, $old_status, $new_status, $order)
+    public function reset_total_revenue($order_item_id, $order_id)
     {
-        if ($old_status !== 'completed' && $new_status !== 'completed')
+        $order_item = WC_Order_Factory::get_order_item($order_item_id);
+        if (!$order_item || !method_exists($order_item, 'get_product_id')) {
             return;
-
-        foreach ($order->get_items() as $item) {
-            $revenue = get_post_meta($item->get_product_id(), 'wcdp_total_revenue');
-            //Delete the outdated total revenue meta
-            //If the orderid is smaller than 10000 it assumes that the page does not receive many donations
-            if ($revenue && ($orderid <= 10000 || time() - $revenue[0]['time'] > 30) && !apply_filters('wcdp_force_recalculate_total_revenue', false, $item, $revenue)) {
-                delete_post_meta($item->get_product_id(), 'wcdp_total_revenue');
-            }
-            delete_transient('wcdp_order_counter_' . $item->get_product_id());
         }
+
+        $product_id = $order_item->get_product_id();
+        if ($product_id <= 0) {
+            return;
+        }
+
+        $revenue = get_post_meta($product_id, 'wcdp_total_revenue');
+        //Delete the outdated total revenue meta
+        //If the order id is smaller than 10000 it assumes that the page does not receive many donations
+        if ($revenue && ($order_id <= 10000 || time() - $revenue[0]['time'] > 30) && !apply_filters('wcdp_force_recalculate_total_revenue', false, $order_item, $revenue)) {
+            delete_post_meta($product_id, 'wcdp_total_revenue');
+        }
+        delete_transient('wcdp_order_counter_' . $product_id);
     }
 
     /**
@@ -188,7 +191,7 @@ class WCDP_Progress
                     --wcdp-main-2:
                         <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#006633')); ?>
                     ;
-                    --label-text-checked: white;
+                    --wcdp-label-text-checked: white;
                 }
 
                 @keyframes wcdp-progress {
