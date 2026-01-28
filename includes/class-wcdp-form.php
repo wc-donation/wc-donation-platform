@@ -58,7 +58,7 @@ class WCDP_Form
             return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
         }
         if (!self::is_donable($value["id"])) {
-            return '<p class="wcdp-error-message">' . esc_html__('Donations are not activated for this project.', 'wc-donation-platform') . '</p>';
+            return '<p class="wcdp-error-message" data-invalidid="' . esc_attr($value["id"]) . '">' . esc_html__('Donations are not activated for this project.', 'wc-donation-platform') . '</p>';
         }
         static $no_donation_form_yet = true;
 
