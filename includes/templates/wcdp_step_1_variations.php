@@ -27,7 +27,9 @@ if ($has_child): ?>
             )
         );
 
-        $attributeLayout = get_post_meta($product_id, 'wcdp-settings[wcdp-attr-' . $esc_attribute . ']', true);
+        $meta_value = get_post_meta($product_id, 'wcdp-settings[wcdp-attr-' . $esc_attribute . ']', true);
+
+        $attributeLayout = in_array($meta_value, ['1', '2', '3']) ? $meta_value : '1';
 
         /*
          * $attributeLayout = 0: Default Layout
