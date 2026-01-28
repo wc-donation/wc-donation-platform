@@ -25,7 +25,7 @@ if ('yes' === get_option('wcdp_branding', 'no')): ?>
             sprintf(
                 // translators: %s is a link to the plugin website
                 esc_html__('Powered by %s', 'wc-donation-platform'),
-                '<a href="https://www.wc-donation.com/" target="_blank">' . esc_html__('Donation Platform for WooCommerce', 'wc-donation-platform') . '</a>'
+                '<a href="https://www.wc-donation.com/?utm_source=poweredby" target="_blank">' . esc_html__('Donation Platform for WooCommerce', 'wc-donation-platform') . '</a>'
             )
         );
         ?>
