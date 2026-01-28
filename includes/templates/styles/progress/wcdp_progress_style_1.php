@@ -33,7 +33,7 @@ if (!defined('WCDP_PROGRESS_1')):
     }
     .wcdp-progress-style-1 .wcdp-thermometer > .wcdp-label, .wcdp-thermometer > .wcdp-label .woocommerce-Price {
     white-space: nowrap;
-    color: var(--label-text-checked);
+    color: var(--wcdp-label-text-checked);
     text-align: right;
     padding: 0 1ch 0 1ch;
     font-size: 1em;

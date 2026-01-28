@@ -534,7 +534,7 @@ class WCDP_Leaderboard
     {
         return ':root {
 					--wcdp-main-2: ' . sanitize_hex_color(get_option('wcdp_main_color', '#30bf76')) . ';
-                    --label-inactive: lightgrey;
+                    --wcdp-label-inactive: lightgrey;
                 }
                 ul.wcdp-leaderboard-s1 {
                   list-style: none;
@@ -552,7 +552,7 @@ class WCDP_Leaderboard
                   top: 0;
                   bottom: 0;
                   width: 2px;
-                  background-color: var(--label-inactive);
+                  background-color: var(--wcdp-label-inactive);
                 }
                 .wcdp-leaderboard-s1 .wcdp-leaderboard-li:first-child::before {
                   top: 50%;

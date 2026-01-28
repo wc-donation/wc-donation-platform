@@ -24,7 +24,7 @@ if (!defined('WCDP_PROGRESS_3')):
     :root{
     --wcdp-main: <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')) ?>;
     --wcdp-main-2: <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#006633')) ?>;
-    --label-text-checked: white;
+    --wcdp-label-text-checked: white;
     }
     .wcdp-progress-style-3 {
     margin-bottom: 0.5em;

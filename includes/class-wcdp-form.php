@@ -422,13 +422,13 @@ class WCDP_Form
                 --wcdp-step-3:
                     <?php echo sanitize_hex_color($wcdp_main_color); ?>
                 ;
-                --label-inactive: LightGray;
-                --label-inactive-hover: #b5b5b5;
-                --label-text: black;
-                --label-text-checked: white;
-                --background-color: white;
-                --overlay-color: rgba(0, 0, 0, 0.8);
-                --controls: black;
+                --wcdp-label-inactive: LightGray;
+                --wcdp-label-inactive-hover: #b5b5b5;
+                --wcdp-label-text: black;
+                --wcdp-label-text-checked: white;
+                --wcdp-background-color: white;
+                --wcdp-overlay-color: rgba(0, 0, 0, 0.8);
+                --wcdp-controls: black;
             }
         </style>
         <?php

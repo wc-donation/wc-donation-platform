@@ -190,6 +190,7 @@ chore: bump supported supported WooCommerce version
 chore: bump supported supported WP version
 chore: Remove Subtotal line from order review when the cart only contains donation products
 chore: improve next/back button placement
+chore: prefix all CSS variables properly
 
 = 1.3.4.1 2025-05-24 =
 hotfix: fix anonymous donation checkbox always visible

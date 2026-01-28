@@ -40,8 +40,7 @@ main#main .wcdp-form {
     width: 1.5em;
     height: 1.5em;
     line-height: 1.5em;
-    color: var(--label-text-checked);
-    /* color: var(--background-color); */
+    color: var(--wcdp-label-text-checked);
     border-radius: 100%;
     margin: auto;
     background: var(--wcdp-main);
@@ -68,7 +67,6 @@ main#main .wcdp-form {
 #wcdp-popup .wcdp-body {
     overflow: hidden;
     padding: 18px;
-    /* background-color: var(--background-color); */
 }
 
 .wcdp-body input.wcdp-donation-amount {
@@ -77,8 +75,8 @@ main#main .wcdp-form {
     padding: 3px;
     text-align: center;
     margin: 0;
-    color: var(--controls);
-    background-color: var(--label-text-checked);
+    color: var(--wcdp-controls);
+    background-color: var(--wcdp-label-text-checked);
     display: inline-block;
 }
 
@@ -152,7 +150,7 @@ main#main .wcdp-form {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background: var(--overlay-color);
+    background: var(--wcdp-overlay-color);
     opacity: 1;
     padding: 0;
 }
@@ -161,7 +159,7 @@ main#main .wcdp-form {
     margin: 10vh auto;
     width: 95vw;
     max-width: calc(42ch + 200px);
-    background: var(--background-color);
+    background: var(--wcdp-background-color);
     position: relative;
     transition: opacity 1s;
     animation-name: wcdp-appear-animation;
@@ -173,7 +171,7 @@ main#main .wcdp-form {
     position: absolute;
     top: 5px;
     right: 5px;
-    stroke: var(--controls);
+    stroke: var(--wcdp-controls);
     stroke-width: 2px;
     width: 36px;
     z-index: 3;
@@ -291,16 +289,7 @@ body span.select2-container--open {
 
 /* START Step 1 grid */
 ul.wcdp_options>li>input:hover:not(:disabled):not(:checked)+label {
-    background-color: var(--label-inactive-hover);
-
-    /*
-     * background-color: var(--wcdp-main);
-     * color: white;
-     * filter: brightness(85%);
-     * transform: scale(1.02);
-     * border: 2px solid var(--wcdp-main);
-     * padding: 8px 3px 8px 3px;
-     * background-color: var(--wcdp-main); */
+    background-color: var(--wcdp-label-inactive-hover);
 }
 
 .wcdp_options>li>input:checked+label:after {
@@ -317,8 +306,8 @@ ul.wcdp_options>li>input:hover:not(:disabled):not(:checked)+label {
 .wcdp_options>li>label {
     text-align: center;
     display: block;
-    background: var(--label-inactive);
-    color: var(--label-text);
+    background: var(--wcdp-label-inactive);
+    color: var(--wcdp-label-text);
     padding: 6px;
     cursor: pointer;
 }
@@ -360,7 +349,7 @@ ul.wcdp_options>li>input:hover:not(:disabled):not(:checked)+label {
 ul.wcdp_options>li>input:checked+label,
 ul.wcdp_options>li>input:checked+label span {
     background: var(--wcdp-main-2);
-    color: var(--label-text-checked);
+    color: var(--wcdp-label-text-checked);
 }
 
 ul.wcdp_options>li>input:focus+label {
@@ -519,7 +508,7 @@ form[name="checkout"] .wcdp-tab div:first-child {
     left: calc(100% - 0.707em);
     top: 50%;
     margin-top: -0.707em;
-    background-color: var(--label-text-checked);
+    background-color: var(--wcdp-label-text-checked);
     transform: rotate(45deg);
     border-top: 1px solid var(--wcdp-main-2);
     border-right: 1px solid var(--wcdp-main-2);
@@ -529,11 +518,11 @@ form[name="checkout"] .wcdp-tab div:first-child {
 .wcdp-style5:hover,
 .wcdp-style5:hover:after {
     background-color: var(--wcdp-main-2);
-    color: var(--label-text-checked);
+    color: var(--wcdp-label-text-checked);
 }
 
 .wcdp-style5-active {
-    color: var(--label-text-checked);
+    color: var(--wcdp-label-text-checked);
     background-color: var(--wcdp-main-2);
 }
 
@@ -636,7 +625,7 @@ input:focus+.wcdp-fee-recovery__body {
 .wcdp-form button,
 .wcdp-button {
     background-color: var(--wcdp-main-2);
-    color: var(--label-text-checked);
+    color: var(--wcdp-label-text-checked);
     border: 0;
     text-align: center;
     padding: 6px 20px;
