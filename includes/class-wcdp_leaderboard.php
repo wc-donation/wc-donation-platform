@@ -706,8 +706,6 @@ class WCDP_Leaderboard
      */
     function delete_stale_orders_cache($order_item_id, $order_id): void
     {
-        error_log('delete_stale_orders_cache ' . $order_item_id . ' ' . $order_id);
-
         $order_item = WC_Order_Factory::get_order_item($order_item_id);
         if (!$order_item || !method_exists($order_item, 'get_product_id')) {
             return;
