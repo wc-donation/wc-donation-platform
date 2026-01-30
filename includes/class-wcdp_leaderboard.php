@@ -20,8 +20,8 @@ class WCDP_Leaderboard
         //Leaderboard shortcode
         add_shortcode('wcdp_leaderboard', array($this, 'wcdp_leaderboard'));
 
-        //Delete cache on order change
-        add_action('woocommerce_order_status_changed', array($this, 'delete_stale_orders_cache'), 10, 4);
+        //Delete cache on product analytics update
+        add_action('woocommerce_analytics_update_product', array($this, 'delete_stale_orders_cache'), 10, 2);
 
         if (get_option('wcdp_enable_checkout_checkbox', 'no') === 'yes') {
             // Add checkbox to WooCommerce checkout
@@ -698,27 +698,39 @@ class WCDP_Leaderboard
     }
 
     /**
-     * Hook that's triggered when an order changes its status
-     * Deletes cache when old/new status is completed and the cache hasn't been recently generated
-     * @param $order_id
-     * @param $old_status
-     * @param $new_status
-     * @param $order
+     * Hook that's triggered when product analytics are updated (order item added/updated)
+     * Deletes cache when the order item's product is a donation product
+     * @param $order_item_id - the WC_Order_Item id
+     * @param $order_id - the order id
      * @return void
      */
-    function delete_stale_orders_cache($order_id, $old_status, $new_status, $order): void
+    function delete_stale_orders_cache($order_item_id, $order_id): void
     {
-        if ($old_status !== 'completed' && $new_status !== 'completed')
+        error_log('delete_stale_orders_cache ' . $order_item_id . ' ' . $order_id);
+
+        $order_item = WC_Order_Factory::get_order_item($order_item_id);
+        if (!$order_item || !method_exists($order_item, 'get_product_id')) {
             return;
+        }
+
+        $product_id = $order_item->get_product_id();
+        if ($product_id <= 0) {
+            return;
+        }
+
+        // Only invalidate cache if this is a donation product
+        if (!WCDP_Form::is_donable($product_id)) {
+            return;
+        }
 
         // Retrieve cache keys from the 'wcdp_transient_cache_keys' option.
         $cache_keys_option = get_option('wcdp_transient_cache_keys', array());
 
-        if (!is_array($cache_keys_option) || !WCDP_Form::order_contains_donation($order)) {
-            return; // No cache keys found, nothing to delete or order does not contain a donation
+        if (!is_array($cache_keys_option)) {
+            return; // No cache keys found, nothing to delete
         }
 
-        $product_ids = WCDP_Hooks::get_order_product_ids($order);
+        $product_ids = array($product_id);
 
         foreach ($cache_keys_option as $cache_key => $timestamp) {
             $should_delete = $this->should_invalidate_cache_key($cache_key, $product_ids);
