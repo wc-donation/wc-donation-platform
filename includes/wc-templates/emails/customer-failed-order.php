@@ -1,16 +1,14 @@
 <?php
 /**
- * Customer completed order email
+ * Customer failed order email
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/emails/customer-completed-order.php.
+ * This template can be overridden by copying it to yourtheme/woocommerce/emails/customer-failed-order.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
- *
- * forked from WooCommerce\Templates
  *
  * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates\Emails
@@ -25,8 +23,11 @@ if (!defined('ABSPATH')) {
 
 $email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
 
-/*
+/**
+ * Hook for the woocommerce_email_header.
+ *
  * @hooked WC_Emails::email_header() Output the email header
+ * @since 3.7.0
  */
 do_action('woocommerce_email_header', $email_heading, $email); ?>
 
@@ -41,15 +42,18 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
 	}
 	?>
 </p>
-<p><?php esc_html_e('We have finished processing your donation.', 'wc-donation-platform'); ?></p>
-<?php if ($email_improvements_enabled): ?>
-	<p><?php esc_html_e('Here’s a reminder of what you donated:', 'wc-donation-platform'); ?></p>
-<?php endif; ?>
+<p><?php esc_html_e("Unfortunately, we couldn't complete your donation due to an issue with your payment method.", 'wc-donation-platform'); ?>
+</p>
+<?php /* translators: %s: Site title */ ?>
+<p><?php printf(esc_html__("If you'd like to continue with your donation, please return to %s and try a different method of payment.", 'wc-donation-platform'), esc_html($blogname)); ?>
+</p>
+<p><?php esc_html_e('Your donation details are as follows:', 'wc-donation-platform'); ?></p>
 <?php echo $email_improvements_enabled ? '</div>' : ''; ?>
 
 <?php
-
-/*
+/**
+ * Hook for the woocommerce_email_order_details.
+ *
  * @hooked WC_Emails::order_details() Shows the order details table.
  * @hooked WC_Structured_Data::generate_order_data() Generates structured data.
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
@@ -57,14 +61,20 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
  */
 do_action('woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email);
 
-/*
+/**
+ * Hook for the woocommerce_email_order_meta.
+ *
  * @hooked WC_Emails::order_meta() Shows order meta data.
+ * @since 1.0.0
  */
 do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email);
 
-/*
+/**
+ * Hook for woocommerce_email_customer_details.
+ *
  * @hooked WC_Emails::customer_details() Shows customer details
  * @hooked WC_Emails::email_address() Shows email address
+ * @since 1.0.0
  */
 do_action('woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email);
 
@@ -77,7 +87,10 @@ if ($additional_content) {
 	echo $email_improvements_enabled ? '</td></tr></table>' : '';
 }
 
-/*
+/**
+ * Hook for the woocommerce_email_footer.
+ *
  * @hooked WC_Emails::email_footer() Output the email footer
+ * @since 3.7.0
  */
 do_action('woocommerce_email_footer', $email);

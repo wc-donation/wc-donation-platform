@@ -150,9 +150,9 @@ class WCDP_Hooks
             case 'emails/customer-new-account.php':
             case 'emails/customer-invoice.php':
             case 'emails/customer-completed-order.php':
-            case 'emails/admin-new-order.php':
-            case 'emails/admin-failed-order.php':
-            case 'emails/admin-cancelled-order.php':
+            case 'emails/customer-failed-order.php':
+            case 'emails/customer-cancelled-order.php':
+            case 'emails/email-order-items.php':
             case 'emails/plain/email-order-details.php':
             case 'emails/plain/email.php':
             case 'emails/plain/email-customer-details.php':
@@ -163,9 +163,6 @@ class WCDP_Hooks
             case 'emails/plain/customer-note.php':
             case 'emails/plain/customer-invoice.php':
             case 'emails/plain/customer-completed-order.php':
-            case 'emails/plain/admin-new-order.php':
-            case 'emails/plain/admin-failed-order.php':
-            case 'emails/plain/admin-cancelled-order.php':
                 if (
                     get_option('wcdp_compatibility_mode', 'no') === 'no' &&
                     ($order === null || WCDP_Form::order_contains_only_donations($order))

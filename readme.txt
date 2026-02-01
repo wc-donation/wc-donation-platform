@@ -172,6 +172,7 @@ feat: refactor form error handling for improved flow
 feat: add "Powered by" functionality
 feat: add Leaderboard anonymous status info in account order details page
 feat: add product image in styled div
+feat: improved & updated email templates
 dev: add wcdp_donate_label filter
 dev: add wcdp_other_label filter
 dev: add wcdp_product_settings_fundraising action

@@ -10,14 +10,21 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://docs.woocommerce.com/document/template-structure/
+ * forked from WooCommerce\Templates
+ *
+ * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates\Emails
- * @version 3.7.0
+ * @version 10.4.0
  */
 
+use Automattic\WooCommerce\Enums\OrderStatus;
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
+
 if (!defined('ABSPATH')) {
-    exit;
+	exit;
 }
+
+$email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
 
 /**
  * Executes the e-mail header.
@@ -26,37 +33,65 @@ if (!defined('ABSPATH')) {
  */
 do_action('woocommerce_email_header', $email_heading, $email); ?>
 
-<?php /* translators: %s: Customer first name */ ?>
-    <p><?php printf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name())); ?></p>
-
-<?php if ($order->has_status('pending')) { ?>
-    <p>
-        <?php
-        printf(
-            wp_kses(
-            /* translators: %1$s: Site title, %2$s: Order pay link */
-                __('A donation has been created for you on %1$s. Your invoice is below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform'),
-                array(
-                    'a' => array(
-                        'href' => array(),
-                    ),
-                )
-            ),
-            esc_html(get_bloginfo('name', 'display')),
-            '<a href="' . esc_url($order->get_checkout_payment_url()) . '">' . esc_html__('Pay this donation', 'wc-donation-platform') . '</a>'
-        );
-        ?>
-    </p>
+<?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
+<p>
+	<?php
+	if (!empty($order->get_billing_first_name())) {
+		/* translators: %s: Customer first name */
+		printf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name()));
+	} else {
+		printf(esc_html__('Hi,', 'woocommerce'));
+	}
+	?>
+</p>
+<?php if ($order->needs_payment()) { ?>
+	<p>
+		<?php
+		if ($order->has_status(OrderStatus::FAILED)) {
+			printf(
+				wp_kses(
+					/* translators: %1$s Site title, %2$s donation pay link */
+					__('Sorry, your donation on %1$s was unsuccessful. Your donation details are below, with a link to try your payment again: %2$s', 'wc-donation-platform'),
+					array(
+						'a' => array(
+							'href' => array(),
+						),
+					)
+				),
+				esc_html(get_bloginfo('name', 'display')),
+				'<a href="' . esc_url($order->get_checkout_payment_url()) . '">' . esc_html__('Pay for this donation', 'wc-donation-platform') . '</a>'
+			);
+		} else {
+			printf(
+				wp_kses(
+					/* translators: %1$s Site title, %2$s donation pay link */
+					__('A donation has been created for you on %1$s. Your donation details are below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform'),
+					array(
+						'a' => array(
+							'href' => array(),
+						),
+					)
+				),
+				esc_html(get_bloginfo('name', 'display')),
+				'<a href="' . esc_url($order->get_checkout_payment_url()) . '">' . esc_html__('Pay for this donation', 'wc-donation-platform') . '</a>'
+			);
+		}
+		?>
+	</p>
 
 <?php } else { ?>
-    <p>
-        <?php
-        /* translators: %s: Order date */
-        printf(esc_html__('Here are the details of your donation placed on %s:', 'wc-donation-platform'), esc_html(wc_format_datetime($order->get_date_created())));
-        ?>
-    </p>
-    <?php
+	<p>
+		<?php
+		/* translators: %s Donation date */
+		printf(esc_html__('Here are the details of your donation placed on %s:', 'wc-donation-platform'), esc_html(wc_format_datetime($order->get_date_created())));
+		?>
+	</p>
+	<?php
 }
+?>
+<?php echo $email_improvements_enabled ? '</div>' : ''; ?>
+
+<?php
 
 /**
  * Hook for the woocommerce_email_order_details.
@@ -87,7 +122,9 @@ do_action('woocommerce_email_customer_details', $order, $sent_to_admin, $plain_t
  * Show user-defined additional content - this is set in each email's settings.
  */
 if ($additional_content) {
-    echo wp_kses_post(wpautop(wptexturize($additional_content)));
+	echo $email_improvements_enabled ? '<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation"><tr><td class="email-additional-content">' : '';
+	echo wp_kses_post(wpautop(wptexturize($additional_content)));
+	echo $email_improvements_enabled ? '</td></tr></table>' : '';
 }
 
 /**
