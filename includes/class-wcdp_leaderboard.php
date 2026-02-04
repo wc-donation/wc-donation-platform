@@ -796,7 +796,7 @@ class WCDP_Leaderboard
     /**
      * Display the value of the anonymous checkbox in My Account order details page
      * @param int $order_id
-     * @since 1.3.5
+     * @since 1.4.0
      * @return void
      */
     public function display_anonymous_donation_checkbox_in_account_order_details($order_id)

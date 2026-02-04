@@ -1,15 +1,15 @@
-# Copyright (C) 2025 Jonas Höbenreich
+# Copyright (C) 2026 Jonas Höbenreich
 # This file is distributed under the GNU General Public License v2.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.3.5\n"
+"Project-Id-Version: Donation Platform for WooCommerce: Fundraising & Donation Management 1.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-donation-platform\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-18T21:57:45+00:00\n"
+"POT-Creation-Date: 2026-02-04T20:58:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -39,7 +39,7 @@ msgid "Yes, I want to cover the transaction fee."
 msgstr ""
 
 #: includes/class-wcdp-fee-recovery.php:85
-#: includes/class-wcdp_leaderboard.php:607
+#: includes/class-wcdp_leaderboard.php:604
 msgid "Transaction costs"
 msgstr ""
 
@@ -78,15 +78,15 @@ msgid "This shortcode does not support AJAX calls."
 msgstr ""
 
 #: includes/class-wcdp-form.php:58
-#: includes/class-wcdp-progress.php:86
-#: includes/class-wcdp-progress.php:388
+#: includes/class-wcdp-progress.php:89
+#: includes/class-wcdp-progress.php:391
 msgid "Invalid shortcode attribute:"
 msgstr ""
 
 #: includes/class-wcdp-form.php:61
-#: includes/class-wcdp-progress.php:89
-#: includes/class-wcdp-progress.php:391
-#: includes/class-wcdp_leaderboard.php:106
+#: includes/class-wcdp-progress.php:92
+#: includes/class-wcdp-progress.php:394
+#: includes/class-wcdp_leaderboard.php:103
 msgid "Donations are not activated for this project."
 msgstr ""
 
@@ -122,37 +122,37 @@ msgstr ""
 msgid "This grouped product has no available child products."
 msgstr ""
 
-#: includes/class-wcdp-form.php:541
+#: includes/class-wcdp-form.php:566
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:548
+#: includes/class-wcdp-form.php:573
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:562
+#: includes/class-wcdp-form.php:587
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:580
+#: includes/class-wcdp-form.php:605
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:587
+#: includes/class-wcdp-form.php:612
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:640
+#: includes/class-wcdp-form.php:665
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:642
+#: includes/class-wcdp-form.php:667
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:36
-#: includes/class-wcdp-hooks.php:240
 #: includes/class-wcdp-hooks.php:258
+#: includes/class-wcdp-hooks.php:276
 msgid "Donations"
 msgstr ""
 
@@ -257,7 +257,7 @@ msgstr ""
 
 #: includes/class-wcdp-general-settings.php:182
 #: includes/class-wcdp-general-settings.php:220
-#: includes/class-wcdp_leaderboard.php:441
+#: includes/class-wcdp_leaderboard.php:438
 msgid "{firstname} donated {amount}"
 msgstr ""
 
@@ -292,9 +292,8 @@ msgid "Checkout checkbox label"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:205
-#: includes/class-wcdp_leaderboard.php:750
-#: includes/class-wcdp_leaderboard.php:790
-#: includes/class-wcdp_leaderboard.php:834
+#: includes/class-wcdp_leaderboard.php:757
+#: includes/class-wcdp_leaderboard.php:818
 msgid "Do not show my name in the leaderboard"
 msgstr ""
 
@@ -442,41 +441,44 @@ msgstr ""
 msgid "Invalid request."
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:223
+#: includes/class-wcdp-hooks.php:241
 #: includes/integrations/woocommerce-subscriptions/templates/myaccount/related-orders.php:21
+#: includes/wc-templates/emails/email-order-details.php:89
+#: includes/wc-templates/order/order-details.php:66
 msgid "Donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:224
+#: includes/class-wcdp-hooks.php:242
+#: includes/wc-templates/order/order-details.php:69
 msgid "Total"
 msgstr ""
 
 #. translators: %s: page
-#: includes/class-wcdp-hooks.php:256
+#: includes/class-wcdp-hooks.php:274
 msgid "Donations (page %d)"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:284
+#: includes/class-wcdp-hooks.php:303
 msgid "Donate now"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:375
+#: includes/class-wcdp-hooks.php:396
 msgid "Related projects"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:386
+#: includes/class-wcdp-hooks.php:407
 msgid "Donation notes"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:387
+#: includes/class-wcdp-hooks.php:408
 msgid "Notes about your donation"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:401
+#: includes/class-wcdp-hooks.php:422
 msgid "Learn more"
 msgstr ""
 
-#: includes/class-wcdp-hooks.php:455
+#: includes/class-wcdp-hooks.php:476
 msgid "Donation Platform"
 msgstr ""
 
@@ -493,35 +495,35 @@ msgid "This product will only be used for donations if activated"
 msgstr ""
 
 #. Translators: %1$s: donation amount raised, %2$s: fundraising goal
-#: includes/class-wcdp-progress.php:136
+#: includes/class-wcdp-progress.php:139
 msgid "%1$s of %2$s"
 msgstr ""
 
 #. translators: 1: raised amount, 2: goal amount
-#: includes/class-wcdp-progress.php:142
+#: includes/class-wcdp-progress.php:145
 msgid "%1$s raised of %2$s goal"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:301
+#: includes/class-wcdp-progress.php:304
 msgid "%s to go"
 msgstr ""
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
-#: includes/class-wcdp-progress.php:304
+#: includes/class-wcdp-progress.php:307
 msgid "ended %s ago"
 msgstr ""
 
 #. Translators: {ORDER_COUNT} will be replaced with the number of orders
-#: includes/class-wcdp-progress.php:381
+#: includes/class-wcdp-progress.php:384
 msgid "{ORDER_COUNT} people have already contributed to this project."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:426
+#: includes/class-wcdp-progress.php:429
 msgid "WooCommerce Analytics is disabled. The donation progress bar & Leaderboard will not function correctly. Please enable it in WooCommerce settings."
 msgstr ""
 
-#: includes/class-wcdp-progress.php:428
+#: includes/class-wcdp-progress.php:431
 #: wc-donation-platform.php:152
 msgid "Documentation"
 msgstr ""
@@ -611,8 +613,8 @@ msgid "Your suggestions for improvement..."
 msgstr ""
 
 #: includes/class-wcdp_feedback.php:759
-#: includes/templates/styles/wcdp_form_style_3.php:55
-#: includes/templates/styles/wcdp_form_style_3.php:63
+#: includes/templates/styles/wcdp_form_style_3.php:56
+#: includes/templates/styles/wcdp_form_style_3.php:67
 msgid "Back"
 msgstr ""
 
@@ -624,35 +626,33 @@ msgstr ""
 msgid "Please select a reason before continuing."
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:88
+#: includes/class-wcdp_leaderboard.php:85
 msgid "Show more"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:89
+#: includes/class-wcdp_leaderboard.php:86
 msgid "No donation data to display."
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:488
+#: includes/class-wcdp_leaderboard.php:485
 msgid "Anonymous donor"
 msgstr ""
 
 #. Translators: %s: time difference e.g. 1 week ago or 3 months ago
-#: includes/class-wcdp_leaderboard.php:700
+#: includes/class-wcdp_leaderboard.php:697
 msgid "%s ago"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:791
-#: includes/class-wcdp_leaderboard.php:835
+#: includes/class-wcdp_leaderboard.php:817
+msgid "Leaderboard Preference"
+msgstr ""
+
+#: includes/class-wcdp_leaderboard.php:819
 msgid "Yes"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:791
-#: includes/class-wcdp_leaderboard.php:835
+#: includes/class-wcdp_leaderboard.php:819
 msgid "No"
-msgstr ""
-
-#: includes/class-wcdp_leaderboard.php:833
-msgid "Leaderboard Preference"
 msgstr ""
 
 #: includes/integrations/express-checkout/class-wcdp-express-checkout.php:41
@@ -660,7 +660,6 @@ msgid "Express Donation"
 msgstr ""
 
 #: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:89
-#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:164
 msgid "Recurring Donations"
 msgstr ""
 
@@ -852,10 +851,6 @@ msgstr ""
 msgid "Donation Date"
 msgstr ""
 
-#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:179
-msgid "Complete checkout to renew your recurring donation."
-msgstr ""
-
 #. translators: $1: opening <strong> tag, $2: closing </strong> tag
 #: includes/integrations/woocommerce-subscriptions/templates/checkout/form-change-payment-method.php:85
 msgid "Update the payment method used for %1$sall%2$s of my current recurring donations."
@@ -865,37 +860,6 @@ msgstr ""
 #: includes/integrations/woocommerce-subscriptions/templates/checkout/subscription-receipt.php:16
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/email-order-details.php:20
 msgid "Recurring Donation Number: %s"
-msgstr ""
-
-#. translators: $1: customer's billing first name and last name
-#: includes/integrations/woocommerce-subscriptions/templates/emails/admin-new-renewal-order.php:16
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-renewal-order.php:18
-msgctxt "Used in admin email: new renewal order"
-msgid "You have received a recurring donation renewal from %1$s. Their donation is as follows:"
-msgstr ""
-
-#. translators: $1: customer's first name and last name, $2: how many subscriptions customer switched
-#: includes/integrations/woocommerce-subscriptions/templates/emails/admin-new-switch-order.php:18
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-switch-order.php:20
-msgctxt "Used in switch notification admin email"
-msgid "Customer %1$s has switched their recurring donation. The details of their new recurring donation are as follows:"
-msgid_plural "Customer %1$s has switched %2$d of their recurring donations. The details of their new recurring donations are as follows:"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/integrations/woocommerce-subscriptions/templates/emails/admin-new-switch-order.php:28
-msgid "New recurring donation details"
-msgstr ""
-
-#. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
-#: includes/integrations/woocommerce-subscriptions/templates/emails/admin-payment-retry.php:23
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:22
-msgctxt "In customer renewal invoice email"
-msgid "The automatic recurring payment for donation #%1$s from %2$s has failed. The payment will be retried %3$s."
-msgstr ""
-
-#: includes/integrations/woocommerce-subscriptions/templates/emails/admin-payment-retry.php:24
-msgid "The donation is as follows:"
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/cancelled-subscription.php:23
@@ -983,6 +947,26 @@ msgstr ""
 #: includes/integrations/woocommerce-subscriptions/templates/emails/on-hold-subscription.php:16
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:16
 msgid "A recurring donation belonging to %1$s has been suspended by the user. Their recurring donation's details are as follows:"
+msgstr ""
+
+#. translators: $1: customer's billing first name and last name
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-renewal-order.php:18
+msgctxt "Used in admin email: new renewal order"
+msgid "You have received a recurring donation renewal from %1$s. Their donation is as follows:"
+msgstr ""
+
+#. translators: $1: customer's first name and last name, $2: how many subscriptions customer switched
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-switch-order.php:20
+msgctxt "Used in switch notification admin email"
+msgid "Customer %1$s has switched their recurring donation. The details of their new recurring donation are as follows:"
+msgid_plural "Customer %1$s has switched %2$d of their recurring donations. The details of their new recurring donations are as follows:"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
+#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:22
+msgctxt "In customer renewal invoice email"
+msgid "The automatic recurring payment for donation #%1$s from %2$s has failed. The payment will be retried %3$s."
 msgstr ""
 
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:23
@@ -1156,8 +1140,8 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
-#: includes/templates/styles/wcdp_form_style_3.php:49
-#: includes/templates/wcdp_step_1.php:118
+#: includes/templates/styles/wcdp_form_style_3.php:50
+#: includes/templates/wcdp_step_1.php:119
 msgid "Next"
 msgstr ""
 
@@ -1282,14 +1266,14 @@ msgstr ""
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:129
+#: includes/templates/wcdp_step_1.php:132
 msgid "Donate"
 msgstr ""
 
 #: includes/templates/wcdp_step_1_amount.php:54
 #: includes/templates/wcdp_step_1_amount.php:115
 #: includes/templates/wcdp_step_1_amount.php:125
-#: includes/templates/wcdp_step_1_variations.php:42
+#: includes/templates/wcdp_step_1_variations.php:44
 msgid "required"
 msgstr ""
 
@@ -1319,8 +1303,7 @@ msgid "Resolve issues"
 msgstr ""
 
 #: includes/wc-templates/checkout/form-billing.php:30
-#: includes/wc-templates/emails/email-addresses.php:32
-#: includes/wc-templates/emails/email-customer-details.php:24
+#: includes/wc-templates/emails/email-customer-details.php:26
 #: includes/wc-templates/emails/plain/email-customer-details.php:24
 msgid "Donor details"
 msgstr ""
@@ -1329,11 +1312,11 @@ msgstr ""
 msgid "Your donation"
 msgstr ""
 
-#: includes/wc-templates/checkout/form-login.php:28
+#: includes/wc-templates/checkout/form-login.php:33
 msgid "Returning donor?"
 msgstr ""
 
-#: includes/wc-templates/checkout/form-login.php:34
+#: includes/wc-templates/checkout/form-login.php:49
 msgid "Sign in with your account to contribute faster!"
 msgstr ""
 
@@ -1363,99 +1346,148 @@ msgstr ""
 msgid "Your request could not be processed correctly. If the problem persists, please contact us."
 msgstr ""
 
-#. translators: %1$s: Order number, %2$s: Customer full name
-#: includes/wc-templates/emails/admin-cancelled-order.php:28
-#: includes/wc-templates/emails/plain/admin-cancelled-order.php:25
-msgid "Notification to let you know &mdash; donation #%1$s belonging to %2$s has been cancelled:"
+#. translators: %1$s: Order number
+#: includes/wc-templates/emails/customer-cancelled-order.php:39
+msgid "We’re sorry to let you know that your donation #%1$s has been cancelled."
 msgstr ""
 
-#. translators: %1$s: Order number. %2$s: Customer full name.
-#: includes/wc-templates/emails/admin-failed-order.php:28
-#: includes/wc-templates/emails/plain/admin-failed-order.php:25
-msgid "Payment for donation #%1$s from %2$s has failed. The donation was as follows:"
-msgstr ""
-
-#. translators: %s: Customer billing full name
-#: includes/wc-templates/emails/admin-new-order.php:26
-#: includes/wc-templates/emails/plain/admin-new-order.php:27
-msgid "You’ve received the following donation from %s:"
-msgstr ""
-
-#. translators: %s: Site title
-#: includes/wc-templates/emails/customer-completed-order.php:31
-#: includes/wc-templates/emails/plain/customer-completed-order.php:29
+#: includes/wc-templates/emails/customer-completed-order.php:44
+#: includes/wc-templates/emails/plain/customer-completed-order.php:32
 msgid "We have finished processing your donation."
 msgstr ""
 
-#. translators: %1$s: Site title, %2$s: Order pay link
-#: includes/wc-templates/emails/customer-invoice.php:38
-#: includes/wc-templates/emails/plain/customer-invoice.php:33
-msgid "A donation has been created for you on %1$s. Your invoice is below, with a link to make payment when you’re ready: %2$s"
+#: includes/wc-templates/emails/customer-completed-order.php:46
+#: includes/wc-templates/emails/customer-on-hold-order.php:45
+#: includes/wc-templates/emails/customer-processing-order.php:47
+#: includes/wc-templates/emails/customer-refunded-order.php:54
+msgid "Here’s a reminder of what you donated:"
 msgstr ""
 
-#: includes/wc-templates/emails/customer-invoice.php:46
-msgid "Pay this donation"
+#: includes/wc-templates/emails/customer-failed-order.php:45
+msgid "Unfortunately, we couldn't complete your donation due to an issue with your payment method."
 msgstr ""
 
-#. translators: %s: Order date
-#: includes/wc-templates/emails/customer-invoice.php:55
-#: includes/wc-templates/emails/plain/customer-invoice.php:41
+#. translators: %s: Site title
+#: includes/wc-templates/emails/customer-failed-order.php:48
+msgid "If you'd like to continue with your donation, please return to %s and try a different method of payment."
+msgstr ""
+
+#: includes/wc-templates/emails/customer-failed-order.php:50
+msgid "Your donation details are as follows:"
+msgstr ""
+
+#. translators: %1$s Site title, %2$s donation pay link
+#: includes/wc-templates/emails/customer-invoice.php:54
+#: includes/wc-templates/emails/plain/customer-invoice.php:38
+msgid "Sorry, your donation on %1$s was unsuccessful. Your donation details are below, with a link to try your payment again: %2$s"
+msgstr ""
+
+#: includes/wc-templates/emails/customer-invoice.php:62
+#: includes/wc-templates/emails/customer-invoice.php:76
+msgid "Pay for this donation"
+msgstr ""
+
+#. translators: %1$s Site title, %2$s donation pay link
+#: includes/wc-templates/emails/customer-invoice.php:68
+#: includes/wc-templates/emails/plain/customer-invoice.php:47
+msgid "A donation has been created for you on %1$s. Your donation details are below, with a link to make payment when you’re ready: %2$s"
+msgstr ""
+
+#. translators: %s: Donation date
+#: includes/wc-templates/emails/customer-invoice.php:86
+#: includes/wc-templates/emails/plain/customer-invoice.php:55
 msgid "Here are the details of your donation placed on %s:"
 msgstr ""
 
+#: includes/wc-templates/emails/customer-new-account.php:53
+msgid "You can access your account area to view donations, change your password, and more via the link below:"
+msgstr ""
+
 #. translators: %1$s: Site title, %2$s: Username, %3$s: My account link
-#: includes/wc-templates/emails/customer-new-account.php:25
+#: includes/wc-templates/emails/customer-new-account.php:60
 msgid "Thanks for creating an account on %1$s. Your username is %2$s. You can access your account area to view donations, change your password, and more at: %3$s"
 msgstr ""
 
-#: includes/wc-templates/emails/customer-note.php:29
+#: includes/wc-templates/emails/customer-note.php:44
 #: includes/wc-templates/emails/plain/customer-note.php:28
 msgid "The following note has been added to your donation:"
 msgstr ""
 
-#: includes/wc-templates/emails/customer-note.php:33
+#: includes/wc-templates/emails/customer-note.php:53
 #: includes/wc-templates/emails/plain/customer-note.php:36
 msgid "As a reminder, here are your donation details:"
 msgstr ""
 
+#: includes/wc-templates/emails/customer-on-hold-order.php:43
+msgid "We’ve received your donation and it’s currently on hold until we can confirm your payment has been processed."
+msgstr ""
+
+#: includes/wc-templates/emails/customer-on-hold-order.php:47
+#: includes/wc-templates/emails/plain/customer-on-hold-order.php:32
+msgid "Thanks for your donation. It’s on-hold until we confirm that payment has been received."
+msgstr ""
+
+#: includes/wc-templates/emails/customer-processing-order.php:45
+msgid "Just to let you know &mdash; we’ve received your donation, and it is now being processed."
+msgstr ""
+
 #. translators: %s: Order number
-#: includes/wc-templates/emails/customer-processing-order.php:30
-#: includes/wc-templates/emails/plain/customer-processing-order.php:29
+#: includes/wc-templates/emails/customer-processing-order.php:50
+#: includes/wc-templates/emails/plain/customer-processing-order.php:33
 msgid "Just to let you know &mdash; we've received your donation #%s, and it is now being processed:"
 msgstr ""
 
 #. translators: %s: Site title
-#: includes/wc-templates/emails/customer-refunded-order.php:32
-#: includes/wc-templates/emails/plain/customer-refunded-order.php:30
+#: includes/wc-templates/emails/customer-refunded-order.php:48
+msgid "Your donation from %s has been partially refunded."
+msgstr ""
+
+#. translators: %s: Site title
+#: includes/wc-templates/emails/customer-refunded-order.php:51
+msgid "Your donation from %s has been refunded."
+msgstr ""
+
+#. translators: %s: Site title
+#: includes/wc-templates/emails/customer-refunded-order.php:58
+#: includes/wc-templates/emails/plain/customer-refunded-order.php:35
 msgid "Your donation on %s has been partially refunded. There are more details below for your reference:"
 msgstr ""
 
 #. translators: %s: Site title
-#: includes/wc-templates/emails/customer-refunded-order.php:35
-#: includes/wc-templates/emails/plain/customer-refunded-order.php:33
+#: includes/wc-templates/emails/customer-refunded-order.php:61
+#: includes/wc-templates/emails/plain/customer-refunded-order.php:38
 msgid "Your donation on %s has been refunded. There are more details below for your reference:"
 msgstr ""
 
-#. translators: %s: Order ID.
-#: includes/wc-templates/emails/email-order-details.php:34
+#: includes/wc-templates/emails/email-order-details.php:58
+msgid "Donation summary"
+msgstr ""
+
+#. translators: %s: Donation ID.
+#: includes/wc-templates/emails/email-order-details.php:71
+msgid "[Donation #%s]"
+msgstr ""
+
+#. translators: %s: Donation ID.
+#: includes/wc-templates/emails/email-order-details.php:74
 msgid "Donation #%s"
 msgstr ""
 
-#: includes/wc-templates/emails/plain/customer-on-hold-order.php:28
-msgid "Thanks for your donation. It’s on-hold until we confirm that payment has been received. In the meantime, here’s a reminder of your donation:"
+#: includes/wc-templates/emails/email-order-details.php:166
+msgid "Donor note"
 msgstr ""
 
 #: includes/wc-templates/emails/plain/email-addresses.php:22
 msgid "Donor Details"
 msgstr ""
 
-#. translators: %1$s: Order ID. %2$s: Order date
-#: includes/wc-templates/emails/plain/email-order-details.php:25
-msgid "Donation #%1$s (%2$s)"
+#. translators: %1$s: Order number, %2$s: Order date
+#: includes/wc-templates/emails/plain/email-order-details.php:33
+msgid "[Donation #%1$s] (%2$s)"
 msgstr ""
 
-#. translators: %s: Order link.
-#: includes/wc-templates/emails/plain/email-order-details.php:53
+#. translators: %s: Donation link.
+#: includes/wc-templates/emails/plain/email-order-details.php:76
 msgid "View donation: %s"
 msgstr ""
 
@@ -1480,6 +1512,7 @@ msgstr ""
 
 #. translators: %1$s Action name, %2$s Order number.
 #: includes/wc-templates/myaccount/orders.php:83
+#: includes/wc-templates/order/order-details.php:111
 msgid "%1$s donation number %2$s"
 msgstr ""
 
@@ -1488,15 +1521,15 @@ msgid "No donation has been made yet."
 msgstr ""
 
 #. translators: 1: order number 2: order date 3: order status
-#: includes/wc-templates/myaccount/view-order.php:30
+#: includes/wc-templates/myaccount/view-order.php:40
 msgid "Donation #%1$s was placed on %2$s and is currently %3$s."
 msgstr ""
 
-#: includes/wc-templates/myaccount/view-order.php:39
+#: includes/wc-templates/myaccount/view-order.php:53
 msgid "Donation updates"
 msgstr ""
 
-#: includes/wc-templates/order/order-details.php:52
+#: includes/wc-templates/order/order-details.php:59
 msgid "Donation details"
 msgstr ""
 

@@ -107,7 +107,7 @@ if ($show_downloads) {
 						foreach ($actions as $key => $action) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 							if (empty($action['aria-label'])) {
 								// Generate the aria-label based on the action name.
-								/* translators: %1$s Action name, %2$s Donation number. */
+								/* translators: %1$s Action name, %2$s Order number. */
 								$action_aria_label = sprintf(__('%1$s donation number %2$s', 'wc-donation-platform'), $action['name'], $order->get_order_number());
 							} else {
 								$action_aria_label = $action['aria-label'];

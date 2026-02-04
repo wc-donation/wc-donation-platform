@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 6.9
-Stable tag: 1.3.5
+Stable tag: 1.4.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,7 +165,7 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
-= 1.3.5 =
+= 1.4.0 2026-02-05 =
 feat: complete refactoring of Leaderboard functionality
 feat: suggested donation amounts with correct number of decimals
 feat: refactor form error handling for improved flow

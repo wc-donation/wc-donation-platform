@@ -82,7 +82,7 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
 <?php } else { ?>
 	<p>
 		<?php
-		/* translators: %s Donation date */
+		/* translators: %s: Donation date */
 		printf(esc_html__('Here are the details of your donation placed on %s:', 'wc-donation-platform'), esc_html(wc_format_datetime($order->get_date_created())));
 		?>
 	</p>

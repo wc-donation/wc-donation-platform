@@ -29,7 +29,7 @@ echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 /* translators: %s: Customer first name */
 echo sprintf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name())) . "\n\n";
-/* translators: %s: Donation number */
+/* translators: %s: Order number */
 echo sprintf(esc_html__('Just to let you know &mdash; we\'ve received your donation #%s, and it is now being processed:', 'wc-donation-platform'), esc_html($order->get_order_number())) . "\n\n";
 
 

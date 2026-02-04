@@ -34,7 +34,7 @@ if ($order->needs_payment()) {
 	if ($order->has_status(OrderStatus::FAILED)) {
 		echo wp_kses_post(
 			sprintf(
-				/* translators: %1$s: Site title, %2$s: donation pay link */
+				/* translators: %1$s Site title, %2$s donation pay link */
 				__('Sorry, your donation on %1$s was unsuccessful. Your donation details are below, with a link to try your payment again: %2$s', 'wc-donation-platform'),
 				esc_html(get_bloginfo('name', 'display')),
 				esc_url($order->get_checkout_payment_url())
@@ -43,7 +43,7 @@ if ($order->needs_payment()) {
 	} else {
 		echo wp_kses_post(
 			sprintf(
-				/* translators: %1$s: Site title, %2$s: donation pay link */
+				/* translators: %1$s Site title, %2$s donation pay link */
 				__('A donation has been created for you on %1$s. Your donation details are below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform'),
 				esc_html(get_bloginfo('name', 'display')),
 				esc_url($order->get_checkout_payment_url())
