@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-04T20:58:06+00:00\n"
+"POT-Creation-Date: 2026-02-06T20:16:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -660,6 +660,7 @@ msgid "Express Donation"
 msgstr ""
 
 #: includes/integrations/subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php:89
+#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:173
 msgid "Recurring Donations"
 msgstr ""
 
@@ -851,6 +852,10 @@ msgstr ""
 msgid "Donation Date"
 msgstr ""
 
+#: includes/integrations/woocommerce-subscriptions/class-wcdp-subscriptions.php:188
+msgid "Complete checkout to renew your recurring donation."
+msgstr ""
+
 #. translators: $1: opening <strong> tag, $2: closing </strong> tag
 #: includes/integrations/woocommerce-subscriptions/templates/checkout/form-change-payment-method.php:85
 msgid "Update the payment method used for %1$sall%2$s of my current recurring donations."
@@ -947,30 +952,6 @@ msgstr ""
 #: includes/integrations/woocommerce-subscriptions/templates/emails/on-hold-subscription.php:16
 #: includes/integrations/woocommerce-subscriptions/templates/emails/plain/on-hold-subscription.php:16
 msgid "A recurring donation belonging to %1$s has been suspended by the user. Their recurring donation's details are as follows:"
-msgstr ""
-
-#. translators: $1: customer's billing first name and last name
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-renewal-order.php:18
-msgctxt "Used in admin email: new renewal order"
-msgid "You have received a recurring donation renewal from %1$s. Their donation is as follows:"
-msgstr ""
-
-#. translators: $1: customer's first name and last name, $2: how many subscriptions customer switched
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-new-switch-order.php:20
-msgctxt "Used in switch notification admin email"
-msgid "Customer %1$s has switched their recurring donation. The details of their new recurring donation are as follows:"
-msgid_plural "Customer %1$s has switched %2$d of their recurring donations. The details of their new recurring donations are as follows:"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:22
-msgctxt "In customer renewal invoice email"
-msgid "The automatic recurring payment for donation #%1$s from %2$s has failed. The payment will be retried %3$s."
-msgstr ""
-
-#: includes/integrations/woocommerce-subscriptions/templates/emails/plain/admin-payment-retry.php:23
-msgid "The renewal donation is as follows:"
 msgstr ""
 
 #. translators: $1: customer's billing first name and last name
