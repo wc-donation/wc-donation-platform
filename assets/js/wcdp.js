@@ -9,7 +9,7 @@ jQuery(function ($) {
       ) {
         triggerCheckoutUpdate();
       }
-    }
+    },
   );
 
   if (!document.querySelector(".wcdp-form")) return;
@@ -47,7 +47,7 @@ jQuery(function ($) {
               error_message(
                 response.message,
                 response.reload,
-                response.newParams
+                response.newParams,
               );
               break;
           }
@@ -130,7 +130,7 @@ jQuery(function ($) {
   function focusFirstFocusableInStep(stepEl) {
     stepEl
       .querySelector(
-        'input:not([disabled]):not([type="hidden"]), button:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'
+        'input:not([disabled]):not([type="hidden"]), button:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])',
       )
       ?.focus();
   }
@@ -143,7 +143,7 @@ jQuery(function ($) {
   function error_message(
     message = "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.",
     reload = true,
-    newParams = false
+    newParams = false,
   ) {
     if (!reload) {
       $("#wcdp-ajax-button").show();
@@ -152,14 +152,14 @@ jQuery(function ($) {
       alert(message);
       let currentUrl = new URL(window.location.href);
       Object.entries(newParams).forEach(([key, value]) =>
-        currentUrl.searchParams.set(key, value)
+        currentUrl.searchParams.set(key, value),
       );
       window.location.href = currentUrl.toString();
     }
     $("#wcdp-spinner").hide();
     $("#wcdp-ajax-error").remove();
     $("form.checkout.woocommerce-checkout").prepend(
-      '<ul class="woocommerce-error" id="wcdp-ajax-error" role="alert"><li></li></ul>'
+      '<ul class="woocommerce-error" id="wcdp-ajax-error" role="alert"><li></li></ul>',
     );
     $("#wcdp-ajax-error li").text(message);
   }
@@ -195,7 +195,7 @@ jQuery(function ($) {
           }
         }, 1300);
       }
-    }
+    },
   );
 
   /**
@@ -205,7 +205,7 @@ jQuery(function ($) {
   let currentprice = 0;
   $(".wcdp-body")?.on("input blur keyup paste change load", function () {
     const button = document.querySelector(
-      ".wcdp-body .single_add_to_cart_button"
+      ".wcdp-body .single_add_to_cart_button",
     );
     const form = document.querySelector("#wcdp-get-send");
     if (button && form && form.checkValidity()) {
@@ -214,7 +214,7 @@ jQuery(function ($) {
       button.classList.add("disabled");
     }
     $(".wcdp-express-amount").val(
-      $('input[name="wcdp-donation-amount"]').val()
+      $('input[name="wcdp-donation-amount"]').val(),
     );
     expresstime++;
     setTimeout(function () {
@@ -381,7 +381,7 @@ jQuery(function ($) {
       history.pushState(
         "",
         document.title,
-        window.location.pathname + window.location.search
+        window.location.pathname + window.location.search,
       );
       wcdpOpen = false;
     }
@@ -406,7 +406,7 @@ jQuery(function ($) {
     let $range = $(this);
     let formId = $range.closest("form").data("formid");
     let $amount = $(
-      `form[data-formid="${formId}"] .wcdp_donation_amount_field`
+      `form[data-formid="${formId}"] .wcdp_donation_amount_field`,
     );
 
     if ($amount.length) {
@@ -435,7 +435,7 @@ jQuery(function ($) {
 
     inputs.forEach((input) => {
       const matchingOption = this.querySelector(
-        `select option[value="${input.value}"]`
+        `select option[value="${input.value}"]`,
       );
       if (!matchingOption || !matchingOption.classList.contains("attached"))
         return;
@@ -454,13 +454,13 @@ jQuery(function ($) {
 
     // copy amount from selectedAmount input field
     const selectedAmount = this.querySelector(
-      ".wcdp_amount_suggestion:checked"
+      ".wcdp_amount_suggestion:checked",
     );
     const amountInput = this.querySelector(
-      'input[name="wcdp-donation-amount"]'
+      'input[name="wcdp-donation-amount"]',
     );
     const amountAttributeInput = this.querySelector(
-      'input[name="attribute_wcdp_donation_amount"]'
+      'input[name="attribute_wcdp_donation_amount"]',
     );
     if (selectedAmount && amountInput) {
       amountInput.value = selectedAmount.value;
