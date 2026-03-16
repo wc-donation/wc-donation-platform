@@ -447,7 +447,7 @@ class WCDP_Form
         );
         wp_register_script(
             'wc-donation-platform',
-            WCDP_DIR_URL . 'assets/js/wcdp.min.js',
+            WCDP_DIR_URL . 'assets/js/wcdp.js',
             array(),
             WCDP_VERSION,
             array(

@@ -64,6 +64,8 @@ defined('ABSPATH') || exit;
 
         <?php endif; ?>
 
+        <?php do_action('wcdp_donation_upsells'); ?>
+
         <?php do_action('wcdp_fee_recovery'); ?>
 
         <?php foreach (WC()->cart->get_fees() as $fee): ?>

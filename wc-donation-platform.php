@@ -56,6 +56,7 @@ if (!class_exists('WCDP')) {
             new WCDP_Form();
             new WCDP_Progress();
             new WCDP_Fee_Recovery();
+            new WCDP_Donation_Upsells();
             new WCDP_Leaderboard();
 
             new WCDP_Feedback();
@@ -88,6 +89,9 @@ if (!class_exists('WCDP')) {
 
             //Fee Recovery
             include_once WCDP_DIR . 'includes/class-wcdp-fee-recovery.php';
+
+            //Donation Upsells
+            include_once WCDP_DIR . 'includes/class-wcdp-donation-upsells.php';
 
             //Integration with other Extensions
             include_once WCDP_DIR . 'includes/integrations/class-wcdp-integrator.php';

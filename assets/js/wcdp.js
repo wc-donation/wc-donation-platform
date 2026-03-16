@@ -1,10 +1,10 @@
 jQuery(function ($) {
   $(document).on(
     "change",
-    '#wcdp_fee_recovery, input[name="payment_method"]',
+    '#wcdp_fee_recovery, .wcdp-donation-upsell__input, input[name="payment_method"]',
     function () {
       if (
-        $(this).is("#wcdp_fee_recovery") ||
+        $(this).is("#wcdp_fee_recovery, .wcdp-donation-upsell__input") ||
         $("#wcdp_fee_recovery").prop("checked")
       ) {
         triggerCheckoutUpdate();

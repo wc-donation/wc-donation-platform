@@ -149,6 +149,18 @@ class WCDP_General_Settings
                 'id' => 'wcdp_fee_recovery_values',
             ),
             array(
+                'title' => __('Activate donation upsells', 'wc-donation-platform'),
+                'desc' => __('Ask customers on checkout if they want to add an optional donation to their order.', 'wc-donation-platform'),
+                'id' => 'wcdp_donation_upsells',
+                'default' => 'no',
+                'type' => 'checkbox',
+                'desc_tip' => __('Donation upsells work with regular webshop carts and add the selected donation as a WooCommerce fee.', 'wc-donation-platform'),
+            ),
+            array(
+                'type' => 'wcdp_donation_upsells',
+                'step' => $decimals,
+            ),
+            array(
                 'title' => __('Enable compatibility mode', 'wc-donation-platform'),
                 'desc' => __('Disable wording changes to run donation platform and webshop simultaneously', 'wc-donation-platform'),
                 'id' => 'wcdp_compatibility_mode',
