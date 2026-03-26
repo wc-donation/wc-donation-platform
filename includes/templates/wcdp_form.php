@@ -125,6 +125,24 @@ if ($value['popup']):
                         );
 
                         break;
+                    case '6':
+                        //Style 6: steps without header, top back arrow, bottom next buttons
+                        wc_get_template(
+                            'styles/wcdp_form_style_6.php',
+                            array(
+                                'value' => $value,
+                                'product' => $product,
+                                'context' => $context,
+                                'product_id' => $product_id,
+                                'has_child' => $has_child,
+                                'checkout' => $checkout,
+                                'form_id' => $form_id,
+                            ),
+                            '',
+                            WCDP_DIR . 'includes/templates/'
+                        );
+
+                        break;
                     /** @noinspection PhpMissingBreakStatementInspection */
                     case 'checkout':
                         if ($context == 'checkout') {

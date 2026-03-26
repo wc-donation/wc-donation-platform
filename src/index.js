@@ -131,6 +131,13 @@ registerBlockType("wc-donation-platform/wcdp", {
                   label: __("Style 5 (Banner Header)", "wc-donation-platform"),
                   value: "5",
                 },
+                {
+                  label: __(
+                    "Style 6 (no header, top back arrow)",
+                    "wc-donation-platform",
+                  ),
+                  value: "6",
+                },
               ]}
               onChange={changeStyle}
             />

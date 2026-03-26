@@ -114,7 +114,7 @@ if ($context === 'embed' && $value['style'] === 4) {
         WCDP_DIR . 'includes/templates/'
     );
     ?>
-    <?php if ($value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5): ?>
+    <?php if ($value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5 || $value['style'] == 6): ?>
         <div class="button-row">
             <button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" data-step="2">
                 <?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform'), $value['id'], 1); ?>

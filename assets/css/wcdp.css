@@ -469,6 +469,32 @@ form[name="checkout"] .wcdp-tab div:first-child {
     left: calc(50% - 36px);
 }
 
+.wcdp-style-6-back-wrap {
+    margin: 0 0 12px;
+}
+
+.wcdp-style-6-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.wcdp-style-6-back-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.wcdp-style-6-back:focus-visible {
+    outline: 2px solid var(--wcdp-main-2);
+    outline-offset: 2px;
+}
+
 /* compatibility Twenty Twenty-One */
 #wcdp form[name=checkout] {
     display: block;
@@ -627,7 +653,7 @@ input:focus+.wcdp-fee-recovery__body {
     width: 100%;
 }
 
-.wcdp-form button,
+.wcdp-form .button,
 .wcdp-button {
     background-color: var(--wcdp-main-2);
     color: var(--wcdp-label-text-checked);
@@ -710,36 +736,6 @@ input:focus+.wcdp-fee-recovery__body {
     background: color-mix(in srgb, var(--wcdp-main-2), transparent 85%);
     box-shadow: inset 0 0 0 2px var(--wcdp-main-2);
     color: var(--wcdp-controls);
-}
-
-.wcdp-theme-2 .wcdp-form button,
-.wcdp-theme-2 .wcdp-button,
-.wcdp-theme-2-button {
-    border-radius: 999px;
-    border: 0;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--wcdp-main-2) 95%, #0f172a 5%) 0%, color-mix(in srgb, var(--wcdp-main) 84%, #0f172a 16%) 100%);
-    color: #fff;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    padding: 10px 22px;
-    box-shadow: 0 10px 24px -16px color-mix(in srgb, var(--wcdp-main-2) 78%, #000 22%);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-}
-
-.wcdp-theme-2 .wcdp-form button:hover,
-.wcdp-theme-2 .wcdp-button:hover,
-.wcdp-theme-2-button:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.03);
-    box-shadow: 0 14px 28px -16px color-mix(in srgb, var(--wcdp-main-2) 74%, #000 26%);
-}
-
-.wcdp-theme-2 .wcdp-form button:focus-visible,
-.wcdp-theme-2 .wcdp-button:focus-visible,
-.wcdp-theme-2-button:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 5px color-mix(in srgb, var(--wcdp-main-2) 34%, #fff 66%);
 }
 
 .wcdp-product-image {
