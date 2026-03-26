@@ -12,6 +12,7 @@ if (!defined('ABSPATH'))
     exit;
 
 $amount_layout = get_post_meta($product_id, 'wcdp-settings[0]', true);
+$is_theme_2 = isset($value['theme']) && (int) $value['theme'] === 2;
 
 //Donation Amount field
 $wcdp_price_decimals = apply_filters('wcdp_donation_amount_decimals', pow(10, wc_get_price_decimals() * (-1)));
@@ -95,18 +96,21 @@ if ($value['style'] != 3 && $value['style'] != 4) {
             }
         }
         $wcdp_price_field = sprintf($wcdp_price_field, '');
-        $option = array(
-            'input-id' => 'wcdp_value_other',
-            'input-value' => 'other',
-            'input-class' => 'wcdp_value_other',
-            'label-id' => 'label_custom_amount',
-            'label-class' => 'wcdp_label_custom_amount',
-            'label-text' => '<div id="wcdp_other" class="wcdp_other">' . apply_filters('wcdp_other_label', esc_html__('Other', 'wc-donation-platform')) . '</div><div class="wcdp_cu_field">' . $wcdp_price_field . '</div>',
-        );
-        if (!$option_already_checked && $value_donation_amount) {
-            $option['input-checked'] = true;
+        if (!$is_theme_2) {
+            $option = array(
+                'input-id' => 'wcdp_value_other',
+                'input-value' => 'other',
+                'input-class' => 'wcdp_value_other',
+                'label-id' => 'label_custom_amount',
+                'label-class' => 'wcdp_label_custom_amount',
+                'label-text' => '<div id="wcdp_other" class="wcdp_other">' . apply_filters('wcdp_other_label', esc_html__('Other', 'wc-donation-platform')) . '</div><div class="wcdp_cu_field">' . $wcdp_price_field . '</div>',
+            );
+            if (!$option_already_checked && $value_donation_amount) {
+                $option['input-checked'] = true;
+            }
+            $args['options'][] = $option;
         }
-        $args['options'][] = $option; ?>
+        ?>
                 <label class="wcdp-variation-heading" for="donation-amount">
                 <?php
                 $title = get_option('wcdp_choose_amount_title', __('Choose an amount', 'wc-donation-platform'));
@@ -115,6 +119,9 @@ if ($value['style'] != 3 && $value['style'] != 4) {
                     <abbr class="required" title="<?php esc_html_e('required', 'wc-donation-platform'); ?>">*</abbr>
                 </label> <?php
                 echo WCDP_Form::wcdp_generate_fieldset($args, null, $form_id);
+                if ($is_theme_2) {
+                    echo '<label class="wcdp-theme-2-custom-amount-wrapper"><div class="screen-reader-text" for="wcdp-donation-amount">' . esc_html__('Donation amount', 'wc-donation-platform') . '</div><div class="wcdp_cu_field wcdp-theme-2-custom-field">' . $wcdp_price_field . '</div></label>';
+                }
     } else { //Default: just input box ?>
                 <div class="wcdp-amount">
                     <label for="wcdp-donation-amount">

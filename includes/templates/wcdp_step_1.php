@@ -82,6 +82,7 @@ if ($context === 'embed' && $value['style'] === 4) {
         value="<?php echo esc_attr(wp_create_nonce('wcdp_ajax_nonce' . $value['id'])); ?>">
     <input type="hidden" name="postid" value="<?php echo esc_attr($value['id']); ?>">
     <input type="hidden" name="wcdp_form_id" value="<?php echo esc_attr($form_id); ?>">
+    <input type="hidden" name="wcdp_theme" value="<?php echo esc_attr($value['theme']); ?>">
 
     <?php
     //Donation Amount section
@@ -114,27 +115,27 @@ if ($context === 'embed' && $value['style'] === 4) {
     );
     ?>
     <?php if ($value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5): ?>
-    <div class="button-row">
-        <button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" data-step="2">
-            <?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform'), $value['id'], 1); ?>
-            &nbsp;<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
-        </button>
-        <div class="lds-ellipsis" id="wcdp-spinner">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-    <?php elseif ($value['style'] == '4'): ?>
-    <div class="button-row">
-        <button class="button wcdp-button wcdp-right" type="submit">
-            <?php echo apply_filters('wcdp_donate_label', esc_html__('Donate', 'wc-donation-platform')); ?>&nbsp;<div
-                class="wcdp-arrow wcdp-right-arrow">
-                &raquo;
+        <div class="button-row">
+            <button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" data-step="2">
+                <?php echo apply_filters('wcdp_next_button', esc_html__('Next', 'wc-donation-platform'), $value['id'], 1); ?>
+                &nbsp;<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
+            </button>
+            <div class="lds-ellipsis" id="wcdp-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
-        </button>
-    </div>
+        </div>
+    <?php elseif ($value['style'] == '4'): ?>
+        <div class="button-row">
+            <button class="button wcdp-button wcdp-right" type="submit">
+                <?php echo apply_filters('wcdp_donate_label', esc_html__('Donate', 'wc-donation-platform')); ?>&nbsp;<div
+                    class="wcdp-arrow wcdp-right-arrow">
+                    &raquo;
+                </div>
+            </button>
+        </div>
     <?php endif; ?>
     <div class="wcdp-divider"></div>
 

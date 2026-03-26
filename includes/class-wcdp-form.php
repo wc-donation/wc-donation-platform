@@ -79,6 +79,7 @@ class WCDP_Form
         $value = shortcode_atts(array(
             'id' => 0,
             'style' => 1,
+            'theme' => 1,
             'popup' => 0,
             'button' => 1,
             'title' => 0,
@@ -88,6 +89,11 @@ class WCDP_Form
             'className' => '',
             'label' => __("Donate now!", "wc-donation-platform")
         ), $value);
+
+        $value['theme'] = absint($value['theme']);
+        if (!in_array($value['theme'], array(1, 2), true)) {
+            $value['theme'] = 1;
+        }
 
         $product_id = (int) $value['id'];
         $checkout = WC()->checkout();
@@ -154,9 +160,11 @@ class WCDP_Form
             return '';
         }
 
+        $popup_button_theme_class = $value['theme'] === 2 ? ' wcdp-theme-2-button' : '';
+
         return '<p>
             <a href="#wcdp-form">
-                <button type="button" class="button wcdp-modal-open wcdp-button">'
+                <button type="button" class="button wcdp-modal-open wcdp-button' . esc_attr($popup_button_theme_class) . '">'
             . esc_html($value['label']) .
             '</button>
             </a>
@@ -506,6 +514,11 @@ class WCDP_Form
                     'type' => 'number',
                     'default' => 1,
                     'enum' => array(1, 2, 3, 4, 5),
+                ),
+                'theme' => array(
+                    'type' => 'number',
+                    'default' => 1,
+                    'enum' => array(1, 2),
                 ),
                 'popup' => array(
                     'type' => 'boolean',

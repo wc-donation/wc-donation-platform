@@ -15,12 +15,33 @@ jQuery(function ($) {
   if (!document.querySelector(".wcdp-form")) return;
 
   let currentFormData;
+
+  function getDonationForm(context) {
+    const contextNode = context?.target || context;
+    if (contextNode?.closest) {
+      const scopedForm = contextNode.closest("form.wcdp-choose-donation");
+      if (scopedForm) {
+        return scopedForm;
+      }
+    }
+
+    return (
+      document.querySelector("form#wcdp-ajax-send.wcdp-choose-donation") ||
+      document.querySelector("form.wcdp-choose-donation")
+    );
+  }
+
   //Send donation selection form
-  function wcdp_submit(step) {
-    if (check_validity("#wcdp-ajax-send")) {
+  function wcdp_submit(step, context) {
+    const formElement = getDonationForm(context);
+    if (!formElement) {
+      return;
+    }
+
+    if (check_validity(formElement)) {
       $("#wcdp-spinner").show();
       $("#wcdp-ajax-button").hide();
-      const form = $("#wcdp-ajax-send");
+      const form = $(formElement);
       const formData = form.serialize();
       $.ajax({
         type: "POST",
@@ -60,13 +81,15 @@ jQuery(function ($) {
   }
 
   // Return true if the donation form is filled in correctly
-  function check_validity(id) {
-    const variation = $("#variation_id");
+  function check_validity(context) {
+    const form = getDonationForm(context);
+    if (!form) {
+      return false;
+    }
+
+    const variation = form.querySelector("#variation_id");
     try {
-      return (
-        $(id)[0].reportValidity() &&
-        (variation.length === 0 || variation.attr("value") != "")
-      );
+      return form.reportValidity() && (!variation || variation.value !== "");
     } catch (err) {
       return false;
     }
@@ -169,10 +192,10 @@ jQuery(function ($) {
    */
   $("#wcdp-ajax-send")?.on("submit", function (e) {
     e.preventDefault();
-    const serialized = $("#wcdp-ajax-send").serialize();
+    const serialized = $(this).serialize();
     if (currentFormData != serialized) {
       currentFormData = serialized;
-      wcdp_submit(2);
+      wcdp_submit(2, this);
     } else {
       wcdp_steps(2);
     }
@@ -185,13 +208,14 @@ jQuery(function ($) {
   $(".wcdp-body > #wcdp-ajax-send")?.on(
     "input blur keyup paste change",
     function () {
-      if (currentFormData != $("#wcdp-ajax-send").serialize()) {
+      const formElement = this;
+      if (currentFormData != $(formElement).serialize()) {
         time++;
-        currentFormData = $("#wcdp-ajax-send").serialize();
+        currentFormData = $(formElement).serialize();
         setTimeout(function () {
           time--;
           if (time === 0) {
-            wcdp_submit();
+            wcdp_submit(undefined, formElement);
           }
         }, 1300);
       }
@@ -245,12 +269,13 @@ jQuery(function ($) {
 
     // If we're on step 1, ensure step-1 form is valid before moving
     if (currentStep === 1) {
-      if (!check_validity("#wcdp-ajax-send")) return;
-      var ajaxSend = $("#wcdp-ajax-send").serialize();
+      const donationForm = getDonationForm(this);
+      if (!check_validity(donationForm)) return;
+      var ajaxSend = donationForm ? $(donationForm).serialize() : "";
       if (currentFormData != ajaxSend) {
         currentFormData = ajaxSend;
         // submit will call wcdp_steps after success; include scroll flag via options when called directly
-        wcdp_submit(targetStep);
+        wcdp_submit(targetStep, donationForm);
         return;
       }
     }
@@ -326,9 +351,10 @@ jQuery(function ($) {
       if ($('input[name="wcdp-donation-amount"]')?.val() != 0) {
         $("#wcdp-ajax-send")?.trigger("change");
       }
-      if ($(".wcdp-choose-donation")[0].checkValidity()) {
-        currentFormData = $("#wcdp-ajax-send")?.serialize();
-        wcdp_submit();
+      const donationForm = getDonationForm();
+      if (check_validity(donationForm)) {
+        currentFormData = donationForm ? $(donationForm).serialize() : "";
+        wcdp_submit(undefined, donationForm);
       }
       $("form.woocommerce-checkout select")?.selectWoo();
     } finally {
@@ -430,15 +456,16 @@ jQuery(function ($) {
     });
   });
 
-  function syncSelection() {
-    const inputs = this.querySelectorAll(".wcdp_su input");
+  function syncVariationButtons(form) {
+    const inputs = form.querySelectorAll(".wcdp_su input");
 
     inputs.forEach((input) => {
-      const matchingOption = this.querySelector(
+      const matchingOption = form.querySelector(
         `select option[value="${input.value}"]`,
       );
-      if (!matchingOption || !matchingOption.classList.contains("attached"))
+      if (!matchingOption || !matchingOption.classList.contains("attached")) {
         return;
+      }
 
       if (matchingOption.classList.contains("enabled")) {
         input.removeAttribute("disabled");
@@ -446,35 +473,79 @@ jQuery(function ($) {
         input.setAttribute("disabled", "true");
       }
 
-      if (input.checked && matchingOption) {
+      if (input.checked) {
         matchingOption.parentElement.value = input.value;
         $(matchingOption.parentElement).trigger("change");
       }
     });
+  }
 
-    // copy amount from selectedAmount input field
-    const selectedAmount = this.querySelector(
+  function syncAmountSelection(form, preferSelectedSuggestion = true) {
+    const selectedAmount = form.querySelector(
       ".wcdp_amount_suggestion:checked",
     );
-    const amountInput = this.querySelector(
+    const amountInput = form.querySelector(
       'input[name="wcdp-donation-amount"]',
     );
-    const amountAttributeInput = this.querySelector(
+    const amountAttributeInput = form.querySelector(
       'input[name="attribute_wcdp_donation_amount"]',
     );
-    if (selectedAmount && amountInput) {
+
+    if (preferSelectedSuggestion && selectedAmount && amountInput) {
       amountInput.value = selectedAmount.value;
     }
+
     if (amountAttributeInput && amountInput) {
       amountAttributeInput.value = amountInput.value;
     }
   }
 
+  function syncSelection(form) {
+    syncVariationButtons(form);
+    syncAmountSelection(form);
+  }
+
+  function setupAmountInputSync(form) {
+    const amountInput = form.querySelector(
+      'input[name="wcdp-donation-amount"]',
+    );
+    if (!amountInput) {
+      return;
+    }
+
+    amountInput.addEventListener("input", () => {
+      const selectedSuggestion = form.querySelector(
+        ".wcdp_amount_suggestion:checked",
+      );
+      if (
+        selectedSuggestion &&
+        selectedSuggestion.value !== amountInput.value
+      ) {
+        selectedSuggestion.checked = false;
+      }
+      syncAmountSelection(form, false);
+    });
+  }
+
+  function setupTheme2AmountValidation(form) {
+    const amountGroupRadios = form.querySelectorAll(
+      ".wcdp_amount input[type='radio']",
+    );
+    amountGroupRadios.forEach((radio) => {
+      radio.required = false;
+    });
+  }
+
   function handleDonationInputs() {
     const forms = document.querySelectorAll("form.wcdp-choose-donation");
     forms.forEach((form) => {
-      //const formid = form.dataset['formid'];
-      form.addEventListener("change", syncSelection);
+      form.addEventListener("change", () => syncSelection(form));
+
+      setupAmountInputSync(form);
+
+      if (form.closest(".wcdp-theme-2")) {
+        setupTheme2AmountValidation(form);
+      }
     });
   }
   handleDonationInputs();

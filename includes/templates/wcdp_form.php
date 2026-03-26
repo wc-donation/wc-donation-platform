@@ -23,6 +23,8 @@ if (!defined('ABSPATH'))
 
 <?php
 $form_id = wp_unique_id('wcdp_') . '_';
+$theme = isset($value['theme']) && (int) $value['theme'] === 2 ? 2 : 1;
+$theme_classes = $theme === 2 ? 'wcdp-theme-2 wcdp-theme-modern' : 'wcdp-theme-1';
 
 //Encapsulate donation form in a popup?
 if ($value['popup']):
@@ -38,7 +40,7 @@ if ($value['popup']):
             <div class="wcdp">
             <?php endif; ?>
 
-            <div class="wc-donation-platform woocommerce wcdp-form <?php echo esc_attr($value['className']); ?>"
+            <div class="wc-donation-platform woocommerce wcdp-form <?php echo esc_attr($theme_classes . ' ' . $value['className']); ?>"
                 id="wcdp" style="visibility:hidden" data-formid="<?php echo $form_id; ?>">
                 <div class="lds-ellipsis wcdp-loader">
                     <div></div>

@@ -373,6 +373,7 @@ class WCDP_Hooks
 
             echo WCDP_Form::wcdp_donation_form(array(
                 'id' => $id,
+                'theme' => isset($_REQUEST['wcdp_theme']) ? intval($_REQUEST['wcdp_theme']) : 1,
                 'style' => 'checkout',
             ), 'checkout');
         }
