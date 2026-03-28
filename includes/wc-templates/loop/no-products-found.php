@@ -21,5 +21,5 @@ defined('ABSPATH') || exit;
 
 ?>
 <div class="woocommerce-no-products-found">
-    <?php wc_print_notice(esc_html__('No projects were found matching your selection.', 'wc-donation-platform'), 'notice'); ?>
+    <?php wc_print_notice(esc_html__('Nothing found matching your selection.', 'wc-donation-platform'), 'notice'); ?>
 </div>
