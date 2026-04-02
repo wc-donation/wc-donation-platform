@@ -29,7 +29,8 @@ if ($has_child): ?>
 
         $meta_value = get_post_meta($product_id, 'wcdp-settings[wcdp-attr-' . $esc_attribute . ']', true);
 
-        $attributeLayout = in_array($meta_value, ['1', '2', '3']) ? $meta_value : '1';
+        // Allow valid saved layouts and default to 1 (amount selection).
+        $attributeLayout = in_array((string) $meta_value, ['0', '1', '2'], true) ? (int) $meta_value : 1;
 
         /*
          * $attributeLayout = 0: Default Layout
@@ -38,7 +39,7 @@ if ($has_child): ?>
          */
         ?>
         <div class="variations wcdp_variation wcdp-row">
-            <?php if ($attributeLayout != 2): //No Label for Custom HTML ?>
+            <?php if ($attributeLayout !== 2): //No Label for Custom HTML ?>
                 <label class="wcdp-variation-heading" for="<?php echo $esc_attribute; ?>">
                     <?php echo wc_attribute_label($attribute, $product); ?>
                     <abbr class="required" title="<?php esc_html_e('required', 'wc-donation-platform'); ?>">*</abbr>
@@ -49,7 +50,7 @@ if ($has_child): ?>
             endif;
 
             //Display Box Layout
-            if ($attributeLayout == 1):
+            if ($attributeLayout === 1):
                 $args = array(
                     'ul-id' => 'suggestion-' . $esc_attribute,
                     'ul-class' => 'wcdp_options wcdp_su',
@@ -92,7 +93,7 @@ if ($has_child): ?>
             endif;
             ?>
 
-            <div <?php if ($attributeLayout != 0) {
+            <div <?php if ($attributeLayout !== 0) {
                 echo 'style="display:none"';
             } //Hide for other Layouts
             ?>>
