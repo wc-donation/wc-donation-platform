@@ -457,25 +457,44 @@ jQuery(function ($) {
   });
 
   function syncVariationButtons(form) {
-    const inputs = form.querySelectorAll(".wcdp_su input");
-
-    inputs.forEach((input) => {
-      const matchingOption = form.querySelector(
-        `select option[value="${input.value}"]`,
+    const getSelectForGroup = (group) => {
+      const input = group.querySelector("input[name]");
+      if (!input) return null;
+      return (
+        group.closest(".wcdp_variation")?.querySelector("select") ||
+        form.querySelector(`select[name="attribute_${input.name}"]`) ||
+        form.querySelector(`select[name="${input.name}"]`)
       );
-      if (!matchingOption || !matchingOption.classList.contains("attached")) {
-        return;
-      }
+    };
 
-      if (matchingOption.classList.contains("enabled")) {
-        input.removeAttribute("disabled");
-      } else {
-        input.setAttribute("disabled", "true");
-      }
+    form.querySelectorAll(".wcdp_su").forEach((group) => {
+      const select = getSelectForGroup(group);
+      if (!select) return;
 
-      if (input.checked) {
-        matchingOption.parentElement.value = input.value;
-        $(matchingOption.parentElement).trigger("change");
+      const available = new Set(
+        Array.from(select.options)
+          .filter(
+            (option) =>
+              option.value &&
+              !option.disabled &&
+              !option.classList.contains("disabled"),
+          )
+          .map((option) => option.value),
+      );
+
+      group.querySelectorAll("input").forEach((input) => {
+        const disabled = !available.has(input.value);
+        input.disabled = disabled;
+        if (disabled) input.checked = false;
+      });
+
+      const selectedInput = group.querySelector(
+        "input:checked:not([disabled])",
+      );
+      const nextValue = selectedInput ? selectedInput.value : "";
+      if (select.value !== nextValue) {
+        select.value = nextValue;
+        $(select).trigger("change");
       }
     });
   }
@@ -539,13 +558,35 @@ jQuery(function ($) {
   function handleDonationInputs() {
     const forms = document.querySelectorAll("form.wcdp-choose-donation");
     forms.forEach((form) => {
-      form.addEventListener("change", () => syncSelection(form));
+      let variationSyncQueued = false;
+      const scheduleVariationSync = () => {
+        if (variationSyncQueued) return;
+        variationSyncQueued = true;
+        requestAnimationFrame(() => {
+          variationSyncQueued = false;
+          syncVariationButtons(form);
+        });
+      };
+
+      const onFormChange = () => {
+        syncSelection(form);
+        scheduleVariationSync();
+      };
+
+      form.addEventListener("change", onFormChange);
+
+      $(form).on(
+        "update_variation_values woocommerce_update_variation_values found_variation reset_data hide_variation show_variation",
+        scheduleVariationSync,
+      );
 
       setupAmountInputSync(form);
 
       if (form.closest(".wcdp-theme-2")) {
         setupTheme2AmountValidation(form);
       }
+
+      syncSelection(form);
     });
   }
   handleDonationInputs();
