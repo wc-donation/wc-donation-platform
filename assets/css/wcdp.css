@@ -476,7 +476,7 @@ form[name="checkout"] .wcdp-tab div:first-child {
 .wcdp-style-6-back {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     width: 36px;
     height: 36px;
     border: 0;
