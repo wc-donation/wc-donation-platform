@@ -84,6 +84,7 @@ class WCDP_Leaderboard
             "split" => -1,
             "button" => __("Show more", "wc-donation-platform"),
             "fallback" => __('No donation data to display.', 'wc-donation-platform'),
+            "exclude_fees" => 'no',
         ), $atts, 'wcdp_leaderboard');
 
         $atts['orderby'] = $atts['orderby'] === 'date' ? 'date' : 'total';
@@ -107,11 +108,27 @@ class WCDP_Leaderboard
 
         $limit = intval($atts['limit']);
         $limit = max(1, min(1000, $limit)); // Enforce reasonable limits
+        $exclude_fees = $this->is_truthy_string($atts['exclude_fees']);
 
-        $orders = $this->get_orders($product_ids, $atts['orderby'], $limit);
+        $orders = $this->get_orders($product_ids, $atts['orderby'], $limit, $exclude_fees);
 
         // Generate the HTML output
         return $this->generate_leaderboard($orders, (int) $atts['style'], (int) $atts['split'], $atts['button'], $atts['fallback']);
+    }
+
+    /**
+     * Parse common shortcode boolean-ish strings (yes/no, true/false, 1/0)
+     * @param mixed $value
+     * @return bool
+     */
+    private function is_truthy_string($value): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        $value = strtolower(trim((string) $value));
+        return in_array($value, array('1', 'true', 'yes', 'on'), true);
     }
 
     /**
@@ -160,17 +177,17 @@ class WCDP_Leaderboard
      * @param int $limit
      * @return array
      */
-    private function get_orders(array $product_ids, string $orderby, int $limit): array
+    private function get_orders(array $product_ids, string $orderby, int $limit, bool $exclude_fees = false): array
     {
-        $cache_key = $this->generate_cache_key($product_ids, $orderby, $limit);
+        $cache_key = $this->generate_cache_key($product_ids, $orderby, $limit, $exclude_fees);
 
         $orders = json_decode(get_transient($cache_key), true);
 
         if (empty($orders)) {
             if (in_array(-1, $product_ids)) {
-                $orders = $this->get_orders_db_all($orderby, $limit);
+                $orders = $this->get_orders_db_all($orderby, $limit, $exclude_fees);
             } else {
-                $orders = $this->get_orders_db_by_product_ids($product_ids, $orderby, $limit);
+                $orders = $this->get_orders_db_by_product_ids($product_ids, $orderby, $limit, $exclude_fees);
             }
 
             set_transient($cache_key, wp_json_encode($orders), apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
@@ -190,14 +207,15 @@ class WCDP_Leaderboard
      * @param int $limit
      * @return string
      */
-    private function generate_cache_key(array $product_ids, string $orderby, int $limit): string
+    private function generate_cache_key(array $product_ids, string $orderby, int $limit, bool $exclude_fees): string
     {
         $product_string = implode(',', $product_ids);
         $base_key = 'wcdp_orders_';
+        $fees_flag = $exclude_fees ? 'nofees' : '';
 
         // Check if we can use a simple concatenation (WordPress transient keys max length is ~172 chars)
         // Leave room for prefix, orderby, limit and separators
-        $simple_key = $base_key . $product_string . '_' . $orderby . '_' . $limit;
+        $simple_key = $base_key . $product_string . '_' . $orderby . '_' . $limit . '_' . $fees_flag;
 
         // Use simple key if it's short enough and contains only safe characters
         if (strlen($simple_key) <= 150 && ctype_alnum(str_replace([',', '_', '-'], '', $simple_key))) {
@@ -205,7 +223,7 @@ class WCDP_Leaderboard
         }
 
         // For longer or complex product ID lists, use MD5 hash
-        return $base_key . 'h_' . md5($product_string) . '_' . $orderby . '_' . $limit;
+        return $base_key . 'h_' . md5($product_string) . '_' . $orderby . '_' . $limit . '_' . $fees_flag;
     }
 
     /**
@@ -246,7 +264,7 @@ class WCDP_Leaderboard
      * @param int $limit
      * @return array
      */
-    private function get_orders_db_all(string $orderby, int $limit): array
+    private function get_orders_db_all(string $orderby, int $limit, bool $exclude_fees = false): array
     {
         // Get cached donable product IDs
         $donable_product_ids = $this->get_cached_donable_products();
@@ -257,7 +275,7 @@ class WCDP_Leaderboard
         }
 
         // Use the consolidated function to get orders for these donable products
-        return $this->get_orders_db_by_product_ids($donable_product_ids, $orderby, $limit);
+        return $this->get_orders_db_by_product_ids($donable_product_ids, $orderby, $limit, $exclude_fees);
     }
 
     /**
@@ -311,7 +329,7 @@ class WCDP_Leaderboard
      * @param int $limit
      * @return array
      */
-    private function get_orders_db_by_product_ids(array $product_ids, string $orderby, int $limit): array
+    private function get_orders_db_by_product_ids(array $product_ids, string $orderby, int $limit, bool $exclude_fees = false): array
     {
         if (empty($product_ids)) {
             return array();
@@ -396,9 +414,11 @@ class WCDP_Leaderboard
 
                 // Check if we should include transaction fee
                 $final_amount = (double) $item_total;
-                $transaction_fee = $this->get_transaction_fee_for_single_donation_order($order);
-                if ($transaction_fee > 0) {
-                    $final_amount += $transaction_fee;
+                if (!$exclude_fees) {
+                    $transaction_fee = $this->get_transaction_fee_for_single_donation_order($order);
+                    if ($transaction_fee > 0) {
+                        $final_amount += $transaction_fee;
+                    }
                 }
 
                 $donation_clean = array(
