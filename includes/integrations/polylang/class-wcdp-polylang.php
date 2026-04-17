@@ -8,6 +8,8 @@
 if (!defined('ABSPATH'))
     exit;
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 class WCDP_Polylang
 {
     /**
@@ -20,25 +22,39 @@ class WCDP_Polylang
     {
         if (function_exists('pll_get_post_translations')) {
             global $wpdb;
-            $translationids = pll_get_post_translations($productid);
-            $placeholder = '';
-            foreach ($translationids as $ignored) {
-                $placeholder .= ', %s';
-            }
-            $placeholder = substr($placeholder, 2);
+            $translationids = array_filter(array_map(static function ($id) {
+                return max(0, intval($id));
+            }, array_values((array) pll_get_post_translations($productid))));
 
-            $result = $wpdb->get_row($wpdb->prepare("
-					SELECT
-						SUM(ltoim.meta_value) as revenue
-					FROM
-						          {$wpdb->prefix}woocommerce_order_itemmeta wcoim
-                        LEFT JOIN {$wpdb->prefix}woocommerce_order_items oi ON wcoim.order_item_id = oi.order_item_id
-                        LEFT JOIN {$wpdb->prefix}posts wpposts ON order_id = wpposts.ID
-                        LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta ltoim ON ltoim.order_item_id = oi.order_item_id AND ltoim.meta_key = '_line_total'
-					WHERE
-						  wcoim.meta_key = '_product_id' 
-					  AND wcoim.meta_value in (%s) 
-					  AND wpposts.post_status = 'wc-completed';", $placeholder), ARRAY_A);
+            if (empty($translationids)) {
+                $translationids = array(max(0, intval($productid)));
+            }
+
+            $placeholder = implode(', ', array_fill(0, count($translationids), '%d'));
+
+            if (class_exists('Automattic\\WooCommerce\\Utilities\\OrderUtil') && OrderUtil::custom_orders_table_usage_is_enabled()) {
+                $query = "SELECT
+                            SUM(l.product_net_revenue) AS revenue
+                          FROM
+                            {$wpdb->prefix}wc_orders o
+                            INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
+                          WHERE
+                                o.status = 'wc-completed'
+                            AND o.type = 'shop_order'
+                            AND l.product_id IN ({$placeholder});";
+            } else {
+                $query = "SELECT
+                            SUM(l.product_net_revenue) AS revenue
+                          FROM
+                            {$wpdb->prefix}posts p
+                            INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON p.ID = l.order_id
+                          WHERE
+                                p.post_type = 'shop_order'
+                            AND p.post_status = 'wc-completed'
+                            AND l.product_id IN ({$placeholder});";
+            }
+
+            $result = $wpdb->get_row($wpdb->prepare($query, $translationids), ARRAY_A);
             if (!is_null($result) && isset($result['revenue'])) {
                 $revenue = (float) $result['revenue'];
             } else {
