@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-28T22:04:41+00:00\n"
+"POT-Creation-Date: 2026-04-21T19:34:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -103,7 +103,7 @@ msgid "Yes, I want to cover the transaction fee."
 msgstr ""
 
 #: includes/class-wcdp-fee-recovery.php:85
-#: includes/class-wcdp_leaderboard.php:604
+#: includes/class-wcdp_leaderboard.php:624
 msgid "Transaction costs"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 #: includes/class-wcdp-form.php:61
 #: includes/class-wcdp-progress.php:92
 #: includes/class-wcdp-progress.php:394
-#: includes/class-wcdp_leaderboard.php:103
+#: includes/class-wcdp_leaderboard.php:104
 msgid "Donations are not activated for this project."
 msgstr ""
 
@@ -320,7 +320,7 @@ msgid "Show a small “Powered by Donation Platform for WooCommerce” note belo
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:186
-msgid "Leaderborard Options"
+msgid "Leaderboard Options"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:188
@@ -333,7 +333,7 @@ msgstr ""
 
 #: includes/class-wcdp-general-settings.php:194
 #: includes/class-wcdp-general-settings.php:232
-#: includes/class-wcdp_leaderboard.php:438
+#: includes/class-wcdp_leaderboard.php:458
 msgid "{firstname} donated {amount}"
 msgstr ""
 
@@ -368,8 +368,8 @@ msgid "Checkout checkbox label"
 msgstr ""
 
 #: includes/class-wcdp-general-settings.php:217
-#: includes/class-wcdp_leaderboard.php:757
-#: includes/class-wcdp_leaderboard.php:818
+#: includes/class-wcdp_leaderboard.php:777
+#: includes/class-wcdp_leaderboard.php:838
 msgid "Do not show my name in the leaderboard"
 msgstr ""
 
@@ -705,24 +705,24 @@ msgstr ""
 msgid "No donation data to display."
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:485
+#: includes/class-wcdp_leaderboard.php:505
 msgid "Anonymous donor"
 msgstr ""
 
 #. Translators: %s: time difference e.g. 1 week ago or 3 months ago
-#: includes/class-wcdp_leaderboard.php:697
+#: includes/class-wcdp_leaderboard.php:717
 msgid "%s ago"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:817
+#: includes/class-wcdp_leaderboard.php:837
 msgid "Leaderboard Preference"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:819
+#: includes/class-wcdp_leaderboard.php:839
 msgid "Yes"
 msgstr ""
 
-#: includes/class-wcdp_leaderboard.php:819
+#: includes/class-wcdp_leaderboard.php:839
 msgid "No"
 msgstr ""
 
@@ -1331,7 +1331,7 @@ msgstr ""
 #: includes/templates/wcdp_step_1_amount.php:55
 #: includes/templates/wcdp_step_1_amount.php:119
 #: includes/templates/wcdp_step_1_amount.php:132
-#: includes/templates/wcdp_step_1_variations.php:44
+#: includes/templates/wcdp_step_1_variations.php:45
 msgid "required"
 msgstr ""
 

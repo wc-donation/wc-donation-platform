@@ -183,7 +183,7 @@ class WCDP_General_Settings
                 'id' => 'wcdp_section_general',
             ),
             array(
-                'name' => __('Leaderborard Options', 'wc-donation-platform'),
+                'name' => __('Leaderboard Options', 'wc-donation-platform'),
                 'type' => 'title',
                 'desc' => '<a href="https://www.wc-donation.com/documentation/usage/donation-leaderboard/" target="_blank">' . esc_html__('Detailed leaderboard documentation', 'wc-donation-platform') . '</a>',
                 'id' => 'wcdp_section_leaderboard',
