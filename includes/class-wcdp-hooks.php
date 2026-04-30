@@ -404,7 +404,7 @@ class WCDP_Hooks
      */
     public function woocommerce_checkout_fields(array $fields): array
     {
-        if (isset($fields['order']['order_comments']) && WCDP_Form::cart_contains_donation()) {
+        if (isset($fields['order']['order_comments']) && (WCDP_Form::cart_contains_donation() || (defined('WCDP_FORM') && WCDP_FORM))) {
             $fields['order']['order_comments']['label'] = __('Donation notes', 'wc-donation-platform');
             $fields['order']['order_comments']['placeholder'] = esc_attr__('Notes about your donation', 'wc-donation-platform');
         }
