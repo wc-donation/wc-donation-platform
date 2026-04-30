@@ -13,6 +13,12 @@ use Automattic\WooCommerce\Utilities\OrderUtil;
 class WCDP_Leaderboard
 {
     /**
+     * Prevents the anonymous checkbox from rendering more than once per request
+     * when both mapped hooks fire on the same page.
+     */
+    private bool $checkbox_rendered = false;
+
+    /**
      * Bootstraps the class and hooks required actions & filters.
      */
     public function __construct()
@@ -24,9 +30,11 @@ class WCDP_Leaderboard
         add_action('woocommerce_analytics_update_product', array($this, 'delete_stale_orders_cache'), 10, 2);
 
         if (get_option('wcdp_enable_checkout_checkbox', 'no') === 'yes') {
-            // Add checkbox to WooCommerce checkout
-            $checkbox_location = apply_filters('anonymous_donation_checkbox_location', 'woocommerce_review_order_before_submit');
-            add_action($checkbox_location, array($this, 'add_anonymous_donation_checkbox'));
+            // Register checkbox on both the WooCommerce checkout hook and the WCDP template
+            // hook for the configured position, so it works with all form styles.
+            foreach ($this->get_checkbox_position_hooks() as $hook) {
+                add_action($hook, array($this, 'add_anonymous_donation_checkbox'));
+            }
 
             //Save the value of the WooCommerce checkout checkbox
             add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
@@ -762,14 +770,52 @@ class WCDP_Leaderboard
     }
 
     /**
+     * Return the pair of hooks (WooCommerce checkout + WCDP template) for the
+     * configured checkbox position, so the checkbox renders correctly in every
+     * form style.
+     *
+     * @return string[]
+     */
+    private function get_checkbox_position_hooks(): array
+    {
+        $position_map = array(
+            'before_donor' => array(
+                'woocommerce_checkout_before_customer_details',
+                'wcdp_before_donor_details',
+            ),
+            'after_donor'  => array(
+                'woocommerce_checkout_after_customer_details',
+                'wcdp_after_donor_details',
+            ),
+            'above_submit' => array(
+                'woocommerce_review_order_before_submit',
+            ),
+        );
+
+        $stored   = (string) get_option('wcdp_anon_checkbox_location', 'above_submit');
+        $position = array_key_exists($stored, $position_map) ? $stored : 'above_submit';
+
+        return $position_map[$position];
+    }
+
+    /**
      * Add an "anonymous donation" checkbox to the checkout
      * @return void
      */
     public function add_anonymous_donation_checkbox()
     {
-        if (!WCDP_Form::cart_contains_donation()) {
+        if ($this->checkbox_rendered) {
             return;
         }
+        // WCDP template hooks (wcdp_before_donor_details, wcdp_after_donor_details)
+        // fire inside the donation form itself and may run before the cart is populated
+        // (e.g. style 2 one-pager renders step 2 at page load with an empty cart).
+        // Skip the cart check for those hooks; keep it for WooCommerce hooks that can
+        // fire on any checkout page regardless of whether a donation is in the cart.
+        if (!str_starts_with(current_action(), 'wcdp_') && !WCDP_Form::cart_contains_donation()) {
+            return;
+        }
+        $this->checkbox_rendered = true;
         echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
