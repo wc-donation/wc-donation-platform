@@ -54,6 +54,7 @@ if ($value['description']) {
 }
 
 do_action('woocommerce_before_add_to_cart_form');
+do_action('wcdp_before_step_amount', $product_id, $context);
 ?>
 
 <form class="cart variations_form wcdp-choose-donation" <?php
@@ -114,6 +115,7 @@ if ($context === 'embed' && $value['style'] === 4) {
         WCDP_DIR . 'includes/templates/'
     );
     ?>
+    <?php do_action('wcdp_after_step_amount', $product_id, $context); ?>
     <?php if ($value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5 || $value['style'] == 6): ?>
         <div class="button-row">
             <button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" data-step="2">

@@ -55,6 +55,8 @@ if ($value['popup']):
                     echo '<div class="wcdp-product-image">' . $product->get_image('medium_large') . '</div>';
                 }
 
+                do_action('wcdp_before_donation_form', $product_id, $context);
+
                 switch ($value['style']) {
                     case 2:
                         //Style 2: one-page form
@@ -184,6 +186,8 @@ if ($value['popup']):
 
                         break;
                 }
+
+                do_action('wcdp_after_donation_form', $product_id, $context);
 
                 ?>
             </div>

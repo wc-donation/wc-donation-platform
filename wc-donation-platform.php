@@ -101,6 +101,12 @@ if (!class_exists('WCDP')) {
 
             //Leaderboard
             include_once WCDP_DIR . 'includes/class-wcdp_leaderboard.php';
+
+            //Hook injection point tests (only when WCDP_ADDON_HOOK_DEBUG is defined in wp-config.php)
+            if ( defined( 'WCDP_ADDON_HOOK_DEBUG' ) && WCDP_ADDON_HOOK_DEBUG ) {
+                include_once WCDP_DIR . 'includes/test/class-wcdp-hook-tests.php';
+                new WCDP_Hook_Tests();
+            }
         }
 
         /**
