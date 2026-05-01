@@ -409,6 +409,10 @@ class WCDP_Form
      */
     public static function define_ccs_variables()
     {
+        if (!apply_filters('wcdp_should_output_css_vars', true)) {
+            return;
+        }
+
         $wcdp_main_color = get_option('wcdp_secondary_color', '#30bf76');
         $wcdp_main_color_2 = get_option('wcdp_main_color', '#006633');
         $wcdp_main_color_3 = get_option('wcdp_error_color', '#B30000');
