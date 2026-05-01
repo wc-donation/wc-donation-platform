@@ -85,6 +85,32 @@ class WCDP_Hooks
 
         //add Settings Page Link in Backend
         add_action('admin_menu', array($this, 'add_donation_platform_submenu_link'));
+
+        //Add donation-context body classes
+        add_filter('body_class', array($this, 'wcdp_body_classes'));
+    }
+
+    /**
+     * Add donation-context body classes.
+     *
+     * @param array $classes
+     * @return array
+     */
+    public function wcdp_body_classes(array $classes): array
+    {
+        if ($this->has_donation_form_context()) {
+            $classes[] = 'wcdp-donation-form';
+        }
+
+        if ($this->is_donation_checkout_context()) {
+            $classes[] = 'wcdp-donation-checkout';
+        }
+
+        if (is_singular('product') && WCDP_Form::is_donable(get_queried_object_id())) {
+            $classes[] = 'wcdp-donation-product';
+        }
+
+        return $classes;
     }
 
     /**
