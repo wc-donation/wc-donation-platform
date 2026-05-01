@@ -16,7 +16,7 @@ class WCDP_Leaderboard
      * Prevents the anonymous checkbox from rendering more than once per request
      * when both mapped hooks fire on the same page.
      */
-    private bool $checkbox_rendered = false;
+    private static bool $checkbox_rendered = false;
 
     /**
      * Bootstraps the class and hooks required actions & filters.
@@ -33,7 +33,7 @@ class WCDP_Leaderboard
             // Register checkbox on both the WooCommerce checkout hook and the WCDP template
             // hook for the configured position, so it works with all form styles.
             foreach ($this->get_checkbox_position_hooks() as $hook) {
-                add_action($hook, array($this, 'add_anonymous_donation_checkbox'));
+                add_action($hook, array('WCDP_Leaderboard', 'add_anonymous_donation_checkbox'));
             }
 
             //Save the value of the WooCommerce checkout checkbox
@@ -802,20 +802,20 @@ class WCDP_Leaderboard
      * Add an "anonymous donation" checkbox to the checkout
      * @return void
      */
-    public function add_anonymous_donation_checkbox()
+    public static function add_anonymous_donation_checkbox()
     {
-        if ($this->checkbox_rendered) {
+        if (self::$checkbox_rendered) {
             return;
         }
         // WCDP template hooks (wcdp_before_donor_details, wcdp_after_donor_details)
         // fire inside the donation form itself and may run before the cart is populated
         // (e.g. style 2 one-pager renders step 2 at page load with an empty cart).
-        // Skip the cart check for those hooks; keep it for WooCommerce hooks that can
+        // Skip the context check for those hooks; keep it for WooCommerce hooks that can
         // fire on any checkout page regardless of whether a donation is in the cart.
-        if (!str_starts_with(current_action(), 'wcdp_') && !WCDP_Form::cart_contains_donation()) {
+        if (!str_starts_with(current_action(), 'wcdp_') && !WCDP_Form::is_donation_checkout_context()) {
             return;
         }
-        $this->checkbox_rendered = true;
+        self::$checkbox_rendered = true;
         echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
