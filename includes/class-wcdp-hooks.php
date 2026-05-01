@@ -88,6 +88,34 @@ class WCDP_Hooks
     }
 
     /**
+     * Return true if there is donation form context on the current page.
+     *
+     * @return bool
+     */
+    private function has_donation_form_context(): bool
+    {
+        global $post;
+
+        return has_block('wc-donation-platform/wcdp')
+            || (!is_null($post) && (has_shortcode($post->post_content, 'wcdp_donation_form') || has_shortcode($post->post_content, 'product_page')))
+            || (isset($_REQUEST['postid']) && absint($_REQUEST['postid']) > 0);
+    }
+
+    /**
+     * Return true if donation notes label should be shown.
+     *
+     * @return bool
+     */
+    private function is_donation_checkout_context(): bool
+    {
+        if (WC()->cart && !empty(WC()->cart->get_cart_contents())) {
+            return WCDP_Form::cart_contains_only_donations();
+        }
+
+        return $this->has_donation_form_context();
+    }
+
+    /**
      * Filter specific WC templates to WCDP templates
      *
      * @param string $template
@@ -404,7 +432,7 @@ class WCDP_Hooks
      */
     public function woocommerce_checkout_fields(array $fields): array
     {
-        if (isset($fields['order']['order_comments']) && (WCDP_Form::cart_contains_donation() || (defined('WCDP_FORM') && WCDP_FORM))) {
+        if (isset($fields['order']['order_comments']) && $this->is_donation_checkout_context()) {
             $fields['order']['order_comments']['label'] = __('Donation notes', 'wc-donation-platform');
             $fields['order']['order_comments']['placeholder'] = esc_attr__('Notes about your donation', 'wc-donation-platform');
         }
