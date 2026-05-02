@@ -24,9 +24,8 @@ class WCDP_Leaderboard
         add_action('woocommerce_analytics_update_product', array($this, 'delete_stale_orders_cache'), 10, 2);
 
         if (get_option('wcdp_enable_checkout_checkbox', 'no') === 'yes') {
-            // Add checkbox to WooCommerce checkout
-            $checkbox_location = apply_filters('anonymous_donation_checkbox_location', 'woocommerce_review_order_before_submit');
-            add_action($checkbox_location, array($this, 'add_anonymous_donation_checkbox'));
+            $checkbox_location = apply_filters('anonymous_donation_checkbox_location', $this->get_checkbox_position_hook());
+            add_action($checkbox_location, array('WCDP_Leaderboard', 'add_anonymous_donation_checkbox'));
 
             //Save the value of the WooCommerce checkout checkbox
             add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
@@ -297,10 +296,10 @@ class WCDP_Leaderboard
         // Query only published products that are donable and available for purchase
         // Excludes trashed, draft, private products
         $donable_products = $wpdb->get_col("
-            SELECT DISTINCT pm.post_id 
+            SELECT DISTINCT pm.post_id
             FROM {$wpdb->postmeta} pm
             INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-            WHERE pm.meta_key = '_donable' 
+            WHERE pm.meta_key = '_donable'
                 AND pm.meta_value = 'yes'
                 AND p.post_type = 'product'
                 AND p.post_status = 'publish'
@@ -345,16 +344,16 @@ class WCDP_Leaderboard
             } else {
                 $orderby_sql = 'l.product_gross_revenue DESC, o.date_created_gmt';
             }
-            $query = "SELECT 
+            $query = "SELECT
                     o.id as order_id,
                     l.order_item_id,
                     l.product_id,
                     l.product_gross_revenue as item_total,
                     o.date_created_gmt
-                FROM 
+                FROM
                     {$wpdb->prefix}wc_orders o
                     INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
-                WHERE 
+                WHERE
                     o.status = 'wc-completed'
                     AND o.type = 'shop_order'
                     AND l.product_id IN ($placeholders)
@@ -366,17 +365,17 @@ class WCDP_Leaderboard
             } else {
                 $orderby_sql = 'l.product_gross_revenue DESC, o.post_date';
             }
-            $query = "SELECT 
+            $query = "SELECT
                     o.ID as order_id,
                     l.order_item_id,
                     l.product_id,
                     l.product_gross_revenue as item_total,
                     o.post_date as date_created
-                FROM 
+                FROM
                     {$wpdb->prefix}posts o
                     INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.ID = l.order_id
-                WHERE 
-                    o.post_type = 'shop_order' 
+                WHERE
+                    o.post_type = 'shop_order'
                     AND o.post_status = 'wc-completed'
                     AND l.product_id IN ($placeholders)
                 ORDER BY $orderby_sql
@@ -762,18 +761,40 @@ class WCDP_Leaderboard
     }
 
     /**
+     * Return the hook for the configured checkbox position.
+     * WC hooks fire in both WC-native checkout (form-checkout.php) and
+     * WCDP one-pager templates (wcdp_step_2.php). The wcdp_checkout_after_name_fields
+     * hook is fired from our form-billing.php override after billing_last_name renders.
+     *
+     * @return string
+     */
+    private function get_checkbox_position_hook(): string
+    {
+        $position_map = array(
+            'before_donor' => 'woocommerce_checkout_before_customer_details',
+            'after_name'   => 'wcdp_checkout_after_name_fields',
+            'after_donor'  => 'woocommerce_checkout_after_customer_details',
+            'above_submit' => 'woocommerce_review_order_before_submit',
+        );
+
+        $stored = (string) get_option('wcdp_anon_checkbox_location', 'above_submit');
+
+        return $position_map[$stored] ?? $position_map['above_submit'];
+    }
+
+    /**
      * Add an "anonymous donation" checkbox to the checkout
      * @return void
      */
-    public function add_anonymous_donation_checkbox()
+    public static function add_anonymous_donation_checkbox()
     {
-        if (!WCDP_Form::cart_contains_donation()) {
+        if (!WCDP_Form::is_donation_checkout_context()) {
             return;
         }
         echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
-            'class' => array('input-checkbox'),
+            'class' => array('input-checkbox', 'form-row-wide', 'wcdp-checkout-checkbox', 'wcdp-anonymous-donation-checkbox'),
             'label' => get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform')),
         ), WC()->checkout->get_value('wcdp_checkout_checkbox'));
         echo '</div>';

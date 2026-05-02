@@ -470,7 +470,10 @@ class WCDP_Form
     }
 
     /**
-     * return true if there is a donation form on the site
+     * return true if there is a donation form context on the current page.
+     * Covers: WooCommerce product/checkout pages, Gutenberg block, shortcodes,
+     * and AJAX requests that pass a postid parameter.
+     *
      * @return bool
      */
     public static function wcdp_has_donation_form(): bool
@@ -486,16 +489,30 @@ class WCDP_Form
             || (!is_null($post)
                 && (has_shortcode($post->post_content, 'wcdp_donation_form') || has_shortcode($post->post_content, 'product_page'))
             )
+            || (isset($_REQUEST['postid']) && absint($_REQUEST['postid']) > 0)
         ) {
-            if (!defined('WCDP_FORM')) {
-                define('WCDP_FORM', true);
-            }
+            define('WCDP_FORM', true);
             return true;
         }
         if (!is_null($post)) {
             define('WCDP_FORM', false);
         }
         return false;
+    }
+
+    /**
+     * Return true if the current context is a donation checkout:
+     * either the cart contains only donations, or the page has a donation form.
+     *
+     * @return bool
+     */
+    public static function is_donation_checkout_context(): bool
+    {
+        if (WC()->cart && !empty(WC()->cart->get_cart_contents())) {
+            return self::cart_contains_only_donations();
+        }
+
+        return self::wcdp_has_donation_form();
     }
 
     /**

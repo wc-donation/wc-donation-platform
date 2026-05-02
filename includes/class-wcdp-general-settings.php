@@ -211,6 +211,20 @@ class WCDP_General_Settings
                 'desc_tip' => __('The checkbox allows you to display anonymous and public donations in your leaderboards.', 'wc-donation-platform'),
             ),
             array(
+                'title' => __('Checkbox position', 'wc-donation-platform'),
+                'desc' => __('Where the anonymous / public checkbox appears at checkout.', 'wc-donation-platform'),
+                'id' => 'wcdp_anon_checkbox_location',
+                'default' => 'above_submit',
+                'type' => 'select',
+                'class' => 'wcdp_leaderboard_optout_checkbox',
+                'options' => array(
+                    'before_donor' => __('Before donor details', 'wc-donation-platform'),
+                    'after_name'   => __('After first &amp; last name', 'wc-donation-platform'),
+                    'after_donor'  => __('After donor details', 'wc-donation-platform'),
+                    'above_submit' => __('Above submit button (default)', 'wc-donation-platform'),
+                ),
+            ),
+            array(
                 'title' => __('Text of anonymous / public checkbox', 'wc-donation-platform'),
                 'desc' => __('Checkout checkbox label', 'wc-donation-platform'),
                 'id' => 'wcdp_checkout_checkbox_text',

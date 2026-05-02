@@ -38,6 +38,9 @@ defined('ABSPATH') || exit;
 
         foreach ($fields as $key => $field) {
             woocommerce_form_field($key, $field, $checkout->get_value($key));
+            if ($key === 'billing_last_name') {
+                do_action('wcdp_checkout_after_name_fields');
+            }
         }
         ?>
     </div>
