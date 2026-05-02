@@ -13,12 +13,6 @@ use Automattic\WooCommerce\Utilities\OrderUtil;
 class WCDP_Leaderboard
 {
     /**
-     * Prevents the anonymous checkbox from rendering more than once per request
-     * when both mapped hooks fire on the same page.
-     */
-    private static bool $checkbox_rendered = false;
-
-    /**
      * Bootstraps the class and hooks required actions & filters.
      */
     public function __construct()
@@ -30,11 +24,8 @@ class WCDP_Leaderboard
         add_action('woocommerce_analytics_update_product', array($this, 'delete_stale_orders_cache'), 10, 2);
 
         if (get_option('wcdp_enable_checkout_checkbox', 'no') === 'yes') {
-            // Register checkbox on both the WooCommerce checkout hook and the WCDP template
-            // hook for the configured position, so it works with all form styles.
-            foreach ($this->get_checkbox_position_hooks() as $hook) {
-                add_action($hook, array('WCDP_Leaderboard', 'add_anonymous_donation_checkbox'));
-            }
+            $checkbox_location = apply_filters('anonymous_donation_checkbox_location', $this->get_checkbox_position_hook());
+            add_action($checkbox_location, array('WCDP_Leaderboard', 'add_anonymous_donation_checkbox'));
 
             //Save the value of the WooCommerce checkout checkbox
             add_action('woocommerce_checkout_create_order', array($this, 'save_anonymous_donation_checkbox'));
@@ -305,10 +296,10 @@ class WCDP_Leaderboard
         // Query only published products that are donable and available for purchase
         // Excludes trashed, draft, private products
         $donable_products = $wpdb->get_col("
-            SELECT DISTINCT pm.post_id 
+            SELECT DISTINCT pm.post_id
             FROM {$wpdb->postmeta} pm
             INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-            WHERE pm.meta_key = '_donable' 
+            WHERE pm.meta_key = '_donable'
                 AND pm.meta_value = 'yes'
                 AND p.post_type = 'product'
                 AND p.post_status = 'publish'
@@ -353,16 +344,16 @@ class WCDP_Leaderboard
             } else {
                 $orderby_sql = 'l.product_gross_revenue DESC, o.date_created_gmt';
             }
-            $query = "SELECT 
+            $query = "SELECT
                     o.id as order_id,
                     l.order_item_id,
                     l.product_id,
                     l.product_gross_revenue as item_total,
                     o.date_created_gmt
-                FROM 
+                FROM
                     {$wpdb->prefix}wc_orders o
                     INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
-                WHERE 
+                WHERE
                     o.status = 'wc-completed'
                     AND o.type = 'shop_order'
                     AND l.product_id IN ($placeholders)
@@ -374,17 +365,17 @@ class WCDP_Leaderboard
             } else {
                 $orderby_sql = 'l.product_gross_revenue DESC, o.post_date';
             }
-            $query = "SELECT 
+            $query = "SELECT
                     o.ID as order_id,
                     l.order_item_id,
                     l.product_id,
                     l.product_gross_revenue as item_total,
                     o.post_date as date_created
-                FROM 
+                FROM
                     {$wpdb->prefix}posts o
                     INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.ID = l.order_id
-                WHERE 
-                    o.post_type = 'shop_order' 
+                WHERE
+                    o.post_type = 'shop_order'
                     AND o.post_status = 'wc-completed'
                     AND l.product_id IN ($placeholders)
                 ORDER BY $orderby_sql
@@ -770,32 +761,23 @@ class WCDP_Leaderboard
     }
 
     /**
-     * Return the pair of hooks (WooCommerce checkout + WCDP template) for the
-     * configured checkbox position, so the checkbox renders correctly in every
-     * form style.
+     * Return the WooCommerce hook for the configured checkbox position.
+     * These hooks fire in both WC-native checkout (form-checkout.php) and
+     * WCDP one-pager templates (wcdp_step_2.php).
      *
-     * @return string[]
+     * @return string
      */
-    private function get_checkbox_position_hooks(): array
+    private function get_checkbox_position_hook(): string
     {
         $position_map = array(
-            'before_donor' => array(
-                'woocommerce_checkout_before_customer_details',
-                'wcdp_before_donor_details',
-            ),
-            'after_donor'  => array(
-                'woocommerce_checkout_after_customer_details',
-                'wcdp_after_donor_details',
-            ),
-            'above_submit' => array(
-                'woocommerce_review_order_before_submit',
-            ),
+            'before_donor' => 'woocommerce_checkout_before_customer_details',
+            'after_donor'  => 'woocommerce_checkout_after_customer_details',
+            'above_submit' => 'woocommerce_review_order_before_submit',
         );
 
-        $stored   = (string) get_option('wcdp_anon_checkbox_location', 'above_submit');
-        $position = array_key_exists($stored, $position_map) ? $stored : 'above_submit';
+        $stored = (string) get_option('wcdp_anon_checkbox_location', 'above_submit');
 
-        return $position_map[$position];
+        return $position_map[$stored] ?? $position_map['above_submit'];
     }
 
     /**
@@ -804,18 +786,9 @@ class WCDP_Leaderboard
      */
     public static function add_anonymous_donation_checkbox()
     {
-        if (self::$checkbox_rendered) {
+        if (!WCDP_Form::is_donation_checkout_context()) {
             return;
         }
-        // WCDP template hooks (wcdp_before_donor_details, wcdp_after_donor_details)
-        // fire inside the donation form itself and may run before the cart is populated
-        // (e.g. style 2 one-pager renders step 2 at page load with an empty cart).
-        // Skip the context check for those hooks; keep it for WooCommerce hooks that can
-        // fire on any checkout page regardless of whether a donation is in the cart.
-        if (!str_starts_with(current_action(), 'wcdp_') && !WCDP_Form::is_donation_checkout_context()) {
-            return;
-        }
-        self::$checkbox_rendered = true;
         echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
