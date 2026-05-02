@@ -761,9 +761,10 @@ class WCDP_Leaderboard
     }
 
     /**
-     * Return the WooCommerce hook for the configured checkbox position.
-     * These hooks fire in both WC-native checkout (form-checkout.php) and
-     * WCDP one-pager templates (wcdp_step_2.php).
+     * Return the hook for the configured checkbox position.
+     * WC hooks fire in both WC-native checkout (form-checkout.php) and
+     * WCDP one-pager templates (wcdp_step_2.php). The wcdp_checkout_after_name_fields
+     * hook is fired from our form-billing.php override after billing_last_name renders.
      *
      * @return string
      */
@@ -771,6 +772,7 @@ class WCDP_Leaderboard
     {
         $position_map = array(
             'before_donor' => 'woocommerce_checkout_before_customer_details',
+            'after_name'   => 'wcdp_checkout_after_name_fields',
             'after_donor'  => 'woocommerce_checkout_after_customer_details',
             'above_submit' => 'woocommerce_review_order_before_submit',
         );
@@ -789,13 +791,11 @@ class WCDP_Leaderboard
         if (!WCDP_Form::is_donation_checkout_context()) {
             return;
         }
-        echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
-            'class' => array('input-checkbox'),
+            'class' => array('input-checkbox', 'form-row-wide', 'wcdp-checkout-checkbox', 'anonymous-donation-checkbox', 'wcdp-anonymous-donation-checkbox'),
             'label' => get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform')),
         ), WC()->checkout->get_value('wcdp_checkout_checkbox'));
-        echo '</div>';
     }
 
     /**

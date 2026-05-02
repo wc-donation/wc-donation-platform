@@ -219,6 +219,7 @@ class WCDP_General_Settings
                 'class' => 'wcdp_leaderboard_optout_checkbox',
                 'options' => array(
                     'before_donor' => __('Before donor details', 'wc-donation-platform'),
+                    'after_name'   => __('After first &amp; last name', 'wc-donation-platform'),
                     'after_donor'  => __('After donor details', 'wc-donation-platform'),
                     'above_submit' => __('Above submit button (default)', 'wc-donation-platform'),
                 ),
