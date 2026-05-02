@@ -6,7 +6,9 @@
  * Author: Jonas Höbenreich
  * Version: 1.4.0
  * Author URI: https://www.jonh.eu/
- * Plugin URI:  https://www.wc-donation.com/
+ * Plugin URI: https://www.wc-donation.com/
+ * GitHub Plugin URI: https://github.com/wc-donation/wc-donation-platform
+ * Primary Branch: main
  * License: GNU General Public License v2.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: wc-donation-platform
