@@ -452,7 +452,11 @@ jQuery(function ($) {
   //Focus donation amount textfield when "other"-button is selected
   document.querySelectorAll(".wcdp_value_other").forEach((button) => {
     button.addEventListener("click", () => {
-      button.parentElement?.querySelector(".wcdp-input-field")?.focus();
+      const inputField = button.parentElement?.querySelector(".wcdp-input-field");
+      if (inputField) {
+        inputField.focus();
+        inputField.value = '';
+      }
     });
   });
 
