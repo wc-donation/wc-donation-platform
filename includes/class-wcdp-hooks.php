@@ -85,6 +85,32 @@ class WCDP_Hooks
 
         //add Settings Page Link in Backend
         add_action('admin_menu', array($this, 'add_donation_platform_submenu_link'));
+
+        //Add donation-context body classes
+        add_filter('body_class', array($this, 'wcdp_body_classes'));
+    }
+
+    /**
+     * Add donation-context body classes.
+     *
+     * @param array $classes
+     * @return array
+     */
+    public function wcdp_body_classes(array $classes): array
+    {
+        if (WCDP_Form::wcdp_has_donation_form()) {
+            $classes[] = 'wcdp-donation-form';
+        }
+
+        if (WCDP_Form::is_donation_checkout_context()) {
+            $classes[] = 'wcdp-donation-checkout';
+        }
+
+        if (is_singular('product') && WCDP_Form::is_donable(get_queried_object_id())) {
+            $classes[] = 'wcdp-donation-product';
+        }
+
+        return $classes;
     }
 
     /**
@@ -404,7 +430,7 @@ class WCDP_Hooks
      */
     public function woocommerce_checkout_fields(array $fields): array
     {
-        if (isset($fields['order']['order_comments'])) {
+        if (isset($fields['order']['order_comments']) && WCDP_Form::is_donation_checkout_context()) {
             $fields['order']['order_comments']['label'] = __('Donation notes', 'wc-donation-platform');
             $fields['order']['order_comments']['placeholder'] = esc_attr__('Notes about your donation', 'wc-donation-platform');
         }
