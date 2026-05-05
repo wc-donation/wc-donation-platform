@@ -771,7 +771,7 @@ jQuery(function ($) {
     const amountOptionsList = form.querySelector(".wcdp_amount");
 
     if (amountOptionsList) {
-      amountOptionsList.addEventListener("mousedown", (event) => {
+      amountOptionsList.addEventListener("pointerdown", (event) => {
         const optionInput = getAmountOptionInputFromEventTarget(
           event.target,
           amountOptionsList,
@@ -781,11 +781,11 @@ jQuery(function ($) {
         }
       });
 
-      amountOptionsList.addEventListener("mouseup", () => {
+      amountOptionsList.addEventListener("pointerup", () => {
         clearPresetAmountInteraction(form);
       });
 
-      amountOptionsList.addEventListener("mouseleave", () => {
+      amountOptionsList.addEventListener("pointercancel", () => {
         clearPresetAmountInteraction(form);
       });
     }
