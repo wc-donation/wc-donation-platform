@@ -114,6 +114,27 @@ jQuery(function ($) {
     };
   }
 
+  function markPresetAmountInteractionStart(form) {
+    form.dataset.wcdpSelectingPresetAmount = "1";
+  }
+
+  function clearPresetAmountInteraction(form) {
+    delete form.dataset.wcdpSelectingPresetAmount;
+  }
+
+  function isPresetAmountInteractionInProgress(form) {
+    return form.dataset.wcdpSelectingPresetAmount === "1";
+  }
+
+  function getAmountOptionInputFromEventTarget(target, amountOptionsList) {
+    const optionItem = target.closest("li");
+    if (!optionItem || !amountOptionsList.contains(optionItem)) {
+      return null;
+    }
+
+    return optionItem.querySelector("input[type='radio']");
+  }
+
   function updateAmountValidationUI(form, isValid, message = "") {
     const { container } = getAmountValidationParts(form);
     setValidationState(container, isValid);
@@ -270,6 +291,10 @@ jQuery(function ($) {
 
         const form = field.closest("form.wcdp-choose-donation");
         if (form && field.matches('input[name="wcdp-donation-amount"]')) {
+          if (isPresetAmountInteractionInProgress(form)) {
+            return;
+          }
+
           validateAmountSelection(form, true);
         }
       },
@@ -743,10 +768,34 @@ jQuery(function ($) {
     const amountGroupRadios = form.querySelectorAll(
       ".wcdp_amount input[type='radio']",
     );
+    const amountOptionsList = form.querySelector(".wcdp_amount");
+
+    if (amountOptionsList) {
+      amountOptionsList.addEventListener("mousedown", (event) => {
+        const optionInput = getAmountOptionInputFromEventTarget(
+          event.target,
+          amountOptionsList,
+        );
+        if (optionInput && !optionInput.classList.contains("wcdp_value_other")) {
+          markPresetAmountInteractionStart(form);
+        }
+      });
+
+      amountOptionsList.addEventListener("mouseup", () => {
+        clearPresetAmountInteraction(form);
+      });
+
+      amountOptionsList.addEventListener("mouseleave", () => {
+        clearPresetAmountInteraction(form);
+      });
+    }
 
     amountGroupRadios.forEach((radio) => {
       radio.required = false;
+
       radio.addEventListener("change", () => {
+        clearPresetAmountInteraction(form);
+
         if (radio.classList.contains("wcdp_value_other")) {
           validateAmountSelection(form, false);
           return;
@@ -764,9 +813,6 @@ jQuery(function ($) {
         }
       });
 
-      otherAmountInput.addEventListener("blur", () => {
-        validateAmountSelection(form, true);
-      });
     }
 
     validateAmountSelection(form, false);
