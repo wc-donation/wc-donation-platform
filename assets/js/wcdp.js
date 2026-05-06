@@ -813,6 +813,48 @@ jQuery(function ($) {
         }
       });
 
+      // TEMPORARY: Left/right arrow navigation from the custom amount input.
+      // This is a stopgap because the custom amount input is nested inside the
+      // "Other" radio label, which breaks normal radio group arrow-key cycling.
+      // Remove this block when the markup is refactored to separate the radio
+      // and the input into sibling elements (see feature/other-amount-a11y-plan).
+      otherAmountInput.addEventListener("keydown", (event) => {
+        const radios = Array.from(amountGroupRadios);
+        const otherRadioIndex = radios.findIndex((r) =>
+          r.classList.contains("wcdp_value_other"),
+        );
+        if (otherRadioIndex === -1) {
+          return;
+        }
+
+        let targetIndex = -1;
+        if (event.key === "ArrowLeft") {
+          targetIndex = otherRadioIndex - 1;
+        } else if (event.key === "ArrowRight") {
+          targetIndex = otherRadioIndex + 1;
+        } else {
+          return;
+        }
+
+        // Clamp to valid preset range (skip Other itself at otherRadioIndex).
+        // Right arrow past the last item wraps back to the first preset.
+        if (targetIndex === otherRadioIndex) {
+          return;
+        }
+        if (targetIndex < 0) {
+          return;
+        }
+        if (targetIndex >= radios.length) {
+          targetIndex = 0;
+        }
+
+        event.preventDefault();
+        const targetRadio = radios[targetIndex];
+        targetRadio.checked = true;
+        targetRadio.focus();
+        targetRadio.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      // END TEMPORARY: arrow navigation from custom amount input.
     }
 
     validateAmountSelection(form, false);
