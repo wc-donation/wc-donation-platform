@@ -173,7 +173,7 @@ class WCDP_Form
 
     /**
      * Checks if a grouped product has at least one purchasable donation child product
-     * 
+     *
      * @param mixed $product
      * @return bool
      */
@@ -456,7 +456,7 @@ class WCDP_Form
         wp_register_script(
             'wc-donation-platform',
             WCDP_DIR_URL . 'assets/js/wcdp.js',
-            array(),
+            array('wp-i18n'),
             WCDP_VERSION,
             array(
                 'strategy' => 'defer',
