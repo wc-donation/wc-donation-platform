@@ -777,9 +777,9 @@ class WCDP_Leaderboard
             'above_submit' => 'woocommerce_review_order_before_submit',
         );
 
-        $stored = (string) get_option('wcdp_anon_checkbox_location', 'above_submit');
+        $stored = (string) get_option('wcdp_anon_checkbox_location', 'after_name');
 
-        return $position_map[$stored] ?? $position_map['above_submit'];
+        return $position_map[$stored] ?? $position_map['after_name'];
     }
 
     /**
