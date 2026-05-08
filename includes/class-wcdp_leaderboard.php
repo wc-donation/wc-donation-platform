@@ -791,13 +791,11 @@ class WCDP_Leaderboard
         if (!WCDP_Form::is_donation_checkout_context()) {
             return;
         }
-        echo '<div class="anonymous-donation-checkbox">';
         woocommerce_form_field('wcdp_checkout_checkbox', array(
             'type' => 'checkbox',
-            'class' => array('input-checkbox', 'form-row-wide', 'wcdp-checkout-checkbox', 'wcdp-anonymous-donation-checkbox'),
+            'class' => array('input-checkbox', 'form-row-wide', 'wcdp-checkout-checkbox', 'wcdp-anonymous-donation-checkbox', 'anonymous-donation-checkbox'),
             'label' => get_option("wcdp_checkout_checkbox_text", __('Do not show my name in the leaderboard', 'wc-donation-platform')),
         ), WC()->checkout->get_value('wcdp_checkout_checkbox'));
-        echo '</div>';
     }
 
     /**
