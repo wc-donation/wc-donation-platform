@@ -447,6 +447,8 @@ class WCDP_Form
      */
     public function wcdp_register_scripts()
     {
+        $script_file = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? 'assets/js/wcdp.js' : 'assets/js/wcdp.min.js';
+
         wp_register_style(
             'wc-donation-platform',
             WCDP_DIR_URL . 'assets/css/wcdp.min.css',
@@ -455,7 +457,7 @@ class WCDP_Form
         );
         wp_register_script(
             'wc-donation-platform',
-            WCDP_DIR_URL . 'assets/js/wcdp.js',
+            WCDP_DIR_URL . $script_file,
             array('wp-i18n'),
             WCDP_VERSION,
             array(
