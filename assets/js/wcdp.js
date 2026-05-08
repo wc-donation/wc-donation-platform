@@ -88,13 +88,12 @@ jQuery(function ($) {
       return sprintf(__('Please enter a donation amount of at least %s.', 'wc-donation-platform'), minValue);
     }
 
-    if (
-      amountInput.validity.badInput ||
-      amountInput.validity.rangeOverflow ||
-      amountInput.validity.stepMismatch ||
-      amountInput.validity.typeMismatch
-    ) {
-      return __('Please enter a valid donation amount.', 'wc-donation-platform');
+    if (amountInput.validity.rangeOverflow) {
+      return sprintf(__('Maximum donation amount is %s.', 'wc-donation-platform'), amountInput.max);
+    }
+
+    if (amountInput.validity.stepMismatch) {
+      return sprintf(__('Please enter an amount in increments of %s.', 'wc-donation-platform'), amountInput.step);
     }
 
     return __('Please enter a valid donation amount.', 'wc-donation-platform');
