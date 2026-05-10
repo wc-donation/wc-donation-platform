@@ -683,8 +683,9 @@ input:focus+.wcdp-fee-recovery__body {
 }
 
 .wcdp-theme-2 .wcdp-theme-2-custom-field {
-    display: block;
+    display: flex;
     width: 100%;
+    align-items: center;
 }
 
 .wcdp-theme-2 .wcdp_value_other:not(:checked)~.wcdp_label_custom_amount>.wcdp_cu_field,
