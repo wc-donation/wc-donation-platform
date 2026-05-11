@@ -1,4 +1,6 @@
 jQuery(function ($) {
+  const { __, sprintf } = wp.i18n;
+
   $(document).on(
     "change",
     '#wcdp_fee_recovery, .wcdp-donation-upsell__input, input[name="payment_method"]',
@@ -31,14 +33,177 @@ jQuery(function ($) {
     );
   }
 
+  function isValidatableField(field) {
+    return (
+      field instanceof HTMLElement &&
+      (field.matches("input") ||
+        field.matches("select") ||
+        field.matches("textarea"))
+    );
+  }
+
+  function setValidationState(element, isValid) {
+    if (!element) {
+      return;
+    }
+
+    element.classList.toggle("woocommerce-invalid", !isValid);
+    element.classList.toggle("woocommerce-invalid-required-field", !isValid);
+    element.classList.toggle("woocommerce-validated", isValid);
+  }
+
+  function getAmountValidationContainer(form) {
+    return (
+      form.querySelector("#wcdp_va_amount") ||
+      form.querySelector(".wcdp_variation.wcdp-row") ||
+      form
+    );
+  }
+
+  function getAmountValidationNotice(container) {
+    let notice = container.querySelector(
+      '.wcdp-required-field-notice[data-wcdp-amount-notice="1"]',
+    );
+    if (!notice) {
+      notice = document.createElement("div");
+      notice.className = "wcdp-required-field-notice";
+      notice.dataset.wcdpAmountNotice = "1";
+      notice.setAttribute("role", "alert");
+      notice.setAttribute("aria-live", "polite");
+      container.appendChild(notice);
+    }
+
+    return notice;
+  }
+
+  function getAmountValidationMessage(amountInput) {
+    const minValue = Number(amountInput.min);
+    const hasValidMin = Number.isFinite(minValue) && minValue > 0;
+
+    if (amountInput.validity.valueMissing) {
+      return __('Please choose a donation amount above.', 'wc-donation-platform');
+    }
+
+    if (amountInput.validity.rangeUnderflow && hasValidMin) {
+      return sprintf(__('Please enter a donation amount of at least %s.', 'wc-donation-platform'), minValue);
+    }
+
+    if (amountInput.validity.rangeOverflow) {
+      return sprintf(__('Maximum donation amount is %s.', 'wc-donation-platform'), amountInput.max);
+    }
+
+    if (amountInput.validity.stepMismatch) {
+      return sprintf(__('Please enter an amount in increments of %s.', 'wc-donation-platform'), amountInput.step);
+    }
+
+    return __('Please enter a valid donation amount.', 'wc-donation-platform');
+  }
+
+  function getAmountValidationParts(form) {
+    return {
+      amountInput: form.querySelector('input[name="wcdp-donation-amount"]'),
+      amountSuggestions: form.querySelectorAll(".wcdp_amount_suggestion"),
+      selectedAmountOption: form.querySelector(
+        ".wcdp_amount input[type='radio']:checked",
+      ),
+      selectedSuggestion: form.querySelector(".wcdp_amount_suggestion:checked"),
+      isOtherSelected: !!form.querySelector(".wcdp_value_other:checked"),
+      hasOtherOption: !!form.querySelector(".wcdp_value_other"),
+      container: getAmountValidationContainer(form),
+    };
+  }
+
+  function markPresetAmountInteractionStart(form) {
+    form.dataset.wcdpSelectingPresetAmount = "1";
+  }
+
+  function clearPresetAmountInteraction(form) {
+    delete form.dataset.wcdpSelectingPresetAmount;
+  }
+
+  function isPresetAmountInteractionInProgress(form) {
+    return form.dataset.wcdpSelectingPresetAmount === "1";
+  }
+
+  function getAmountOptionInputFromEventTarget(target, amountOptionsList) {
+    const optionItem = target.closest("li");
+    if (!optionItem || !amountOptionsList.contains(optionItem)) {
+      return null;
+    }
+
+    return optionItem.querySelector("input[type='radio']");
+  }
+
+  function updateAmountValidationUI(form, isValid, message = "") {
+    const { container } = getAmountValidationParts(form);
+    setValidationState(container, isValid);
+
+    const notice = getAmountValidationNotice(container);
+    notice.textContent = message;
+    notice.style.display = isValid ? "none" : "block";
+  }
+
+  function validateAmountSelection(form, showValidationMessage = false) {
+    const {
+      amountInput,
+      amountSuggestions,
+      selectedAmountOption,
+      selectedSuggestion,
+      isOtherSelected,
+      hasOtherOption,
+    } = getAmountValidationParts(form);
+
+    if (!amountInput) {
+      return true;
+    }
+
+    const hasAmountSelection = !!selectedAmountOption;
+    const hasSuggestionSelection = !!selectedSuggestion;
+    const hasAmountValue = amountInput.value.trim() !== "";
+
+    let isValid = true;
+    if (hasOtherOption) {
+      if (!hasAmountSelection) {
+        isValid = false;
+      } else if (isOtherSelected) {
+        isValid = hasAmountValue && amountInput.checkValidity();
+      }
+    } else if (!hasSuggestionSelection) {
+      isValid = amountInput.checkValidity();
+    }
+
+    if (!isOtherSelected && hasSuggestionSelection && amountSuggestions.length) {
+      isValid = true;
+    }
+
+    if (isOtherSelected && !hasAmountValue) {
+      isValid = false;
+    }
+
+    if (showValidationMessage) {
+      if (isOtherSelected && !hasAmountValue && document.activeElement === amountInput) {
+        updateAmountValidationUI(form, true, "");
+        return false;
+      }
+
+      const message = isValid ? "" : getAmountValidationMessage(amountInput);
+      updateAmountValidationUI(form, isValid, message);
+    } else if (isValid) {
+      updateAmountValidationUI(form, true, "");
+    }
+
+    return isValid;
+  }
+
   //Send donation selection form
-  function wcdp_submit(step, context) {
+  function wcdp_submit(step, context, options = {}) {
+    const { showValidationMessage = true } = options;
     const formElement = getDonationForm(context);
     if (!formElement) {
       return;
     }
 
-    if (check_validity(formElement)) {
+    if (check_validity(formElement, showValidationMessage)) {
       $("#wcdp-spinner").show();
       $("#wcdp-ajax-button").hide();
       const form = $(formElement);
@@ -81,7 +246,7 @@ jQuery(function ($) {
   }
 
   // Return true if the donation form is filled in correctly
-  function check_validity(context) {
+  function check_validity(context, showValidationMessage = true) {
     const form = getDonationForm(context);
     if (!form) {
       return false;
@@ -89,10 +254,51 @@ jQuery(function ($) {
 
     const variation = form.querySelector("#variation_id");
     try {
-      return form.reportValidity() && (!variation || variation.value !== "");
+      const isFormValid = form.checkValidity();
+      const isAmountValid = validateAmountSelection(form, showValidationMessage);
+
+      return (
+        isFormValid &&
+        isAmountValid &&
+        (!variation || variation.value !== "")
+      );
     } catch (err) {
       return false;
     }
+  }
+
+  function setupValidationOnBlur(form) {
+    form.addEventListener("focusin", function (event) {
+      if (!isValidatableField(event.target)) {
+        return;
+      }
+
+      event.target.dataset.wcdpTouched = "1";
+    });
+
+    form.addEventListener(
+      "blur",
+      function (event) {
+        const field = event.target;
+        if (!isValidatableField(field) || field.dataset.wcdpTouched !== "1") {
+          return;
+        }
+
+        const group = field.closest(".validate-required") || field;
+        const isValid = field.checkValidity();
+        setValidationState(group, isValid);
+
+        const form = field.closest("form.wcdp-choose-donation");
+        if (form && field.matches('input[name="wcdp-donation-amount"]')) {
+          if (isPresetAmountInteractionInProgress(form)) {
+            return;
+          }
+
+          validateAmountSelection(form, true);
+        }
+      },
+      true,
+    );
   }
 
   function findScrollableAncestor(el) {
@@ -215,7 +421,9 @@ jQuery(function ($) {
         setTimeout(function () {
           time--;
           if (time === 0) {
-            wcdp_submit(undefined, formElement);
+            wcdp_submit(undefined, formElement, {
+              showValidationMessage: false,
+            });
           }
         }, 1300);
       }
@@ -296,11 +504,6 @@ jQuery(function ($) {
         try {
           $firstInvalid.find("input,select,textarea,button").first().focus();
         } catch (e) {}
-        // ensure browser shows native messages
-        var checkoutForm = document.querySelector("form.checkout");
-        if (checkoutForm && typeof checkoutForm.reportValidity === "function") {
-          checkoutForm.reportValidity();
-        }
         return;
       }
     }
@@ -352,9 +555,9 @@ jQuery(function ($) {
         $("#wcdp-ajax-send")?.trigger("change");
       }
       const donationForm = getDonationForm();
-      if (check_validity(donationForm)) {
+      if (check_validity(donationForm, false)) {
         currentFormData = donationForm ? $(donationForm).serialize() : "";
-        wcdp_submit(undefined, donationForm);
+        wcdp_submit(undefined, donationForm, { showValidationMessage: false });
       }
       $("form.woocommerce-checkout select")?.selectWoo();
     } finally {
@@ -452,7 +655,11 @@ jQuery(function ($) {
   //Focus donation amount textfield when "other"-button is selected
   document.querySelectorAll(".wcdp_value_other").forEach((button) => {
     button.addEventListener("click", () => {
-      button.parentElement?.querySelector(".wcdp-input-field")?.focus();
+      const inputField = button.parentElement?.querySelector(".wcdp-input-field");
+      if (inputField) {
+        inputField.focus();
+        inputField.value = '';
+      }
     });
   });
 
@@ -543,6 +750,7 @@ jQuery(function ($) {
         selectedSuggestion.checked = false;
       }
       syncAmountSelection(form, false);
+      validateAmountSelection(form, false);
     });
   }
 
@@ -553,6 +761,172 @@ jQuery(function ($) {
     amountGroupRadios.forEach((radio) => {
       radio.required = false;
     });
+  }
+
+  function setupAmountValidation(form) {
+    const amountGroupRadios = form.querySelectorAll(
+      ".wcdp_amount input[type='radio']",
+    );
+    const amountOptionsList = form.querySelector(".wcdp_amount");
+
+    if (amountOptionsList) {
+      amountOptionsList.addEventListener("pointerdown", (event) => {
+        const optionInput = getAmountOptionInputFromEventTarget(
+          event.target,
+          amountOptionsList,
+        );
+        if (optionInput && !optionInput.classList.contains("wcdp_value_other")) {
+          markPresetAmountInteractionStart(form);
+        }
+      });
+
+      amountOptionsList.addEventListener("pointerup", () => {
+        clearPresetAmountInteraction(form);
+      });
+
+      amountOptionsList.addEventListener("pointercancel", () => {
+        clearPresetAmountInteraction(form);
+      });
+    }
+
+    amountGroupRadios.forEach((radio) => {
+      radio.required = false;
+
+      radio.addEventListener("change", () => {
+        clearPresetAmountInteraction(form);
+
+        if (radio.classList.contains("wcdp_value_other")) {
+          validateAmountSelection(form, false);
+          return;
+        }
+
+        validateAmountSelection(form, true);
+      });
+    });
+
+    const otherAmountInput = form.querySelector('input[name="wcdp-donation-amount"]');
+    if (otherAmountInput) {
+      otherAmountInput.addEventListener("focus", () => {
+        if (form.querySelector(".wcdp_value_other:checked")) {
+          updateAmountValidationUI(form, true, "");
+        }
+      });
+
+      // TEMPORARY: Left/right arrow navigation from the custom amount input.
+      // This is a stopgap because the custom amount input is nested inside the
+      // "Other" radio label, which breaks normal radio group arrow-key cycling.
+      // Remove this block when the markup is refactored to separate the radio
+      // and the input into sibling elements (see feature/other-amount-a11y-plan).
+      otherAmountInput.addEventListener("keydown", (event) => {
+        const radios = Array.from(amountGroupRadios);
+        const otherRadioIndex = radios.findIndex((r) =>
+          r.classList.contains("wcdp_value_other"),
+        );
+        if (otherRadioIndex === -1) {
+          return;
+        }
+
+        let targetIndex = -1;
+        if (event.key === "ArrowLeft") {
+          targetIndex = otherRadioIndex - 1;
+        } else if (event.key === "ArrowRight") {
+          targetIndex = otherRadioIndex + 1;
+        } else {
+          return;
+        }
+
+        // Clamp to valid preset range (skip Other itself at otherRadioIndex).
+        // Right arrow past the last item wraps back to the first preset.
+        if (targetIndex === otherRadioIndex) {
+          return;
+        }
+        if (targetIndex < 0) {
+          return;
+        }
+        if (targetIndex >= radios.length) {
+          targetIndex = 0;
+        }
+
+        event.preventDefault();
+        const targetRadio = radios[targetIndex];
+        targetRadio.checked = true;
+        targetRadio.focus();
+        targetRadio.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      // END TEMPORARY: arrow navigation from custom amount input.
+    }
+
+    validateAmountSelection(form, false);
+  }
+
+  function isElementVisible(element) {
+    if (!element) {
+      return false;
+    }
+
+    const style = window.getComputedStyle(element);
+    return (
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      element.offsetParent !== null
+    );
+  }
+
+  function setupStyle2PlaceOrderAmountNotice(form) {
+    const body = form.closest(".wcdp-body");
+    if (!body || body.querySelector(".wcdp-tab")) {
+      return;
+    }
+
+    const checkoutForm = body.querySelector("form.checkout.woocommerce-checkout");
+    const placeOrderButton = checkoutForm?.querySelector("#place_order");
+    if (!checkoutForm || !placeOrderButton) {
+      return;
+    }
+
+    const hiddenOnLoad = !isElementVisible(placeOrderButton);
+    if (!hiddenOnLoad) {
+      return;
+    }
+
+    let notice = checkoutForm.querySelector(".wcdp-place-order-amount-notice");
+    if (!notice) {
+      notice = document.createElement("div");
+      notice.className = "woocommerce-error wcdp-place-order-amount-notice";
+      notice.setAttribute("role", "alert");
+      notice.innerHTML = `<div>${__('Please choose a donation amount above.', 'wc-donation-platform')}</div>`;
+      const paymentSection = checkoutForm.querySelector("#payment");
+      if (paymentSection?.parentElement) {
+        paymentSection.parentElement.insertBefore(notice, paymentSection);
+      } else {
+        checkoutForm.prepend(notice);
+      }
+    }
+
+    const syncNoticeVisibility = () => {
+      notice.style.display = isElementVisible(placeOrderButton) ? "none" : "";
+    };
+
+    syncNoticeVisibility();
+
+    const observer = new MutationObserver(syncNoticeVisibility);
+    observer.observe(placeOrderButton, {
+      attributes: true,
+      attributeFilter: ["class", "style", "hidden", "disabled"],
+    });
+
+    const placeOrderContainer = placeOrderButton.parentElement;
+    if (placeOrderContainer) {
+      observer.observe(placeOrderContainer, {
+        attributes: true,
+        attributeFilter: ["class", "style", "hidden"],
+      });
+    }
+
+    $(document.body).on(
+      "change input update_checkout updated_checkout woocommerce_variation_has_changed",
+      syncNoticeVisibility,
+    );
   }
 
   function handleDonationInputs() {
@@ -575,12 +949,16 @@ jQuery(function ($) {
 
       form.addEventListener("change", onFormChange);
 
+      setupValidationOnBlur(form);
+
       $(form).on(
         "update_variation_values woocommerce_update_variation_values found_variation reset_data hide_variation show_variation",
         scheduleVariationSync,
       );
 
       setupAmountInputSync(form);
+      setupAmountValidation(form);
+      setupStyle2PlaceOrderAmountNotice(form);
 
       if (form.closest(".wcdp-theme-2")) {
         setupTheme2AmountValidation(form);
