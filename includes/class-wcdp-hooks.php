@@ -119,6 +119,8 @@ class WCDP_Hooks
             //Rename thank-you message on order-received page
             add_filter('woocommerce_thankyou_order_received_text', array($this, 'wcdp_thankyou_order_received_text'), 10, 2);
 
+            //Rename "Order received" h1 to "Donation received" on the order-received endpoint
+            add_filter('woocommerce_endpoint_order-received_title', array($this, 'wcdp_order_received_title'), 10, 2);
         }
 
         //Change "Add to Cart" Button
@@ -424,6 +426,26 @@ class WCDP_Hooks
             return __('Thank you. Your donation has been received.', 'wc-donation-platform');
         }
         return $message;
+    }
+
+    /**
+     * Rename the "Order received" h1 page heading to "Donation received" for donation orders.
+     *
+     * @param string $title
+     * @param string $endpoint
+     * @return string
+     */
+    public function wcdp_order_received_title(string $title, string $endpoint): string
+    {
+        global $wp;
+        $order_id = isset($wp->query_vars['order-received']) ? absint($wp->query_vars['order-received']) : 0;
+        if ($order_id) {
+            $order = wc_get_order($order_id);
+            if ($order && WCDP_Form::order_contains_only_donations($order)) {
+                return __('Donation received', 'wc-donation-platform');
+            }
+        }
+        return $title;
     }
 
     /**
