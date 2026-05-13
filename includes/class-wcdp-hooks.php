@@ -280,11 +280,6 @@ class WCDP_Hooks
                     $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
                 }
                 break;
-            case 'single-product/add-to-cart/variation-add-to-cart-button.php':
-                if ($donable) {
-                    $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
-                }
-                break;
 
             case 'single-product/add-to-cart/simple.php':
             case 'single-product/add-to-cart/variable.php':
