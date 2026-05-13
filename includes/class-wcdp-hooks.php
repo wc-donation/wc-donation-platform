@@ -10,6 +10,72 @@ if (!defined('ABSPATH'))
 
 class WCDP_Hooks
 {
+    /**
+     * Resolve a WCDP template with explicit theme override support and configurable precedence.
+     *
+     * Explicit theme overrides live under yourtheme/wc-donation-platform/<namespace>/...
+     * and always win over plugin defaults.
+     *
+     * @param string $template Current resolved WooCommerce template.
+     * @param string $plugin_template WCDP plugin template path.
+     * @param string $template_name Requested WooCommerce template name.
+     * @param string $namespace Override namespace inside the theme.
+     * @param string|null $override_name Optional override file path relative to namespace.
+     * @return string
+     */
+    public static function resolve_template_precedence(string $template, string $plugin_template, string $template_name, string $namespace = 'woocommerce', ?string $override_name = null): string
+    {
+        // Tier 1: Check for explicit WCDP theme override (always wins)
+        $theme_template = self::locate_theme_override($namespace, $override_name ?: $template_name);
+        if ($theme_template) {
+            return $theme_template;
+        }
+
+        // Tier 2: Check if theme has a WooCommerce override
+        // If $template contains the theme directory path, theme has overridden it
+        $theme_dir = get_template_directory();
+        $stylesheet_dir = get_stylesheet_directory();
+
+        $theme_has_override = (
+            strpos($template, $theme_dir) !== false ||
+            strpos($template, $stylesheet_dir) !== false
+        );
+
+        if ($theme_has_override) {
+            // Theme has WooCommerce override - check precedence setting
+            $mode = get_option('wcdp_template_override_precedence', 'theme');
+            $mode = apply_filters('wcdp_template_override_precedence', $mode, $template_name, $template, $plugin_template, $namespace);
+
+            if ('theme' === $mode) {
+                return $template;  // Respect theme override
+            }
+            return $plugin_template;  // WCDP overrides theme
+        }
+
+        // Tier 3: No theme override exists - use WCDP template (backward compatible default)
+        return $plugin_template;
+    }
+
+    /**
+     * Locate an explicit WCDP theme override.
+     *
+     * @param string $namespace Override namespace inside the theme.
+     * @param string $template_name Template path relative to the namespace.
+     * @return string
+     */
+    public static function locate_theme_override(string $namespace, string $template_name): string
+    {
+        $located = locate_template(
+            array(
+                'wc-donation-platform/' . trim($namespace, '/') . '/' . ltrim($template_name, '/'),
+            ),
+            false,
+            false
+        );
+
+        return is_string($located) ? $located : '';
+    }
+
     public function __construct()
     {
         //Change some WC templates to WCDP templates
@@ -46,7 +112,16 @@ class WCDP_Hooks
 
             //Change "Add to Cart" Button Text
             add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text'), 10, 2);
+
+            //Rename "Returning customer?" to "Returning donor?" on checkout login form
+            add_filter('woocommerce_checkout_login_message', array($this, 'wcdp_checkout_login_message'));
+
+            //Rename "Order received" h1 to "Donation received" on the order-received endpoint
+            add_filter('woocommerce_endpoint_order-received_title', array($this, 'wcdp_order_received_title'), 10, 2);
         }
+
+        //Hide price display on donation products (lets theme price template load; price HTML is empty)
+        add_filter('woocommerce_get_price_html', array($this, 'wcdp_hide_donation_price_html'), 10, 2);
 
         //Change "Add to Cart" Button
         add_filter('woocommerce_loop_add_to_cart_link', array($this, 'wcdp_loop_add_to_cart_link'), 10, 3);
@@ -125,11 +200,6 @@ class WCDP_Hooks
      */
     public function wcdp_modify_template($template = '', $template_name = '', $args = array(), $template_path = '', $default_path = ''): string
     {
-        //Return if the template has been overwritten in yourtheme/woocommerce/XXX
-        if (!str_starts_with($template_name, 'single-product') && $template[strlen($template) - strlen($template_name) - 2] === 'e') {
-            return $template;
-        }
-
         $order = null;
         if (isset($args['order'])) {
             $order = $args['order'];
@@ -141,7 +211,6 @@ class WCDP_Hooks
 
         switch ($template_name) {
             case 'checkout/review-order.php':
-            case 'checkout/form-login.php':
             case 'checkout/cart-errors.php':
             case 'checkout/form-checkout.php':
             case 'checkout/payment.php':
@@ -150,12 +219,11 @@ class WCDP_Hooks
                     get_option('wcdp_compatibility_mode', 'no') === 'no' &&
                     WCDP_Form::cart_contains_only_donations()
                 ) {
-                    $template = $path . $template_name;
+                    $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
                 }
                 break;
 
             case 'checkout/order-receipt.php':
-            case 'checkout/order-received.php':
             case 'checkout/thankyou.php':
 
             case 'myaccount/dashboard.php':
@@ -193,27 +261,20 @@ class WCDP_Hooks
                     get_option('wcdp_compatibility_mode', 'no') === 'no' &&
                     ($order === null || WCDP_Form::order_contains_only_donations($order))
                 ) {
-                    $template = $path . $template_name;
+                    $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
                 }
                 break;
 
             case 'loop/no-products-found.php':
                 if (get_option('wcdp_compatibility_mode', 'no') === 'no') {
-                    $template = $path . $template_name;
+                    $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
                 }
                 break;
 
             case 'loop/price.php':
                 global $product;
                 if (!is_null($product) && WCDP_Form::is_donable($product->get_id())) {
-                    $template = $path . $template_name;
-                }
-                break;
-
-            case 'single-product/price.php':
-            case 'single-product/add-to-cart/variation-add-to-cart-button.php':
-                if ($donable) {
-                    $template = $path . $template_name;
+                    $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
                 }
                 break;
 
@@ -221,7 +282,7 @@ class WCDP_Hooks
             case 'single-product/add-to-cart/variable.php':
             case 'single-product/add-to-cart/grouped.php':
                 if ($donable) {
-                    $template = $path . 'single-product/add-to-cart/product.php';
+                    $template = self::resolve_template_precedence($template, $path . 'single-product/add-to-cart/product.php', $template_name, 'woocommerce', 'single-product/add-to-cart/product.php');
                 }
                 break;
 
@@ -329,6 +390,40 @@ class WCDP_Hooks
             return __('Donate now', 'wc-donation-platform');
         }
         return $label;
+    }
+
+    /**
+     * Rename "Returning customer?" to "Returning donor?" on checkout login form.
+     *
+     * @param string $message
+     * @return string
+     */
+    public function wcdp_checkout_login_message(string $message): string
+    {
+        if (WCDP_Form::cart_contains_only_donations()) {
+            return __('Returning donor?', 'wc-donation-platform');
+        }
+        return $message;
+    }
+
+    /**
+     * Rename the "Order received" h1 page heading to "Donation received" for donation orders.
+     *
+     * @param string $title
+     * @param string $endpoint
+     * @return string
+     */
+    public function wcdp_order_received_title(string $title, string $endpoint): string
+    {
+        global $wp;
+        $order_id = isset($wp->query_vars['order-received']) ? absint($wp->query_vars['order-received']) : 0;
+        if ($order_id) {
+            $order = wc_get_order($order_id);
+            if ($order && WCDP_Form::order_contains_only_donations($order)) {
+                return __('Donation received', 'wc-donation-platform');
+            }
+        }
+        return $title;
     }
 
     /**
@@ -450,6 +545,22 @@ class WCDP_Hooks
         } else {
             return $text;
         }
+    }
+
+    /**
+     * Suppress price HTML on donation products so the theme price template loads
+     * but outputs nothing, preserving theme markup structure.
+     *
+     * @param string $price
+     * @param WC_Product $product
+     * @return string
+     */
+    public function wcdp_hide_donation_price_html(string $price, WC_Product $product): string
+    {
+        if (WCDP_Form::is_donable($product->get_id())) {
+            return '';
+        }
+        return $price;
     }
 
     /**
