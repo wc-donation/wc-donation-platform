@@ -123,6 +123,9 @@ class WCDP_Hooks
             add_filter('woocommerce_endpoint_order-received_title', array($this, 'wcdp_order_received_title'), 10, 2);
         }
 
+        //Hide price display on donation products (lets theme price template load; price HTML is empty)
+        add_filter('woocommerce_get_price_html', array($this, 'wcdp_hide_donation_price_html'), 10, 2);
+
         //Change "Add to Cart" Button
         add_filter('woocommerce_loop_add_to_cart_link', array($this, 'wcdp_loop_add_to_cart_link'), 10, 3);
 
@@ -277,8 +280,6 @@ class WCDP_Hooks
                     $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
                 }
                 break;
-
-            case 'single-product/price.php':
             case 'single-product/add-to-cart/variation-add-to-cart-button.php':
                 if ($donable) {
                     $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
@@ -567,6 +568,22 @@ class WCDP_Hooks
         } else {
             return $text;
         }
+    }
+
+    /**
+     * Suppress price HTML on donation products so the theme price template loads
+     * but outputs nothing, preserving theme markup structure.
+     *
+     * @param string $price
+     * @param WC_Product $product
+     * @return string
+     */
+    public function wcdp_hide_donation_price_html(string $price, WC_Product $product): string
+    {
+        if (WCDP_Form::is_donable($product->get_id())) {
+            return '';
+        }
+        return $price;
     }
 
     /**
