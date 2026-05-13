@@ -116,9 +116,6 @@ class WCDP_Hooks
             //Rename "Returning customer?" to "Returning donor?" on checkout login form
             add_filter('woocommerce_checkout_login_message', array($this, 'wcdp_checkout_login_message'));
 
-            //Rename thank-you message on order-received page
-            add_filter('woocommerce_thankyou_order_received_text', array($this, 'wcdp_thankyou_order_received_text'), 10, 2);
-
             //Rename "Order received" h1 to "Donation received" on the order-received endpoint
             add_filter('woocommerce_endpoint_order-received_title', array($this, 'wcdp_order_received_title'), 10, 2);
         }
@@ -405,21 +402,6 @@ class WCDP_Hooks
     {
         if (WCDP_Form::cart_contains_only_donations()) {
             return __('Returning donor?', 'wc-donation-platform');
-        }
-        return $message;
-    }
-
-    /**
-     * Rename thank-you message on the order-received page.
-     *
-     * @param string $message
-     * @param WC_Order|null $order
-     * @return string
-     */
-    public function wcdp_thankyou_order_received_text(string $message, ?WC_Order $order): string
-    {
-        if ($order && WCDP_Form::order_contains_only_donations($order)) {
-            return __('Thank you. Your donation has been received.', 'wc-donation-platform');
         }
         return $message;
     }
