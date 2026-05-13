@@ -112,6 +112,13 @@ class WCDP_Hooks
 
             //Change "Add to Cart" Button Text
             add_filter('woocommerce_product_add_to_cart_text', array($this, 'product_add_to_cart_text'), 10, 2);
+
+            //Rename "Returning customer?" to "Returning donor?" on checkout login form
+            add_filter('woocommerce_checkout_login_message', array($this, 'wcdp_checkout_login_message'));
+
+            //Rename thank-you message on order-received page
+            add_filter('woocommerce_thankyou_order_received_text', array($this, 'wcdp_thankyou_order_received_text'), 10, 2);
+
         }
 
         //Change "Add to Cart" Button
@@ -202,7 +209,6 @@ class WCDP_Hooks
 
         switch ($template_name) {
             case 'checkout/review-order.php':
-            case 'checkout/form-login.php':
             case 'checkout/cart-errors.php':
             case 'checkout/form-checkout.php':
             case 'checkout/payment.php':
@@ -216,7 +222,6 @@ class WCDP_Hooks
                 break;
 
             case 'checkout/order-receipt.php':
-            case 'checkout/order-received.php':
             case 'checkout/thankyou.php':
 
             case 'myaccount/dashboard.php':
@@ -390,6 +395,35 @@ class WCDP_Hooks
             return __('Donate now', 'wc-donation-platform');
         }
         return $label;
+    }
+
+    /**
+     * Rename "Returning customer?" to "Returning donor?" on checkout login form.
+     *
+     * @param string $message
+     * @return string
+     */
+    public function wcdp_checkout_login_message(string $message): string
+    {
+        if (WCDP_Form::cart_contains_only_donations()) {
+            return __('Returning donor?', 'wc-donation-platform');
+        }
+        return $message;
+    }
+
+    /**
+     * Rename thank-you message on the order-received page.
+     *
+     * @param string $message
+     * @param WC_Order|null $order
+     * @return string
+     */
+    public function wcdp_thankyou_order_received_text(string $message, ?WC_Order $order): string
+    {
+        if ($order && WCDP_Form::order_contains_only_donations($order)) {
+            return __('Thank you. Your donation has been received.', 'wc-donation-platform');
+        }
+        return $message;
     }
 
     /**
