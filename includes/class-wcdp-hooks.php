@@ -221,6 +221,8 @@ class WCDP_Hooks
             case 'single-product/add-to-cart/simple.php':
             case 'single-product/add-to-cart/variable.php':
             case 'single-product/add-to-cart/grouped.php':
+            case 'single-product/add-to-cart/subscription.php':
+            case 'single-product/add-to-cart/variable-subscription.php':
                 if ($donable) {
                     $template = $path . 'single-product/add-to-cart/product.php';
                 }
