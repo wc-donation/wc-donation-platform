@@ -654,11 +654,18 @@ jQuery(function ($) {
 
   //Focus donation amount textfield when "other"-button is selected
   document.querySelectorAll(".wcdp_value_other").forEach((button) => {
+    const inputField = button.parentElement?.querySelector(".wcdp-input-field");
+    if (inputField) {
+      inputField.addEventListener("input", () => {
+        inputField.dataset.wcdpUserTyped = "1";
+      });
+    }
     button.addEventListener("click", () => {
-      const inputField = button.parentElement?.querySelector(".wcdp-input-field");
       if (inputField) {
         inputField.focus();
-        inputField.value = '';
+        if (!inputField.dataset.wcdpUserTyped) {
+          inputField.value = '';
+        }
       }
     });
   });
