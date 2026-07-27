@@ -807,6 +807,12 @@ jQuery(function ($) {
           return;
         }
 
+        // Preset selected — reset typed flag so "Other" clears input next time
+        const otherInput = form.querySelector(".wcdp-input-field");
+        if (otherInput) {
+          delete otherInput.dataset.wcdpUserTyped;
+        }
+
         validateAmountSelection(form, true);
       });
     });
