@@ -84,6 +84,9 @@ if ($context === 'embed' && $value['style'] === 4) {
     <input type="hidden" name="postid" value="<?php echo esc_attr($value['id']); ?>">
     <input type="hidden" name="wcdp_form_id" value="<?php echo esc_attr($form_id); ?>">
     <input type="hidden" name="wcdp_theme" value="<?php echo esc_attr($value['theme']); ?>">
+    <?php if (!empty($value['source'])): ?>
+        <input type="hidden" name="wcdp_source" value="<?php echo esc_attr($value['source']); ?>">
+    <?php endif; ?>
 
     <?php
     //Donation Amount section

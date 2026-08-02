@@ -87,9 +87,11 @@ class WCDP_Form
             'short_description' => 0,
             'image' => 0,
             'className' => '',
-            'label' => __("Donate now!", "wc-donation-platform")
+            'label' => __("Donate now!", "wc-donation-platform"),
+            'source' => '',
         ), $value);
 
+        $value['source'] = self::sanitize_source($value['source']);
         $value['theme'] = absint($value['theme']);
         if (!in_array($value['theme'], array(1, 2), true)) {
             $value['theme'] = 1;
@@ -640,7 +642,15 @@ class WCDP_Form
         }
 
         $this->maybe_empty_cart($product_id, $product_choices);
-        if (false === WC()->cart->add_to_cart($product_id, 1, $variation_id, $variation, array('wcdp_donation_amount' => $wcdp_donation_amount))) {
+        $cart_item_data = array('wcdp_donation_amount' => $wcdp_donation_amount);
+        if (!empty($_REQUEST['wcdp_source'])) {
+            $source = self::sanitize_source(wp_unslash($_REQUEST['wcdp_source']));
+            if ($source !== '') {
+                $cart_item_data['wcdp_source'] = $source;
+            }
+        }
+
+        if (false === WC()->cart->add_to_cart($product_id, 1, $variation_id, $variation, $cart_item_data)) {
             $response['message'] = esc_html__('Could not add donation to cart.', 'wc-donation-platform');
             return $response;
         }
@@ -662,6 +672,24 @@ class WCDP_Form
         $min_donation_amount = (float) apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
         $max_donation_amount = (float) apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 50000), $product_id);
         return $donation_amount >= $min_donation_amount && $donation_amount <= $max_donation_amount;
+    }
+
+    /**
+     * Sanitize a tracking source used by forms, carts, orders and reporting shortcodes.
+     *
+     * @param mixed $source Raw source value.
+     * @return string
+     */
+    public static function sanitize_source($source): string
+    {
+        $source = sanitize_text_field((string) $source);
+        $source = trim($source);
+
+        if ($source === '') {
+            return '';
+        }
+
+        return substr($source, 0, 191);
     }
 
     /**
@@ -735,6 +763,5 @@ class WCDP_Form
         }
     }
 }
-
 
 

@@ -83,6 +83,9 @@ class WCDP_Hooks
         //make sure to update the price for orders created via API
         add_action('woocommerce_new_order_item', array($this, 'wcdp_modify_item_price_after_creation'), 10, 3);
 
+        //Persist donation source tracking from cart items to orders.
+        add_action('woocommerce_checkout_create_order_line_item', array($this, 'wcdp_add_source_to_order_item'), 10, 4);
+
         //add Settings Page Link in Backend
         add_action('admin_menu', array($this, 'add_donation_platform_submenu_link'));
 
@@ -384,6 +387,40 @@ class WCDP_Hooks
                 $item_data->set_total_tax(0);
             }
         }
+    }
+
+    /**
+     * Persist donation source tracking to order item and order meta.
+     *
+     * @param WC_Order_Item_Product $item Order line item.
+     * @param string $cart_item_key Cart item key.
+     * @param array $values Cart item values.
+     * @param WC_Order $order Order.
+     * @return void
+     */
+    public function wcdp_add_source_to_order_item($item, $cart_item_key, $values, $order)
+    {
+        if (!$item instanceof WC_Order_Item_Product || empty($values['wcdp_source'])) {
+            return;
+        }
+
+        $source = WCDP_Form::sanitize_source($values['wcdp_source']);
+        if ($source === '') {
+            return;
+        }
+
+        $item->add_meta_data('_wcdp_source', $source, true);
+
+        $sources = $order->get_meta('_wcdp_sources');
+        if (!is_array($sources)) {
+            $sources = empty($sources) ? array() : array($sources);
+        }
+
+        $sources[] = $source;
+        $sources = array_values(array_unique(array_filter(array_map(array('WCDP_Form', 'sanitize_source'), $sources))));
+
+        $order->update_meta_data('_wcdp_source', reset($sources));
+        $order->update_meta_data('_wcdp_sources', $sources);
     }
 
     /**
