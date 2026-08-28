@@ -472,7 +472,7 @@ class WCDP_Form
             $this->wcdp_enqueue_scripts();
         }
     }
-
+    
     /**
      * return true if there is a donation form context on the current page.
      * Covers: WooCommerce product/checkout pages, Gutenberg block, shortcodes,
@@ -634,8 +634,8 @@ class WCDP_Form
             }
         }
 
-        $wcdp_donation_amount = sanitize_text_field($_REQUEST['wcdp-donation-amount']);
-        if (!$this->check_donation_amount($wcdp_donation_amount, $product_id) || !isset(WC()->cart)) {
+        $wcdp_donation_amount = self::normalize_donation_amount($_REQUEST['wcdp-donation-amount']);
+        if (is_null($wcdp_donation_amount) || !$this->check_donation_amount($wcdp_donation_amount, $product_id) || !isset(WC()->cart)) {
             $response['message'] = esc_html__('Invalid donation amount. Please enter a different donation amount.', 'wc-donation-platform');
             $response['reload'] = false;
             return $response;
@@ -662,6 +662,39 @@ class WCDP_Form
     }
 
     /**
+     * Normalize a donation amount input to WooCommerce price precision.
+     *
+     * Rejects unsupported numeric formats (for example scientific notation)
+     * so the validated value matches what is later stored and charged.
+     *
+     * @param mixed $donation_amount
+     * @return string|null
+     */
+    private static function normalize_donation_amount($donation_amount): ?string
+    {
+        if (!is_scalar($donation_amount)) {
+            return null;
+        }
+
+        $donation_amount = trim(wp_unslash((string) $donation_amount));
+        if ($donation_amount === '') {
+            return null;
+        }
+
+        if (!preg_match('/^(?:\d+|\d+\.\d+|\.\d+)$/', $donation_amount)) {
+            return null;
+        }
+
+        $price_decimals = (int) wc_get_price_decimals();
+        if ($price_decimals < 0) {
+            $price_decimals = 0;
+        }
+
+        return number_format((float) $donation_amount, $price_decimals, '.', '');
+    }
+
+
+    /**
      * Check if specified donation amount is valid
      * @param $donation_amount
      * @param $product_id int
@@ -669,6 +702,12 @@ class WCDP_Form
      */
     public static function check_donation_amount($donation_amount, int $product_id = 0): bool
     {
+        $donation_amount = self::normalize_donation_amount($donation_amount);
+        if (is_null($donation_amount)) {
+            return false;
+        }
+
+        $donation_amount = (float) $donation_amount;
         $min_donation_amount = (float) apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
         $max_donation_amount = (float) apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 50000), $product_id);
         return $donation_amount >= $min_donation_amount && $donation_amount <= $max_donation_amount;
