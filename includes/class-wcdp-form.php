@@ -130,7 +130,7 @@ class WCDP_Form
                     wp_enqueue_script('wc-add-to-cart-variation');
                 }
 
-                WCDP_Form::wcdp_enqueue_scripts($value['style'] !== 4);
+                WCDP_Form::wcdp_enqueue_scripts($value['style'] !== 4, true);
                 wc_get_template(
                     'wcdp_form.php',
                     array(
@@ -220,7 +220,7 @@ class WCDP_Form
      * Enqueue CSS & JS Files
      * @return void
      */
-    private static function wcdp_enqueue_scripts($is_checkout = true)
+    private static function wcdp_enqueue_scripts($is_checkout = true, $needs_wc_cart = false)
     {
         //Dependencies
         $cssdeps = array(
@@ -236,9 +236,16 @@ class WCDP_Form
             'jquery',
             'selectWoo',
             'select2',
-            'wc-cart',
             'wp-hooks'
         );
+
+        // Only enqueue wc-cart when a WCDP form is actually rendered on the page.
+        // Enqueuing wc-cart on standard checkout pages (without an embedded WCDP
+        // form) causes WC's cart-page shipping handler to fire on checkout's
+        // shipping radios, triggering a cart AJAX update that navigates away.
+        if ($needs_wc_cart) {
+            $jsdeps[] = 'wc-cart';
+        }
 
         // style 4 only renders an add2cart form
         if ($is_checkout) {
