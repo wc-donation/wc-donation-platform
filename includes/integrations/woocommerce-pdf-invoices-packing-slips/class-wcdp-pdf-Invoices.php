@@ -86,10 +86,28 @@ class WCDP_Pdf_Invoices
      */
     public static function add_document_type(array $documents = array()): array
     {
-        if (file_exists(WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/Documents/OrderDocumentMethods.php')) {
-            include_once 'class-wcdp-thank-you-certificate.php';
-            $documents['\WPO\IPS\Documents\WCDP_Thank_You_Certificate'] = WCDP_Thank_You_Certificate::instance();
+        $wpo_ips_base_version = function_exists( 'WPO_WCPDF' )
+            ? preg_replace( '/[^0-9.].*$/', '', ( WPO_WCPDF()->version ?? null ) )
+            : null;
+
+        if ( empty( $wpo_ips_base_version ) ) {
+            return $documents;
         }
+
+        if ( file_exists( WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/Documents/OrderDocumentMethods.php' ) ) {
+            $dirname            = dirname( __FILE__ );
+            $wpo_ips_is_v6_base = version_compare( $wpo_ips_base_version, '6.0.0', '>=' );
+
+            // New base 6.0.0+
+            if ( $wpo_ips_is_v6_base ) {
+                $documents['\WPO\IPS\Documents\ThankYouCertificate'] = include $dirname . '/Documents/ThankYouCertificate.php';
+
+                // Legacy
+            } else {
+                $documents['\WPO\IPS\Documents\WCDP_Thank_You_Certificate'] = include $dirname . '/class-wcdp-thank-you-certificate-legacy.php';
+            }
+        }
+
         return $documents;
     }
 }

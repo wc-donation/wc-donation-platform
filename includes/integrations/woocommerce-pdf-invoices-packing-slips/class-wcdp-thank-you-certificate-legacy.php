@@ -346,3 +346,5 @@ if (!class_exists('WCDP_Thank_You_Certificate')):
     }
 
 endif; // class_exists
+
+return WCDP_Thank_You_Certificate::instance();
