@@ -654,11 +654,18 @@ jQuery(function ($) {
 
   //Focus donation amount textfield when "other"-button is selected
   document.querySelectorAll(".wcdp_value_other").forEach((button) => {
+    const inputField = button.parentElement?.querySelector(".wcdp-input-field");
+    if (inputField) {
+      inputField.addEventListener("input", () => {
+        inputField.dataset.wcdpUserTyped = "1";
+      });
+    }
     button.addEventListener("click", () => {
-      const inputField = button.parentElement?.querySelector(".wcdp-input-field");
       if (inputField) {
         inputField.focus();
-        inputField.value = '';
+        if (!inputField.dataset.wcdpUserTyped) {
+          inputField.value = '';
+        }
       }
     });
   });
@@ -798,6 +805,12 @@ jQuery(function ($) {
         if (radio.classList.contains("wcdp_value_other")) {
           validateAmountSelection(form, false);
           return;
+        }
+
+        // Preset selected — reset typed flag so "Other" clears input next time
+        const otherInput = form.querySelector(".wcdp-input-field");
+        if (otherInput) {
+          delete otherInput.dataset.wcdpUserTyped;
         }
 
         validateAmountSelection(form, true);
