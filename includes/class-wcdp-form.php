@@ -233,7 +233,6 @@ class WCDP_Form
 
         $jsdeps = array(
             'wc-donation-platform',
-            'jquery',
             'selectWoo',
             'select2',
             'wp-hooks'
@@ -402,7 +401,11 @@ class WCDP_Form
             ) {
                 $html .= ' checked="checked"';
             }
-            $html .= ' required>';
+            if ($input_name === 'donation-amount') {
+                $html .= '>';
+            } else {
+                $html .= ' required>';
+            }
             $label_id = $option['label-id'] !== '' ? esc_attr($form_id . $option['label-id']) : '';
             $html .= '<label id="' . $label_id . '" class="' . esc_attr($option['label-class']) . '" for="' . $form_id . esc_attr($option['input-id']) . '">';
             $html .= wp_kses(apply_filters('wcdp_label_' . esc_attr($option['input-value']), $option['label-text'], $args), $allowed_html);
@@ -479,7 +482,7 @@ class WCDP_Form
             $this->wcdp_enqueue_scripts();
         }
     }
-    
+
     /**
      * return true if there is a donation form context on the current page.
      * Covers: WooCommerce product/checkout pages, Gutenberg block, shortcodes,

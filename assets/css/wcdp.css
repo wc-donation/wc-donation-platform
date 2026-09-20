@@ -613,6 +613,7 @@ input:focus+.wcdp-fee-recovery__body {
     cursor: pointer;
     border: 2px solid var(--wcdp-main-2);
     text-align: left;
+    padding-right: 6px;
 }
 
 .wcdp-fee-recovery__input:checked~.wcdp-fee-recovery__body .wcdp-fee-recovery__body-cover-checkbox--svg {
@@ -688,6 +689,10 @@ input:focus+.wcdp-fee-recovery__body {
     align-items: center;
 }
 
+.wcdp-theme-2 .wcdp-theme-2-custom-field input.wcdp_donation_amount_field {
+    width: 100%;
+}
+
 .wcdp-theme-2 .wcdp_value_other:not(:checked)~.wcdp_label_custom_amount>.wcdp_cu_field,
 .wcdp-theme-2 .wcdp_value_other:checked~.wcdp_label_custom_amount>.wcdp_cu_field {
     display: block;
@@ -710,6 +715,7 @@ input:focus+.wcdp-fee-recovery__body {
     -moz-appearance: textfield;
     background: none;
     border: none;
+    outline: none;
     font-size: 1.3em;
 }
 

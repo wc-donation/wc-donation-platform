@@ -138,5 +138,6 @@ if ($value['style'] != 3 && $value['style'] != 4) {
                 ?>
                 </div> <?php
     } ?>
+    <div class="wcdp-required-field-notice" role="alert" style="display: none;"></div>
 </div>
 <?php

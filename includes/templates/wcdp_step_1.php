@@ -76,8 +76,9 @@ if ($context === 'embed' && $value['style'] === 4) {
     echo ' target="_blank"';
 }
 ?> autocomplete="off" enctype='multipart/form-data'
-    data-product_id="<?php echo esc_attr($product_id); ?>" data-formid="<?php echo esc_attr($form_id); ?>" <?php if ($has_child): ?> data-product_variations="<?php echo esc_attr($variations_attr); ?>" <?php endif; ?>
-    wcdp-error-default="<?php echo esc_attr(wp_kses(__('An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.', 'wc-donation-platform'), array()), ENT_QUOTES, 'UTF-8', true); ?>">
+    data-style="<?php echo esc_attr($value['style']); ?>" data-product_id="<?php echo esc_attr($product_id); ?>"
+    data-formid="<?php echo esc_attr($form_id); ?>" <?php if ($has_child): ?>
+        data-product_variations="<?php echo esc_attr($variations_attr); ?>" <?php endif; ?>>
     <input type="hidden" name="action" value="wcdp_ajax_donation_calculation">
     <input type="hidden" name="security"
         value="<?php echo esc_attr(wp_create_nonce('wcdp_ajax_nonce' . $value['id'])); ?>">
