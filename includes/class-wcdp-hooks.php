@@ -166,6 +166,9 @@ class WCDP_Hooks
         //make sure to update the price for orders created via API
         add_action('woocommerce_new_order_item', array($this, 'wcdp_modify_item_price_after_creation'), 10, 3);
 
+        //Persist donation source tracking from cart items to orders.
+        add_action('woocommerce_checkout_create_order_line_item', array($this, 'wcdp_add_source_to_order_item'), 10, 4);
+
         //add Settings Page Link in Backend
         add_action('admin_menu', array($this, 'add_donation_platform_submenu_link'));
 
@@ -209,10 +212,11 @@ class WCDP_Hooks
     public function wcdp_modify_template($template = '', $template_name = '', $args = array(), $template_path = '', $default_path = ''): string
     {
         $order = null;
-        if (isset($args['order'])) {
+        if (isset($args['order']) && $args['order'] instanceof WC_Order) {
             $order = $args['order'];
         } else if (isset($args['order_id'])) {
-            $order = wc_get_order($args['order_id']);
+            $fetched_order = wc_get_order($args['order_id']);
+            $order = $fetched_order instanceof WC_Order ? $fetched_order : null;
         }
         $path = WCDP_DIR . 'includes/wc-templates/';
         $donable = WCDP_Form::is_donable(get_queried_object_id());
@@ -299,6 +303,8 @@ class WCDP_Hooks
             case 'single-product/add-to-cart/simple.php':
             case 'single-product/add-to-cart/variable.php':
             case 'single-product/add-to-cart/grouped.php':
+            case 'single-product/add-to-cart/subscription.php':
+            case 'single-product/add-to-cart/variable-subscription.php':
                 if ($donable) {
                     $template = self::resolve_template_precedence($template, $path . 'single-product/add-to-cart/product.php', $template_name, 'woocommerce', 'single-product/add-to-cart/product.php');
                 }
@@ -503,6 +509,40 @@ class WCDP_Hooks
                 $item_data->set_total_tax(0);
             }
         }
+    }
+
+    /**
+     * Persist donation source tracking to order item and order meta.
+     *
+     * @param WC_Order_Item_Product $item Order line item.
+     * @param string $cart_item_key Cart item key.
+     * @param array $values Cart item values.
+     * @param WC_Order $order Order.
+     * @return void
+     */
+    public function wcdp_add_source_to_order_item($item, $cart_item_key, $values, $order)
+    {
+        if (!$item instanceof WC_Order_Item_Product || empty($values['wcdp_source'])) {
+            return;
+        }
+
+        $source = WCDP_Form::sanitize_source($values['wcdp_source']);
+        if ($source === '') {
+            return;
+        }
+
+        $item->add_meta_data('_wcdp_source', $source, true);
+
+        $sources = $order->get_meta('_wcdp_sources');
+        if (!is_array($sources)) {
+            $sources = empty($sources) ? array() : array($sources);
+        }
+
+        $sources[] = $source;
+        $sources = array_values(array_unique(array_filter(array_map(array('WCDP_Form', 'sanitize_source'), $sources))));
+
+        $order->update_meta_data('_wcdp_source', reset($sources));
+        $order->update_meta_data('_wcdp_sources', $sources);
     }
 
     /**

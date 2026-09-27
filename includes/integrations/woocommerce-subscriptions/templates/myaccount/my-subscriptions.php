@@ -8,6 +8,21 @@
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
+
+$contains_non_donation_subscriptions = false;
+
+if (!empty($subscriptions)) {
+    foreach ($subscriptions as $subscription) {
+        if (!$subscription instanceof WC_Order || !WCDP_Form::order_contains_only_donations($subscription)) {
+            $contains_non_donation_subscriptions = true;
+            break;
+        }
+    }
+}
+
+$subscription_column_label = $contains_non_donation_subscriptions
+    ? __('Subscription', 'woocommerce-subscriptions')
+    : __('Recurring Donation', 'wc-donation-platform');
 ?>
 <div class="woocommerce_account_subscriptions">
 
@@ -17,7 +32,7 @@ if (!defined('ABSPATH')) {
             <thead>
             <tr>
                 <th class="subscription-id order-number woocommerce-orders-table__header woocommerce-orders-table__header-order-number woocommerce-orders-table__header-subscription-id">
-                    <span class="nobr"><?php esc_html_e('Recurring Donation', 'wc-donation-platform'); ?></span></th>
+                    <span class="nobr"><?php echo esc_html($subscription_column_label); ?></span></th>
                 <th class="subscription-status order-status woocommerce-orders-table__header woocommerce-orders-table__header-order-status woocommerce-orders-table__header-subscription-status">
                     <span class="nobr"><?php esc_html_e('Status', 'woocommerce-subscriptions'); ?></span></th>
                 <th class="subscription-next-payment order-date woocommerce-orders-table__header woocommerce-orders-table__header-order-date woocommerce-orders-table__header-subscription-next-payment">

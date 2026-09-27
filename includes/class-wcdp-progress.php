@@ -45,6 +45,28 @@ class WCDP_Progress
             delete_post_meta($product->get_id(), 'wcdp_total_revenue');
             delete_transient('wcdp_order_counter_' . $product->get_id());
         }
+
+        self::delete_source_report_cache();
+    }
+
+    /**
+     * Delete source-scoped progress and counter cache entries.
+     *
+     * @return void
+     */
+    public static function delete_source_report_cache()
+    {
+        $cache_keys = get_option('wcdp_source_report_cache_keys', array());
+        if (!is_array($cache_keys)) {
+            delete_option('wcdp_source_report_cache_keys');
+            return;
+        }
+
+        foreach ($cache_keys as $cache_key => $timestamp) {
+            delete_transient($cache_key);
+        }
+
+        delete_option('wcdp_source_report_cache_keys');
     }
 
     /**
@@ -72,6 +94,7 @@ class WCDP_Progress
             delete_post_meta($product_id, 'wcdp_total_revenue');
         }
         delete_transient('wcdp_order_counter_' . $product_id);
+        self::delete_source_report_cache();
     }
 
     /**
@@ -81,6 +104,16 @@ class WCDP_Progress
      */
     public function wcdp_progress(array $atts = array())
     {
+        $atts = shortcode_atts(array(
+            'id' => get_the_ID(),
+            'goal' => '',
+            'style' => 1,
+            'addids' => '',
+            'cheat' => 0,
+            'percentage_decimals' => 0,
+            'source' => '',
+        ), $atts, 'wcdp_progress');
+
         if ($atts['id'] === 'current') {
             $atts['id'] = get_the_ID();
         }
@@ -94,21 +127,16 @@ class WCDP_Progress
 
         $goal_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true);
         $end_date_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true);
-
-        $atts = shortcode_atts(array(
-            'id' => get_the_ID(),
-            'goal' => $goal_db,
-            'style' => 1,
-            'addids' => '',
-            'cheat' => 0,
-            'percentage_decimals' => 0,
-        ), $atts);
+        if ($atts['goal'] === '') {
+            $atts['goal'] = $goal_db;
+        }
 
         if (!is_numeric($atts['goal'])) {
             $atts['goal'] = 100;
         }
 
-        $revenue = (float) $this->getTotalRevenueOfProduct($atts['id']);
+        $source = WCDP_Form::sanitize_source($atts['source']);
+        $revenue = (float) $this->getTotalRevenueOfProduct($atts['id'], $source);
 
         do_action('wcdp_goal_product_status', $revenue, $goal_db, $atts['id']);
 
@@ -116,7 +144,7 @@ class WCDP_Progress
         $ids = explode(",", $atts['addids']);
         foreach ($ids as $id) {
             if (WCDP_Form::is_donable($id)) {
-                $revenue += (float) $this->getTotalRevenueOfProduct($id);
+                $revenue += (float) $this->getTotalRevenueOfProduct($id, $source);
             }
         }
 
@@ -229,12 +257,18 @@ class WCDP_Progress
      * @param $product_id
      * @return float|int
      */
-    private function getTotalRevenueOfProduct($product_id)
+    private function getTotalRevenueOfProduct($product_id, string $source = '')
     {
         // only include donable projects
         if (!WCDP_Form::is_donable($product_id)) {
             return 0;
         }
+
+        $source = WCDP_Form::sanitize_source($source);
+        if ($source !== '') {
+            return $this->getTotalRevenueOfProductBySource((int) $product_id, $source);
+        }
+
         $totalrevenue = get_post_meta($product_id, 'wcdp_total_revenue');
         if ($totalrevenue === false) {
             return 0;
@@ -290,6 +324,106 @@ class WCDP_Progress
     }
 
     /**
+     * Return cached revenue for a product scoped to a source.
+     *
+     * @param int $product_id Product id.
+     * @param string $source Source key.
+     * @return float
+     */
+    private function getTotalRevenueOfProductBySource(int $product_id, string $source): float
+    {
+        $cache_key = $this->get_source_report_cache_key('progress', $product_id, $source);
+        $cached = get_transient($cache_key);
+        if ($cached !== false) {
+            return (float) $cached;
+        }
+
+        $revenue = $this->queryTotalRevenueOfProductBySource($product_id, $source);
+        set_transient($cache_key, $revenue, apply_filters('wcdp_cache_expiration', 6 * HOUR_IN_SECONDS));
+        $this->track_source_report_cache_key($cache_key);
+
+        return $revenue;
+    }
+
+    /**
+     * Query revenue for a product scoped to a source.
+     *
+     * @param int $product_id Product id.
+     * @param string $source Source key.
+     * @return float
+     */
+    private function queryTotalRevenueOfProductBySource(int $product_id, string $source): float
+    {
+        global $wpdb;
+
+        if (OrderUtil::custom_orders_table_usage_is_enabled()) {
+            $query = "  SELECT
+                            SUM(l.product_net_revenue) as revenue
+                        FROM
+                            {$wpdb->prefix}wc_orders o
+                            INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
+                            INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta sim ON l.order_item_id = sim.order_item_id
+                        WHERE
+                                o.status = 'wc-completed'
+                            AND o.type = 'shop_order'
+                            AND l.product_id = %d
+                            AND sim.meta_key = '_wcdp_source'
+                            AND sim.meta_value = %s;";
+        } else {
+            $query = "  SELECT
+                            SUM(l.product_net_revenue) as revenue
+                        FROM
+                            {$wpdb->prefix}posts p
+                            INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON p.ID = l.order_id
+                            INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta sim ON l.order_item_id = sim.order_item_id
+                        WHERE
+                                p.post_type = 'shop_order'
+                            AND p.post_status = 'wc-completed'
+                            AND l.product_id = %d
+                            AND sim.meta_key = '_wcdp_source'
+                            AND sim.meta_value = %s;";
+        }
+
+        $result = $wpdb->get_row($wpdb->prepare($query, $product_id, $source), ARRAY_A);
+
+        if (!is_null($result) && isset($result['revenue'])) {
+            return (float) apply_filters('wcdp_update_product_revenue', (float) $result['revenue'], $product_id, $source);
+        }
+
+        return 0.0;
+    }
+
+    /**
+     * Build a transient key for source-scoped reports.
+     *
+     * @param string $type Report type.
+     * @param int $product_id Product id.
+     * @param string $source Source key.
+     * @return string
+     */
+    private function get_source_report_cache_key(string $type, int $product_id, string $source): string
+    {
+        return 'wcdp_' . sanitize_key($type) . '_src_' . md5($product_id . '|' . $source);
+    }
+
+    /**
+     * Track source report cache keys so they can be cleared globally.
+     *
+     * @param string $cache_key Cache key.
+     * @return void
+     */
+    private function track_source_report_cache_key(string $cache_key)
+    {
+        $cache_keys = get_option('wcdp_source_report_cache_keys', array());
+        if (!is_array($cache_keys)) {
+            $cache_keys = array();
+        }
+
+        $cache_keys[$cache_key] = time();
+        update_option('wcdp_source_report_cache_keys', $cache_keys);
+    }
+
+    /**
      * Format timestamp as timediff string
      * @param $timestamp
      * @return string
@@ -316,9 +450,19 @@ class WCDP_Progress
      * @return string|null
      * @since v1.3.2
      */
-    private function query_order_count_product(int $product_id): int
+    private function query_order_count_product(int $product_id, string $source = ''): int
     {
         global $wpdb;
+        $source = WCDP_Form::sanitize_source($source);
+        $source_join = '';
+        $source_where = '';
+        $prepare_values = array($product_id);
+
+        if ($source !== '') {
+            $source_join = " INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta sim ON l.order_item_id = sim.order_item_id";
+            $source_where = " AND sim.meta_key = '_wcdp_source' AND sim.meta_value = %s";
+            $prepare_values[] = $source;
+        }
 
         if (class_exists('Automattic\WooCommerce\Utilities\OrderUtil') && Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
             $query = "
@@ -327,10 +471,12 @@ class WCDP_Progress
             FROM 
                 {$wpdb->prefix}wc_orders o
                 INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON o.id = l.order_id
+                {$source_join}
             WHERE 
                     o.status = 'wc-completed'
                 AND o.type = 'shop_order'
                 AND l.product_id = %d
+                {$source_where}
         ";
         } else {
             $query = "
@@ -339,14 +485,16 @@ class WCDP_Progress
             FROM 
                 {$wpdb->prefix}posts p
                 INNER JOIN {$wpdb->prefix}wc_order_product_lookup l ON p.ID = l.order_id
+                {$source_join}
             WHERE 
                     p.post_type = 'shop_order'
                 AND p.post_status = 'wc-completed'
                 AND l.product_id = %d
+                {$source_where}
         ";
         }
 
-        return intval($wpdb->get_var($wpdb->prepare($query, $product_id)));
+        return intval($wpdb->get_var($wpdb->prepare($query, $prepare_values)));
     }
 
     /**
@@ -356,14 +504,18 @@ class WCDP_Progress
      * @return void
      * @since v1.3.2
      */
-    function get_order_count_product(int $product_id): int
+    function get_order_count_product(int $product_id, string $source = ''): int
     {
-        $cache_key = 'wcdp_order_counter_' . $product_id;
+        $source = WCDP_Form::sanitize_source($source);
+        $cache_key = $source === '' ? 'wcdp_order_counter_' . $product_id : $this->get_source_report_cache_key('counter', $product_id, $source);
         $count = get_transient($cache_key);
 
         if ($count === false) {
-            $count = $this->query_order_count_product($product_id);
+            $count = $this->query_order_count_product($product_id, $source);
             set_transient($cache_key, $count, apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
+            if ($source !== '') {
+                $this->track_source_report_cache_key($cache_key);
+            }
         }
         return intval($count);
     }
@@ -384,6 +536,7 @@ class WCDP_Progress
             'label' => __('{ORDER_COUNT} people have already contributed to this project.', 'wc-donation-platform'),
             'fallback' => '',
             'cheat' => 0,
+            'source' => '',
         ), $atts, 'wcdp_order_counter');
 
         $product_id = intval($atts['id']);
@@ -400,7 +553,7 @@ class WCDP_Progress
             $label .= ' {ORDER_COUNT}';
         }
 
-        $count = $this->get_order_count_product($product_id) + intval($atts['cheat']);
+        $count = $this->get_order_count_product($product_id, WCDP_Form::sanitize_source($atts['source'])) + intval($atts['cheat']);
         if ($count === 0 && $atts['fallback'] !== '') {
             $label = $atts['fallback'];
         }
