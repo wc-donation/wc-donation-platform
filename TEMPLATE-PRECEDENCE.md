@@ -22,34 +22,29 @@ yourtheme/
         └── myaccount/my-subscriptions.php
 ```
 
-Use this tier when you need donation-specific customizations separate from regular WooCommerce templates.
+Use this tier when you need donation-specific customizations separate from regular WooCommerce templates. Explicit overrides win regardless of the precedence mode.
 
 ### Tier 2: Theme WooCommerce Overrides (Configurable)
 
-When theme has WooCommerce overrides but no explicit WCDP override, precedence is configurable.
+When the theme has a WooCommerce override but no explicit WCDP override, the `wcdp_template_override_precedence` filter decides:
 
-**Default:** Theme templates win (backward compatible)
-
-**Admin Setting:** WooCommerce → Settings → Donations → Template Override Precedence
-- "Respect theme customizations" (default)
-- "Force donation features"
-
-**Filter for Per-Template Control:**
+| Mode | Behavior |
+|------|----------|
+| `'plugin'` (default) | The WCDP template wins |
+| `'theme'` | The theme template wins, **except** for `single-product/*` templates |
+| `'theme_force'` | The theme template always wins |
 
 ```php
 add_filter('wcdp_template_override_precedence', function($mode, $template_name) {
-    // Force WCDP for checkout templates only
-    if (strpos($template_name, 'checkout/') === 0) {
-        return 'plugin';
-    }
-    return 'theme';  // Theme wins elsewhere
+    // Restore the legacy behavior: theme wins, except on single product pages.
+    return 'theme';
 }, 10, 2);
 ```
 
 **Filter Parameters:**
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `$mode` | string | Current mode: `'theme'` or `'plugin'` |
+| `$mode` | string | Current mode, default `'plugin'` |
 | `$template_name` | string | Template path (e.g., `'checkout/payment.php'`) |
 | `$template` | string | Full path to theme template |
 | `$plugin_template` | string | Full path to WCDP template |
@@ -57,33 +52,40 @@ add_filter('wcdp_template_override_precedence', function($mode, $template_name) 
 
 ### Tier 3: No Theme Override (Default)
 
-When theme has no WooCommerce override, WCDP template is used automatically.
+When the theme has no WooCommerce override, the WCDP template is used automatically.
 
 ## Backward Compatibility
 
-Fully backwards compatible. Existing installations work unchanged, continuing the existing "theme wins" approach out of the box.
+The default `'plugin'` mode is a behavior change: WCDP templates now win over theme WooCommerce overrides in donation contexts (checkout, emails, single product donation form). Previously the theme won everywhere except `single-product/*`.
+
+To keep the old behavior site-wide, set the filter to `'theme'`:
+
+```php
+add_filter('wcdp_template_override_precedence', function($mode) {
+    return 'theme';
+});
+```
+
+To make the theme win everywhere, including `single-product/*`:
+
+```php
+add_filter('wcdp_template_override_precedence', function($mode) {
+    return 'theme_force';
+});
+```
 
 ## Configuration Examples
 
-### Simple: Enable Donation Features Globally
+### Selective Template Control
 
-If donation features are broken by theme templates:
-
-**Admin:** WooCommerce → Settings → Donations → Template Override Precedence → "Force donation features"
-
-**Code:**
-```php
-update_option('wcdp_template_override_precedence', 'plugin');
-```
-
-### Advanced: Selective Template Control
-
-Force WCDP for checkout, keep theme for everything else:
+Theme wins for checkout templates, WCDP elsewhere:
 
 ```php
 add_filter('wcdp_template_override_precedence', function($mode, $template_name) {
-    $checkout_templates = ['checkout/form-login.php', 'checkout/payment.php', 'checkout/form-checkout.php'];
-    return in_array($template_name, $checkout_templates) ? 'plugin' : 'theme';
+    if (strpos($template_name, 'checkout/') === 0) {
+        return 'theme';
+    }
+    return $mode;
 }, 10, 2);
 ```
 
@@ -91,7 +93,7 @@ add_filter('wcdp_template_override_precedence', function($mode, $template_name) 
 
 ```php
 add_filter('wcdp_template_override_precedence', function($mode, $template_name) {
-    return (get_current_blog_id() === 5) ? 'plugin' : 'theme';
+    return (get_current_blog_id() === 5) ? 'theme_force' : $mode;
 }, 10, 2);
 ```
 

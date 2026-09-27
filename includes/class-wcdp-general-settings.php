@@ -169,17 +169,6 @@ class WCDP_General_Settings
                 'desc_tip' => __('Some features of Donation Platform for WooCommerce will be disabled so that WooCommerce can be used as a donation platform and webshop at the same time.', 'wc-donation-platform'),
             ),
             array(
-                'title' => __('Template Overrides', 'wc-donation-platform'),
-                'desc' => __('If your theme has custom WooCommerce templates that conflict with donation features, select "Force donation features".<br>Otherwise, keep the default to preserve your theme customizations.<br><em>(Theme developers, see <a href="https://www.wc-donation.com/documentation/development/">developer documentation</a> for more granular overrides.)</em>', 'wc-donation-platform'),
-                'id' => 'wcdp_template_override_precedence',
-                'default' => 'theme',
-                'type' => 'select',
-                'options' => array(
-                    'theme'  => __('Respect theme WC template overrides (default)', 'wc-donation-platform'),
-                    'plugin' => __('Force wc-donation WC template overrides', 'wc-donation-platform'),
-                ),
-            ),
-            array(
                 'type' => 'wcdp_clear_cache_button',
             ),
             array(
@@ -230,8 +219,8 @@ class WCDP_General_Settings
                 'class' => 'wcdp_leaderboard_optout_checkbox',
                 'options' => array(
                     'before_donor' => __('Before donor details', 'wc-donation-platform'),
-                    'after_name'   => __('After first &amp; last name', 'wc-donation-platform'),
-                    'after_donor'  => __('After donor details', 'wc-donation-platform'),
+                    'after_name' => __('After first &amp; last name', 'wc-donation-platform'),
+                    'after_donor' => __('After donor details', 'wc-donation-platform'),
                     'above_submit' => __('Above submit button (default)', 'wc-donation-platform'),
                 ),
             ),
