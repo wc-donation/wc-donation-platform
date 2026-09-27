@@ -242,10 +242,11 @@ class WCDP_Hooks
                 }
                 break;
 
-            case 'checkout/form-login.php':
-                if (WCDP_Form::is_donation_checkout_context()) {
-                    $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
-                }
+case 'checkout/form-login.php':
+                if (
+                    get_option('wcdp_compatibility_mode', 'no') === 'no' &&
+                    WCDP_Form::is_donation_checkout_context()
+                ) {
                 break;
 
             case 'myaccount/dashboard.php':
