@@ -241,14 +241,14 @@ class WCDP_Hooks
                     $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
                 }
                 break;
-
-case 'checkout/form-login.php':
+            case 'checkout/form-login.php':
                 if (
                     get_option('wcdp_compatibility_mode', 'no') === 'no' &&
                     WCDP_Form::is_donation_checkout_context()
                 ) {
+                    $template = self::resolve_template_precedence($template, $path . $template_name, $template_name);
+                }
                 break;
-
             case 'myaccount/dashboard.php':
             case 'myaccount/view-order.php':
             case 'myaccount/orders.php':

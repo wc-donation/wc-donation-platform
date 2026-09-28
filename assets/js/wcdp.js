@@ -91,6 +91,7 @@
     if (amountInput.validity.rangeUnderflow && hasValidMin) {
       return sprintf(
         __(
+          // translators: %s is the minimum donation amount
           "Please enter a donation amount of at least %s.",
           "wc-donation-platform",
         ),
@@ -100,6 +101,7 @@
 
     if (amountInput.validity.rangeOverflow) {
       return sprintf(
+        // translators: %s is the maximum donation amount
         __("Maximum donation amount is %s.", "wc-donation-platform"),
         amountInput.max,
       );
@@ -108,6 +110,7 @@
     if (amountInput.validity.stepMismatch) {
       return sprintf(
         __(
+          // translators: %s is the step value for the donation amount
           "Please enter an amount in increments of %s.",
           "wc-donation-platform",
         ),

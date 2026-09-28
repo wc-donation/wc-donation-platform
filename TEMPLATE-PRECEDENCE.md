@@ -18,6 +18,7 @@ yourtheme/
     ├── woocommerce/
     │   ├── checkout/form-login.php
     │   └── emails/customer-completed-order.php
+    │   └── single-product/add-to-cart/product.php
     └── woocommerce-subscriptions/
         └── myaccount/my-subscriptions.php
 ```
@@ -28,11 +29,11 @@ Use this tier when you need donation-specific customizations separate from regul
 
 When the theme has a WooCommerce override but no explicit WCDP override, the `wcdp_template_override_precedence` filter decides:
 
-| Mode | Behavior |
-|------|----------|
-| `'plugin'` (default) | The WCDP template wins |
-| `'theme'` | The theme template wins, **except** for `single-product/*` templates |
-| `'theme_force'` | The theme template always wins |
+| Mode                 | Behavior                                                             |
+| -------------------- | -------------------------------------------------------------------- |
+| `'plugin'` (default) | The WCDP template wins                                               |
+| `'theme'`            | The theme template wins, **except** for `single-product/*` templates |
+| `'theme_force'`      | The theme template always wins                                       |
 
 ```php
 add_filter('wcdp_template_override_precedence', function($mode, $template_name) {
