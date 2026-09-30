@@ -147,11 +147,26 @@ class WCDP_Fee_Recovery
     }
 
     /**
+     * Return the checkout request data, including the serialized WooCommerce post_data payload
+     * sent by the checkout update AJAX request.
+     * @return array
+     */
+    private function get_request_data(): array
+    {
+        if (isset($_POST['post_data'])) {
+            parse_str(wp_unslash($_POST['post_data']), $request_data);
+            return is_array($request_data) ? $request_data : array();
+        }
+
+        return is_array($_POST) ? wp_unslash($_POST) : array();
+    }
+
+    /**
      * Check if the fee recovery checkbox was checked
      */
     private function is_fee_recovery_checked(): bool
     {
-        return isset($_POST['post_data']) && strpos($_POST['post_data'], 'wcdp_fee_recovery=wcdp_fee_recovery') !== false;
+        return !empty($this->get_request_data()['wcdp_fee_recovery']);
     }
 
     /**
@@ -159,11 +174,12 @@ class WCDP_Fee_Recovery
      */
     private function get_selected_payment_method(): ?string
     {
-        if ($this->is_fee_recovery_checked()) {
-            preg_match('/payment_method=([\w-]+)/', $_POST['post_data'], $matches);
-            return isset($matches[1]) ? sanitize_key($matches[1]) : null;
+        $request_data = $this->get_request_data();
+
+        if (empty($request_data['wcdp_fee_recovery']) || empty($request_data['payment_method'])) {
+            return null;
         }
 
-        return isset($_POST['wcdp_fee_recovery'], $_POST['payment_method']) ? sanitize_key($_POST['payment_method']) : null;
+        return sanitize_key($request_data['payment_method']);
     }
 }

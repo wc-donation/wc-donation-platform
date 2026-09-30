@@ -26,7 +26,6 @@ $min_donation_amount = (float) apply_filters('wcdp_min_amount', get_option('wcdp
 $max_donation_amount = (float) apply_filters('wcdp_max_amount', get_option('wcdp_max_amount', 3), $product_id, $min_donation_amount);
 
 if ($max_donation_amount < $min_donation_amount) {
-    update_option('wcdp_max_amount', $min_donation_amount);
     $max_donation_amount = $min_donation_amount;
 }
 

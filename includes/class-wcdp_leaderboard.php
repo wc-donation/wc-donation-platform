@@ -477,7 +477,7 @@ class WCDP_Leaderboard
      */
     public function generate_leaderboard(array $orders, int $style, int $split, string $button, string $fallback): string
     {
-        $checkout_checkbox_enabled = get_option("wcdp_enable_checkout_checkbox", "yes") === "yes";
+        $checkout_checkbox_enabled = get_option("wcdp_enable_checkout_checkbox", "no") === "yes";
         $title = sanitize_text_field(get_option("wcdp_lb_title", __('{firstname} donated {amount}', 'wc-donation-platform')));
         $subtitle = sanitize_text_field(get_option("wcdp_lb_subtitle", "{timediff}"));
         $title_checked = sanitize_text_field(get_option("wcdp_lb_title_checked", ""));

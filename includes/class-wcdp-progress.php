@@ -571,7 +571,7 @@ class WCDP_Progress
             return;
         }
 
-        if (!isset($_GET['page']) || strpos('wc-', $_GET['page']) !== 0) {
+        if (!isset($_GET['page']) || strpos($_GET['page'], 'wc-') !== 0) {
             return;
         }
 

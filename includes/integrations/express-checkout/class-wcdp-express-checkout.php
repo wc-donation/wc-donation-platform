@@ -14,9 +14,11 @@ class WCDP_Express_Checkout
     {
         if (isset($_REQUEST['wc-ajax']) && $_REQUEST['wc-ajax'] == 'ppc-change-cart') {
             //Update PayPal Request
+            add_filter('wcdp_add_default_donation_amount', '__return_true');
             add_filter('woocommerce_add_cart_item_data', array($this, 'paypal_modify_add_cart_data'), 10, 4);
         } else if (isset($_REQUEST['wc-ajax']) && $_REQUEST['wc-ajax'] == 'wc_stripe_add_to_cart') {
             //Update Stripe (Apple/Google Pay) add to cart Request
+            add_filter('wcdp_add_default_donation_amount', '__return_true');
             add_filter('woocommerce_add_cart_item_data', array($this, 'stripe_modify_add_cart_data'), 10, 4);
         } else if (isset($_REQUEST['wc-ajax']) && $_REQUEST['wc-ajax'] == 'wc_stripe_get_selected_product_data') {
             //Update Stripe (Apple/Google Pay) wc_stripe_get_selected_product_data Request
@@ -65,13 +67,12 @@ class WCDP_Express_Checkout
     public function stripe_modify_add_cart_data($cart_item_data, $product_id, $variation_id, $quantity)
     {
         if (WCDP_Form::is_donable($product_id)) {
-            $min_donation_amount = get_option('wcdp_min_amount', 3);
-            $max_donation_amount = get_option('wcdp_max_amount', 50000);
             $amount = $this->stripe_extract_amount();
-            if ($amount >= $min_donation_amount && $amount <= $max_donation_amount) {
-                $cart_item_data['wcdp_donation_amount'] = $amount;
+            if (WCDP_Form::check_donation_amount($amount, $product_id)) {
+                $cart_item_data['wcdp_donation_amount'] = WCDP_Form::normalize_donation_amount($amount);
                 return $cart_item_data;
             }
+            //Invalid amount: no amount is set here, so WCDP_Form applies the minimum donation amount
         }
         return $cart_item_data;
     }
@@ -93,17 +94,20 @@ class WCDP_Express_Checkout
     /**
      * Filter wc_stripe_get_selected_product_data product price
      * @param $value
-     * @param $data
-     * @return array|int|string|void
+     * @param $data WC_Product
+     * @return float|mixed
      */
     public function stripe_modify_get_selected_product_data($value, $data)
     {
-        $min_donation_amount = get_option('wcdp_min_amount', 3);
-        $max_donation_amount = get_option('wcdp_max_amount', 50000);
-        $amount = $this->stripe_extract_amount();
-        if ($amount >= $min_donation_amount && $amount <= $max_donation_amount) {
-            return $amount;
+        if (!$data instanceof WC_Product || !WCDP_Form::is_donation_product_id($data->get_id())) {
+            return $value;
         }
+
+        $amount = $this->stripe_extract_amount();
+        if (WCDP_Form::check_donation_amount($amount, $data->get_id())) {
+            return (float) WCDP_Form::normalize_donation_amount($amount);
+        }
+
         return $value;
     }
 
@@ -153,9 +157,10 @@ class WCDP_Express_Checkout
                 WCDP_Form::check_donation_amount($amount, $product_id) &&
                 wp_verify_nonce($nonce, 'wcdp_ajax_nonce' . $product_id)
             ) {
-                $cart_item_data['wcdp_donation_amount'] = $amount;
+                $cart_item_data['wcdp_donation_amount'] = WCDP_Form::normalize_donation_amount($amount);
                 break; // Found the correct product, no need to keep looping
             }
+            //Invalid amount or nonce: no amount is set here, so WCDP_Form applies the minimum donation amount
         }
 
         return $cart_item_data;
@@ -171,7 +176,7 @@ class WCDP_Express_Checkout
      */
     public function payment_plugins_hide_express_stripe($gateways, $product)
     {
-        if (WCDP_Form::is_donable($product->id)) {
+        if ($product instanceof WC_Product && WCDP_Form::is_donable($product->get_id())) {
             return [];
         }
         return $gateways;

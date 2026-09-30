@@ -25,6 +25,9 @@ class WCDP_Form
 
         //Handle checkout request in style 4
         add_action('wp_loaded', array($this, 'wcdp_checkout_donation_calculation'), 10);
+
+        //Ensure donation products added without a donation amount (e.g. classic "add-to-cart") get the minimum donation amount
+        add_filter('woocommerce_add_cart_item_data', array($this, 'wcdp_add_donation_amount_to_cart_item'), 20, 3);
     }
 
     /**
@@ -503,7 +506,7 @@ class WCDP_Form
             || (!is_null($post)
                 && (has_shortcode($post->post_content, 'wcdp_donation_form') || has_shortcode($post->post_content, 'product_page'))
             )
-            || (isset($_REQUEST['postid']) && absint($_REQUEST['postid']) > 0)
+            || self::request_targets_donation_product()
         ) {
             define('WCDP_FORM', true);
             return true;
@@ -512,6 +515,27 @@ class WCDP_Form
             define('WCDP_FORM', false);
         }
         return false;
+    }
+
+    /**
+     * Return true if the current request targets a donation product via the ?postid parameter
+     * (e.g. the "Direct Link" of a project). The ID must reference a published, donable product,
+     * so that arbitrary URLs cannot flip the page into the donation / checkout context.
+     *
+     * @return bool
+     */
+    private static function request_targets_donation_product(): bool
+    {
+        if (!isset($_REQUEST['postid'])) {
+            return false;
+        }
+
+        $post_id = absint($_REQUEST['postid']);
+        if ($post_id <= 0 || get_post_type($post_id) !== 'product' || get_post_status($post_id) !== 'publish') {
+            return false;
+        }
+
+        return self::is_donable($post_id);
     }
 
     /**
@@ -672,6 +696,65 @@ class WCDP_Form
     }
 
     /**
+     * Checks if a product or the parent of a variation is marked as a donation product
+     *
+     * @param $product_id int
+     * @return bool
+     */
+    public static function is_donation_product_id(int $product_id): bool
+    {
+        if (self::is_donable($product_id)) {
+            return true;
+        }
+
+        $parent_id = (int) wp_get_post_parent_id($product_id);
+        return $parent_id > 0 && self::is_donable($parent_id);
+    }
+
+    /**
+     * Ensure donation products always carry a validated donation amount when they are added
+     * to the cart through entry points that do not provide one (e.g. the classic
+     * "add-to-cart" request, which WooCommerce does not protect with a nonce).
+     *
+     * Instead of blocking these adds, the minimum donation amount is applied, so that the
+     * amount validation can not be bypassed and no donation product ends up in the cart at
+     * its default product price. Adds that carry their own donation amount (WCDP donation
+     * form, express checkout) or their own context (e.g. subscription renewals) are not
+     * modified.
+     *
+     * @param mixed $cart_item_data
+     * @param int $product_id
+     * @param int $variation_id
+     * @return mixed
+     */
+    public function wcdp_add_donation_amount_to_cart_item($cart_item_data, $product_id = 0, $variation_id = 0)
+    {
+        $product_id = (int) $product_id;
+
+        //Amounts already set by a WCDP donation flow (donation form, checkout, express checkout) are already validated
+        if (!is_array($cart_item_data) || isset($cart_item_data['wcdp_donation_amount']) || !self::is_donation_product_id($product_id)) {
+            return $cart_item_data;
+        }
+
+        $needs_amount = isset($_REQUEST['add-to-cart'])
+            || (wp_doing_ajax() && isset($_REQUEST['wc-ajax']) && $_REQUEST['wc-ajax'] === 'add_to_cart')
+            || apply_filters('wcdp_add_default_donation_amount', false);
+
+        if (!$needs_amount) {
+            return $cart_item_data;
+        }
+
+        $min_amount = (float) apply_filters('wcdp_min_amount', get_option('wcdp_min_amount', 3), $product_id);
+        $amount = self::normalize_donation_amount($min_amount);
+
+        if (!is_null($amount) && self::check_donation_amount($amount, $product_id)) {
+            $cart_item_data['wcdp_donation_amount'] = $amount;
+        }
+
+        return $cart_item_data;
+    }
+
+    /**
      * Normalize a donation amount input to WooCommerce price precision.
      *
      * Rejects unsupported numeric formats (for example scientific notation)
@@ -680,7 +763,7 @@ class WCDP_Form
      * @param mixed $donation_amount
      * @return string|null
      */
-    private static function normalize_donation_amount($donation_amount): ?string
+    public static function normalize_donation_amount($donation_amount): ?string
     {
         if (!is_scalar($donation_amount)) {
             return null;
