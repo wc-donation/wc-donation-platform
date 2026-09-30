@@ -212,12 +212,6 @@ class WCDP_Subscriptions
             return $template;
         }
 
-        //Return if the template has been overwritten in yourtheme/woocommerce/XXX
-        //Checks if it's woocommerce/ or templates/ as before $template_name
-        if (!str_starts_with($template_name, 'single-product') && $template[strlen($template) - strlen($template_name) - 2] === 'e') {
-            return $template;
-        }
-
         $path = WCDP_DIR . 'includes/integrations/woocommerce-subscriptions/templates/';
         global $product;
         $donable = self::is_donation_product((int) get_queried_object_id(), $product);
@@ -229,7 +223,7 @@ class WCDP_Subscriptions
                     get_option('wcdp_compatibility_mode', 'no') === 'no' &&
                     self::template_args_contain_only_donations($args)
                 ) {
-                    $template = $path . $template_name;
+                    $template = WCDP_Hooks::resolve_template_precedence($template, $path . $template_name, $template_name, 'woocommerce-subscriptions');
                 }
                 break;
 
@@ -242,7 +236,7 @@ class WCDP_Subscriptions
                     !empty(WC()->cart->get_cart_contents()) &&
                     WCDP_Form::cart_contains_only_donations()
                 ) {
-                    $template = $path . $template_name;
+                    $template = WCDP_Hooks::resolve_template_precedence($template, $path . $template_name, $template_name, 'woocommerce-subscriptions');
                 }
                 break;
 
@@ -253,7 +247,7 @@ class WCDP_Subscriptions
                     is_array($args['subscriptions']) &&
                     self::subscriptions_contain_donation($args['subscriptions'])
                 ) {
-                    $template = $path . $template_name;
+                    $template = WCDP_Hooks::resolve_template_precedence($template, $path . $template_name, $template_name, 'woocommerce-subscriptions');
                 }
                 break;
 
@@ -290,14 +284,14 @@ class WCDP_Subscriptions
                     get_option('wcdp_compatibility_mode', 'no') === 'no' &&
                     self::template_args_contain_only_donations($args)
                 ) {
-                    $template = $path . $template_name;
+                    $template = WCDP_Hooks::resolve_template_precedence($template, $path . $template_name, $template_name, 'woocommerce-subscriptions');
                 }
                 break;
 
             case 'single-product/add-to-cart/subscription.php':
             case 'single-product/add-to-cart/variable-subscription.php':
                 if ($donable) {
-                    $template = WCDP_DIR . 'includes/wc-templates/single-product/add-to-cart/product.php';
+                    $template = WCDP_Hooks::resolve_template_precedence($template, WCDP_DIR . 'includes/wc-templates/single-product/add-to-cart/product.php', $template_name, 'woocommerce', 'single-product/add-to-cart/product.php');
                 }
                 break;
 
