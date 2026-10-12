@@ -93,7 +93,7 @@ class WCDP_Form
 
         $value['source'] = self::sanitize_source($value['source']);
         $value['theme'] = absint($value['theme']);
-        if (!in_array($value['theme'], array(1, 2), true)) {
+        if (!in_array($value['theme'], array(1, 2), true) || !function_exists('wcdpp_is_active') || !wcdpp_is_active()) {
             $value['theme'] = 1;
         }
 

@@ -141,21 +141,6 @@ registerBlockType("wc-donation-platform/wcdp", {
               ]}
               onChange={changeStyle}
             />
-            <SelectControl
-              label={__("Theme", "wc-donation-platform")}
-              value={theme}
-              options={[
-                {
-                  label: __("Theme 1 (Default)", "wc-donation-platform"),
-                  value: "1",
-                },
-                {
-                  label: __("Theme 2 (Modern Buttons)", "wc-donation-platform"),
-                  value: "2",
-                },
-              ]}
-              onChange={changeTheme}
-            />
             <ToggleControl
               label={__("Display in a popup?", "wc-donation-platform")}
               checked={popup}

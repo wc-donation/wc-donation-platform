@@ -796,8 +796,8 @@ class WCDP_Leaderboard
     {
         $position_map = array(
             'before_donor' => 'woocommerce_checkout_before_customer_details',
-            'after_name'   => 'wcdp_checkout_after_name_fields',
-            'after_donor'  => 'woocommerce_checkout_after_customer_details',
+            'after_name' => 'wcdp_checkout_after_name_fields',
+            'after_donor' => 'woocommerce_checkout_after_customer_details',
             'above_submit' => 'woocommerce_review_order_before_submit',
         );
 

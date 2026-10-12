@@ -4,7 +4,7 @@ Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
 Tested up to: 7.1
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -168,8 +168,34 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
-= Unreleased =
+= 1.5.0 =
 feat: add donation upsells with round-up and fixed + percentage checkout donation types
+feat: granular template override system with configurable precedence
+feat: add donation source tracking for forms, orders, progress bars, and leaderboards
+feat: add Style 6 layout with clean back navigation
+feat: allow configuring checkout position for leaderboard anonymous checkbox
+feat: replace browser-native validation with WooCommerce-style inline field validation
+feat: donation context aware WooCommerce Subscriptions integration
+feat: add compatibility with WooCommerce PDF Invoices & Packing Slips v3 and v6
+feat: add exclude_fees attribute to leaderboard shortcode
+feat: add Git Updater compatibility headers
+dev: add wcdp_template_override_precedence filter for template override resolution
+dev: add wcdp_anonymous_donation_checkbox_location filter
+dev: add settings sections navigation and filter hooks
+dev: add template action hooks across form steps for improved extensibility
+dev: add context-based body classes to donation pages
+fix: harden donation amount normalization for different locales
+fix: prevent clearing custom donation amount when clicking or editing the field
+fix: context-aware order notes label ("Donation notes" instead of "Order notes")
+fix: prevent shipping method infinite reload loop on checkout
+fix: override add-to-cart templates for simple and variable subscriptions in Style 2
+fix: High-Performance Order Storage (HPOS) compatibility for Polylang integration
+fix: email preview not working
+fix: sync variation buttons when options are unavailable or disabled
+fix: default layout for attributes not working
+a11y: add keyboard arrow navigation for donation amount choices
+a11y: switch form interaction events to pointer events to support touch devices
+chore: bump tested WordPress version to 7.1
 
 = 1.4.0 2026-02-05 =
 feat: complete refactoring of Leaderboard functionality

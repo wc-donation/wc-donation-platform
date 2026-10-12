@@ -4,7 +4,7 @@
  * Plugin URI: https://www.wc-donation.com/
  * Description: Donation Platform for WooCommerce unlocks the power of WooCommerce for your online fundraising & crowdfunding.
  * Author: Jonas Höbenreich
- * Version: 1.4.0
+ * Version: 1.5.0
  * Author URI: https://www.jonh.eu/
  * Plugin URI: https://www.wc-donation.com/
  * GitHub Plugin URI: https://github.com/wc-donation/wc-donation-platform
@@ -23,7 +23,7 @@ if (!defined('ABSPATH'))
 
 define('WCDP_DIR', dirname(__FILE__) . '/');
 define('WCDP_DIR_URL', plugin_dir_url(__FILE__));
-const WCDP_VERSION = '1.4.0';
+const WCDP_VERSION = '1.5.0';
 
 /**
  * Check if WooCommerce is active
@@ -105,7 +105,7 @@ if (!class_exists('WCDP')) {
             include_once WCDP_DIR . 'includes/class-wcdp_leaderboard.php';
 
             //Hook injection point tests (only when WCDP_ADDON_HOOK_DEBUG is defined in wp-config.php)
-            if ( defined( 'WCDP_ADDON_HOOK_DEBUG' ) && WCDP_ADDON_HOOK_DEBUG ) {
+            if (defined('WCDP_ADDON_HOOK_DEBUG') && WCDP_ADDON_HOOK_DEBUG) {
                 include_once WCDP_DIR . 'includes/test/class-wcdp-hook-tests.php';
                 new WCDP_Hook_Tests();
             }
