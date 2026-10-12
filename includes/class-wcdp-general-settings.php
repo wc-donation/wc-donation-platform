@@ -47,6 +47,50 @@ class WCDP_General_Settings
     }
 
     /**
+     * Get sections for the settings tab.
+     *
+     * @return array
+     */
+    public function get_sections(): array
+    {
+        $sections = array(
+            'general' => __('General', 'wc-donation-platform'),
+        );
+
+        $sections = apply_filters('wcdp_settings_sections', $sections);
+        return apply_filters('woocommerce_get_sections_wc-donation-platform', $sections);
+    }
+
+    /**
+     * Output sections navigation if multiple sections exist.
+     *
+     * @return void
+     */
+    public function output_sections()
+    {
+        $sections = $this->get_sections();
+        if (empty($sections) || count($sections) <= 1) {
+            return;
+        }
+
+        $current_section = !empty($_GET['section']) ? sanitize_key(wp_unslash($_GET['section'])) : 'general';
+
+        echo '<ul class="subsubsub">';
+        $section_links = array();
+        foreach ($sections as $section_id => $section_label) {
+            $url = add_query_arg(array(
+                'page' => 'wc-settings',
+                'tab' => 'wc-donation-platform',
+                'section' => $section_id,
+            ), admin_url('admin.php'));
+            $class = $current_section === $section_id ? 'current' : '';
+            $section_links[] = '<li><a class="' . esc_attr($class) . '" href="' . esc_url($url) . '">' . esc_html($section_label) . '</a></li>';
+        }
+        echo implode(' | ', $section_links);
+        echo '</ul><br class="clear">';
+    }
+
+    /**
      * Uses the WooCommerce admin fields API to output settings via the @see woocommerce_admin_fields() function.
      *
      * @uses woocommerce_admin_fields()
@@ -54,16 +98,34 @@ class WCDP_General_Settings
      */
     public function settings_tab()
     {
-        woocommerce_admin_fields($this->get_settings());
+        $this->output_sections();
+        $current_section = !empty($_GET['section']) ? sanitize_key(wp_unslash($_GET['section'])) : 'general';
+        $settings = $this->get_settings($current_section);
+        if (!empty($settings)) {
+            woocommerce_admin_fields($settings);
+        }
+        do_action('wcdp_settings_tab_' . $current_section);
     }
 
     /**
-     * Get all the settings for this plugin for @return array Array of settings for @see woocommerce_admin_fields() function.
-     * @see woocommerce_admin_fields() function.
+     * Get all the settings for this plugin for @see woocommerce_admin_fields() function.
      *
+     * @param string $current_section Current section name.
+     * @return array Array of settings for @see woocommerce_admin_fields() function.
      */
-    public function get_settings(): array
+    public function get_settings(string $current_section = ''): array
     {
+        if ('' === $current_section) {
+            $current_section = !empty($_GET['section']) ? sanitize_key(wp_unslash($_GET['section'])) : 'general';
+        }
+
+        if ('general' !== $current_section) {
+            $settings = array();
+            $settings = apply_filters('wcdp-' . $current_section . '-settings', $settings);
+            $settings = apply_filters('wcdp_get_settings_' . $current_section, $settings);
+            return apply_filters('wcdp_section_settings', $settings, $current_section);
+        }
+
         $decimals = pow(10, wc_get_price_decimals() * (-1));
         $settings = array(
             array(
@@ -219,8 +281,8 @@ class WCDP_General_Settings
                 'class' => 'wcdp_leaderboard_optout_checkbox',
                 'options' => array(
                     'before_donor' => __('Before donor details', 'wc-donation-platform'),
-                    'after_name'   => __('After first &amp; last name', 'wc-donation-platform'),
-                    'after_donor'  => __('After donor details', 'wc-donation-platform'),
+                    'after_name' => __('After first &amp; last name', 'wc-donation-platform'),
+                    'after_donor' => __('After donor details', 'wc-donation-platform'),
                     'above_submit' => __('Above submit button (default)', 'wc-donation-platform'),
                 ),
             ),
@@ -347,35 +409,44 @@ class WCDP_General_Settings
      */
     public function update_settings()
     {
-        $wcdp_fee_recovery_values = array();
-        $available_payment_methods = WC()->payment_gateways->get_available_payment_gateways();
-        foreach ($available_payment_methods as $method) {
-            if (isset($_POST['wcdp_fixed_' . $method->id]) && $_POST['wcdp_fixed_' . $method->id] >= 0) {
-                $fixed = (float) $_POST['wcdp_fixed_' . $method->id];
-            } else {
-                $fixed = 0;
-            }
-            if (
-                isset($_POST['wcdp_variable_' . $method->id]) &&
-                (float) $_POST['wcdp_variable_' . $method->id] >= 0 &&
-                (float) $_POST['wcdp_variable_' . $method->id] <= 100
-            ) {
-                $variable = (float) $_POST['wcdp_variable_' . $method->id];
-            } else {
-                $variable = 0;
-            }
+        $current_section = !empty($_GET['section']) ? sanitize_key(wp_unslash($_GET['section'])) : 'general';
 
-            $wcdp_fee_recovery_values[$method->id] = array(
-                'fixed' => $fixed,
-                'variable' => $variable,
-            );
+        if ('general' === $current_section) {
+            $wcdp_fee_recovery_values = array();
+            $available_payment_methods = WC()->payment_gateways->get_available_payment_gateways();
+            foreach ($available_payment_methods as $method) {
+                if (isset($_POST['wcdp_fixed_' . $method->id]) && $_POST['wcdp_fixed_' . $method->id] >= 0) {
+                    $fixed = (float) $_POST['wcdp_fixed_' . $method->id];
+                } else {
+                    $fixed = 0;
+                }
+                if (
+                    isset($_POST['wcdp_variable_' . $method->id]) &&
+                    (float) $_POST['wcdp_variable_' . $method->id] >= 0 &&
+                    (float) $_POST['wcdp_variable_' . $method->id] <= 100
+                ) {
+                    $variable = (float) $_POST['wcdp_variable_' . $method->id];
+                } else {
+                    $variable = 0;
+                }
+
+                $wcdp_fee_recovery_values[$method->id] = array(
+                    'fixed' => $fixed,
+                    'variable' => $variable,
+                );
+            }
+            update_option('wcdp_fee_recovery_values', wp_json_encode($wcdp_fee_recovery_values), 'yes');
         }
-        update_option('wcdp_fee_recovery_values', wp_json_encode($wcdp_fee_recovery_values), 'yes');
 
-        woocommerce_update_options(self::get_settings());
+        $settings = $this->get_settings($current_section);
+        if (!empty($settings)) {
+            woocommerce_update_options($settings);
+        }
 
         // Make sure to disable Product block editor
         update_option('woocommerce_feature_product_block_editor_enabled', 'no');
+
+        do_action('wcdp_update_options_' . $current_section);
     }
 
     /**

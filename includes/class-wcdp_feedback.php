@@ -95,7 +95,7 @@ class WCDP_Feedback
 
         // Create the notice content
         echo '<div id="message" class="updated woocommerce-message">
-                <a class="woocommerce-message-close notice-dismiss" href="' . esc_url(wp_nonce_url(add_query_arg('wc-hide-notice', $key), 'woocommerce_hide_notices_nonce', '_wc_notice_nonce')) . '">' . esc_html__('Dismiss', 'woocommerce') . '</a>
+                <a class="woocommerce-message-close notice-dismiss" href="' . esc_url(wp_nonce_url(add_query_arg('wc-hide-notice', $key), 'woocommerce_hide_notices_nonce', '_wc_notice_nonce')) . '">' . esc_html__('Dismiss', 'wc-donation-platform') . '</a>
                 <h2>' . esc_html__('Subscribe to the Donation Platform for WooCommerce Newsletter', 'wc-donation-platform') . '</h2>
                 <style>
                     .form-container {

@@ -3,7 +3,7 @@ Contributors: flinnn
 Tags: donation, fundraising, charity, woocommerce donation, recurring donation
 Donate link: https://www.wc-donation.com/documentation/support/contact/
 Requires at least: 5.8
-Tested up to: 6.9
+Tested up to: 7.1
 Stable tag: 1.4.0
 Requires PHP: 7.1
 License: GPLv2 or later
