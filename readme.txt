@@ -168,7 +168,7 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
 
-= 1.5.0 =
+= 1.5.0 2026-10-13 =
 feat: add donation upsells with round-up and fixed + percentage checkout donation types
 feat: granular template override system with configurable precedence
 feat: add donation source tracking for forms, orders, progress bars, and leaderboards
