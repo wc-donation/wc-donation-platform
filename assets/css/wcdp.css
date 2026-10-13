@@ -473,7 +473,9 @@ form[name="checkout"] .wcdp-tab div:first-child {
     margin: 0 0 12px;
 }
 
-.wcdp-style-6-back {
+.wcdp-style-6-back,
+.wcdp-style-6-back:focus,
+.wcdp-style-6-back:hover {
     display: inline-flex;
     align-items: center;
     justify-content: left;
