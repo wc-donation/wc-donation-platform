@@ -459,11 +459,12 @@ class WCDP_Form
      */
     public function wcdp_register_scripts()
     {
-        $script_file = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? 'assets/js/wcdp.js' : 'assets/js/wcdp.min.js';
+        $script_file = (defined('WCDP_DEV') && WCDP_DEV) ? 'assets/js/wcdp.js' : 'assets/js/wcdp.min.js';
+        $css_file = (defined('WCDP_DEV') && WCDP_DEV) ? 'assets/css/wcdp.css' : 'assets/css/wcdp.min.css';
 
         wp_register_style(
             'wc-donation-platform',
-            WCDP_DIR_URL . 'assets/css/wcdp.min.css',
+            WCDP_DIR_URL . $css_file,
             array(),
             WCDP_VERSION
         );
@@ -476,6 +477,7 @@ class WCDP_Form
                 'strategy' => 'defer',
             )
         );
+        wp_set_script_translations('wc-donation-platform', 'wc-donation-platform', WCDP_DIR . 'languages');
 
         //Only enqueue if needed
         if ($this->wcdp_has_donation_form()) {
