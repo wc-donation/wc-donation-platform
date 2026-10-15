@@ -29,12 +29,11 @@ if ($has_child): ?>
 
         $meta_value = get_post_meta($product_id, 'wcdp-settings[wcdp-attr-' . $esc_attribute . ']', true);
 
-        // Allow valid saved layouts and default to 1 (amount selection).
+        // Allow valid saved layouts and default to 1 (button selection).
         $attributeLayout = in_array((string) $meta_value, ['0', '1', '2'], true) ? (int) $meta_value : 1;
-
         /*
-         * $attributeLayout = 0: Default Layout
-         * $attributeLayout = 1: Box Layout
+         * $attributeLayout = 0: Dropdown Layout
+         * $attributeLayout = 1: Box Selection (default)
          * $attributeLayout = 2: custom html
          */
         ?>

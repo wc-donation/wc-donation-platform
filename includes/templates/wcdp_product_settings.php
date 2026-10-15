@@ -133,8 +133,8 @@ do_action('wcdp_before_product_settings');
                         'class' => 'select short wcdp-selection',
                         'label' => __('Layout of ', 'wc-donation-platform') . wc_attribute_label($attribute_name),
                         'options' => array(
-                            '0' => __('Default layout', 'wc-donation-platform'),
                             '1' => __('Radio/Button selection', 'wc-donation-platform'),
+                            '0' => __('Dropdown selection', 'wc-donation-platform'),
                             '2' => __('Expert: custom code with action wcdp_custom_html_', 'wc-donation-platform') . esc_attr($attribute_name) . '_' . esc_attr($product->get_id()),
                         ),
                         'description' => __('Design of the variation selection. Only for variable products.', 'wc-donation-platform'),
