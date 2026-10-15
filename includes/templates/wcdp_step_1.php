@@ -57,7 +57,13 @@ do_action('woocommerce_before_add_to_cart_form');
 do_action('wcdp_before_step_amount', $product_id, $context);
 ?>
 
-<form class="cart variations_form wcdp-choose-donation" <?php
+<form class="cart variations_form wcdp-choose-donation <?php
+if ($value['style'] != '4') {
+    echo 'wcdp-ajax-send';
+} else {
+    echo 'wcdp-get-send';
+}
+?>" <?php
 if ($value['style'] != '4') {
     echo ' id="wcdp-ajax-send"';
     echo ' method="post"';

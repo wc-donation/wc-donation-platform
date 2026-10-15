@@ -21,14 +21,6 @@
   const serializeForm = (form) =>
     new URLSearchParams(new FormData(form)).toString();
 
-  const setElementVisibility = (element, isVisible) => {
-    if (!element) {
-      return;
-    }
-
-    element.style.display = isVisible ? "" : "none";
-  };
-
   function getDonationForm(context) {
     const contextNode = context?.target || context;
     if (contextNode?.closest) {
@@ -38,10 +30,7 @@
       }
     }
 
-    return (
-      document.querySelector("form#wcdp-ajax-send.wcdp-choose-donation") ||
-      document.querySelector("form.wcdp-choose-donation")
-    );
+    return document.querySelector("form.wcdp-choose-donation");
   }
 
   function isValidatableField(field) {
@@ -442,22 +431,24 @@
     }
   }
 
-  /**
-   * Handle submit of add to cart form
-   */
-  document
-    .querySelector("#wcdp-ajax-send")
-    ?.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      const serialized = serializeForm(form);
-      if (currentFormData !== serialized) {
-        currentFormData = serialized;
-        wcdp_submit(2, form);
-      } else {
-        wcdp_steps(2);
-      }
-    });
+  function handleDonationSubmit() {
+    document
+      .querySelectorAll("form.wcdp-choose-donation.wcdp-ajax-send")
+      .forEach((form) => {
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          const serialized = serializeForm(form);
+          if (currentFormData !== serialized) {
+            currentFormData = serialized;
+            wcdp_submit(2, form);
+          } else {
+            wcdp_steps(2);
+          }
+        });
+      });
+  }
+  handleDonationSubmit();
 
   /**
    * Submit step 1 form automatically for style 2 and on checkout
