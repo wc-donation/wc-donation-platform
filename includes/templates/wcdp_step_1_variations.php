@@ -32,8 +32,8 @@ if ($has_child): ?>
         // Allow valid saved layouts and default to 1 (button selection).
         $attributeLayout = in_array((string) $meta_value, ['0', '1', '2'], true) ? (int) $meta_value : 1;
         /*
-         * $attributeLayout = 0: Dropdown Layout
-         * $attributeLayout = 1: Box Selection (default)
+         * $attributeLayout = 0: Button Selection (default)
+         * $attributeLayout = 1: Dropdown Selection
          * $attributeLayout = 2: custom html
          */
         ?>
@@ -49,7 +49,7 @@ if ($has_child): ?>
             endif;
 
             //Display Box Layout
-            if ($attributeLayout === 1):
+            if ($attributeLayout === 0):
                 $args = array(
                     'ul-id' => 'suggestion-' . $esc_attribute,
                     'ul-class' => 'wcdp_options wcdp_su',
@@ -92,7 +92,7 @@ if ($has_child): ?>
             endif;
             ?>
 
-            <div <?php if ($attributeLayout !== 0) {
+            <div <?php if ($attributeLayout !== 1) {
                 echo 'style="display:none"';
             } //Hide for other Layouts
             ?>>
