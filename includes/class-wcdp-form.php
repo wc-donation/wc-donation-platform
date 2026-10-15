@@ -498,12 +498,12 @@ class WCDP_Form
 
         global $post;
         if (
-            is_product() || is_checkout()
+            (is_product() && !is_null($post) && WCDP_Form::is_donable($post->ID)) || is_checkout()
             || has_block('wc-donation-platform/wcdp')
             || (!is_null($post)
                 && (has_shortcode($post->post_content, 'wcdp_donation_form') || has_shortcode($post->post_content, 'product_page'))
             )
-            || (isset($_REQUEST['postid']) && absint($_REQUEST['postid']) > 0)
+            || (wp_doing_ajax() && isset($_REQUEST['postid']) && WCDP_Form::is_donable((int) $_REQUEST['postid']))
         ) {
             define('WCDP_FORM', true);
             return true;
