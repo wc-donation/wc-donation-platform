@@ -353,7 +353,7 @@ ul.wcdp_options>li>input:checked+label {
     color: var(--wcdp-label-text-checked);
 }
 
-.ul.wcdp_options>li>input:checked+label span {
+ul.wcdp_options>li>input:checked+label span {
     color: var(--wcdp-label-text-checked);
 }
 
