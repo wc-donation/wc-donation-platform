@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-13T19:21:36+00:00\n"
+"POT-Creation-Date: 2026-10-15T22:29:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -186,31 +186,31 @@ msgstr ""
 msgid "This grouped product has no available child products."
 msgstr ""
 
-#: includes/class-wcdp-form.php:610
+#: includes/class-wcdp-form.php:612
 msgid "Invalid request. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:617
+#: includes/class-wcdp-form.php:619
 msgid "Invalid postid. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:631
+#: includes/class-wcdp-form.php:633
 msgid "Invalid donation product status. Please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:649
+#: includes/class-wcdp-form.php:651
 msgid "Invalid donation amount. Please enter a different donation amount."
 msgstr ""
 
-#: includes/class-wcdp-form.php:664
+#: includes/class-wcdp-form.php:666
 msgid "Could not add donation to cart."
 msgstr ""
 
-#: includes/class-wcdp-form.php:774
+#: includes/class-wcdp-form.php:776
 msgid "Invalid Request: postid missing. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
-#: includes/class-wcdp-form.php:776
+#: includes/class-wcdp-form.php:778
 msgid "Error: invalid nonce. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
@@ -1249,7 +1249,7 @@ msgstr ""
 
 #: includes/templates/styles/wcdp_form_style_3.php:50
 #: includes/templates/styles/wcdp_form_style_6.php:58
-#: includes/templates/wcdp_step_1.php:126
+#: includes/templates/wcdp_step_1.php:132
 msgid "Next"
 msgstr ""
 
@@ -1339,7 +1339,6 @@ msgid "Just input box"
 msgstr ""
 
 #: includes/templates/wcdp_product_settings.php:89
-#: includes/templates/wcdp_product_settings.php:137
 msgid "Radio/Button selection"
 msgstr ""
 
@@ -1364,7 +1363,11 @@ msgid "Layout of "
 msgstr ""
 
 #: includes/templates/wcdp_product_settings.php:136
-msgid "Default layout"
+msgid "Button selection (default)"
+msgstr ""
+
+#: includes/templates/wcdp_product_settings.php:137
+msgid "Dropdown selection"
 msgstr ""
 
 #: includes/templates/wcdp_product_settings.php:138
@@ -1375,14 +1378,14 @@ msgstr ""
 msgid "Design of the variation selection. Only for variable products."
 msgstr ""
 
-#: includes/templates/wcdp_step_1.php:139
+#: includes/templates/wcdp_step_1.php:145
 msgid "Donate"
 msgstr ""
 
 #: includes/templates/wcdp_step_1_amount.php:55
 #: includes/templates/wcdp_step_1_amount.php:119
 #: includes/templates/wcdp_step_1_amount.php:132
-#: includes/templates/wcdp_step_1_variations.php:45
+#: includes/templates/wcdp_step_1_variations.php:44
 msgid "required"
 msgstr ""
 
@@ -1662,30 +1665,30 @@ msgstr ""
 msgid "View Documentation of Donation Platform for WooCommerce"
 msgstr ""
 
-#: assets/js/wcdp.js:85
+#: assets/js/wcdp.js:74
 msgid "Please provide a donation amount above."
 msgstr ""
 
 #. translators: %s is the minimum donation amount
-#: assets/js/wcdp.js:93
+#: assets/js/wcdp.js:82
 msgid "Please enter a donation amount of at least %s."
 msgstr ""
 
 #. translators: %s is the maximum donation amount
-#: assets/js/wcdp.js:105
+#: assets/js/wcdp.js:94
 msgid "Maximum donation amount is %s."
 msgstr ""
 
 #. translators: %s is the step value for the donation amount
-#: assets/js/wcdp.js:112
+#: assets/js/wcdp.js:101
 msgid "Please enter an amount in increments of %s."
 msgstr ""
 
-#: assets/js/wcdp.js:121
+#: assets/js/wcdp.js:110
 msgid "Please enter a valid donation amount."
 msgstr ""
 
-#: assets/js/wcdp.js:293
+#: assets/js/wcdp.js:282
 msgid "An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team."
 msgstr ""
 
