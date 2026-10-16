@@ -128,7 +128,7 @@ class WCDP_Fee_Recovery
                                         id="wcdp_fixed_<?php echo esc_attr($method->id); ?>" type="number" style="width: 100px;"
                                         value="<?php echo esc_attr($value_fixed); ?>"
                                         placeholder="<?php esc_html_e('Fixed', 'wc-donation-platform'); ?>" min="0"
-                                        step="<?php echo esc_attr($value['step']); ?>" />
+                                        step="<?php echo esc_attr($value['step'] ?? '0.01'); ?>" />
                                     <?php esc_html_e('(fixed)', 'wc-donation-platform'); ?>&nbsp;&nbsp;&nbsp;
                                     <input name="wcdp_variable_<?php echo esc_attr($method->id); ?>"
                                         id="wcdp_variable_<?php echo esc_attr($method->id); ?>" type="number" style="width: 100px;"

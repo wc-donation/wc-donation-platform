@@ -54,7 +54,7 @@ class WCDP_Polylang
                             AND l.product_id IN ({$placeholder});";
             }
 
-            $result = $wpdb->get_row($wpdb->prepare($query, $translationids), ARRAY_A);
+            $result = $wpdb->get_row($wpdb->prepare($query, ...$translationids), ARRAY_A);
             if (!is_null($result) && isset($result['revenue'])) {
                 $revenue = (float) $result['revenue'];
             } else {

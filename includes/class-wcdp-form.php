@@ -583,6 +583,12 @@ class WCDP_Form
 
     /**
      * Try to add the donation to the cart before the checkout is loaded
+     * 
+     * @since 1.0.0
+     * @see https://developer.wordpress.org/reference/functions/wp_doing_ajax/
+     * @see https://developer.wordpress.org/reference/functions/wp_verify_nonce/
+     * @see https://developer.wordpress.org/reference/functions/apply_filters/
+     * @uses wcdp_skip_nonce_validation filter: Set to true to skip nonce validation. Adding an item to cart is not a sensitive action, so this is safe to do if you want to avoid nonce errors on cached pages.
      * @return void
      */
     public function wcdp_checkout_donation_calculation()
@@ -768,6 +774,11 @@ class WCDP_Form
 
     /**
      * Handle wcdp_ajax_donation_calculation AJAX request
+     * 
+     * @since 1.0.0
+     * @see https://developer.wordpress.org/reference/functions/check_ajax_referer/
+     * @see https://developer.wordpress.org/reference/functions/apply_filters/
+     * @uses wcdp_skip_nonce_validation filter: Set to true to skip nonce validation. Adding an item to cart is not a sensitive action, so this is safe to do if you want to avoid nonce errors on cached pages.
      */
     public function wcdp_ajax_donation_calculation()
     {

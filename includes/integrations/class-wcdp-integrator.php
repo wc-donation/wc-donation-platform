@@ -88,7 +88,7 @@ class WCDP_Integrator
      */
     public static function cart_contents_total($total)
     {
-        if (!wp_doing_ajax() && $total == 0 && WCDP_FORM::wcdp_has_donation_form()) {
+        if (!wp_doing_ajax() && $total == 0 && WCDP_Form::wcdp_has_donation_form()) {
             //Return very small amount (rounded to 0 in checkout)
             return 4.9E-324;
         }
@@ -103,7 +103,7 @@ class WCDP_Integrator
      */
     public static function set_cart_needs_payment($needs_payment)
     {
-        if (!wp_doing_ajax() && !$needs_payment && WCDP_FORM::wcdp_has_donation_form()) {
+        if (!wp_doing_ajax() && !$needs_payment && WCDP_Form::wcdp_has_donation_form()) {
             return true;
         }
         return $needs_payment;

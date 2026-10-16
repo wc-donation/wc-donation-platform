@@ -494,7 +494,7 @@ class WCDP_Progress
         ";
         }
 
-        return intval($wpdb->get_var($wpdb->prepare($query, $prepare_values)));
+        return intval($wpdb->get_var($wpdb->prepare($query, ...$prepare_values)));
     }
 
     /**

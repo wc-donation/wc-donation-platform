@@ -353,10 +353,6 @@ ul.wcdp_options>li>input:checked+label {
     color: var(--wcdp-label-text-checked);
 }
 
-ul.wcdp_options>li>input:checked+label span {
-    color: var(--wcdp-label-text-checked);
-}
-
 ul.wcdp_options>li>input:focus+label {
     box-shadow: 0 0 0 2px white, 0 0 0 4px var(--wcdp-main-2);
 }
