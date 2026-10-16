@@ -10,7 +10,7 @@
  * GitHub Plugin URI: https://github.com/wc-donation/wc-donation-platform
  * Primary Branch: main
  * License: GNU General Public License v2.0
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: wc-donation-platform
  * Domain Path: /languages
  * WC requires at least: 4.0.0
@@ -23,7 +23,7 @@ if (!defined('ABSPATH'))
 
 define('WCDP_DIR', dirname(__FILE__) . '/');
 define('WCDP_DIR_URL', plugin_dir_url(__FILE__));
-const WCDP_VERSION = '1.5.0';
+const WCDP_VERSION = '1.5.1';
 
 /**
  * Check if WooCommerce is active
@@ -36,6 +36,38 @@ if (!function_exists('is_woocommerce_active')) {
             $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
         }
         return in_array('woocommerce/woocommerce.php', $active_plugins) || array_key_exists('woocommerce/woocommerce.php', $active_plugins) || class_exists('WooCommerce');
+    }
+}
+
+if (!function_exists('str_starts_with')) {
+    /**
+     * Polyfill for str_starts_with() (PHP 8.0+).
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @return bool
+     */
+    function str_starts_with(string $haystack, string $needle): bool
+    {
+        $needle = (string) $needle;
+        if ($needle === '') {
+            return true;
+        }
+        return strncmp($haystack, $needle, strlen($needle)) === 0;
+    }
+}
+
+if (!function_exists('str_contains')) {
+    /**
+     * Polyfill for str_contains() (PHP 8.0+).
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @return bool
+     */
+    function str_contains(string $haystack, string $needle): bool
+    {
+        return $needle !== '' && strpos($haystack, $needle) !== false;
     }
 }
 
