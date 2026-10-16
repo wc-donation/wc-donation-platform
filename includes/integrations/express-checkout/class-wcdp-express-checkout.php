@@ -149,9 +149,10 @@ class WCDP_Express_Checkout
                 continue;
             }
 
+            // wcdp_skip_nonce_validation filter: Set to true to skip nonce validation. Adding an item to cart is not a sensitive action, so this is safe to do if you want to avoid nonce errors on cached pages.
             if (
                 WCDP_Form::check_donation_amount($amount, $product_id) &&
-                wp_verify_nonce($nonce, 'wcdp_ajax_nonce' . $product_id)
+                (apply_filters('wcdp_skip_nonce_validation', false) || wp_verify_nonce($nonce, 'wcdp_ajax_nonce' . $product_id))
             ) {
                 $cart_item_data['wcdp_donation_amount'] = $amount;
                 break; // Found the correct product, no need to keep looping
