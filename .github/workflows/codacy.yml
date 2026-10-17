@@ -49,8 +49,13 @@ jobs:
           # Skip validation of uncommitted changes
           skip-uncommitted-files-check: true
 
+      # Consolidate multiple SARIF runs into one (upload-sarif@v4 rejects
+      # multiple runs with the same category; Codacy emits one run per tool).
+      - name: Consolidate SARIF runs
+        run: python3 -c "import json; d=json.load(open('results.sarif')); rs=d.get('runs',[]); [print('SARIF already has a single run')] if len(rs)<=1 else (rs[0].setdefault('results',[]).extend(sum((r.get('results',[]) for r in rs[1:]),[])), d.__setitem__('runs',[rs[0]]), json.dump(d,open('results.sarif','w')), print(f'Consolidated {len(rs)} SARIF runs into 1'))"
+
       # Upload the SARIF file generated in the previous step
       - name: Upload SARIF results file
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: results.sarif
