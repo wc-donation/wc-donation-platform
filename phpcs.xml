@@ -1,26 +1,17 @@
 <?xml version="1.0"?>
 <ruleset name="WCDP">
-    <description>Donation Platform for WooCommerce coding standards.</description>
+  <description>Donation Platform for WooCommerce coding standards.</description>
 
-    <!-- WordPress Coding Standards as the base -->
-    <rule ref="WordPress"/>
+  <!-- WordPress Coding Standards as the base -->
+  <rule ref="WordPress" />
 
-    <!--
-      Codacy was flagging two low-value, cosmetic issues:
-      1. "Line exceeds 85 characters"
-      2. "@PARAM tag indented incorrectly"
-      Neither indicates malformed or insecure code. Real compile checking is
-      handled by php -l in .github/workflows/ci.yml.
+  <!-- Keep LineLength comments but demote @param indentation noise to info -->
+  <rule ref="Generic.Files.LineLength">
+    <severity>info</severity>
+  </rule>
 
-      Line length is relaxed here (reported as info only) so Codacy / PHPCS
-      stops being "bitchy" about long functional lines.
-    -->
-    <rule ref="Generic.Files.LineLength">
-        <severity>info</severity>
-    </rule>
-
-    <!-- Keep PHPDoc comments but demote @param indentation noise to info -->
-    <rule ref="Squiz.Commenting.FunctionComment">
-        <severity>info</severity>
-    </rule>
+  <!-- Keep PHPDoc comments but demote @param indentation noise to info -->
+  <rule ref="Squiz.Commenting.FunctionComment">
+    <severity>info</severity>
+  </rule>
 </ruleset>
