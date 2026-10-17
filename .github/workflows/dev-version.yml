@@ -13,6 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Compile/malformed-code check before packaging+deploying
+      - name: PHP syntax lint (compile check)
+        run: |
+          find . -name "*.php" \
+            -not -path "./node_modules/*" \
+            -not -path "./.git/*" \
+            -not -path "./build/*" \
+            -print0 | xargs -0 -n1 php -l
+
       - name: Create Folder
         run: mkdir -p ./result/wc-donation-platform
 
@@ -20,13 +29,10 @@ jobs:
         run: rsync -av --prune-empty-dirs --exclude 'node_modules/*' --exclude 'wc-donation-platform/*' --exclude '.github/*' --exclude 'package-lock.json' --exclude 'pnpm-lock.yaml' --exclude '.idea/*' --exclude 'result/*' --exclude '.git/*' --exclude '.gitignore' ./ result/wc-donation-platform
 
       - name: Create zip file
-        run: cd ./result && zip -r wc-donation-platform.1.3b.zip ./wc-donation-platform
-
-      - name: Cleanup tmp files
-        run: rm ./result/wc-donation-platform -r
+        run: cd ./result && zip -r wc-donation-platform.zip ./wc-donation-platform
 
       - name: Deploy via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTPS_SERVER }}
           username: ${{ secrets.FTPS_USERNAME }}
@@ -35,4 +41,4 @@ jobs:
           local-dir: ./result/
 
       - name: Cleanup zip file
-        run: rm result -r
+        run: rm -rf result

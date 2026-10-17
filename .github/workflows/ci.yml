@@ -1,0 +1,54 @@
+name: CI / Compile Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  php-lint:
+    name: PHP Syntax Lint (compile check)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: PHP syntax lint (catches malformed/parse-error code)
+        run: |
+          find . -name "*.php" \
+            -not -path "./node_modules/*" \
+            -not -path "./.git/*" \
+            -not -path "./build/*" \
+            -print0 | xargs -0 -n1 php -l
+
+  js-lint-and-build:
+    name: JS lint & build (compile check)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: JS lint (ESLint via wp-scripts)
+        run: npm run lint:js
+
+      - name: JS build (compile check via wp-scripts build)
+        run: npm run build
