@@ -44,6 +44,10 @@ jobs:
           gh-code-scanning-compat: true
           # Keep builds green; Codacy dashboard is where issues are reviewed
           max-allowed-issues: 2147483647
+          # Prevent individual tools from hanging indefinitely
+          tool-timeout: '10minutes'
+          # Skip validation of uncommitted changes
+          skip-uncommitted-files-check: true
 
       # Upload the SARIF file generated in the previous step
       - name: Upload SARIF results file

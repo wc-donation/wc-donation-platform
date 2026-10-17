@@ -20,16 +20,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'php' ]
+        # CodeQL does not support PHP analysis — JavaScript/TypeScript only
+        language: [ 'javascript' ]
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      uses: github/codeql-action/analyze@v4
