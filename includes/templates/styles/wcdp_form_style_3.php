@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	?>
 	<form name="checkout" method="post" class="checkout woocommerce-checkout"
 		action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
-		<div class="wcdp-tab" id="wcdp-step-2">
+		<div class="wcdp-tab wcdp-step-2" id="wcdp-step-2">
 			<?php
 			wc_get_template(
 				'wcdp_step_2.php',

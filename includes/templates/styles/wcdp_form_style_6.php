@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php do_action( 'woocommerce_before_checkout_form', $checkout ); ?>
 	<form name="checkout" method="post" class="checkout woocommerce-checkout"
 		action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
-		<div class="wcdp-tab" id="wcdp-step-2">
+		<div class="wcdp-tab wcdp-step-2" id="wcdp-step-2">
 			<div class="wcdp-style-6-back-wrap">
 				<button type="button" class="wcdp-step wcdp-style-6-back" data-step="1"
 					aria-label="<?php esc_attr_e( 'Back', 'wc-donation-platform' ); ?>">

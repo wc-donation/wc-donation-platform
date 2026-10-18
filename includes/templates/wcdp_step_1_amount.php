@@ -146,6 +146,6 @@ if ( $value['style'] != 3 && $value['style'] != 4 ) {
 				<?php
 	}
 	?>
-	<div class="wcdp-required-field-notice" role="alert" style="display: none;"></div>
+	<div class="wcdp-required-field-notice wcdp-amount-notice" role="alert" aria-live="polite" style="display: none;"></div>
 </div>
 <?php

@@ -37,33 +37,6 @@
 		return document.querySelector( 'form.wcdp-choose-donation' );
 	}
 
-	function setValidationState( element, isValid ) {
-		if ( ! element ) {
-			return;
-		}
-
-		element.classList.toggle( 'woocommerce-invalid', ! isValid );
-		element.classList.toggle(
-			'woocommerce-invalid-required-field',
-			! isValid
-		);
-		element.classList.toggle( 'woocommerce-validated', isValid );
-	}
-
-	function getAmountValidationContainer( form ) {
-		return (
-			form.querySelector( '#wcdp_va_amount' ) ||
-			form.querySelector( '.wcdp_variation.wcdp-row' ) ||
-			form
-		);
-	}
-
-	function getAmountValidationNotice( container ) {
-		const notice = container.querySelector( '.wcdp-required-field-notice' );
-
-		return notice;
-	}
-
 	function getAmountValidationMessage( amountInput ) {
 		const minValue = Number( amountInput.min );
 		const hasValidMin = Number.isFinite( minValue ) && minValue > 0;
@@ -111,111 +84,40 @@
 		);
 	}
 
-	function getAmountValidationParts( form ) {
-		return {
-			amountInput: form.querySelector(
-				'input[name="wcdp-donation-amount"]'
-			),
-			amountSuggestions: form.querySelectorAll(
-				'.wcdp_amount_suggestion'
-			),
-			selectedAmountOption: form.querySelector(
-				".wcdp_amount input[type='radio']:checked"
-			),
-			selectedSuggestion: form.querySelector(
-				'.wcdp_amount_suggestion:checked'
-			),
-			isOtherSelected: !! form.querySelector(
-				'.wcdp_value_other:checked'
-			),
-			hasOtherOption: !! form.querySelector( '.wcdp_value_other' ),
-			container: getAmountValidationContainer( form ),
-		};
-	}
-
-	function updateAmountValidationUI( form, isValid, message = '' ) {
-		const { container } = getAmountValidationParts( form );
-		setValidationState( container, isValid );
-
-		const notice = getAmountValidationNotice( container );
-		if ( ! notice ) {
-			return;
-		}
-		notice.textContent = message;
-		notice.style.display = isValid ? 'none' : 'block';
-	}
-
-	function validateAmountSelection( form, showValidationMessage = false ) {
-		const {
-			amountInput,
-			amountSuggestions,
-			selectedAmountOption,
-			selectedSuggestion,
-			isOtherSelected,
-			hasOtherOption,
-		} = getAmountValidationParts( form );
-
+	function validateAmountSelection( form, showValidationMessage = true ) {
+		const amountInput = form.querySelector(
+			'input[name="wcdp-donation-amount"]'
+		);
 		if ( ! amountInput ) {
-			return true;
+			return false;
 		}
+		const isValid = amountInput.checkValidity();
 
-		const hasAmountSelection = !! selectedAmountOption;
-		const hasSuggestionSelection = !! selectedSuggestion;
-		const hasAmountValue = amountInput.value.trim() !== '';
+		const message = isValid
+			? ''
+			: getAmountValidationMessage( amountInput );
 
-		let isValid = true;
-		if ( hasOtherOption ) {
-			if ( ! hasAmountSelection ) {
-				isValid = false;
-			} else if ( isOtherSelected ) {
-				isValid = hasAmountValue && amountInput.checkValidity();
-			}
-		} else if ( ! hasSuggestionSelection ) {
-			isValid = amountInput.checkValidity();
-		}
+		const noticeEl = form.querySelector( '.wcdp-amount-notice' );
 
-		if (
-			! isOtherSelected &&
-			hasSuggestionSelection &&
-			amountSuggestions.length
-		) {
-			isValid = true;
-		}
-
-		if ( isOtherSelected && ! hasAmountValue ) {
-			isValid = false;
-		}
-
-		if ( showValidationMessage ) {
-			if (
-				isOtherSelected &&
-				! hasAmountValue &&
-				document.activeElement === amountInput
-			) {
-				updateAmountValidationUI( form, true, '' );
-				return false;
-			}
-
-			const message = isValid
-				? ''
-				: getAmountValidationMessage( amountInput );
-			updateAmountValidationUI( form, isValid, message );
-		} else if ( isValid ) {
-			updateAmountValidationUI( form, true, '' );
-		}
-
+		updateErrorMessage(
+			noticeEl,
+			isValid,
+			message,
+			showValidationMessage,
+			amountInput
+		);
 		return isValid;
 	}
 
 	//Send donation selection form
-	async function wcdp_submit( step, context, options = {} ) {
+	async function submitDonationForm( step, context, options = {} ) {
 		const { showValidationMessage = true } = options;
 		const formElement = getDonationForm( context );
 		if ( ! formElement ) {
 			return;
 		}
 
-		if ( check_validity( formElement, showValidationMessage ) ) {
+		if ( checkFormValidity( formElement, showValidationMessage ) ) {
 			const spinner = formElement.querySelector( '#wcdp-spinner' );
 			const ajaxButton = formElement.querySelector( '#wcdp-ajax-button' );
 			if ( spinner ) {
@@ -283,10 +185,10 @@
 								}
 							} );
 
-						wcdp_steps( step, '' );
+						jumpToStep( step, '' );
 						break;
 					default:
-						error_message(
+						handleFormSubmitError(
 							payload.message,
 							payload.reload,
 							payload.newParams
@@ -298,7 +200,7 @@
 					spinner.style.display = 'none';
 				}
 				console.error( 'Donation form submission error:', error );
-				error_message(
+				handleFormSubmitError(
 					__(
 						'An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.',
 						'wc-donation-platform'
@@ -308,8 +210,48 @@
 		}
 	}
 
+	function updateErrorMessage(
+		noticeEl,
+		isValid,
+		message = '',
+		showValidationMessage = false,
+		focusElement = null
+	) {
+		if ( ! noticeEl ) {
+			return;
+		}
+
+		if ( isValid ) {
+			noticeEl.style.display = 'none';
+			noticeEl.textContent = ''; // Clear stale text
+			return;
+		}
+
+		if ( ! showValidationMessage ) {
+			return;
+		}
+
+		noticeEl.textContent = message;
+		noticeEl.style.display = 'block';
+
+		scrollToElementWithOffset( noticeEl, 200 );
+		if ( focusElement ) {
+			focusElement.focus();
+		}
+	}
+
+	function showRequiredNotice( firstInvalid ) {
+		const noticeEl = document.querySelector(
+			'.wcdp-step-2 .wcdp-invalid-field-notice'
+		);
+		if ( ! noticeEl || ! firstInvalid ) {
+			return;
+		}
+		firstInvalid.append( noticeEl );
+	}
+
 	// Return true if the donation form is filled in correctly
-	function check_validity( context, showValidationMessage = true ) {
+	function checkFormValidity( context, showValidationMessage = true ) {
 		const form = getDonationForm( context );
 		if ( ! form ) {
 			return false;
@@ -318,17 +260,30 @@
 		const variation = form.querySelector( '#variation_id' );
 		try {
 			const isFormValid = form.checkValidity();
+
 			const isAmountValid = validateAmountSelection(
 				form,
 				showValidationMessage
 			);
-
+			if ( variation ) {
+				updateErrorMessage(
+					form.querySelector( '.wcdp-variation-error' ),
+					false,
+					variation.value === ''
+						? __(
+								'Please select a donation option before proceeding.',
+								'wc-donation-platform'
+							)
+						: '',
+					showValidationMessage
+				);
+			}
 			return (
 				isFormValid &&
 				isAmountValid &&
 				( ! variation || variation.value !== '' )
 			);
-		} catch ( err ) {
+		} catch ( e ) {
 			return false;
 		}
 	}
@@ -353,7 +308,7 @@
 		return document.scrollingElement || document.documentElement || window;
 	}
 
-	function scrollToElementWithOffset( el, offset = 200, smooth = true ) {
+	function scrollToElementWithOffset( el, offset = 200 ) {
 		if ( ! el ) {
 			return;
 		}
@@ -364,7 +319,7 @@
 				absoluteTop = 0;
 			}
 			const ancestor = findScrollableAncestor( el );
-			const behavior = smooth ? 'smooth' : 'auto';
+			const behavior = 'smooth';
 			if (
 				ancestor === document.scrollingElement ||
 				ancestor === document.documentElement ||
@@ -388,19 +343,6 @@
 		}
 	}
 
-	function showRequiredNotice( firstInvalid ) {
-		const notice = document.querySelector(
-			'#wcdp-step-2 .wcdp-required-field-notice'
-		);
-		if ( ! notice || ! firstInvalid ) {
-			return;
-		}
-
-		notice.setAttribute( 'role', 'alert' );
-		notice.setAttribute( 'aria-live', 'polite' );
-		firstInvalid.append( notice );
-	}
-
 	function focusFirstFocusableInStep( stepEl ) {
 		stepEl
 			.querySelector(
@@ -415,7 +357,7 @@
 	 * @param reload
 	 * @param newParams
 	 */
-	function error_message(
+	function handleFormSubmitError(
 		message = 'An unexpected error occurred. Please reload the page and try again. If the problem persists, please contact our support team.',
 		reload = true,
 		newParams = false
@@ -476,7 +418,7 @@
 			setTimeout( () => {
 				time--;
 				if ( time === 0 ) {
-					wcdp_submit( undefined, formElement, {
+					submitDonationForm( undefined, formElement, {
 						showValidationMessage: true,
 					} );
 				}
@@ -552,7 +494,7 @@
 
 				if ( currentStep === 1 ) {
 					const donationForm = getDonationForm( button );
-					if ( ! check_validity( donationForm ) ) {
+					if ( ! checkFormValidity( donationForm, true ) ) {
 						return;
 					}
 
@@ -561,7 +503,7 @@
 						: '';
 					if ( currentFormData !== ajaxSend ) {
 						currentFormData = ajaxSend;
-						wcdp_submit( targetStep, donationForm );
+						submitDonationForm( targetStep, donationForm );
 						return;
 					}
 				}
@@ -586,7 +528,7 @@
 					if ( invalids.length > 0 ) {
 						const firstInvalid = invalids[ 0 ];
 						showRequiredNotice( firstInvalid );
-						scrollToElementWithOffset( firstInvalid, 200, true );
+						scrollToElementWithOffset( firstInvalid, 200 );
 						const focusable = firstInvalid.querySelector(
 							'input, select, textarea, button'
 						);
@@ -597,11 +539,11 @@
 					}
 				}
 
-				wcdp_steps( targetStep, '' );
+				jumpToStep( targetStep, '' );
 			} );
 		} );
 
-	function wcdp_steps( step, formid = '' ) {
+	function jumpToStep( step, formid = '' ) {
 		const root = document.documentElement;
 		root.style.setProperty( '--wcdp-step-2', 'var(--wcdp-main)' );
 		root.style.setProperty( '--wcdp-step-3', 'var(--wcdp-main)' );
@@ -642,7 +584,7 @@
 				tab.style.display = 'none';
 			} );
 			stepEl.style.display = 'block';
-			scrollToElementWithOffset( stepEl, 200, true );
+			scrollToElementWithOffset( stepEl, 200 );
 			focusFirstFocusableInStep( stepEl );
 			currentStep = step;
 		}
@@ -665,7 +607,7 @@
 		} );
 
 		// init popup
-		wcdp_open( false );
+		openPopupForm( false );
 
 		try {
 			const amountInput = document.querySelector(
@@ -679,16 +621,6 @@
 						new Event( 'change', { bubbles: true } )
 					);
 				}
-			}
-
-			const donationForm = getDonationForm();
-			if ( check_validity( donationForm, false ) ) {
-				currentFormData = donationForm
-					? serializeForm( donationForm )
-					: '';
-				wcdp_submit( undefined, donationForm, {
-					showValidationMessage: false,
-				} );
 			}
 
 			document
@@ -745,12 +677,12 @@
 
 	//Modal window hash
 	window.onhashchange = function () {
-		wcdp_open( false );
+		openPopupForm( false );
 	};
 
 	document.querySelectorAll( '.wcdp-modal-open' ).forEach( ( button ) => {
 		button.addEventListener( 'click', () => {
-			wcdp_open( true );
+			openPopupForm( true );
 		} );
 	} );
 
@@ -760,18 +692,18 @@
 			event.key === 'Escape' &&
 			event.target instanceof HTMLInputElement
 		) {
-			wcdp_close();
+			closePopupForm();
 		}
 	} );
 
 	//Close modal when clicking on the close button
 	document.querySelectorAll( '.wcdp-modal-close' ).forEach( ( button ) => {
-		button.addEventListener( 'click', wcdp_close );
+		button.addEventListener( 'click', closePopupForm );
 	} );
 
 	let wcdpOpen = false;
 	//Close modal function
-	function wcdp_close() {
+	function closePopupForm() {
 		if ( wcdpOpen ) {
 			const overlay = document.querySelector( '.wcdp-overlay' );
 			if ( overlay ) {
@@ -788,7 +720,7 @@
 	}
 
 	//Open modal function
-	function wcdp_open( direct ) {
+	function openPopupForm( direct ) {
 		const overlay = document.querySelector( '.wcdp-overlay' );
 		if (
 			overlay &&
@@ -976,18 +908,6 @@
 		);
 	}
 
-	function onDonationFormSubmit( event ) {
-		event.preventDefault();
-		const form = event.currentTarget;
-		const serialized = serializeForm( form );
-		if ( currentFormData !== serialized ) {
-			currentFormData = serialized;
-			wcdp_submit( 2, form );
-		} else {
-			wcdp_steps( 2 );
-		}
-	}
-
 	function setupDonationFormListeners() {
 		const forms = document.querySelectorAll( 'form.wcdp-choose-donation' );
 		forms.forEach( ( form ) => {
@@ -1012,13 +932,31 @@
 				) {
 					autoSubmitDonationSelection( form );
 				}
+
+				updateErrorMessage(
+					form.querySelector( '.wcdp-variation-error' ),
+					true,
+					'',
+					false
+				);
 			};
 
+			// Listen for changes on the form to update the selection and sync variations
 			form.addEventListener( 'change', onFormChange );
 
-			if ( form.dataset.style !== '4' ) {
-				form.addEventListener( 'submit', onDonationFormSubmit );
-			}
+			// Stop submission if the form is invalid, and show validation messages
+			form.addEventListener( 'submit', ( event ) => {
+				const form = event.currentTarget;
+				if ( form.dataset.style !== '4' ) {
+					event.preventDefault();
+				}
+
+				const isValid = checkFormValidity( form, true );
+
+				if ( ! isValid ) {
+					event.preventDefault();
+				}
+			} );
 
 			[
 				'update_variation_values',

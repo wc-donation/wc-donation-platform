@@ -25,6 +25,6 @@ if ( WC()->checkout()->get_checkout_fields() ) {
 	do_action( 'woocommerce_checkout_billing' );
 	do_action( 'woocommerce_checkout_shipping' );
 	do_action( 'woocommerce_checkout_after_customer_details' );
-	echo '<div class="wcdp-required-field-notice">' . esc_html__( 'This is a required field.', 'wc-donation-platform' ) . '</div>';
+	echo '<div class="wcdp-required-field-notice wcdp-invalid-field-notice" role="alert" aria-live="polite">' . esc_html__( 'This is a required field.', 'wc-donation-platform' ) . '</div>';
 }
 do_action( 'wcdp_after_donor_details', (int) $value['id'], $context );

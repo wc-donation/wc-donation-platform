@@ -116,7 +116,11 @@ autocomplete="off" enctype='multipart/form-data'
 		'',
 		WCDP_DIR . 'includes/templates/'
 	);
+	?>
 
+	<div class="wcdp-required-field-notice wcdp-variation-error" role="alert" aria-live="polite" style="display: none;"></div>
+
+	<?php
 	// Variation fields
 	wc_get_template(
 		'wcdp_step_1_variations.php',
@@ -132,9 +136,10 @@ autocomplete="off" enctype='multipart/form-data'
 	);
 	?>
 	<?php do_action( 'wcdp_after_step_amount', $product_id, $context ); ?>
+
 	<?php if ( $value['style'] == 1 || $value['style'] == 3 || $value['style'] == 5 || $value['style'] == 6 ) : ?>
 		<div class="button-row">
-			<button class="button wcdp-button wcdp-right" type="button" id="wcdp-ajax-button" data-step="2">
+			<button class="button wcdp-button wcdp-right" type="submit" id="wcdp-ajax-button" data-step="2">
 				<?php echo apply_filters( 'wcdp_next_button', esc_html__( 'Next', 'wc-donation-platform' ), $value['id'], 1 ); ?>
 				&nbsp;<div class="wcdp-arrow wcdp-right-arrow">&raquo;</div>
 			</button>
