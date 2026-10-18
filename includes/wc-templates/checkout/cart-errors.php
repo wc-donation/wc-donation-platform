@@ -11,20 +11,20 @@
  * the readme will list any important changes.
  *
  * forked from WooCommerce\Templates
- * 
+ *
  * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
  * @version 3.5.0
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 ?>
 
-<p><?php esc_html_e('There are some issues with your donation session. Please reload the page and try again.', 'wc-donation-platform'); ?>
+<p><?php esc_html_e( 'There are some issues with your donation session. Please reload the page and try again.', 'wc-donation-platform' ); ?>
 </p>
 
-<?php do_action('woocommerce_cart_has_errors'); ?>
+<?php do_action( 'woocommerce_cart_has_errors' ); ?>
 
 <p><a class="button wc-backward"
-            href="<?php echo esc_url(wc_get_cart_url()); ?>"><?php esc_html_e('Resolve issues', 'wc-donation-platform'); ?></a>
+			href="<?php echo esc_url( wc_get_cart_url() ); ?>"><?php esc_html_e( 'Resolve issues', 'wc-donation-platform' ); ?></a>
 </p>

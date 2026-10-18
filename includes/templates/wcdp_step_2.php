@@ -6,24 +6,25 @@
  * @var string $context
  */
 
-if (!defined('ABSPATH'))
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Add woocommerce_after_add_to_cart_form hook in step 2
  * needed in order to support Stripe express checkout
  */
-if ($value['style'] !== 4 && $context == 'shortcode') {
-    do_action('woocommerce_after_add_to_cart_form');
+if ( $value['style'] !== 4 && $context == 'shortcode' ) {
+	do_action( 'woocommerce_after_add_to_cart_form' );
 }
 
 // If checkout registration is disabled and not logged in, the user cannot check out.
-do_action('wcdp_before_donor_details', (int) $value['id'], $context);
-if (WC()->checkout()->get_checkout_fields()) {
-    do_action('woocommerce_checkout_before_customer_details');
-    do_action('woocommerce_checkout_billing');
-    do_action('woocommerce_checkout_shipping');
-    do_action('woocommerce_checkout_after_customer_details');
-    echo '<div class="wcdp-required-field-notice">' . esc_html__('This is a required field.', 'wc-donation-platform') . '</div>';
+do_action( 'wcdp_before_donor_details', (int) $value['id'], $context );
+if ( WC()->checkout()->get_checkout_fields() ) {
+	do_action( 'woocommerce_checkout_before_customer_details' );
+	do_action( 'woocommerce_checkout_billing' );
+	do_action( 'woocommerce_checkout_shipping' );
+	do_action( 'woocommerce_checkout_after_customer_details' );
+	echo '<div class="wcdp-required-field-notice">' . esc_html__( 'This is a required field.', 'wc-donation-platform' ) . '</div>';
 }
-do_action('wcdp_after_donor_details', (int) $value['id'], $context);
+do_action( 'wcdp_after_donor_details', (int) $value['id'], $context );

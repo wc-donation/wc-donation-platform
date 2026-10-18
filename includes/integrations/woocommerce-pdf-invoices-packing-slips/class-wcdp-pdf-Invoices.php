@@ -5,109 +5,105 @@
 
 use WPO\IPS\Documents\WCDP_Thank_You_Certificate;
 
-if (!defined('ABSPATH'))
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class WCDP_Pdf_Invoices
-{
-    /**
-     * Bootstraps the class and hooks required actions & filters
-     */
-    public static function init()
-    {
-        $pdf_invoices_active = in_array('woocommerce-pdf-invoices-packing-slips/woocommerce-pdf-invoices-packingslips.php', apply_filters('active_plugins', get_option('active_plugins')));
+class WCDP_Pdf_Invoices {
 
-        if ($pdf_invoices_active) {
-            //Add a Tax Receipt Template
-            add_filter('wpo_wcpdf_template_paths', 'WCDP_Pdf_Invoices::add_template', 10, 1);
+	/**
+	 * Bootstraps the class and hooks required actions & filters
+	 */
+	public static function init() {
+		$pdf_invoices_active = in_array( 'woocommerce-pdf-invoices-packing-slips/woocommerce-pdf-invoices-packingslips.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
 
-            //Rename pdf file name
-            add_filter('wpo_wcpdf_filename', 'WCDP_Pdf_Invoices::filename', 5, 3);
+		if ( $pdf_invoices_active ) {
+			// Add a Tax Receipt Template
+			add_filter( 'wpo_wcpdf_template_paths', 'WCDP_Pdf_Invoices::add_template', 10, 1 );
 
-            //Rename pdf file name
-            add_filter('wpo_wcpdf_document_classes', 'WCDP_Pdf_Invoices::add_document_type');
+			// Rename pdf file name
+			add_filter( 'wpo_wcpdf_filename', 'WCDP_Pdf_Invoices::filename', 5, 3 );
 
-            // Rename Invoice to Donation Receipt (uses dedicated handler)
-            add_filter('wpo_wcpdf_document_title', array('WCDP_Pdf_Invoices', 'document_title'), 10, 2);
-        }
-    }
+			// Rename pdf file name
+			add_filter( 'wpo_wcpdf_document_classes', 'WCDP_Pdf_Invoices::add_document_type' );
 
-    /**
-     * Rename invoice document title to 'Donation Receipt' when the order contains a donation
-     *
-     * @param string $title
-     * @param object $orderDocument
-     * @return string
-     */
-    public static function document_title($title, $orderDocument)
-    {
-        try {
-            if (is_object($orderDocument) && method_exists($orderDocument, 'get_type') && $orderDocument->get_type() === 'invoice') {
-                // $orderDocument->order is expected to be a WC_Order instance
-                $order = $orderDocument->order ?? null;
-                if ($order instanceof WC_Order && \WCDP_Form::order_contains_donation($order)) {
-                    return __('Donation Receipt', 'wc-donation-platform');
-                }
-            }
-        } catch (\Throwable $e) {
-            // ignore and return original title
-        }
+			// Rename Invoice to Donation Receipt (uses dedicated handler)
+			add_filter( 'wpo_wcpdf_document_title', array( 'WCDP_Pdf_Invoices', 'document_title' ), 10, 2 );
+		}
+	}
 
-        return $title;
-    }
+	/**
+	 * Rename invoice document title to 'Donation Receipt' when the order contains a donation
+	 *
+	 * @param string $title
+	 * @param object $orderDocument
+	 * @return string
+	 */
+	public static function document_title( $title, $orderDocument ) {
+		try {
+			if ( is_object( $orderDocument ) && method_exists( $orderDocument, 'get_type' ) && $orderDocument->get_type() === 'invoice' ) {
+				// $orderDocument->order is expected to be a WC_Order instance
+				$order = $orderDocument->order ?? null;
+				if ( $order instanceof WC_Order && \WCDP_Form::order_contains_donation( $order ) ) {
+					return __( 'Donation Receipt', 'wc-donation-platform' );
+				}
+			}
+		} catch ( \Throwable $e ) {
+			// ignore and return original title
+		}
 
-    /**
-     * @param $template_paths
-     * @return array
-     */
-    public static function add_template($template_paths): array
-    {
-        $template_paths['wcdp'] = WCDP_DIR . 'includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/';
-        return $template_paths;
-    }
+		return $title;
+	}
 
-    /**
-     * @param $filename
-     * @param $type
-     * @param $order_ids
-     * @return string
-     */
-    public static function filename($filename, $type, $order_ids): string
-    {
-        if ($type !== 'invoice') {
-            return $filename;
-        }
-        return sanitize_title(get_bloginfo('name'), 'wcdp') . '_receipt_' . implode('-', $order_ids) . '.pdf';
-    }
+	/**
+	 * @param $template_paths
+	 * @return array
+	 */
+	public static function add_template( $template_paths ): array {
+		$template_paths['wcdp'] = WCDP_DIR . 'includes/integrations/woocommerce-pdf-invoices-packing-slips/templates/';
+		return $template_paths;
+	}
 
-    /**
-     * @param array $documents
-     * @return array
-     */
-    public static function add_document_type(array $documents = array()): array
-    {
-        $wpo_ips_base_version = function_exists( 'WPO_WCPDF' )
-            ? preg_replace( '/[^0-9.].*$/', '', ( WPO_WCPDF()->version ?? null ) )
-            : null;
+	/**
+	 * @param $filename
+	 * @param $type
+	 * @param $order_ids
+	 * @return string
+	 */
+	public static function filename( $filename, $type, $order_ids ): string {
+		if ( $type !== 'invoice' ) {
+			return $filename;
+		}
+		return sanitize_title( get_bloginfo( 'name' ), 'wcdp' ) . '_receipt_' . implode( '-', $order_ids ) . '.pdf';
+	}
 
-        if ( empty( $wpo_ips_base_version ) ) {
-            return $documents;
-        }
+	/**
+	 * @param array $documents
+	 * @return array
+	 */
+	public static function add_document_type( array $documents = array() ): array {
+		$wpo_ips_base_version = function_exists( 'WPO_WCPDF' )
+			? preg_replace( '/[^0-9.].*$/', '', ( WPO_WCPDF()->version ?? null ) )
+			: null;
 
-        if ( file_exists( WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/Documents/OrderDocumentMethods.php' ) ) {
-            $dirname            = dirname( __FILE__ );
-            $wpo_ips_is_v6_base = version_compare( $wpo_ips_base_version, '6.0.0', '>=' );
+		if ( empty( $wpo_ips_base_version ) ) {
+			return $documents;
+		}
 
-            // New base 6.0.0+
-            if ( $wpo_ips_is_v6_base ) {
-                $documents['\WPO\IPS\Documents\ThankYouCertificate'] = include $dirname . '/Documents/ThankYouCertificate.php';
+		if ( file_exists( WP_PLUGIN_DIR . '/woocommerce-pdf-invoices-packing-slips/includes/Documents/OrderDocumentMethods.php' ) ) {
+			$dirname            = __DIR__;
+			$wpo_ips_is_v6_base = version_compare( $wpo_ips_base_version, '6.0.0', '>=' );
 
-                // Legacy
-            } else {
-                $documents['\WPO\IPS\Documents\WCDP_Thank_You_Certificate'] = include $dirname . '/class-wcdp-thank-you-certificate-legacy.php';
-            }
-        }
+			// New base 6.0.0+
+			if ( $wpo_ips_is_v6_base ) {
+				$documents['\WPO\IPS\Documents\ThankYouCertificate'] = include $dirname . '/Documents/ThankYouCertificate.php';
 
-        return $documents;
-    }
+				// Legacy
+			} else {
+				$documents['\WPO\IPS\Documents\WCDP_Thank_You_Certificate'] = include $dirname . '/class-wcdp-thank-you-certificate-legacy.php';
+			}
+		}
+
+		return $documents;
+	}
 }

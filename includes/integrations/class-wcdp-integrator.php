@@ -3,109 +3,107 @@
  * This class implements integrations with other WooCommerce Extensions
  */
 
-class WCDP_Integrator
-{
-    /**
-     * Bootstraps the class and hooks required actions & filters
-     */
-    public static function init(): void
-    {
-        if (!function_exists('is_plugin_active_for_network')) {
-            require_once(ABSPATH . '/wp-admin/includes/plugin.php');
-        }
+class WCDP_Integrator {
 
-        $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
+	/**
+	 * Bootstraps the class and hooks required actions & filters
+	 */
+	public static function init(): void {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
 
-        //some payment gateways do not load with empty checkout
-        add_filter('woocommerce_cart_get_cart_contents_total', 'WCDP_Integrator::cart_contents_total', 10, 1);
+		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 
-        // Make sure payment gateways enqueue checkout scripts
-        add_filter('woocommerce_cart_needs_payment', 'WCDP_Integrator::set_cart_needs_payment');
+		// some payment gateways do not load with empty checkout
+		add_filter( 'woocommerce_cart_get_cart_contents_total', 'WCDP_Integrator::cart_contents_total', 10, 1 );
 
-        //Integration with WooCommerce Subscriptions
-        //https://woocommerce.com/products/woocommerce-subscriptions/
-        $subscriptions_active = in_array('woocommerce-subscriptions/woocommerce-subscriptions.php', $active_plugins)
-            || in_array('woocommerce-subscriptions-main/woocommerce-subscriptions.php', $active_plugins)
-            || in_array('wc-donation-platform-pro/wc-donation-platform-pro.php', $active_plugins)
-            || is_plugin_active_for_network('woocommerce-subscriptions/woocommerce-subscriptions.php')
-            || is_plugin_active_for_network('woocommerce-subscriptions-main/woocommerce-subscriptions.php')
-            || is_plugin_active_for_network('wc-donation-platform-pro/wc-donation-platform-pro.php');
-        if ($subscriptions_active) {
-            include_once 'woocommerce-subscriptions/class-wcdp-subscriptions.php';
-            WCDP_Subscriptions::init();
-        }
+		// Make sure payment gateways enqueue checkout scripts
+		add_filter( 'woocommerce_cart_needs_payment', 'WCDP_Integrator::set_cart_needs_payment' );
 
-        //Integration with WooCommerce PDF Invoices & Packing Slips
-        //https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/
-        include_once 'woocommerce-pdf-invoices-packing-slips/class-wcdp-pdf-Invoices.php';
-        WCDP_Pdf_Invoices::init();
+		// Integration with WooCommerce Subscriptions
+		// https://woocommerce.com/products/woocommerce-subscriptions/
+		$subscriptions_active = in_array( 'woocommerce-subscriptions/woocommerce-subscriptions.php', $active_plugins )
+			|| in_array( 'woocommerce-subscriptions-main/woocommerce-subscriptions.php', $active_plugins )
+			|| in_array( 'wc-donation-platform-pro/wc-donation-platform-pro.php', $active_plugins )
+			|| is_plugin_active_for_network( 'woocommerce-subscriptions/woocommerce-subscriptions.php' )
+			|| is_plugin_active_for_network( 'woocommerce-subscriptions-main/woocommerce-subscriptions.php' )
+			|| is_plugin_active_for_network( 'wc-donation-platform-pro/wc-donation-platform-pro.php' );
+		if ( $subscriptions_active ) {
+			include_once 'woocommerce-subscriptions/class-wcdp-subscriptions.php';
+			WCDP_Subscriptions::init();
+		}
 
-        //Add support for Stripe & PayPal Express Checkout
-        //https://wordpress.org/plugins/woocommerce-gateway-stripe/
-        //https://wordpress.org/plugins/woocommerce-paypal-payments/
-        //https://wordpress.org/plugins/woo-stripe-payment/
-        $stripe_active = in_array('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php', $active_plugins) || is_plugin_active_for_network('woocommerce-gateway-stripe/woocommerce-gateway-stripe.php');
-        $paypal_active = in_array('woocommerce-paypal-payments/woocommerce-paypal-payments.php', $active_plugins) || is_plugin_active_for_network('woocommerce-paypal-payments/woocommerce-paypal-payments.php');
-        $payment_plugins_stripe_active = in_array('woo-stripe-payment/stripe-payments.php', $active_plugins) || is_plugin_active_for_network('woo-stripe-payment/stripe-payments.php');
-        if ($stripe_active || $paypal_active || $payment_plugins_stripe_active) {
-            include_once 'express-checkout/class-wcdp-express-checkout.php';
-            new WCDP_Express_Checkout();
-        }
+		// Integration with WooCommerce PDF Invoices & Packing Slips
+		// https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/
+		include_once 'woocommerce-pdf-invoices-packing-slips/class-wcdp-pdf-Invoices.php';
+		WCDP_Pdf_Invoices::init();
 
-        //Integration with Subscriptions for WooCommerce
-        //https://wordpress.org/plugins/subscriptions-for-woocommerce/
-        include_once 'subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php';
-        WCDP_Subscriptions_For_WooCommerce::init();
+		// Add support for Stripe & PayPal Express Checkout
+		// https://wordpress.org/plugins/woocommerce-gateway-stripe/
+		// https://wordpress.org/plugins/woocommerce-paypal-payments/
+		// https://wordpress.org/plugins/woo-stripe-payment/
+		$stripe_active                 = in_array( 'woocommerce-gateway-stripe/woocommerce-gateway-stripe.php', $active_plugins ) || is_plugin_active_for_network( 'woocommerce-gateway-stripe/woocommerce-gateway-stripe.php' );
+		$paypal_active                 = in_array( 'woocommerce-paypal-payments/woocommerce-paypal-payments.php', $active_plugins ) || is_plugin_active_for_network( 'woocommerce-paypal-payments/woocommerce-paypal-payments.php' );
+		$payment_plugins_stripe_active = in_array( 'woo-stripe-payment/stripe-payments.php', $active_plugins ) || is_plugin_active_for_network( 'woo-stripe-payment/stripe-payments.php' );
+		if ( $stripe_active || $paypal_active || $payment_plugins_stripe_active ) {
+			include_once 'express-checkout/class-wcdp-express-checkout.php';
+			new WCDP_Express_Checkout();
+		}
 
-        $polylang_active = in_array('polylang/polylang.php', $active_plugins) || is_plugin_active_for_network('polylang/polylang.php');
-        if ($polylang_active) {
-            include_once 'polylang/class-wcdp-polylang.php';
-            //update donation total revenue for translated products
-            add_filter('wcdp_update_product_revenue', 'WCDP_Polylang::product_revenue', 10, 2);
-        }
-    }
+		// Integration with Subscriptions for WooCommerce
+		// https://wordpress.org/plugins/subscriptions-for-woocommerce/
+		include_once 'subscriptions-for-woocommerce/class-wcdp-subscriptions-for-woocommerce.php';
+		WCDP_Subscriptions_For_WooCommerce::init();
 
-    /**
-     * Return true if cart contains a WooCommerce Subscriptions or Subscriptions for WooCommerce product
-     * @param null $product
-     * @return bool
-     */
-    public static function wcdp_contains_subscription($product = null): bool
-    {
-        if (class_exists('WC_Subscriptions_Cart')) {
-            return WC_Subscriptions_Cart::cart_contains_subscription();
-        } else if (function_exists('wps_sfw_check_product_is_subscription')) {
-            return wps_sfw_check_product_is_subscription($product);
-        } else {
-            return false;
-        }
-    }
+		$polylang_active = in_array( 'polylang/polylang.php', $active_plugins ) || is_plugin_active_for_network( 'polylang/polylang.php' );
+		if ( $polylang_active ) {
+			include_once 'polylang/class-wcdp-polylang.php';
+			// update donation total revenue for translated products
+			add_filter( 'wcdp_update_product_revenue', 'WCDP_Polylang::product_revenue', 10, 2 );
+		}
+	}
 
-    /**
-     * PayPal Payment Plugin only loads when the cart total != 0
-     * @param $total
-     * @return float|mixed
-     */
-    public static function cart_contents_total($total)
-    {
-        if (!wp_doing_ajax() && $total == 0 && WCDP_Form::wcdp_has_donation_form()) {
-            //Return very small amount (rounded to 0 in checkout)
-            return 4.9E-324;
-        }
-        return $total;
-    }
+	/**
+	 * Return true if cart contains a WooCommerce Subscriptions or Subscriptions for WooCommerce product
+	 *
+	 * @param null $product
+	 * @return bool
+	 */
+	public static function wcdp_contains_subscription( $product = null ): bool {
+		if ( class_exists( 'WC_Subscriptions_Cart' ) ) {
+			return WC_Subscriptions_Cart::cart_contains_subscription();
+		} elseif ( function_exists( 'wps_sfw_check_product_is_subscription' ) ) {
+			return wps_sfw_check_product_is_subscription( $product );
+		} else {
+			return false;
+		}
+	}
 
-    /**
-     * Mark the Cart as needs payment (needed for some payment gateways)
-     *
-     * @param $needs_payment
-     * @return mixed|true
-     */
-    public static function set_cart_needs_payment($needs_payment)
-    {
-        if (!wp_doing_ajax() && !$needs_payment && WCDP_Form::wcdp_has_donation_form()) {
-            return true;
-        }
-        return $needs_payment;
-    }
+	/**
+	 * PayPal Payment Plugin only loads when the cart total != 0
+	 *
+	 * @param $total
+	 * @return float|mixed
+	 */
+	public static function cart_contents_total( $total ) {
+		if ( ! wp_doing_ajax() && $total == 0 && WCDP_Form::wcdp_has_donation_form() ) {
+			// Return very small amount (rounded to 0 in checkout)
+			return 4.9E-324;
+		}
+		return $total;
+	}
+
+	/**
+	 * Mark the Cart as needs payment (needed for some payment gateways)
+	 *
+	 * @param $needs_payment
+	 * @return mixed|true
+	 */
+	public static function set_cart_needs_payment( $needs_payment ) {
+		if ( ! wp_doing_ajax() && ! $needs_payment && WCDP_Form::wcdp_has_donation_form() ) {
+			return true;
+		}
+		return $needs_payment;
+	}
 }

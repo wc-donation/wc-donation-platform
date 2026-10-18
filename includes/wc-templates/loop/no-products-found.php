@@ -9,7 +9,7 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
- * 
+ *
  * forked from WooCommerce\Templates
  *
  * @see https://woocommerce.com/document/template-structure/
@@ -17,9 +17,9 @@
  * @version 7.8.0
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 ?>
 <div class="woocommerce-no-products-found">
-    <?php wc_print_notice(esc_html__('Nothing found matching your selection.', 'wc-donation-platform'), 'notice'); ?>
+	<?php wc_print_notice( esc_html__( 'Nothing found matching your selection.', 'wc-donation-platform' ), 'notice' ); ?>
 </div>

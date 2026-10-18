@@ -17,11 +17,11 @@
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
+$email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 
 /**
  * Hook for the woocommerce_email_header.
@@ -29,25 +29,25 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvemen
  * @hooked WC_Emails::email_header() Output the email header
  * @since 3.7.0
  */
-do_action('woocommerce_email_header', $email_heading, $email); ?>
+do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
 <p>
 	<?php
-	if (!empty($order->get_billing_first_name())) {
+	if ( ! empty( $order->get_billing_first_name() ) ) {
 		/* translators: %s: Customer first name */
-		printf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name()));
+		printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) );
 	} else {
-		printf(esc_html__('Hi,', 'woocommerce'));
+		printf( esc_html__( 'Hi,', 'woocommerce' ) );
 	}
 	?>
 </p>
-<p><?php esc_html_e("Unfortunately, we couldn't complete your donation due to an issue with your payment method.", 'wc-donation-platform'); ?>
+<p><?php esc_html_e( "Unfortunately, we couldn't complete your donation due to an issue with your payment method.", 'wc-donation-platform' ); ?>
 </p>
 <?php /* translators: %s: Site title */ ?>
-<p><?php printf(esc_html__("If you'd like to continue with your donation, please return to %s and try a different method of payment.", 'wc-donation-platform'), esc_html($blogname)); ?>
+<p><?php printf( esc_html__( "If you'd like to continue with your donation, please return to %s and try a different method of payment.", 'wc-donation-platform' ), esc_html( $blogname ) ); ?>
 </p>
-<p><?php esc_html_e('Your donation details are as follows:', 'wc-donation-platform'); ?></p>
+<p><?php esc_html_e( 'Your donation details are as follows:', 'wc-donation-platform' ); ?></p>
 <?php echo $email_improvements_enabled ? '</div>' : ''; ?>
 
 <?php
@@ -59,7 +59,7 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action('woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook for the woocommerce_email_order_meta.
@@ -67,7 +67,7 @@ do_action('woocommerce_email_order_details', $order, $sent_to_admin, $plain_text
  * @hooked WC_Emails::order_meta() Shows order meta data.
  * @since 1.0.0
  */
-do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook for woocommerce_email_customer_details.
@@ -76,14 +76,14 @@ do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $
  * @hooked WC_Emails::email_address() Shows email address
  * @since 1.0.0
  */
-do_action('woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Show user-defined additional content - this is set in each email's settings.
  */
-if ($additional_content) {
+if ( $additional_content ) {
 	echo $email_improvements_enabled ? '<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation"><tr><td class="email-additional-content">' : '';
-	echo wp_kses_post(wpautop(wptexturize($additional_content)));
+	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 	echo $email_improvements_enabled ? '</td></tr></table>' : '';
 }
 
@@ -93,4 +93,4 @@ if ($additional_content) {
  * @hooked WC_Emails::email_footer() Output the email footer
  * @since 3.7.0
  */
-do_action('woocommerce_email_footer', $email);
+do_action( 'woocommerce_email_footer', $email );

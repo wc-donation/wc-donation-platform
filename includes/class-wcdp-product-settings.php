@@ -3,221 +3,215 @@
  * This class adapts WC Products as donable products
  */
 
-if (!defined('ABSPATH'))
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class WCDP_Product_Settings
-{
-    /**
-     * Bootstraps the class and hooks required actions & filters.
-     */
-    public function __construct()
-    {
-        //Add donation tab on product edit page
-        add_filter('woocommerce_product_data_tabs', array($this, 'wcdp_product_data_tabs'), 10, 3);
+class WCDP_Product_Settings {
 
-        //Add donation data panel on product edit page
-        add_action('woocommerce_product_data_panels', array($this, 'wcdp_product_data_panel'));
+	/**
+	 * Bootstraps the class and hooks required actions & filters.
+	 */
+	public function __construct() {
+		// Add donation tab on product edit page
+		add_filter( 'woocommerce_product_data_tabs', array( $this, 'wcdp_product_data_tabs' ), 10, 3 );
 
-        //Safe donation specific product meta
-        add_action('woocommerce_process_product_meta', array($this, 'wcdp_process_product_meta'));
+		// Add donation data panel on product edit page
+		add_action( 'woocommerce_product_data_panels', array( $this, 'wcdp_product_data_panel' ) );
 
-        //donable Product
-        add_filter("product_type_options", array($this, 'wcdp_add_product_type_option'), 11);
+		// Safe donation specific product meta
+		add_action( 'woocommerce_process_product_meta', array( $this, 'wcdp_process_product_meta' ) );
 
-        //Safe donable Product
-        add_action("save_post_product", array($this, 'wcdp_save_post_product'), 10, 3);
-    }
+		// donable Product
+		add_filter( 'product_type_options', array( $this, 'wcdp_add_product_type_option' ), 11 );
 
-    /**
-     * Add donation tab on product edit page
-     *
-     * @param array $tabs
-     * @return array
-     */
-    public function wcdp_product_data_tabs(array $tabs = array()): array
-    {
-        $wcdp_options = array(
-            'label' => __('Donation Form', 'wc-donation-platform'),
-            'target' => 'wcdp_donation_form_data',
-            'class' => 'show_if_donable hidden donation_options hide_if_external',
-            'priority' => 65,
-        );
-        $tabs[] = $wcdp_options;
-        return $tabs;
-    }
+		// Safe donable Product
+		add_action( 'save_post_product', array( $this, 'wcdp_save_post_product' ), 10, 3 );
+	}
 
-    /**
-     * Add donation data panel on product edit page
-     */
-    public function wcdp_product_data_panel()
-    {
-        include WCDP_DIR . '/includes/templates/wcdp_product_settings.php';
-    }
+	/**
+	 * Add donation tab on product edit page
+	 *
+	 * @param array $tabs
+	 * @return array
+	 */
+	public function wcdp_product_data_tabs( array $tabs = array() ): array {
+		$wcdp_options = array(
+			'label'    => __( 'Donation Form', 'wc-donation-platform' ),
+			'target'   => 'wcdp_donation_form_data',
+			'class'    => 'show_if_donable hidden donation_options hide_if_external',
+			'priority' => 65,
+		);
+		$tabs[]       = $wcdp_options;
+		return $tabs;
+	}
 
-    /**
-     * Save donation data from product edit page
-     * @param $post_id
-     */
-    public function wcdp_process_product_meta($post_id)
-    {
-        $product = wc_get_product($post_id);
-        $product_settings = $this->product_meta_style(array());
-        $product_settings = $this->product_meta_amount_selection($product_settings, $post_id);
-        $product_settings = $this->product_meta_variation_styles($product_settings, $product);
-        $product_settings = $this->product_meta_fundraising_meta($product_settings);
+	/**
+	 * Add donation data panel on product edit page
+	 */
+	public function wcdp_product_data_panel() {
+		include WCDP_DIR . '/includes/templates/wcdp_product_settings.php';
+	}
 
-        // Allow pro features to add their own settings.
-        $product_settings = apply_filters('wcdp_process_product_meta_settings', $product_settings, $post_id);
+	/**
+	 * Save donation data from product edit page
+	 *
+	 * @param $post_id
+	 */
+	public function wcdp_process_product_meta( $post_id ) {
+		$product          = wc_get_product( $post_id );
+		$product_settings = $this->product_meta_style( array() );
+		$product_settings = $this->product_meta_amount_selection( $product_settings, $post_id );
+		$product_settings = $this->product_meta_variation_styles( $product_settings, $product );
+		$product_settings = $this->product_meta_fundraising_meta( $product_settings );
 
-        foreach ($product_settings as $key => $value) {
-            $product->update_meta_data('wcdp-settings[' . $key . ']', $value);
-        }
-        $product->save();
-    }
+		// Allow pro features to add their own settings.
+		$product_settings = apply_filters( 'wcdp_process_product_meta_settings', $product_settings, $post_id );
 
-    /**
-     * Determine style of product
-     * @param $product_settings
-     * @return array
-     */
-    private function product_meta_style($product_settings): array
-    {
-        if (isset($_POST['wcdp-amount-layout'])) {
-            if ($_POST['wcdp-amount-layout'] == '1') {
-                $product_settings[0] = 1;
-            } else if ($_POST['wcdp-amount-layout'] == '2') {
-                $product_settings[0] = 2;
-            } else if ($_POST['wcdp-amount-layout'] == '3') {
-                $product_settings[0] = 3;
-            } else {
-                $product_settings[0] = 0;
-            }
-        } else {
-            //Default style
-            $product_settings[0] = 0;
-        }
-        return $product_settings;
-    }
+		foreach ( $product_settings as $key => $value ) {
+			$product->update_meta_data( 'wcdp-settings[' . $key . ']', $value );
+		}
+		$product->save();
+	}
 
-    /**
-     * Determine predefined amounts
-     * @param $product_settings
-     * @return array
-     */
-    private function product_meta_amount_selection($product_settings, $post_id): array
-    {
-        if (isset($_POST['wcdp-settings']) && !empty($_POST['wcdp-settings']) && $product_settings[0] == 1) {
-            // Parse comma-separated string into array
-            $input_string = sanitize_text_field($_POST['wcdp-settings']);
-            $amounts_array = array_map('trim', explode(',', $input_string));
+	/**
+	 * Determine style of product
+	 *
+	 * @param $product_settings
+	 * @return array
+	 */
+	private function product_meta_style( $product_settings ): array {
+		if ( isset( $_POST['wcdp-amount-layout'] ) ) {
+			if ( $_POST['wcdp-amount-layout'] == '1' ) {
+				$product_settings[0] = 1;
+			} elseif ( $_POST['wcdp-amount-layout'] == '2' ) {
+				$product_settings[0] = 2;
+			} elseif ( $_POST['wcdp-amount-layout'] == '3' ) {
+				$product_settings[0] = 3;
+			} else {
+				$product_settings[0] = 0;
+			}
+		} else {
+			// Default style
+			$product_settings[0] = 0;
+		}
+		return $product_settings;
+	}
 
-            $prices = array();
-            foreach ($amounts_array as $value) {
-                $value = (float) $value;
-                if (WCDP_Form::check_donation_amount($value, $post_id)) {
-                    $prices[] = $value;
-                }
-            }
+	/**
+	 * Determine predefined amounts
+	 *
+	 * @param $product_settings
+	 * @return array
+	 */
+	private function product_meta_amount_selection( $product_settings, $post_id ): array {
+		if ( isset( $_POST['wcdp-settings'] ) && ! empty( $_POST['wcdp-settings'] ) && $product_settings[0] == 1 ) {
+			// Parse comma-separated string into array
+			$input_string  = sanitize_text_field( $_POST['wcdp-settings'] );
+			$amounts_array = array_map( 'trim', explode( ',', $input_string ) );
 
-            // Remove duplicates and sort
-            $prices = array_unique($prices);
-            $sort_order = apply_filters('wcdp_sort_order', 'ASC', $post_id);
-            ($sort_order === 'DESC') ? rsort($prices, SORT_NUMERIC) : sort($prices, SORT_NUMERIC);
-            $product_settings[1] = wp_json_encode($prices);
-        } else {
-            $product_settings[1] = '';
-            if ($product_settings[0] == 1) {
-                $product_settings[0] = 0;
-            }
-        }
-        return $product_settings;
-    }
+			$prices = array();
+			foreach ( $amounts_array as $value ) {
+				$value = (float) $value;
+				if ( WCDP_Form::check_donation_amount( $value, $post_id ) ) {
+					$prices[] = $value;
+				}
+			}
 
-    /**
-     * Determine style of variation attributes
-     * @param $product_settings
-     * @param $product
-     * @return array
-     */
-    private function product_meta_variation_styles($product_settings, $product): array
-    {
-        if (is_a($product, 'WC_Product_Variable')) {
-            $attributes = $product->get_variation_attributes();
-            foreach ($attributes as $attribute => $options) {
-                $attribute_name = esc_attr(sanitize_title($attribute));
-                $product_settings['wcdp-attr-' . $attribute_name] = '0';
-                if (isset($_POST['wcdp-attr-' . $attribute_name])) {
-                    if ($_POST['wcdp-attr-' . $attribute_name] == '1') {
-                        $product_settings['wcdp-attr-' . $attribute_name] = '1';
-                    } else if ($_POST['wcdp-attr-' . $attribute_name] == '2') {
-                        $product_settings['wcdp-attr-' . $attribute_name] = '2';
-                    }
-                }
-            }
-        }
-        return $product_settings;
-    }
+			// Remove duplicates and sort
+			$prices     = array_unique( $prices );
+			$sort_order = apply_filters( 'wcdp_sort_order', 'ASC', $post_id );
+			( $sort_order === 'DESC' ) ? rsort( $prices, SORT_NUMERIC ) : sort( $prices, SORT_NUMERIC );
+			$product_settings[1] = wp_json_encode( $prices );
+		} else {
+			$product_settings[1] = '';
+			if ( $product_settings[0] == 1 ) {
+				$product_settings[0] = 0;
+			}
+		}
+		return $product_settings;
+	}
 
-    /**
-     * Determine fundraising end date & goal
-     * @param $product_settings
-     * @return array
-     */
-    private function product_meta_fundraising_meta($product_settings): array
-    {
-        if (isset($_POST['wcdp_fundraising_goal']) && $_POST['wcdp_fundraising_goal'] != '') {
-            $product_settings['wcdp_fundraising_goal'] = (float) $_POST['wcdp_fundraising_goal'];
-        } else {
-            $product_settings['wcdp_fundraising_goal'] = 0;
-        }
+	/**
+	 * Determine style of variation attributes
+	 *
+	 * @param $product_settings
+	 * @param $product
+	 * @return array
+	 */
+	private function product_meta_variation_styles( $product_settings, $product ): array {
+		if ( is_a( $product, 'WC_Product_Variable' ) ) {
+			$attributes = $product->get_variation_attributes();
+			foreach ( $attributes as $attribute => $options ) {
+				$attribute_name                                     = esc_attr( sanitize_title( $attribute ) );
+				$product_settings[ 'wcdp-attr-' . $attribute_name ] = '0';
+				if ( isset( $_POST[ 'wcdp-attr-' . $attribute_name ] ) ) {
+					if ( $_POST[ 'wcdp-attr-' . $attribute_name ] == '1' ) {
+						$product_settings[ 'wcdp-attr-' . $attribute_name ] = '1';
+					} elseif ( $_POST[ 'wcdp-attr-' . $attribute_name ] == '2' ) {
+						$product_settings[ 'wcdp-attr-' . $attribute_name ] = '2';
+					}
+				}
+			}
+		}
+		return $product_settings;
+	}
 
-        if (isset($_POST['wcdp_fundraising_end_date']) && $_POST['wcdp_fundraising_end_date'] != '') {
-            $product_settings['wcdp_fundraising_end_date'] = preg_replace('/[^0-9-]/', '', $_POST['wcdp_fundraising_end_date']);
-        } else {
-            $product_settings['wcdp_fundraising_end_date'] = '';
-        }
-        return $product_settings;
-    }
+	/**
+	 * Determine fundraising end date & goal
+	 *
+	 * @param $product_settings
+	 * @return array
+	 */
+	private function product_meta_fundraising_meta( $product_settings ): array {
+		if ( isset( $_POST['wcdp_fundraising_goal'] ) && $_POST['wcdp_fundraising_goal'] != '' ) {
+			$product_settings['wcdp_fundraising_goal'] = (float) $_POST['wcdp_fundraising_goal'];
+		} else {
+			$product_settings['wcdp_fundraising_goal'] = 0;
+		}
 
-    /**
-     * Add "Donable" as a product type option
-     * Only if this option is enabled one can donate to the product
-     *
-     * @param $product_type_options
-     * @return array
-     */
-    public function wcdp_add_product_type_option($product_type_options): array
-    {
-        $product_type_options["donable"] = [
-            "id" => "_donable",
-            "wrapper_class" => "show_if_simple show_if_variable show_if_grouped",
-            "label" => __('Donation Product', 'wc-donation-platform'),
-            "description" => __('This product will only be used for donations if activated', 'wc-donation-platform'),
-            "default" => "on",
-        ];
+		if ( isset( $_POST['wcdp_fundraising_end_date'] ) && $_POST['wcdp_fundraising_end_date'] != '' ) {
+			$product_settings['wcdp_fundraising_end_date'] = preg_replace( '/[^0-9-]/', '', $_POST['wcdp_fundraising_end_date'] );
+		} else {
+			$product_settings['wcdp_fundraising_end_date'] = '';
+		}
+		return $product_settings;
+	}
 
-        return $product_type_options;
-    }
+	/**
+	 * Add "Donable" as a product type option
+	 * Only if this option is enabled one can donate to the product
+	 *
+	 * @param $product_type_options
+	 * @return array
+	 */
+	public function wcdp_add_product_type_option( $product_type_options ): array {
+		$product_type_options['donable'] = array(
+			'id'            => '_donable',
+			'wrapper_class' => 'show_if_simple show_if_variable show_if_grouped',
+			'label'         => __( 'Donation Product', 'wc-donation-platform' ),
+			'description'   => __( 'This product will only be used for donations if activated', 'wc-donation-platform' ),
+			'default'       => 'on',
+		);
 
-    /**
-     * Safe "Donable" product type option
-     *
-     * @param $post_ID
-     * @param $product
-     * @param $update
-     */
-    public function wcdp_save_post_product($post_ID, $product, $update)
-    {
-        if (!isset($_POST['_wpnonce'])) {
-            return;
-        }
-        update_post_meta(
-            $product->ID
-            ,
-            "_donable"
-            ,
-            isset($_POST["_donable"]) ? "yes" : "no"
-        );
-    }
+		return $product_type_options;
+	}
+
+	/**
+	 * Safe "Donable" product type option
+	 *
+	 * @param $post_ID
+	 * @param $product
+	 * @param $update
+	 */
+	public function wcdp_save_post_product( $post_ID, $product, $update ) {
+		if ( ! isset( $_POST['_wpnonce'] ) ) {
+			return;
+		}
+		update_post_meta(
+			$product->ID,
+			'_donable',
+			isset( $_POST['_donable'] ) ? 'yes' : 'no'
+		);
+	}
 }

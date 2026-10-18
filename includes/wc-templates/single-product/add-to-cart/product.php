@@ -14,20 +14,23 @@
  * forked from WooCommerce\Templates
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 global $product;
 
-//needed to enable support for PayPal express checkout
+// needed to enable support for PayPal express checkout
 echo '<span class="woocommerce-Price-amount wcdp_pp_amount" style="display:none !important;">1</span>';
 
-echo do_shortcode('[wcdp_progress id="' . $post->ID . '" style="2"]');
+echo do_shortcode( '[wcdp_progress id="' . $post->ID . '" style="2"]' );
 
 /**
  * Display Donation Form
  */
-echo WCDP_Form::wcdp_donation_form(array(
-    'id' => $post->ID,
-    'style' => '4',
-), 'product-page');
+echo WCDP_Form::wcdp_donation_form(
+	array(
+		'id'    => $post->ID,
+		'style' => '4',
+	),
+	'product-page'
+);

@@ -14,9 +14,9 @@
  * forked from WooCommerce\Templates
  */
 
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
 }
 
 global $product;
-echo do_shortcode('[wcdp_progress id="' . $product->get_id() . '" style="3"]');
+echo do_shortcode( '[wcdp_progress id="' . $product->get_id() . '" style="3"]' );

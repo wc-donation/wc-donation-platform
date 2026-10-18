@@ -19,11 +19,11 @@
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
+$email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 
 /**
  * Hook: woocommerce_email_header.
@@ -31,15 +31,15 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvemen
  * @hooked WC_Emails::email_header() Output the email header
  * @since 2.5.0
  */
-do_action('woocommerce_email_header', $email_heading, $email); ?>
+do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php
 echo $email_improvements_enabled ? '<div class="email-introduction">' : '';
 /* translators: %1$s: Order number */
-$text = __('We’re sorry to let you know that your donation #%1$s has been cancelled.', 'wc-donation-platform');
+$text = __( 'We’re sorry to let you know that your donation #%1$s has been cancelled.', 'wc-donation-platform' );
 
 ?>
-<p><?php printf(esc_html($text), esc_html($order->get_order_number())); ?></p>
+<p><?php printf( esc_html( $text ), esc_html( $order->get_order_number() ) ); ?></p>
 <?php echo $email_improvements_enabled ? '</div>' : ''; ?>
 
 <?php
@@ -51,7 +51,7 @@ $text = __('We’re sorry to let you know that your donation #%1$s has been canc
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action('woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook: woocommerce_email_order_meta.
@@ -59,7 +59,7 @@ do_action('woocommerce_email_order_details', $order, $sent_to_admin, $plain_text
  * @hooked WC_Emails::order_meta() Shows order meta data.
  * @since 2.5.0
  */
-do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook: woocommerce_email_customer_details.
@@ -68,14 +68,14 @@ do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $
  * @hooked WC_Emails::email_address() Shows email address
  * @since 2.5.0
  */
-do_action('woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Show user-defined additional content - this is set in each email's settings.
  */
-if ($additional_content) {
+if ( $additional_content ) {
 	echo $email_improvements_enabled ? '<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation"><tr><td class="email-additional-content">' : '';
-	echo wp_kses_post(wpautop(wptexturize($additional_content)));
+	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 	echo $email_improvements_enabled ? '</td></tr></table>' : '';
 }
 
@@ -85,4 +85,4 @@ if ($additional_content) {
  * @hooked WC_Emails::email_footer() Output the email footer
  * @since 2.5.0
  */
-do_action('woocommerce_email_footer', $email);
+do_action( 'woocommerce_email_footer', $email );

@@ -3,294 +3,300 @@
  * This class illustrates the progress of a fundraising campaign
  */
 
-if (!defined('ABSPATH'))
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use Automattic\WooCommerce\Utilities\OrderUtil;
 
-class WCDP_Progress
-{
-    /**
-     * Bootstraps the class and hooks required actions & filters.
-     */
-    public function __construct()
-    {
-        //progress shortcode
-        add_shortcode('wcdp_progress', array($this, 'wcdp_progress'));
+class WCDP_Progress {
 
-        //display order count for a product
-        add_shortcode('wcdp_order_counter', array($this, 'wcdp_order_counter'));
+	/**
+	 * Bootstraps the class and hooks required actions & filters.
+	 */
+	public function __construct() {
+		// progress shortcode
+		add_shortcode( 'wcdp_progress', array( $this, 'wcdp_progress' ) );
 
-        //update donation revenue when wc_order_product_lookup table is updated
-        add_action('woocommerce_analytics_update_product', array($this, 'reset_total_revenue'), 10, 2);
+		// display order count for a product
+		add_shortcode( 'wcdp_order_counter', array( $this, 'wcdp_order_counter' ) );
 
-        //Show a warning to admins if WooCommerce analytics is disabled
-        add_action('admin_init', [$this, 'maybe_show_analytics_warning']);
-    }
+		// update donation revenue when wc_order_product_lookup table is updated
+		add_action( 'woocommerce_analytics_update_product', array( $this, 'reset_total_revenue' ), 10, 2 );
 
-    /**
-     * Delete all cached revenue data
-     * @return void
-     */
-    public static function delete_total_revenue_meta_for_all_products()
-    {
-        $args = array(
-            'status' => 'publish',
-            'limit' => -1,
-        );
+		// Show a warning to admins if WooCommerce analytics is disabled
+		add_action( 'admin_init', array( $this, 'maybe_show_analytics_warning' ) );
+	}
 
-        $products = wc_get_products($args);
+	/**
+	 * Delete all cached revenue data
+	 *
+	 * @return void
+	 */
+	public static function delete_total_revenue_meta_for_all_products() {
+		$args = array(
+			'status' => 'publish',
+			'limit'  => -1,
+		);
 
-        foreach ($products as $product) {
-            delete_post_meta($product->get_id(), 'wcdp_total_revenue');
-            delete_transient('wcdp_order_counter_' . $product->get_id());
-        }
+		$products = wc_get_products( $args );
 
-        self::delete_source_report_cache();
-    }
+		foreach ( $products as $product ) {
+			delete_post_meta( $product->get_id(), 'wcdp_total_revenue' );
+			delete_transient( 'wcdp_order_counter_' . $product->get_id() );
+		}
 
-    /**
-     * Delete source-scoped progress and counter cache entries.
-     *
-     * @return void
-     */
-    public static function delete_source_report_cache()
-    {
-        $cache_keys = get_option('wcdp_source_report_cache_keys', array());
-        if (!is_array($cache_keys)) {
-            delete_option('wcdp_source_report_cache_keys');
-            return;
-        }
+		self::delete_source_report_cache();
+	}
 
-        foreach ($cache_keys as $cache_key => $timestamp) {
-            delete_transient($cache_key);
-        }
+	/**
+	 * Delete source-scoped progress and counter cache entries.
+	 *
+	 * @return void
+	 */
+	public static function delete_source_report_cache() {
+		$cache_keys = get_option( 'wcdp_source_report_cache_keys', array() );
+		if ( ! is_array( $cache_keys ) ) {
+			delete_option( 'wcdp_source_report_cache_keys' );
+			return;
+		}
 
-        delete_option('wcdp_source_report_cache_keys');
-    }
+		foreach ( $cache_keys as $cache_key => $timestamp ) {
+			delete_transient( $cache_key );
+		}
 
-    /**
-     * Reset product revenue when wc_order_product_lookup table is updated
-     * @param $order_item_id - the WC_Order_Item id
-     * @param $order_id - the order id
-     * @return void
-     */
-    public function reset_total_revenue($order_item_id, $order_id)
-    {
-        $order_item = WC_Order_Factory::get_order_item($order_item_id);
-        if (!$order_item || !method_exists($order_item, 'get_product_id')) {
-            return;
-        }
+		delete_option( 'wcdp_source_report_cache_keys' );
+	}
 
-        $product_id = $order_item->get_product_id();
-        if ($product_id <= 0) {
-            return;
-        }
+	/**
+	 * Reset product revenue when wc_order_product_lookup table is updated
+	 *
+	 * @param $order_item_id - the WC_Order_Item id
+	 * @param $order_id - the order id
+	 * @return void
+	 */
+	public function reset_total_revenue( $order_item_id, $order_id ) {
+		$order_item = WC_Order_Factory::get_order_item( $order_item_id );
+		if ( ! $order_item || ! method_exists( $order_item, 'get_product_id' ) ) {
+			return;
+		}
 
-        $revenue = get_post_meta($product_id, 'wcdp_total_revenue');
-        //Delete the outdated total revenue meta
-        //If the order id is smaller than 10000 it assumes that the page does not receive many donations
-        if ($revenue && ($order_id <= 10000 || time() - $revenue[0]['time'] > 30) && !apply_filters('wcdp_force_recalculate_total_revenue', false, $order_item, $revenue)) {
-            delete_post_meta($product_id, 'wcdp_total_revenue');
-        }
-        delete_transient('wcdp_order_counter_' . $product_id);
-        self::delete_source_report_cache();
-    }
+		$product_id = $order_item->get_product_id();
+		if ( $product_id <= 0 ) {
+			return;
+		}
 
-    /**
-     * Display a fundraising progress bar
-     * @param array $atts
-     * @return false|string
-     */
-    public function wcdp_progress(array $atts = array())
-    {
-        $atts = shortcode_atts(array(
-            'id' => get_the_ID(),
-            'goal' => '',
-            'style' => 1,
-            'addids' => '',
-            'cheat' => 0,
-            'percentage_decimals' => 0,
-            'source' => '',
-        ), $atts, 'wcdp_progress');
+		$revenue = get_post_meta( $product_id, 'wcdp_total_revenue' );
+		// Delete the outdated total revenue meta
+		// If the order id is smaller than 10000 it assumes that the page does not receive many donations
+		if ( $revenue && ( $order_id <= 10000 || time() - $revenue[0]['time'] > 30 ) && ! apply_filters( 'wcdp_force_recalculate_total_revenue', false, $order_item, $revenue ) ) {
+			delete_post_meta( $product_id, 'wcdp_total_revenue' );
+		}
+		delete_transient( 'wcdp_order_counter_' . $product_id );
+		self::delete_source_report_cache();
+	}
 
-        if ($atts['id'] === 'current') {
-            $atts['id'] = get_the_ID();
-        }
+	/**
+	 * Display a fundraising progress bar
+	 *
+	 * @param array $atts
+	 * @return false|string
+	 */
+	public function wcdp_progress( array $atts = array() ) {
+		$atts = shortcode_atts(
+			array(
+				'id'                  => get_the_ID(),
+				'goal'                => '',
+				'style'               => 1,
+				'addids'              => '',
+				'cheat'               => 0,
+				'percentage_decimals' => 0,
+				'source'              => '',
+			),
+			$atts,
+			'wcdp_progress'
+		);
 
-        if (!isset($atts['id']) || $atts['id'] <= 0) {
-            return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
-        }
-        if (!WCDP_Form::is_donable($atts['id'])) {
-            return esc_html__('Donations are not activated for this project.', 'wc-donation-platform');
-        }
+		if ( $atts['id'] === 'current' ) {
+			$atts['id'] = get_the_ID();
+		}
 
-        $goal_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true);
-        $end_date_db = get_post_meta($atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true);
-        if ($atts['goal'] === '') {
-            $atts['goal'] = $goal_db;
-        }
+		if ( ! isset( $atts['id'] ) || $atts['id'] <= 0 ) {
+			return esc_html__( 'Invalid shortcode attribute:', 'wc-donation-platform' ) . ' "id"';
+		}
+		if ( ! WCDP_Form::is_donable( $atts['id'] ) ) {
+			return esc_html__( 'Donations are not activated for this project.', 'wc-donation-platform' );
+		}
 
-        if (!is_numeric($atts['goal'])) {
-            $atts['goal'] = 100;
-        }
+		$goal_db     = get_post_meta( $atts['id'], 'wcdp-settings[wcdp_fundraising_goal]', true );
+		$end_date_db = get_post_meta( $atts['id'], 'wcdp-settings[wcdp_fundraising_end_date]', true );
+		if ( $atts['goal'] === '' ) {
+			$atts['goal'] = $goal_db;
+		}
 
-        $source = WCDP_Form::sanitize_source($atts['source']);
-        $revenue = (float) $this->getTotalRevenueOfProduct($atts['id'], $source);
+		if ( ! is_numeric( $atts['goal'] ) ) {
+			$atts['goal'] = 100;
+		}
 
-        do_action('wcdp_goal_product_status', $revenue, $goal_db, $atts['id']);
+		$source  = WCDP_Form::sanitize_source( $atts['source'] );
+		$revenue = (float) $this->getTotalRevenueOfProduct( $atts['id'], $source );
 
-        //Add revenue of additional Product IDs
-        $ids = explode(",", $atts['addids']);
-        foreach ($ids as $id) {
-            if (WCDP_Form::is_donable($id)) {
-                $revenue += (float) $this->getTotalRevenueOfProduct($id, $source);
-            }
-        }
+		do_action( 'wcdp_goal_product_status', $revenue, $goal_db, $atts['id'] );
 
-        //Add specified amount to revenue
-        $revenue += (float) $atts['cheat'];
-        $revenue = apply_filters('wcdp_progress_revenue', $revenue, $atts);
+		// Add revenue of additional Product IDs
+		$ids = explode( ',', $atts['addids'] );
+		foreach ( $ids as $id ) {
+			if ( WCDP_Form::is_donable( $id ) ) {
+				$revenue += (float) $this->getTotalRevenueOfProduct( $id, $source );
+			}
+		}
 
-        if ((float) $atts['goal'] != 0) {
-            $percentage = ($revenue * 100) / (float) $atts['goal'];
-        } else {
-            $percentage = 0;
-        }
+		// Add specified amount to revenue
+		$revenue += (float) $atts['cheat'];
+		$revenue  = apply_filters( 'wcdp_progress_revenue', $revenue, $atts );
 
-        $width = max(0, min(100, $percentage));
+		if ( (float) $atts['goal'] != 0 ) {
+			$percentage = ( $revenue * 100 ) / (float) $atts['goal'];
+		} else {
+			$percentage = 0;
+		}
 
-        $percentage_decimals = max((int) $atts['percentage_decimals'], 0);
-        $percentage_formatted = wc_format_decimal($percentage, $percentage_decimals) . '%';
+		$width = max( 0, min( 100, $percentage ) );
 
-        // Translators: %1$s: donation amount raised, %2$s: fundraising goal
-        $label = esc_html__('%1$s of %2$s', 'wc-donation-platform');
-        $revenue_formatted = apply_filters('wcdp_progress_revenue', wc_price($revenue, ['in_span' => false]));
-        $goal_formatted = apply_filters('wcdp_progress_goal', wc_price($atts['goal'], ['in_span' => false]));
-        $aria_label = esc_attr(wp_kses(
-            sprintf(
-                /* translators: 1: raised amount, 2: goal amount */
-                __('%1$s raised of %2$s goal', 'wc-donation-platform'),
-                $revenue_formatted,
-                $goal_formatted
-            ),
-            []
-        ));
+		$percentage_decimals  = max( (int) $atts['percentage_decimals'], 0 );
+		$percentage_formatted = wc_format_decimal( $percentage, $percentage_decimals ) . '%';
 
-        switch ($atts['style']) {
-            case 2:
-                $template = 'wcdp_progress_style_2.php';
-                break;
-            case 3:
-                $template = 'wcdp_progress_style_3.php';
-                break;
-            case 4:
-                $template = 'wcdp_progress_style_4.php';
-                break;
-            case 5:
-                $template = 'wcdp_progress_style_5.php';
-                break;
-            case 6:
-                $template = 'wcdp_progress_style_6.php';
-                break;
-            case 7:
-                $template = 'wcdp_progress_style_7.php';
-                break;
-            case 8:
-                $template = 'wcdp_progress_style_8.php';
-                break;
-            case 9:
-                $template = 'wcdp_progress_style_9.php';
-                break;
-            case 10:
-                $template = 'wcdp_progress_style_10.php';
-                break;
-            default:
-                $template = 'wcdp_progress_style_1.php';
-        }
+		// Translators: %1$s: donation amount raised, %2$s: fundraising goal
+		$label             = esc_html__( '%1$s of %2$s', 'wc-donation-platform' );
+		$revenue_formatted = apply_filters( 'wcdp_progress_revenue', wc_price( $revenue, array( 'in_span' => false ) ) );
+		$goal_formatted    = apply_filters( 'wcdp_progress_goal', wc_price( $atts['goal'], array( 'in_span' => false ) ) );
+		$aria_label        = esc_attr(
+			wp_kses(
+				sprintf(
+				/* translators: 1: raised amount, 2: goal amount */
+					__( '%1$s raised of %2$s goal', 'wc-donation-platform' ),
+					$revenue_formatted,
+					$goal_formatted
+				),
+				array()
+			)
+		);
 
-        ob_start(); ?>
-        <style>
-            <?php if (!defined('WCDP_PROGRESS_3') && !defined('WCDP_PROGRESS_2') && !defined('WCDP_PROGRESS_1')): ?>
-                :root {
-                    --wcdp-main:
-                        <?php echo sanitize_hex_color(get_option('wcdp_secondary_color', '#30bf76')); ?>
-                    ;
-                    --wcdp-main-2:
-                        <?php echo sanitize_hex_color(get_option('wcdp_main_color', '#006633')); ?>
-                    ;
-                    --wcdp-label-text-checked: white;
-                }
+		switch ( $atts['style'] ) {
+			case 2:
+				$template = 'wcdp_progress_style_2.php';
+				break;
+			case 3:
+				$template = 'wcdp_progress_style_3.php';
+				break;
+			case 4:
+				$template = 'wcdp_progress_style_4.php';
+				break;
+			case 5:
+				$template = 'wcdp_progress_style_5.php';
+				break;
+			case 6:
+				$template = 'wcdp_progress_style_6.php';
+				break;
+			case 7:
+				$template = 'wcdp_progress_style_7.php';
+				break;
+			case 8:
+				$template = 'wcdp_progress_style_8.php';
+				break;
+			case 9:
+				$template = 'wcdp_progress_style_9.php';
+				break;
+			case 10:
+				$template = 'wcdp_progress_style_10.php';
+				break;
+			default:
+				$template = 'wcdp_progress_style_1.php';
+		}
 
-                @keyframes wcdp-progress {
-                    0% {
-                        width: 0;
-                    }
-                }
+		ob_start(); ?>
+		<style>
+			<?php if ( ! defined( 'WCDP_PROGRESS_3' ) && ! defined( 'WCDP_PROGRESS_2' ) && ! defined( 'WCDP_PROGRESS_1' ) ) : ?>
+				:root {
+					--wcdp-main:
+						<?php echo sanitize_hex_color( get_option( 'wcdp_secondary_color', '#30bf76' ) ); ?>
+					;
+					--wcdp-main-2:
+						<?php echo sanitize_hex_color( get_option( 'wcdp_main_color', '#006633' ) ); ?>
+					;
+					--wcdp-label-text-checked: white;
+				}
 
-            <?php endif;
-            //Progress Bar template
-            wc_get_template(
-                $template,
-                array(
-                    'label' => $label,
-                    'revenue_formatted' => $revenue_formatted,
-                    'goal_formatted' => $goal_formatted,
-                    'end_date_db' => $end_date_db,
-                    'width' => $width,
-                    'revenue' => $revenue,
-                    'goal' => (float) $atts['goal'],
-                    'percentage_formatted' => $percentage_formatted,
-                    'aria_label' => $aria_label,
-                ),
-                '',
-                WCDP_DIR . 'includes/templates/styles/progress/'
-            );
+				@keyframes wcdp-progress {
+					0% {
+						width: 0;
+					}
+				}
 
-            $r = ob_get_contents();
-            ob_end_clean();
-            return $r;
-    }
+				<?php
+			endif;
+			// Progress Bar template
+			wc_get_template(
+				$template,
+				array(
+					'label'                => $label,
+					'revenue_formatted'    => $revenue_formatted,
+					'goal_formatted'       => $goal_formatted,
+					'end_date_db'          => $end_date_db,
+					'width'                => $width,
+					'revenue'              => $revenue,
+					'goal'                 => (float) $atts['goal'],
+					'percentage_formatted' => $percentage_formatted,
+					'aria_label'           => $aria_label,
+				),
+				'',
+				WCDP_DIR . 'includes/templates/styles/progress/'
+			);
 
-    /**
-     * Return the Revenue of a Product (sum of all completed orders)
-     * @param $product_id
-     * @return float|int
-     */
-    private function getTotalRevenueOfProduct($product_id, string $source = '')
-    {
-        // only include donable projects
-        if (!WCDP_Form::is_donable($product_id)) {
-            return 0;
-        }
+			$r = ob_get_contents();
+			ob_end_clean();
+			return $r;
+	}
 
-        $source = WCDP_Form::sanitize_source($source);
-        if ($source !== '') {
-            return $this->getTotalRevenueOfProductBySource((int) $product_id, $source);
-        }
+	/**
+	 * Return the Revenue of a Product (sum of all completed orders)
+	 *
+	 * @param $product_id
+	 * @return float|int
+	 */
+	private function getTotalRevenueOfProduct( $product_id, string $source = '' ) {
+		// only include donable projects
+		if ( ! WCDP_Form::is_donable( $product_id ) ) {
+			return 0;
+		}
 
-        $totalrevenue = get_post_meta($product_id, 'wcdp_total_revenue');
-        if ($totalrevenue === false) {
-            return 0;
-        }
-        //Calculate revenue if not set or calculated revenue older than 21600 seconds
-        if (!$totalrevenue || !isset($totalrevenue[0]) || time() - $totalrevenue[0]['time'] > 21600) {
-            return $this->updateTotalRevenueOfProduct($product_id);
-        }
+		$source = WCDP_Form::sanitize_source( $source );
+		if ( $source !== '' ) {
+			return $this->getTotalRevenueOfProductBySource( (int) $product_id, $source );
+		}
 
-        return (float) $totalrevenue[0]['revenue'];
-    }
+		$totalrevenue = get_post_meta( $product_id, 'wcdp_total_revenue' );
+		if ( $totalrevenue === false ) {
+			return 0;
+		}
+		// Calculate revenue if not set or calculated revenue older than 21600 seconds
+		if ( ! $totalrevenue || ! isset( $totalrevenue[0] ) || time() - $totalrevenue[0]['time'] > 21600 ) {
+			return $this->updateTotalRevenueOfProduct( $product_id );
+		}
 
-    /**
-     * Calculate and update the total revenue of a product
-     * @param int $product_id
-     * @return float
-     */
-    private function updateTotalRevenueOfProduct(int $product_id): float
-    {
-        global $wpdb;
-        if (OrderUtil::custom_orders_table_usage_is_enabled()) {
-            $query = "  SELECT 
+		return (float) $totalrevenue[0]['revenue'];
+	}
+
+	/**
+	 * Calculate and update the total revenue of a product
+	 *
+	 * @param int $product_id
+	 * @return float
+	 */
+	private function updateTotalRevenueOfProduct( int $product_id ): float {
+		global $wpdb;
+		if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			$query = "  SELECT 
 	                        SUM(l.product_net_revenue) as revenue
                         FROM 
                             {$wpdb->prefix}wc_orders o
@@ -299,8 +305,8 @@ class WCDP_Progress
                                 o.status = 'wc-completed'
                             AND o.type = 'shop_order'
                             AND l.product_id = %d;";
-        } else {
-            $query = "  SELECT 
+		} else {
+			$query = "  SELECT 
                             SUM(l.product_net_revenue) as revenue
                         FROM 
                             {$wpdb->prefix}posts p
@@ -309,55 +315,60 @@ class WCDP_Progress
                                 post_type = 'shop_order' 
                             AND post_status = 'wc-completed'
                             AND l.product_id = %d;";
-        }
+		}
 
-        $result = $wpdb->get_row($wpdb->prepare($query, $product_id), ARRAY_A);
+		$result = $wpdb->get_row( $wpdb->prepare( $query, $product_id ), ARRAY_A );
 
-        if (!is_null($result) && isset($result['revenue'])) {
-            $revenue = $result['revenue'];
-        } else {
-            $revenue = 0;
-        }
-        $revenue = (float) apply_filters('wcdp_update_product_revenue', $revenue, $product_id);
-        update_post_meta($product_id, 'wcdp_total_revenue', array('revenue' => $revenue, 'time' => time()));
-        return $revenue;
-    }
+		if ( ! is_null( $result ) && isset( $result['revenue'] ) ) {
+			$revenue = $result['revenue'];
+		} else {
+			$revenue = 0;
+		}
+		$revenue = (float) apply_filters( 'wcdp_update_product_revenue', $revenue, $product_id );
+		update_post_meta(
+			$product_id,
+			'wcdp_total_revenue',
+			array(
+				'revenue' => $revenue,
+				'time'    => time(),
+			)
+		);
+		return $revenue;
+	}
 
-    /**
-     * Return cached revenue for a product scoped to a source.
-     *
-     * @param int $product_id Product id.
-     * @param string $source Source key.
-     * @return float
-     */
-    private function getTotalRevenueOfProductBySource(int $product_id, string $source): float
-    {
-        $cache_key = $this->get_source_report_cache_key('progress', $product_id, $source);
-        $cached = get_transient($cache_key);
-        if ($cached !== false) {
-            return (float) $cached;
-        }
+	/**
+	 * Return cached revenue for a product scoped to a source.
+	 *
+	 * @param int    $product_id Product id.
+	 * @param string $source Source key.
+	 * @return float
+	 */
+	private function getTotalRevenueOfProductBySource( int $product_id, string $source ): float {
+		$cache_key = $this->get_source_report_cache_key( 'progress', $product_id, $source );
+		$cached    = get_transient( $cache_key );
+		if ( $cached !== false ) {
+			return (float) $cached;
+		}
 
-        $revenue = $this->queryTotalRevenueOfProductBySource($product_id, $source);
-        set_transient($cache_key, $revenue, apply_filters('wcdp_cache_expiration', 6 * HOUR_IN_SECONDS));
-        $this->track_source_report_cache_key($cache_key);
+		$revenue = $this->queryTotalRevenueOfProductBySource( $product_id, $source );
+		set_transient( $cache_key, $revenue, apply_filters( 'wcdp_cache_expiration', 6 * HOUR_IN_SECONDS ) );
+		$this->track_source_report_cache_key( $cache_key );
 
-        return $revenue;
-    }
+		return $revenue;
+	}
 
-    /**
-     * Query revenue for a product scoped to a source.
-     *
-     * @param int $product_id Product id.
-     * @param string $source Source key.
-     * @return float
-     */
-    private function queryTotalRevenueOfProductBySource(int $product_id, string $source): float
-    {
-        global $wpdb;
+	/**
+	 * Query revenue for a product scoped to a source.
+	 *
+	 * @param int    $product_id Product id.
+	 * @param string $source Source key.
+	 * @return float
+	 */
+	private function queryTotalRevenueOfProductBySource( int $product_id, string $source ): float {
+		global $wpdb;
 
-        if (OrderUtil::custom_orders_table_usage_is_enabled()) {
-            $query = "  SELECT
+		if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			$query = "  SELECT
                             SUM(l.product_net_revenue) as revenue
                         FROM
                             {$wpdb->prefix}wc_orders o
@@ -369,8 +380,8 @@ class WCDP_Progress
                             AND l.product_id = %d
                             AND sim.meta_key = '_wcdp_source'
                             AND sim.meta_value = %s;";
-        } else {
-            $query = "  SELECT
+		} else {
+			$query = "  SELECT
                             SUM(l.product_net_revenue) as revenue
                         FROM
                             {$wpdb->prefix}posts p
@@ -382,90 +393,88 @@ class WCDP_Progress
                             AND l.product_id = %d
                             AND sim.meta_key = '_wcdp_source'
                             AND sim.meta_value = %s;";
-        }
+		}
 
-        $result = $wpdb->get_row($wpdb->prepare($query, $product_id, $source), ARRAY_A);
+		$result = $wpdb->get_row( $wpdb->prepare( $query, $product_id, $source ), ARRAY_A );
 
-        if (!is_null($result) && isset($result['revenue'])) {
-            return (float) apply_filters('wcdp_update_product_revenue', (float) $result['revenue'], $product_id, $source);
-        }
+		if ( ! is_null( $result ) && isset( $result['revenue'] ) ) {
+			return (float) apply_filters( 'wcdp_update_product_revenue', (float) $result['revenue'], $product_id, $source );
+		}
 
-        return 0.0;
-    }
+		return 0.0;
+	}
 
-    /**
-     * Build a transient key for source-scoped reports.
-     *
-     * @param string $type Report type.
-     * @param int $product_id Product id.
-     * @param string $source Source key.
-     * @return string
-     */
-    private function get_source_report_cache_key(string $type, int $product_id, string $source): string
-    {
-        return 'wcdp_' . sanitize_key($type) . '_src_' . md5($product_id . '|' . $source);
-    }
+	/**
+	 * Build a transient key for source-scoped reports.
+	 *
+	 * @param string $type Report type.
+	 * @param int    $product_id Product id.
+	 * @param string $source Source key.
+	 * @return string
+	 */
+	private function get_source_report_cache_key( string $type, int $product_id, string $source ): string {
+		return 'wcdp_' . sanitize_key( $type ) . '_src_' . md5( $product_id . '|' . $source );
+	}
 
-    /**
-     * Track source report cache keys so they can be cleared globally.
-     *
-     * @param string $cache_key Cache key.
-     * @return void
-     */
-    private function track_source_report_cache_key(string $cache_key)
-    {
-        $cache_keys = get_option('wcdp_source_report_cache_keys', array());
-        if (!is_array($cache_keys)) {
-            $cache_keys = array();
-        }
+	/**
+	 * Track source report cache keys so they can be cleared globally.
+	 *
+	 * @param string $cache_key Cache key.
+	 * @return void
+	 */
+	private function track_source_report_cache_key( string $cache_key ) {
+		$cache_keys = get_option( 'wcdp_source_report_cache_keys', array() );
+		if ( ! is_array( $cache_keys ) ) {
+			$cache_keys = array();
+		}
 
-        $cache_keys[$cache_key] = time();
-        update_option('wcdp_source_report_cache_keys', $cache_keys);
-    }
+		$cache_keys[ $cache_key ] = time();
+		update_option( 'wcdp_source_report_cache_keys', $cache_keys );
+	}
 
-    /**
-     * Format timestamp as timediff string
-     * @param $timestamp
-     * @return string
-     */
-    public static function get_human_time_diff($timestamp): string
-    {
-        $time_diff = strtotime($timestamp) - strtotime('now');
+	/**
+	 * Format timestamp as timediff string
+	 *
+	 * @param $timestamp
+	 * @return string
+	 */
+	public static function get_human_time_diff( $timestamp ): string {
+		$time_diff = strtotime( $timestamp ) - strtotime( 'now' );
 
-        $human_diff = '<span class="wcdp-emphasized">' . human_time_diff(strtotime($timestamp)) . '</span>';
-        if ($time_diff > 0) {
-            // translators: placeholder is human time diff (e.g. "3 weeks")
-            $date_to_display = sprintf(esc_html__('%s to go', 'wc-donation-platform'), $human_diff);
-        } else {
-            // translators: placeholder is human time diff (e.g. "3 weeks")
-            $date_to_display = sprintf(esc_html__('ended %s ago', 'wc-donation-platform'), $human_diff);
-        }
+		$human_diff = '<span class="wcdp-emphasized">' . human_time_diff( strtotime( $timestamp ) ) . '</span>';
+		if ( $time_diff > 0 ) {
+			// translators: placeholder is human time diff (e.g. "3 weeks")
+			$date_to_display = sprintf( esc_html__( '%s to go', 'wc-donation-platform' ), $human_diff );
+		} else {
+			// translators: placeholder is human time diff (e.g. "3 weeks")
+			$date_to_display = sprintf( esc_html__( 'ended %s ago', 'wc-donation-platform' ), $human_diff );
+		}
 
-        return $date_to_display;
-    }
+		return $date_to_display;
+	}
 
-    /**
-     * Query the number of completed orders with a specific product
-     * @param int $product_id
-     * @return string|null
-     * @since v1.3.2
-     */
-    private function query_order_count_product(int $product_id, string $source = ''): int
-    {
-        global $wpdb;
-        $source = WCDP_Form::sanitize_source($source);
-        $source_join = '';
-        $source_where = '';
-        $prepare_values = array($product_id);
+	/**
+	 * Query the number of completed orders with a specific product
+	 *
+	 * @param int $product_id
+	 * @return string|null
+	 * @since v1.3.2
+	 */
+	private function query_order_count_product( int $product_id, string $source = '' ): int {
+		global $wpdb;
+		$source         = WCDP_Form::sanitize_source( $source );
+		$source_join    = '';
+		$source_where   = '';
+		$prepare_values = array( $product_id );
 
-        if ($source !== '') {
-            $source_join = " INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta sim ON l.order_item_id = sim.order_item_id";
-            $source_where = " AND sim.meta_key = '_wcdp_source' AND sim.meta_value = %s";
-            $prepare_values[] = $source;
-        }
+		if ( $source !== '' ) {
+			$source_join      = " INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta sim ON l.order_item_id = sim.order_item_id";
+			$source_where     = " AND sim.meta_key = '_wcdp_source' AND sim.meta_value = %s";
+			$prepare_values[] = $source;
+		}
 
-        if (class_exists('Automattic\WooCommerce\Utilities\OrderUtil') && Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
-            $query = "
+		if ( class_exists( 'Automattic\WooCommerce\Utilities\OrderUtil' ) && Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			$query = "
             SELECT 
                 COUNT(*) 
             FROM 
@@ -478,8 +487,8 @@ class WCDP_Progress
                 AND l.product_id = %d
                 {$source_where}
         ";
-        } else {
-            $query = "
+		} else {
+			$query = "
             SELECT 
                 COUNT(*) 
             FROM 
@@ -492,98 +501,100 @@ class WCDP_Progress
                 AND l.product_id = %d
                 {$source_where}
         ";
-        }
+		}
 
-        return intval($wpdb->get_var($wpdb->prepare($query, ...$prepare_values)));
-    }
+		return intval( $wpdb->get_var( $wpdb->prepare( $query, ...$prepare_values ) ) );
+	}
 
-    /**
-     * Get the number of completed orders with a specific product
-     *
-     * @param int $product_id
-     * @return void
-     * @since v1.3.2
-     */
-    function get_order_count_product(int $product_id, string $source = ''): int
-    {
-        $source = WCDP_Form::sanitize_source($source);
-        $cache_key = $source === '' ? 'wcdp_order_counter_' . $product_id : $this->get_source_report_cache_key('counter', $product_id, $source);
-        $count = get_transient($cache_key);
+	/**
+	 * Get the number of completed orders with a specific product
+	 *
+	 * @param int $product_id
+	 * @return void
+	 * @since v1.3.2
+	 */
+	function get_order_count_product( int $product_id, string $source = '' ): int {
+		$source    = WCDP_Form::sanitize_source( $source );
+		$cache_key = $source === '' ? 'wcdp_order_counter_' . $product_id : $this->get_source_report_cache_key( 'counter', $product_id, $source );
+		$count     = get_transient( $cache_key );
 
-        if ($count === false) {
-            $count = $this->query_order_count_product($product_id, $source);
-            set_transient($cache_key, $count, apply_filters("wcdp_cache_expiration", 6 * HOUR_IN_SECONDS));
-            if ($source !== '') {
-                $this->track_source_report_cache_key($cache_key);
-            }
-        }
-        return intval($count);
-    }
+		if ( $count === false ) {
+			$count = $this->query_order_count_product( $product_id, $source );
+			set_transient( $cache_key, $count, apply_filters( 'wcdp_cache_expiration', 6 * HOUR_IN_SECONDS ) );
+			if ( $source !== '' ) {
+				$this->track_source_report_cache_key( $cache_key );
+			}
+		}
+		return intval( $count );
+	}
 
-    /**
-     * Shortcode to display the number of completed orders for a product
-     *
-     * @param array $atts
-     * @return string
-     * @since v1.3.2
-     */
-    function wcdp_order_counter(array $atts = array()): string
-    {
-        global $post;
-        $atts = shortcode_atts(array(
-            'id' => $post->ID,
-            // Translators: {ORDER_COUNT} will be replaced with the number of orders
-            'label' => __('{ORDER_COUNT} people have already contributed to this project.', 'wc-donation-platform'),
-            'fallback' => '',
-            'cheat' => 0,
-            'source' => '',
-        ), $atts, 'wcdp_order_counter');
+	/**
+	 * Shortcode to display the number of completed orders for a product
+	 *
+	 * @param array $atts
+	 * @return string
+	 * @since v1.3.2
+	 */
+	function wcdp_order_counter( array $atts = array() ): string {
+		global $post;
+		$atts = shortcode_atts(
+			array(
+				'id'       => $post->ID,
+				// Translators: {ORDER_COUNT} will be replaced with the number of orders
+				'label'    => __( '{ORDER_COUNT} people have already contributed to this project.', 'wc-donation-platform' ),
+				'fallback' => '',
+				'cheat'    => 0,
+				'source'   => '',
+			),
+			$atts,
+			'wcdp_order_counter'
+		);
 
-        $product_id = intval($atts['id']);
-        if ($product_id <= 0) {
-            return esc_html__('Invalid shortcode attribute:', 'wc-donation-platform') . ' "id"';
-        }
-        if (!WCDP_Form::is_donable($product_id)) {
-            return esc_html__('Donations are not activated for this project.', 'wc-donation-platform');
-        }
+		$product_id = intval( $atts['id'] );
+		if ( $product_id <= 0 ) {
+			return esc_html__( 'Invalid shortcode attribute:', 'wc-donation-platform' ) . ' "id"';
+		}
+		if ( ! WCDP_Form::is_donable( $product_id ) ) {
+			return esc_html__( 'Donations are not activated for this project.', 'wc-donation-platform' );
+		}
 
-        $label = $atts['label'];
+		$label = $atts['label'];
 
-        if (strpos($label, '{ORDER_COUNT}') === false) {
-            $label .= ' {ORDER_COUNT}';
-        }
+		if ( strpos( $label, '{ORDER_COUNT}' ) === false ) {
+			$label .= ' {ORDER_COUNT}';
+		}
 
-        $count = $this->get_order_count_product($product_id, WCDP_Form::sanitize_source($atts['source'])) + intval($atts['cheat']);
-        if ($count === 0 && $atts['fallback'] !== '') {
-            $label = $atts['fallback'];
-        }
-        $label = str_replace('{ORDER_COUNT}', '<span class="wcdp_order_count">' . intval($count) . '</span>', sanitize_text_field($label));
-        return apply_filters('wcdp_order_counter', '<span class="wcdp_order_counter_label">' . $label . '</span>', $atts);
-    }
+		$count = $this->get_order_count_product( $product_id, WCDP_Form::sanitize_source( $atts['source'] ) ) + intval( $atts['cheat'] );
+		if ( $count === 0 && $atts['fallback'] !== '' ) {
+			$label = $atts['fallback'];
+		}
+		$label = str_replace( '{ORDER_COUNT}', '<span class="wcdp_order_count">' . intval( $count ) . '</span>', sanitize_text_field( $label ) );
+		return apply_filters( 'wcdp_order_counter', '<span class="wcdp_order_counter_label">' . $label . '</span>', $atts );
+	}
 
-    /**
-     * Show a warning to admins if WooCommerce analytics is disabled
-     * @return void
-     */
-    public function maybe_show_analytics_warning()
-    {
-        if (!is_admin() || !current_user_can('manage_woocommerce') || !class_exists('WC_Admin_Notices')) {
-            return;
-        }
+	/**
+	 * Show a warning to admins if WooCommerce analytics is disabled
+	 *
+	 * @return void
+	 */
+	public function maybe_show_analytics_warning() {
+		if ( ! is_admin() || ! current_user_can( 'manage_woocommerce' ) || ! class_exists( 'WC_Admin_Notices' ) ) {
+			return;
+		}
 
-        if (!isset($_GET['page']) || strpos('wc-', $_GET['page']) !== 0) {
-            return;
-        }
+		if ( ! isset( $_GET['page'] ) || strpos( 'wc-', $_GET['page'] ) !== 0 ) {
+			return;
+		}
 
-        // Check if WooCommerce Analytics is disabled
-        $analytics_enabled = get_option('woocommerce_analytics_enabled', 'yes');
-        if ($analytics_enabled === 'no') {
-            $html = '<strong>'
-                . esc_html__('WooCommerce Analytics is disabled. The donation progress bar & Leaderboard will not function correctly. Please enable it in WooCommerce settings.', 'wc-donation-platform')
-                . '</strong> <a href="https://www.wc-donation.com/documentation/troubleshooting/how-to-enable-woocommerce-analytics/" target="_blank">'
-                . esc_html__('Documentation', 'wc-donation-platform')
-                . '</a>';
-            WC_Admin_Notices::add_custom_notice('wcdp_analytics_notice', $html);
-        }
-    }
+		// Check if WooCommerce Analytics is disabled
+		$analytics_enabled = get_option( 'woocommerce_analytics_enabled', 'yes' );
+		if ( $analytics_enabled === 'no' ) {
+			$html = '<strong>'
+				. esc_html__( 'WooCommerce Analytics is disabled. The donation progress bar & Leaderboard will not function correctly. Please enable it in WooCommerce settings.', 'wc-donation-platform' )
+				. '</strong> <a href="https://www.wc-donation.com/documentation/troubleshooting/how-to-enable-woocommerce-analytics/" target="_blank">'
+				. esc_html__( 'Documentation', 'wc-donation-platform' )
+				. '</a>';
+			WC_Admin_Notices::add_custom_notice( 'wcdp_analytics_notice', $html );
+		}
+	}
 }

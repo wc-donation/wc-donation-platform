@@ -19,11 +19,11 @@
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 $text_align = is_rtl() ? 'right' : 'left';
 
-$email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
+$email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 
 /**
  * Filter whether to display the section divider in the email body.
@@ -31,14 +31,14 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvemen
  * @since 10.6.0
  * @param bool $display_section_divider Whether to display the section divider. Default true.
  */
-$display_section_divider = (bool) apply_filters('woocommerce_email_body_display_section_divider', true);
-$heading_class = $email_improvements_enabled ? 'email-order-detail-heading' : '';
-$order_table_class = $email_improvements_enabled ? 'email-order-details' : '';
-$order_total_text_align = $email_improvements_enabled ? 'right' : 'left';
+$display_section_divider   = (bool) apply_filters( 'woocommerce_email_body_display_section_divider', true );
+$heading_class             = $email_improvements_enabled ? 'email-order-detail-heading' : '';
+$order_table_class         = $email_improvements_enabled ? 'email-order-details' : '';
+$order_total_text_align    = $email_improvements_enabled ? 'right' : 'left';
 $order_quantity_text_align = $email_improvements_enabled ? 'right' : 'left';
 
-if ($email_improvements_enabled) {
-	add_filter('woocommerce_order_shipping_to_display_shipped_via', '__return_false');
+if ( $email_improvements_enabled ) {
+	add_filter( 'woocommerce_order_shipping_to_display_shipped_via', '__return_false' );
 }
 
 /**
@@ -50,46 +50,46 @@ if ($email_improvements_enabled) {
  * @param WC_Email $email Email object.
  * @since 2.5.0
  */
-do_action('woocommerce_email_before_order_table', $order, $sent_to_admin, $plain_text, $email); ?>
+do_action( 'woocommerce_email_before_order_table', $order, $sent_to_admin, $plain_text, $email ); ?>
 
-<h2 class="<?php echo esc_attr($heading_class); ?>">
+<h2 class="<?php echo esc_attr( $heading_class ); ?>">
 	<?php
-	if ($email_improvements_enabled) {
-		echo wp_kses_post(__('Donation summary', 'wc-donation-platform'));
+	if ( $email_improvements_enabled ) {
+		echo wp_kses_post( __( 'Donation summary', 'wc-donation-platform' ) );
 	}
-	if ($sent_to_admin) {
-		$before = '<a class="link" href="' . esc_url($order->get_edit_order_url()) . '">';
-		$after = '</a>';
+	if ( $sent_to_admin ) {
+		$before = '<a class="link" href="' . esc_url( $order->get_edit_order_url() ) . '">';
+		$after  = '</a>';
 	} else {
 		$before = '';
-		$after = '';
+		$after  = '';
 	}
-	if ($email_improvements_enabled) {
+	if ( $email_improvements_enabled ) {
 		echo '<br><span>';
 	}
 	/* translators: %s: Donation ID. */
-	$order_number_string = __('[Donation #%s]', 'wc-donation-platform');
-	if ($email_improvements_enabled) {
+	$order_number_string = __( '[Donation #%s]', 'wc-donation-platform' );
+	if ( $email_improvements_enabled ) {
 		/* translators: %s: Donation ID. */
-		$order_number_string = __('Donation #%s', 'wc-donation-platform');
+		$order_number_string = __( 'Donation #%s', 'wc-donation-platform' );
 	}
-	echo wp_kses_post($before . sprintf($order_number_string . $after . ' (<time datetime="%s">%s</time>)', $order->get_order_number(), $order->get_date_created()->format('c'), wc_format_datetime($order->get_date_created())));
-	if ($email_improvements_enabled) {
+	echo wp_kses_post( $before . sprintf( $order_number_string . $after . ' (<time datetime="%s">%s</time>)', $order->get_order_number(), $order->get_date_created()->format( 'c' ), wc_format_datetime( $order->get_date_created() ) ) );
+	if ( $email_improvements_enabled ) {
 		echo '</span>';
 	}
 	?>
 </h2>
 
 <div style="margin-bottom: <?php echo $email_improvements_enabled ? '24px' : '40px'; ?>;">
-	<table class="td font-family <?php echo esc_attr($order_table_class); ?>" cellspacing="0" cellpadding="6"
+	<table class="td font-family <?php echo esc_attr( $order_table_class ); ?>" cellspacing="0" cellpadding="6"
 		style="width: 100%;" border="1">
 		<thead>
 			<tr>
-				<th class="td" scope="col" style="text-align:<?php echo esc_attr($text_align); ?>;">
-					<?php esc_html_e('Donation', 'wc-donation-platform'); ?>
+				<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;">
+					<?php esc_html_e( 'Donation', 'wc-donation-platform' ); ?>
 				</th>
-				<th class="td" scope="col" style="text-align:<?php echo esc_attr($order_total_text_align); ?>;">
-					<?php esc_html_e('Amount', 'woocommerce'); ?>
+				<th class="td" scope="col" style="text-align:<?php echo esc_attr( $order_total_text_align ); ?>;">
+					<?php esc_html_e( 'Amount', 'woocommerce' ); ?>
 				</th>
 			</tr>
 		</thead>
@@ -99,72 +99,72 @@ do_action('woocommerce_email_before_order_table', $order, $sent_to_admin, $plain
 			echo wc_get_email_order_items( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$order,
 				array(
-					'show_sku' => $sent_to_admin,
-					'show_image' => $email_improvements_enabled,
-					'image_size' => array($image_size, $image_size),
-					'plain_text' => $plain_text,
+					'show_sku'      => $sent_to_admin,
+					'show_image'    => $email_improvements_enabled,
+					'image_size'    => array( $image_size, $image_size ),
+					'plain_text'    => $plain_text,
 					'sent_to_admin' => $sent_to_admin,
 				)
 			);
 			?>
 		</tbody>
 	</table>
-	<?php if ($display_section_divider): ?>
+	<?php if ( $display_section_divider ) : ?>
 		<hr style="border: 0; border-top: 1px solid #1E1E1E; border-top-color: rgba(30, 30, 30, 0.2); margin: 20px 0;">
 	<?php endif; ?>
-	<table class="td font-family <?php echo esc_attr($order_table_class); ?>" cellspacing="0" cellpadding="6"
+	<table class="td font-family <?php echo esc_attr( $order_table_class ); ?>" cellspacing="0" cellpadding="6"
 		style="width: 100%;" border="1">
 		<?php
-		$item_totals = $order->get_order_item_totals();
-		$item_totals_count = count($item_totals);
+		$item_totals       = $order->get_order_item_totals();
+		$item_totals_count = count( $item_totals );
 
-		if ($item_totals) {
+		if ( $item_totals ) {
 			$i = 0;
-			foreach ($item_totals as $total) {
+			foreach ( $item_totals as $total ) {
 				++$i;
-				$last_class = ($i === $item_totals_count) ? ' order-totals-last' : '';
+				$last_class = ( $i === $item_totals_count ) ? ' order-totals-last' : '';
 				?>
 				<tr
-					class="order-totals order-totals-<?php echo esc_attr($total['type'] ?? 'unknown'); ?><?php echo esc_attr($last_class); ?>">
+					class="order-totals order-totals-<?php echo esc_attr( $total['type'] ?? 'unknown' ); ?><?php echo esc_attr( $last_class ); ?>">
 					<th class="td text-align-left" scope="row" colspan="2"
-						style="<?php echo (1 === $i) ? 'border-top-width: 4px;' : ''; ?>">
+						style="<?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>">
 						<?php
-						echo wp_kses_post($total['label']) . ' ';
-						if ($email_improvements_enabled) {
-							echo isset($total['meta']) ? wp_kses_post($total['meta']) : '';
+						echo wp_kses_post( $total['label'] ) . ' ';
+						if ( $email_improvements_enabled ) {
+							echo isset( $total['meta'] ) ? wp_kses_post( $total['meta'] ) : '';
 						}
 						?>
 					</th>
-					<td class="td text-align-<?php echo esc_attr($order_total_text_align); ?>"
-						style="<?php echo (1 === $i) ? 'border-top-width: 4px;' : ''; ?>">
-						<?php echo wp_kses_post($total['value']); ?>
+					<td class="td text-align-<?php echo esc_attr( $order_total_text_align ); ?>"
+						style="<?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>">
+						<?php echo wp_kses_post( $total['value'] ); ?>
 					</td>
 				</tr>
 				<?php
 			}
 		}
-		if ($order->get_customer_note() && !$email_improvements_enabled) {
+		if ( $order->get_customer_note() && ! $email_improvements_enabled ) {
 			?>
 			<tr>
-				<th class="td text-align-left" scope="row" colspan="2"><?php esc_html_e('Note:', 'woocommerce'); ?></th>
+				<th class="td text-align-left" scope="row" colspan="2"><?php esc_html_e( 'Note:', 'woocommerce' ); ?></th>
 				<td class="td text-align-left">
-					<?php echo wp_kses(nl2br(wc_wptexturize_order_note($order->get_customer_note())), array()); ?>
+					<?php echo wp_kses( nl2br( wc_wptexturize_order_note( $order->get_customer_note() ) ), array() ); ?>
 				</td>
 			</tr>
 			<?php
 		}
 		?>
 	</table>
-	<?php if ($order->get_customer_note() && $email_improvements_enabled) { ?>
-		<?php if ($display_section_divider): ?>
+	<?php if ( $order->get_customer_note() && $email_improvements_enabled ) { ?>
+		<?php if ( $display_section_divider ) : ?>
 			<hr style="border: 0; border-top: 1px solid #1E1E1E; border-top-color: rgba(30, 30, 30, 0.2); margin: 20px 0;">
 		<?php endif; ?>
-		<table class="td font-family <?php echo esc_attr($order_table_class); ?>" cellspacing="0" cellpadding="6"
+		<table class="td font-family <?php echo esc_attr( $order_table_class ); ?>" cellspacing="0" cellpadding="6"
 			style="width: 100%;" border="1" role="presentation">
 			<tr class="order-customer-note">
 				<td class="td text-align-left">
-					<b><?php esc_html_e('Donor note', 'wc-donation-platform'); ?></b><br>
-					<?php echo wp_kses(nl2br(wc_wptexturize_order_note($order->get_customer_note())), array('br' => array())); ?>
+					<b><?php esc_html_e( 'Donor note', 'wc-donation-platform' ); ?></b><br>
+					<?php echo wp_kses( nl2br( wc_wptexturize_order_note( $order->get_customer_note() ) ), array( 'br' => array() ) ); ?>
 				</td>
 			</tr>
 		</table>
@@ -172,8 +172,8 @@ do_action('woocommerce_email_before_order_table', $order, $sent_to_admin, $plain
 </div>
 
 <?php
-if ($email_improvements_enabled) {
-	remove_filter('woocommerce_order_shipping_to_display_shipped_via', '__return_false');
+if ( $email_improvements_enabled ) {
+	remove_filter( 'woocommerce_order_shipping_to_display_shipped_via', '__return_false' );
 }
 
 /**
@@ -185,5 +185,5 @@ if ($email_improvements_enabled) {
  * @param WC_Email $email Email object.
  * @since 2.5.0
  */
-do_action('woocommerce_email_after_order_table', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_after_order_table', $order, $sent_to_admin, $plain_text, $email );
 ?>

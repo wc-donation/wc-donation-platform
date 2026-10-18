@@ -20,60 +20,60 @@
 use Automattic\WooCommerce\Enums\OrderStatus;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
+$email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 
 /**
  * Executes the e-mail header.
  *
  * @hooked WC_Emails::email_header() Output the email header
  */
-do_action('woocommerce_email_header', $email_heading, $email); ?>
+do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php echo $email_improvements_enabled ? '<div class="email-introduction">' : ''; ?>
 <p>
 	<?php
-	if (!empty($order->get_billing_first_name())) {
+	if ( ! empty( $order->get_billing_first_name() ) ) {
 		/* translators: %s: Customer first name */
-		printf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name()));
+		printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) );
 	} else {
-		printf(esc_html__('Hi,', 'woocommerce'));
+		printf( esc_html__( 'Hi,', 'woocommerce' ) );
 	}
 	?>
 </p>
-<?php if ($order->needs_payment()) { ?>
+<?php if ( $order->needs_payment() ) { ?>
 	<p>
 		<?php
-		if ($order->has_status(OrderStatus::FAILED)) {
+		if ( $order->has_status( OrderStatus::FAILED ) ) {
 			printf(
 				wp_kses(
 					/* translators: %1$s Site title, %2$s donation pay link */
-					__('Sorry, your donation on %1$s was unsuccessful. Your donation details are below, with a link to try your payment again: %2$s', 'wc-donation-platform'),
+					__( 'Sorry, your donation on %1$s was unsuccessful. Your donation details are below, with a link to try your payment again: %2$s', 'wc-donation-platform' ),
 					array(
 						'a' => array(
 							'href' => array(),
 						),
 					)
 				),
-				esc_html(get_bloginfo('name', 'display')),
-				'<a href="' . esc_url($order->get_checkout_payment_url()) . '">' . esc_html__('Pay for this donation', 'wc-donation-platform') . '</a>'
+				esc_html( get_bloginfo( 'name', 'display' ) ),
+				'<a href="' . esc_url( $order->get_checkout_payment_url() ) . '">' . esc_html__( 'Pay for this donation', 'wc-donation-platform' ) . '</a>'
 			);
 		} else {
 			printf(
 				wp_kses(
 					/* translators: %1$s Site title, %2$s donation pay link */
-					__('A donation has been created for you on %1$s. Your donation details are below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform'),
+					__( 'A donation has been created for you on %1$s. Your donation details are below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform' ),
 					array(
 						'a' => array(
 							'href' => array(),
 						),
 					)
 				),
-				esc_html(get_bloginfo('name', 'display')),
-				'<a href="' . esc_url($order->get_checkout_payment_url()) . '">' . esc_html__('Pay for this donation', 'wc-donation-platform') . '</a>'
+				esc_html( get_bloginfo( 'name', 'display' ) ),
+				'<a href="' . esc_url( $order->get_checkout_payment_url() ) . '">' . esc_html__( 'Pay for this donation', 'wc-donation-platform' ) . '</a>'
 			);
 		}
 		?>
@@ -83,7 +83,7 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
 	<p>
 		<?php
 		/* translators: %s: Donation date */
-		printf(esc_html__('Here are the details of your donation placed on %s:', 'wc-donation-platform'), esc_html(wc_format_datetime($order->get_date_created())));
+		printf( esc_html__( 'Here are the details of your donation placed on %s:', 'wc-donation-platform' ), esc_html( wc_format_datetime( $order->get_date_created() ) ) );
 		?>
 	</p>
 	<?php
@@ -101,14 +101,14 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action('woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook for the woocommerce_email_order_meta.
  *
  * @hooked WC_Emails::order_meta() Shows order meta data.
  */
-do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook for woocommerce_email_customer_details.
@@ -116,14 +116,14 @@ do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $
  * @hooked WC_Emails::customer_details() Shows customer details
  * @hooked WC_Emails::email_address() Shows email address
  */
-do_action('woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Show user-defined additional content - this is set in each email's settings.
  */
-if ($additional_content) {
+if ( $additional_content ) {
 	echo $email_improvements_enabled ? '<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation"><tr><td class="email-additional-content">' : '';
-	echo wp_kses_post(wpautop(wptexturize($additional_content)));
+	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 	echo $email_improvements_enabled ? '</td></tr></table>' : '';
 }
 
@@ -132,4 +132,4 @@ if ($additional_content) {
  *
  * @hooked WC_Emails::email_footer() Output the email footer
  */
-do_action('woocommerce_email_footer', $email);
+do_action( 'woocommerce_email_footer', $email );

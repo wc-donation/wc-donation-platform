@@ -19,14 +19,14 @@
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$address = $order->get_formatted_billing_address();
+$address  = $order->get_formatted_billing_address();
 $shipping = $order->get_formatted_shipping_address();
 
-$email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
+$email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
 
 /**
  * Filter whether to display the section divider in the email body.
@@ -34,10 +34,10 @@ $email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvemen
  * @since 10.6.0
  * @param bool $display_section_divider Whether to display the section divider. Default true.
  */
-$display_section_divider = (bool) apply_filters('woocommerce_email_body_display_section_divider', true);
+$display_section_divider = (bool) apply_filters( 'woocommerce_email_body_display_section_divider', true );
 
 ?>
-<?php if ($display_section_divider): ?>
+<?php if ( $display_section_divider ) : ?>
 	<hr style="border: 0; border-top: 1px solid #1E1E1E; border-top-color: rgba(30, 30, 30, 0.2); margin: 20px 0;">
 <?php endif; ?>
 <table id="addresses" cellspacing="0" cellpadding="0"
@@ -45,19 +45,19 @@ $display_section_divider = (bool) apply_filters('woocommerce_email_body_display_
 	border="0" role="presentation">
 	<tr>
 		<td class="font-family text-align-left" style="border:0; padding:0;" valign="top" width="50%">
-			<?php if ($email_improvements_enabled) { ?>
-				<b class="address-title"><?php esc_html_e('Billing address', 'woocommerce'); ?></b>
+			<?php if ( $email_improvements_enabled ) { ?>
+				<b class="address-title"><?php esc_html_e( 'Billing address', 'woocommerce' ); ?></b>
 			<?php } else { ?>
-				<h2><?php esc_html_e('Billing address', 'woocommerce'); ?></h2>
+				<h2><?php esc_html_e( 'Billing address', 'woocommerce' ); ?></h2>
 			<?php } ?>
 
 			<address class="address">
-				<?php echo wp_kses_post($address ? $address : esc_html__('N/A', 'woocommerce')); ?>
-				<?php if ($order->get_billing_phone()): ?>
-					<br /><?php echo wc_make_phone_clickable($order->get_billing_phone()); ?>
+				<?php echo wp_kses_post( $address ? $address : esc_html__( 'N/A', 'woocommerce' ) ); ?>
+				<?php if ( $order->get_billing_phone() ) : ?>
+					<br /><?php echo wc_make_phone_clickable( $order->get_billing_phone() ); ?>
 				<?php endif; ?>
-				<?php if ($order->get_billing_email()): ?>
-					<br /><?php echo esc_html($order->get_billing_email()); ?>
+				<?php if ( $order->get_billing_email() ) : ?>
+					<br /><?php echo esc_html( $order->get_billing_email() ); ?>
 				<?php endif; ?>
 				<?php
 				/**
@@ -70,22 +70,22 @@ $display_section_divider = (bool) apply_filters('woocommerce_email_body_display_
 				 * @param bool $sent_to_admin If this email is being sent to the admin or not.
 				 * @param bool $plain_text If this email is plain text or not.
 				 */
-				do_action('woocommerce_email_customer_address_section', 'billing', $order, $sent_to_admin, false);
+				do_action( 'woocommerce_email_customer_address_section', 'billing', $order, $sent_to_admin, false );
 				?>
 			</address>
 		</td>
-		<?php if (!wc_ship_to_billing_address_only() && $order->needs_shipping_address() && $shipping): ?>
+		<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && $shipping ) : ?>
 			<td class="font-family text-align-left" style="padding:0;" valign="top" width="50%">
-				<?php if ($email_improvements_enabled) { ?>
-					<b class="address-title"><?php esc_html_e('Shipping address', 'woocommerce'); ?></b>
+				<?php if ( $email_improvements_enabled ) { ?>
+					<b class="address-title"><?php esc_html_e( 'Shipping address', 'woocommerce' ); ?></b>
 				<?php } else { ?>
-					<h2><?php esc_html_e('Shipping address', 'woocommerce'); ?></h2>
+					<h2><?php esc_html_e( 'Shipping address', 'woocommerce' ); ?></h2>
 				<?php } ?>
 
 				<address class="address">
-					<?php echo wp_kses_post($shipping); ?>
-					<?php if ($order->get_shipping_phone()): ?>
-						<br /><?php echo wc_make_phone_clickable($order->get_shipping_phone()); ?>
+					<?php echo wp_kses_post( $shipping ); ?>
+					<?php if ( $order->get_shipping_phone() ) : ?>
+						<br /><?php echo wc_make_phone_clickable( $order->get_shipping_phone() ); ?>
 					<?php endif; ?>
 					<?php
 					/**
@@ -98,7 +98,7 @@ $display_section_divider = (bool) apply_filters('woocommerce_email_body_display_
 					 * @param bool $sent_to_admin If this email is being sent to the admin or not.
 					 * @param bool $plain_text If this email is plain text or not.
 					 */
-					do_action('woocommerce_email_customer_address_section', 'shipping', $order, $sent_to_admin, false);
+					do_action( 'woocommerce_email_customer_address_section', 'shipping', $order, $sent_to_admin, false );
 					?>
 				</address>
 			</td>

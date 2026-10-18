@@ -17,38 +17,38 @@
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 $margin_side = is_rtl() ? 'left' : 'right';
 
-$email_improvements_enabled = FeaturesUtil::feature_is_enabled('email_improvements');
-$price_text_align = $email_improvements_enabled ? 'right' : 'left';
+$email_improvements_enabled = FeaturesUtil::feature_is_enabled( 'email_improvements' );
+$price_text_align           = $email_improvements_enabled ? 'right' : 'left';
 
-foreach ($items as $item_id => $item):
-	$product = $item->get_product();
-	$sku = '';
+foreach ( $items as $item_id => $item ) :
+	$product       = $item->get_product();
+	$sku           = '';
 	$purchase_note = '';
-	$image = '';
+	$image         = '';
 
-	if (!apply_filters('woocommerce_order_item_visible', true, $item)) {
+	if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
 		continue;
 	}
 
-	if (is_object($product)) {
-		$sku = $product->get_sku();
+	if ( is_object( $product ) ) {
+		$sku           = $product->get_sku();
 		$purchase_note = $product->get_purchase_note();
-		$image = $product->get_image($image_size);
+		$image         = $product->get_image( $image_size );
 	}
 
 	?>
-	<tr class="<?php echo esc_attr(apply_filters('woocommerce_order_item_class', 'order_item', $item, $order)); ?>">
+	<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
 		<td class="td font-family text-align-left" style="vertical-align: middle; word-wrap:break-word;">
-			<?php if ($email_improvements_enabled) { ?>
+			<?php if ( $email_improvements_enabled ) { ?>
 				<table class="order-item-data" role="presentation">
 					<tr>
 						<?php
 						// Show title/image etc.
-						if ($show_image) {
+						if ( $show_image ) {
 							/**
 							 * Email Order Item Thumbnail hook.
 							 *
@@ -56,7 +56,7 @@ foreach ($items as $item_id => $item):
 							 * @param WC_Order_Item_Product $item  The item being displayed.
 							 * @since 2.1.0
 							 */
-							echo '<td>' . wp_kses_post(apply_filters('woocommerce_order_item_thumbnail', $image, $item)) . '</td>';
+							echo '<td>' . wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) ) . '</td>';
 						}
 						?>
 						<td>
@@ -68,12 +68,12 @@ foreach ($items as $item_id => $item):
 							 * @param WC_Order_Item_Product $item      The item being displayed.
 							 * @since 2.1.0
 							 */
-							$order_item_name = apply_filters('woocommerce_order_item_name', $item->get_name(), $item, false);
-							echo wp_kses_post("<h3 style='font-size: inherit;font-weight: inherit;'>{$order_item_name}</h3>");
+							$order_item_name = apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false );
+							echo wp_kses_post( "<h3 style='font-size: inherit;font-weight: inherit;'>{$order_item_name}</h3>" );
 
 							// SKU.
-							if ($show_sku && $sku) {
-								echo wp_kses_post(' (#' . $sku . ')');
+							if ( $show_sku && $sku ) {
+								echo wp_kses_post( ' (#' . $sku . ')' );
 							}
 
 							/**
@@ -85,17 +85,17 @@ foreach ($items as $item_id => $item):
 							 * @param bool                  $plain_text Whether the email is plain text or not.
 							 * @since 2.3.0
 							 */
-							do_action('woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text);
+							do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text );
 
 							$item_meta = wc_display_item_meta(
 								$item,
 								array(
-									'before' => '',
-									'after' => '',
-									'separator' => '<br>',
-									'echo' => false,
+									'before'       => '',
+									'after'        => '',
+									'separator'    => '<br>',
+									'echo'         => false,
 									'label_before' => '<span>',
-									'label_after' => ':</span> ',
+									'label_after'  => ':</span> ',
 								)
 							);
 							echo '<div class="email-order-item-meta">';
@@ -103,13 +103,13 @@ foreach ($items as $item_id => $item):
 							echo wp_kses(
 								$item_meta,
 								array(
-									'br' => array(),
+									'br'   => array(),
 									'span' => array(),
-									'a' => array(
-										'href' => true,
+									'a'    => array(
+										'href'   => true,
 										'target' => true,
-										'rel' => true,
-										'title' => true,
+										'rel'    => true,
+										'title'  => true,
 									),
 								)
 							);
@@ -124,7 +124,7 @@ foreach ($items as $item_id => $item):
 							 * @param bool                  $plain_text Whether the email is plain text or not.
 							 * @since 2.3.0
 							 */
-							do_action('woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text);
+							do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text );
 
 							?>
 						</td>
@@ -134,7 +134,7 @@ foreach ($items as $item_id => $item):
 			} else {
 
 				// Show title/image etc.
-				if ($show_image) {
+				if ( $show_image ) {
 					/**
 					 * Email Order Item Thumbnail hook.
 					 *
@@ -142,7 +142,7 @@ foreach ($items as $item_id => $item):
 					 * @param WC_Order_Item_Product $item  The item being displayed.
 					 * @since 2.1.0
 					 */
-					echo wp_kses_post(apply_filters('woocommerce_order_item_thumbnail', $image, $item));
+					echo wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) );
 				}
 
 				/**
@@ -152,11 +152,11 @@ foreach ($items as $item_id => $item):
 				 * @param WC_Order_Item_Product $item      The item being displayed.
 				 * @since 2.1.0
 				 */
-				echo wp_kses_post(apply_filters('woocommerce_order_item_name', $item->get_name(), $item, false));
+				echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) );
 
 				// SKU.
-				if ($show_sku && $sku) {
-					echo wp_kses_post(' (#' . $sku . ')');
+				if ( $show_sku && $sku ) {
+					echo wp_kses_post( ' (#' . $sku . ')' );
 				}
 
 				/**
@@ -168,12 +168,12 @@ foreach ($items as $item_id => $item):
 				 * @param bool                  $plain_text Whether the email is plain text or not.
 				 * @since 2.3.0
 				 */
-				do_action('woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text);
+				do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text );
 
 				wc_display_item_meta(
 					$item,
 					array(
-						'label_before' => '<strong class="wc-item-meta-label" style="float: ' . (is_rtl() ? 'right' : 'left') . '; margin-' . esc_attr($margin_side) . ': .25em; clear: both">',
+						'label_before' => '<strong class="wc-item-meta-label" style="float: ' . ( is_rtl() ? 'right' : 'left' ) . '; margin-' . esc_attr( $margin_side ) . ': .25em; clear: both">',
 					)
 				);
 
@@ -186,22 +186,22 @@ foreach ($items as $item_id => $item):
 				 * @param bool                  $plain_text Whether the email is plain text or not.
 				 * @since 2.3.0
 				 */
-				do_action('woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text);
+				do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text );
 			}
 			?>
 		</td>
-		<td class="td font-family text-align-<?php echo esc_attr($price_text_align); ?>" style="vertical-align:middle;">
-			<?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?>
+		<td class="td font-family text-align-<?php echo esc_attr( $price_text_align ); ?>" style="vertical-align:middle;">
+			<?php echo wp_kses_post( $order->get_formatted_line_subtotal( $item ) ); ?>
 		</td>
 	</tr>
 	<?php
 
-	if ($show_purchase_note && $purchase_note) {
+	if ( $show_purchase_note && $purchase_note ) {
 		?>
 		<tr>
 			<td colspan="3" class="font-family text-align-left" style="vertical-align:middle;">
 				<?php
-				echo wp_kses_post(wpautop(do_shortcode($purchase_note)));
+				echo wp_kses_post( wpautop( do_shortcode( $purchase_note ) ) );
 				?>
 			</td>
 		</tr>

@@ -21,38 +21,38 @@
 
 use Automattic\WooCommerce\Enums\OrderStatus;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
-echo esc_html(wp_strip_all_tags($email_heading));
+echo esc_html( wp_strip_all_tags( $email_heading ) );
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 /* translators: %s: Customer first name */
-echo sprintf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name())) . "\n\n";
+echo sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
 
-if ($order->needs_payment()) {
-	if ($order->has_status(OrderStatus::FAILED)) {
+if ( $order->needs_payment() ) {
+	if ( $order->has_status( OrderStatus::FAILED ) ) {
 		echo wp_kses_post(
 			sprintf(
 				/* translators: %1$s Site title, %2$s donation pay link */
-				__('Sorry, your donation on %1$s was unsuccessful. Your donation details are below, with a link to try your payment again: %2$s', 'wc-donation-platform'),
-				esc_html(get_bloginfo('name', 'display')),
-				esc_url($order->get_checkout_payment_url())
+				__( 'Sorry, your donation on %1$s was unsuccessful. Your donation details are below, with a link to try your payment again: %2$s', 'wc-donation-platform' ),
+				esc_html( get_bloginfo( 'name', 'display' ) ),
+				esc_url( $order->get_checkout_payment_url() )
 			)
 		) . "\n\n";
 	} else {
 		echo wp_kses_post(
 			sprintf(
 				/* translators: %1$s Site title, %2$s donation pay link */
-				__('A donation has been created for you on %1$s. Your donation details are below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform'),
-				esc_html(get_bloginfo('name', 'display')),
-				esc_url($order->get_checkout_payment_url())
+				__( 'A donation has been created for you on %1$s. Your donation details are below, with a link to make payment when you’re ready: %2$s', 'wc-donation-platform' ),
+				esc_html( get_bloginfo( 'name', 'display' ) ),
+				esc_url( $order->get_checkout_payment_url() )
 			)
 		) . "\n\n";
 	}
 } else {
 	/* translators: %s: Donation date */
-	echo sprintf(esc_html__('Here are the details of your donation placed on %s:', 'wc-donation-platform'), esc_html(wc_format_datetime($order->get_date_created()))) . "\n\n";
+	echo sprintf( esc_html__( 'Here are the details of your donation placed on %s:', 'wc-donation-platform' ), esc_html( wc_format_datetime( $order->get_date_created() ) ) ) . "\n\n";
 }
 
 /**
@@ -63,7 +63,7 @@ if ($order->needs_payment()) {
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action('woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n----------------------------------------\n\n";
 
@@ -72,7 +72,7 @@ echo "\n----------------------------------------\n\n";
  *
  * @hooked WC_Emails::order_meta() Shows order meta data.
  */
-do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook for woocommerce_email_customer_details
@@ -80,18 +80,18 @@ do_action('woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $
  * @hooked WC_Emails::customer_details() Shows customer details
  * @hooked WC_Emails::email_address() Shows email address
  */
-do_action('woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email);
+do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n\n----------------------------------------\n\n";
 
 /**
  * Show user-defined additional content - this is set in each email's settings.
  */
-if ($additional_content) {
-	echo esc_html(wp_strip_all_tags(wptexturize($additional_content)));
+if ( $additional_content ) {
+	echo esc_html( wp_strip_all_tags( wptexturize( $additional_content ) ) );
 	echo "\n\n----------------------------------------\n\n";
 }
 
-echo wp_kses_post(apply_filters('woocommerce_email_footer_text', get_option('woocommerce_email_footer_text')));
+echo wp_kses_post( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) );
 
 // phpcs:enable Universal.WhiteSpace.PrecisionAlignment.Found, Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed
