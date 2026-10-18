@@ -1,61 +1,37 @@
-# This workflow checks out code, performs a Codacy security scan
-# and integrates the results with GitHub Advanced Security code scanning.
-# See https://github.com/codacy/codacy-analysis-cli-action for action usage.
-
-name: Codacy Security Scan
+name: 'CodeQL JavaScript Analysis'
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: '31 15 * * 0'
-
-permissions:
-  contents: read
+    push:
+        branches: [main, master]
+    pull_request:
+        branches: [main, master]
+    schedule:
+        - cron: '32 3 * * 2'
 
 jobs:
-  codacy-security-scan:
-    permissions:
-      contents: read      # for actions/checkout to fetch code
-      security-events: write  # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read       # only required for a private repository
-    name: Codacy Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repository to the GitHub Actions runner
-      - name: Checkout code
-        uses: actions/checkout@v4
+    analyze:
+        name: Analyze JavaScript
+        runs-on: ubuntu-latest
+        permissions:
+            actions: read
+            contents: read
+            security-events: write
 
-      # Execute Codacy Analysis CLI and generate a SARIF output with the security
-      # issues identified during the analysis. Noise (line length, PHPDoc indent)
-      # is reduced via the repo's .codacy.yml + phpcs.xml.
-      - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@v4.4.7
-        with:
-          # Get your project token from your Codacy repository settings:
-          # https://app.codacy.com/ <project> > Settings > Project API Token
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          verbose: true
-          output: results.sarif
-          format: sarif
-          # Adjust severity of non-security issues for GitHub code scanning
-          gh-code-scanning-compat: true
-          # Keep builds green; Codacy dashboard is where issues are reviewed
-          max-allowed-issues: 2147483647
-          # Prevent individual tools from hanging indefinitely
-          tool-timeout: '10minutes'
-          # Skip validation of uncommitted changes
-          skip-uncommitted-files-check: true
+        strategy:
+            fail-fast: false
+            matrix:
+                language: ['javascript']
 
-      # Consolidate multiple SARIF runs into one (upload-sarif@v4 rejects
-      # multiple runs with the same category; Codacy emits one run per tool).
-      - name: Consolidate SARIF runs
-        run: python3 -c "import json; d=json.load(open('results.sarif')); rs=d.get('runs',[]); [print('SARIF already has a single run')] if len(rs)<=1 else (rs[0].setdefault('results',[]).extend(sum((r.get('results',[]) for r in rs[1:]),[])), d.__setitem__('runs',[rs[0]]), json.dump(d,open('results.sarif','w')), print(f'Consolidated {len(rs)} SARIF runs into 1'))"
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-      # Upload the SARIF file generated in the previous step
-      - name: Upload SARIF results file
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: results.sarif
+            - name: Initialize CodeQL
+              uses: github/codeql-action/init@v4
+              with:
+                  languages: ${{ matrix.language }}
+                  # Required for interpreted languages in v4 to prevent file permission / build errors
+                  build-mode: none
+
+            - name: Perform CodeQL Analysis
+              uses: github/codeql-action/analyze@v4
