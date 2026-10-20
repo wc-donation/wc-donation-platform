@@ -185,7 +185,7 @@
 								}
 							} );
 
-						jumpToStep( step, '' );
+						jumpToStep( step );
 						break;
 					default:
 						handleFormSubmitError(
@@ -539,26 +539,24 @@
 					}
 				}
 
-				jumpToStep( targetStep, '' );
+				jumpToStep( targetStep );
 			} );
 		} );
 
-	function jumpToStep( step, formid = '' ) {
+	function jumpToStep( step ) {
 		const root = document.documentElement;
-		root.style.setProperty( '--wcdp-step-2', 'var(--wcdp-main)' );
-		root.style.setProperty( '--wcdp-step-3', 'var(--wcdp-main)' );
 
-		switch ( step ) {
-			case 3:
-				root.style.setProperty( '--wcdp-step-3', 'var(--wcdp-main-2)' );
-			case 2:
-				root.style.setProperty( '--wcdp-step-2', 'var(--wcdp-main-2)' );
-				break;
-			case 1:
-				break;
-			default:
-				return;
-		}
+		// Guard clause for invalid steps
+		if ( step < 1 || step > 3 ) return;
+
+		root.style.setProperty(
+			'--wcdp-step-2',
+			step >= 2 ? 'var(--wcdp-main-2)' : 'var(--wcdp-main)'
+		);
+		root.style.setProperty(
+			'--wcdp-step-3',
+			step === 3 ? 'var(--wcdp-main-2)' : 'var(--wcdp-main)'
+		);
 
 		document
 			.querySelectorAll( '.wcdp-style5-active' )
@@ -590,9 +588,9 @@
 		}
 	}
 
-	let express_heading_timeout = 10;
+	let expressHeadingTimeout = 10;
 	//initialize WCDP in Frontend
-	document.addEventListener( 'DOMContentLoaded', function wcdp_setup() {
+	document.addEventListener( 'DOMContentLoaded', () => {
 		const spinners = document.querySelectorAll( '.wcdp-loader' );
 		const forms = document.querySelectorAll( '.wc-donation-platform' );
 
@@ -639,14 +637,14 @@
 					new Event( 'change', { bubbles: true } )
 				);
 			} );
-			setTimeout( express_checkout_heading, express_heading_timeout );
+			setTimeout( expressCheckoutHeading, expressHeadingTimeout );
 		}
 	} );
 
 	/**
 	 * Show the Express Donation Header when Stripe or PayPal express checkout available
 	 */
-	function express_checkout_heading() {
+	function expressCheckoutHeading() {
 		const stripeButtons = document.querySelectorAll(
 			'#wc-stripe-payment-request-button'
 		);
@@ -669,9 +667,9 @@
 			if ( heading ) {
 				heading.style.display = 'block';
 			}
-		} else if ( express_heading_timeout < 10000 ) {
-			express_heading_timeout *= 2;
-			setTimeout( express_checkout_heading, express_heading_timeout );
+		} else if ( expressHeadingTimeout < 10000 ) {
+			expressHeadingTimeout *= 2;
+			setTimeout( expressCheckoutHeading, expressHeadingTimeout );
 		}
 	}
 
@@ -946,7 +944,6 @@
 
 			// Stop submission if the form is invalid, and show validation messages
 			form.addEventListener( 'submit', ( event ) => {
-				const form = event.currentTarget;
 				if ( form.dataset.style !== '4' ) {
 					event.preventDefault();
 				}
