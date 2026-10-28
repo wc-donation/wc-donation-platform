@@ -146,6 +146,42 @@ if ( $value['popup'] ) :
 						);
 
 						break;
+					case '7':
+						// Style 7: 2 steps (details & payment combined), without header
+						wc_get_template(
+							'styles/wcdp_form_style_7.php',
+							array(
+								'value'      => $value,
+								'product'    => $product,
+								'context'    => $context,
+								'product_id' => $product_id,
+								'has_child'  => $has_child,
+								'checkout'   => $checkout,
+								'form_id'    => $form_id,
+							),
+							'',
+							WCDP_DIR . 'includes/templates/'
+						);
+
+						break;
+					case '8':
+						// Style 8: 2 steps (details & payment combined), with banner header
+						wc_get_template(
+							'styles/wcdp_form_style_8.php',
+							array(
+								'value'      => $value,
+								'product'    => $product,
+								'context'    => $context,
+								'product_id' => $product_id,
+								'has_child'  => $has_child,
+								'checkout'   => $checkout,
+								'form_id'    => $form_id,
+							),
+							'',
+							WCDP_DIR . 'includes/templates/'
+						);
+
+						break;
 					/** @noinspection PhpMissingBreakStatementInspection */
 					case 'checkout':
 						if ( $context == 'checkout' ) {

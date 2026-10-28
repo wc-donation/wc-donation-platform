@@ -564,6 +564,26 @@ form[name="checkout"] .wcdp-tab div:first-child {
     display: none;
 }
 
+/* Style 8 header: 2 steps, labels may wrap on narrow screens */
+.wcdp-steps-wrapper-2 .wcdp-style5 {
+    box-sizing: border-box;
+    width: 50%;
+    height: auto;
+    min-height: 2em;
+    padding: 0.25em 0.5em 0.25em 1em;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.wcdp-steps-wrapper-2 .wcdp-style5:last-child:after {
+    display: none;
+}
+
+/* Styles 7 & 8: payment section below donor details */
+.wcdp-two-steps-payment {
+    margin-top: 1.5em;
+}
+
 #wcdp-popup .wcdp-steps-wrapper {
     margin: 0 20px 20px;
     top: 35px;
