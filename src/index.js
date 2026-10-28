@@ -152,6 +152,20 @@ registerBlockType( 'wc-donation-platform/wcdp', {
 									),
 									value: '6',
 								},
+								{
+									label: __(
+										'Style 7 (2 steps, no header)',
+										'wc-donation-platform'
+									),
+									value: '7',
+								},
+								{
+									label: __(
+										'Style 8 (2 steps, banner header)',
+										'wc-donation-platform'
+									),
+									value: '8',
+								},
 							] }
 							onChange={ changeStyle }
 						/>
