@@ -136,7 +136,8 @@ class WCDP_Donation_Upsells {
 											<input type="text" class="regular-input"
 												id="wcdp_donation_upsell_label_<?php echo esc_attr( $type_id ); ?>"
 												name="wcdp_donation_upsell_label_<?php echo esc_attr( $type_id ); ?>"
-												value="<?php echo esc_attr( $settings['label'] ); ?>">
+												value="<?php echo esc_attr( $settings['label'] ); ?>"
+												style="width: 100%;">
 										</p>
 
 										<p>
@@ -147,7 +148,8 @@ class WCDP_Donation_Upsells {
 											<input type="text" class="regular-input"
 												id="wcdp_donation_upsell_fee_name_<?php echo esc_attr( $type_id ); ?>"
 												name="wcdp_donation_upsell_fee_name_<?php echo esc_attr( $type_id ); ?>"
-												value="<?php echo esc_attr( $settings['fee_name'] ); ?>">
+												value="<?php echo esc_attr( $settings['fee_name'] ); ?>"
+												style="width: 100%;">
 										</p>
 
 										<?php

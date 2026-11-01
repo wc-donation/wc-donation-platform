@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-01T17:06:14+00:00\n"
+"POT-Creation-Date: 2026-11-01T21:35:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-donation-platform\n"
@@ -90,11 +90,11 @@ msgstr ""
 msgid "Checkout checkbox wording"
 msgstr ""
 
-#: includes/class-wcdp-donation-upsells.php:144
+#: includes/class-wcdp-donation-upsells.php:145
 msgid "Fee name"
 msgstr ""
 
-#: includes/class-wcdp-donation-upsells.php:179
+#: includes/class-wcdp-donation-upsells.php:181
 msgid "% of cart value"
 msgstr ""
 
@@ -133,7 +133,7 @@ msgstr ""
 
 #: includes/class-wcdp-form.php:40
 #: build/index.js:1
-#: src/index.js:213
+#: src/index.js:227
 msgid "Your donation form will be displayed here."
 msgstr ""
 
@@ -727,6 +727,7 @@ msgstr ""
 #: includes/templates/styles/wcdp_form_style_3.php:74
 #: includes/templates/styles/wcdp_form_style_6.php:43
 #: includes/templates/styles/wcdp_form_style_6.php:46
+#: includes/templates/styles/wcdp_form_style_7.php:60
 msgid "Back"
 msgstr ""
 
@@ -1252,6 +1253,7 @@ msgid "Next"
 msgstr ""
 
 #: includes/templates/styles/wcdp_form_style_5.php:21
+#: includes/templates/styles/wcdp_form_style_8.php:21
 msgid "1. Amount"
 msgstr ""
 
@@ -1266,6 +1268,10 @@ msgstr ""
 #: includes/templates/styles/wcdp_form_style_6.php:73
 #: includes/templates/styles/wcdp_form_style_6.php:76
 msgid "Go to previous step"
+msgstr ""
+
+#: includes/templates/styles/wcdp_form_style_8.php:24
+msgid "2. Details & Payment"
 msgstr ""
 
 #: includes/templates/wcdp_form.php:20
@@ -1735,37 +1741,47 @@ msgid "Style 6 (no header, top back arrow)"
 msgstr ""
 
 #: build/index.js:1
-#: src/index.js:159
+#: src/index.js:156
+msgid "Style 7 (2 steps, no header)"
+msgstr ""
+
+#: build/index.js:1
+#: src/index.js:163
+msgid "Style 8 (2 steps, banner header)"
+msgstr ""
+
+#: build/index.js:1
+#: src/index.js:173
 msgid "Display in a popup?"
 msgstr ""
 
 #: build/index.js:1
-#: src/index.js:167
+#: src/index.js:181
 msgid "Display a open popup button?"
 msgstr ""
 
 #: build/index.js:1
-#: src/index.js:172
+#: src/index.js:186
 msgid "Applies only if popup is enabled"
 msgstr ""
 
 #: build/index.js:1
-#: src/index.js:179
+#: src/index.js:193
 msgid "Display the product title?"
 msgstr ""
 
 #: build/index.js:1
-#: src/index.js:187
+#: src/index.js:201
 msgid "Display description?"
 msgstr ""
 
 #: build/index.js:1
-#: src/index.js:195
+#: src/index.js:209
 msgid "Display short description?"
 msgstr ""
 
 #: build/index.js:1
-#: src/index.js:203
+#: src/index.js:217
 msgid "Display product image?"
 msgstr ""
 

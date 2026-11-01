@@ -27,7 +27,7 @@ Unlock the potential of WooCommerce for your charity or fundraising efforts:
 * 💸 **100+ Payment Gateways**: Diverse options for lower transaction fees, enabling greater flexibility for donors.
 * 🚀 **Express Donations**: Your supporters can donate quickly using [Apple Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/), [Google Pay](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/) & [PayPal](https://www.wc-donation.com/documentation/integrations/express-donations-apple-pay-google-pay-paypal/), providing a hassle-free giving experience.
 * 💰 **Fee Recovery**: Encourage donors to cover transaction costs, ensuring more funds go towards your cause.
-* 🛍️ **Donation Upsells**: Ask webshop customers on checkout to add a round-up donation or a configurable fixed + percentage donation.
+* 🛍️ **[Donation Upsells](https://www.wc-donation.com/documentation/usage/checkout-upselling-features/)**: Ask webshop customers on checkout to add a round-up donation or a configurable fixed + percentage donation.
 * 🏆 **Donation Leaderboard**: Showcase top donors with a [donor wall](https://www.wc-donation.com/documentation/usage/donation-leaderboard/), recognizing and motivating generous contributions.
 * 🆓 **Free & Open Source**: No platform fees or subscriptions, ensuring accessibility for charities of all sizes!
 
@@ -167,6 +167,21 @@ If you want to disable the wording changes applied by Donation Platform for WooC
 
 == Changelog ==
 Active development of Donation Platform for WooCommerce: Fundraising & Donation Management is handled [on GitHub](https://github.com/wc-donation/wc-donation-platform/).
+
+= 1.5.1 =
+feat: add Style 7 (2 steps, no header)
+feat: add Style 8 (2 steps, banner header)
+fix: donation added to cart on page load
+fix: js strings not properly set up for translations
+fix: too broad donation context detection
+fix: add polyfills for 2 PHP 8.0+ functions
+fix: set above submit as default for WooCommerce checkout for improved backwards compatibility
+chore: js refactored
+chore: required PHP version is now 7.4
+tweak: set Radio/Button selection as default for variations
+tweak: donation upsell settings styling
+
+
 
 = 1.5.0 2026-10-13 =
 feat: add donation upsells with round-up and fixed + percentage checkout donation types
