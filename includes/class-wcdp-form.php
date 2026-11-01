@@ -549,7 +549,7 @@ class WCDP_Form {
 					'style'             => array(
 						'type'    => 'number',
 						'default' => 1,
-						'enum'    => array( 1, 2, 3, 4, 5, 6 ),
+						'enum'    => array( 1, 2, 3, 4, 5, 6, 7, 8 ),
 					),
 					'theme'             => array(
 						'type'    => 'number',
