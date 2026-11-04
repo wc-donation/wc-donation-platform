@@ -167,18 +167,6 @@ main#main .wcdp-form {
 
 }
 
-.wcdpp-donation-reminder {
-	padding: 2rem;
-}
-
-.wcdpp-donation-reminder[hidden] {
-	display: none;
-}
-
-.wcdpp-show-reminder .wcdp-form {
-	display: none;
-}
-
 .wcdp-close {
     position: absolute;
     top: 5px;

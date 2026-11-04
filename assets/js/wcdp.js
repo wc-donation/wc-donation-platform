@@ -706,21 +706,36 @@
 	document.querySelectorAll( '.wcdp-modal-close' ).forEach( ( button ) => {
 		button.addEventListener( 'click', ( event ) => {
 			const overlay = event.currentTarget.closest( '.wcdp-overlay' );
-			const reminder = overlay?.querySelector( '.wcdpp-donation-reminder' );
+			const reminder = overlay?.querySelector(
+				'.wcdpp-donation-reminder'
+			);
 			if ( reminder && ! reminder.hidden ) {
+				toggleReminder( overlay );
 				closePopupForm();
 				return;
 			}
 			if ( reminder ) {
 				event.preventDefault();
-				overlay.querySelector( '.wcdp-popup' )?.classList.add( 'wcdpp-show-reminder' );
-				reminder.hidden = false;
-				overlay.querySelector( '.wcdp-form' )?.setAttribute( 'aria-hidden', 'true' );
+				toggleReminder( overlay );
 				return;
 			}
 			closePopupForm();
 		} );
 	} );
+
+	function toggleReminder( overlay ) {
+		const popup = overlay.querySelector( '.wcdp-popup' );
+		const reminder = overlay.querySelector( '.wcdpp-donation-reminder' );
+		if ( ! popup || ! reminder ) {
+			return;
+		}
+		const isReminderVisible = ! reminder.hidden;
+
+		popup.classList.toggle( 'wcdpp-show-reminder', ! isReminderVisible );
+		reminder.hidden = isReminderVisible;
+		popup.setAttribute( 'aria-hidden', String( isReminderVisible ) );
+		reminder.setAttribute( 'aria-hidden', String( ! isReminderVisible ) );
+	}
 
 	let wcdpOpen = false;
 	//Close modal function
